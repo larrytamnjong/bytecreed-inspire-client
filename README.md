@@ -3,7 +3,7 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.4.
 
 ## Install Dependencies
-Run `npm install --legacy-peer-deps `
+Run `npm install --legacy-peer-deps`
 
 ## Development server
 
