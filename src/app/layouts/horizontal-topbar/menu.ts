@@ -1,5 +1,5 @@
 import { MenuItem } from './menu.model';
-import { ModuleEnum } from 'src/app/core/enums/module-enum';
+
 
 export const MENU: MenuItem[] = [
   {
