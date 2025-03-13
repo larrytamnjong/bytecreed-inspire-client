@@ -42,5 +42,6 @@ export enum MenuEnum {
   GradeSetup = 40,
   School = 41,
   ResultHistory =42,
-  Teachers = 43
+  Teachers = 43,
+  HeaderMore = 44
 }
