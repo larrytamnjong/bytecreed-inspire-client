@@ -33,6 +33,12 @@ export const MENU: MenuItem[] = [
         link: "/",
       },
       {
+        id: MenuEnum.ExamTypes,
+        label: "MENUITEMS.CONFIGURATIONS.LIST.EXAMTYPES",
+        parentId: MenuEnum.Configuration,
+        link: "/",
+      },
+      {
         id: MenuEnum.Subjects,
         label: "MENUITEMS.CONFIGURATIONS.LIST.SUBJECTS",
         parentId: MenuEnum.Configuration,
@@ -48,7 +54,6 @@ export const MENU: MenuItem[] = [
         id: MenuEnum.Grading,
         label: "MENUITEMS.CONFIGURATIONS.LIST.GRADING",
         parentId: MenuEnum.Configuration,
-        isCollapsed: true,
         subItems: [
           {
             id: MenuEnum.GradingSystems,
@@ -70,6 +75,31 @@ export const MENU: MenuItem[] = [
         parentId: MenuEnum.Configuration,
         link: "/",
       },
+      {
+        id: MenuEnum.Academics,
+        label: "MENUITEMS.CONFIGURATIONS.LIST.ACADEMICS",
+        icon: " ri-calendar-2-line",
+        subItems: [
+          {
+            id: MenuEnum.AcademicYear,
+            label: "MENUITEMS.ACADEMICS.LIST.ACADEMICYEARS",
+            parentId: MenuEnum.Academics,
+            link: "/",
+          },
+          {
+            id: MenuEnum.AcademicTerm,
+            label: "MENUITEMS.ACADEMICS.LIST.ACADEMICTERMS",
+            parentId: MenuEnum.Academics,
+            link: "/",
+          },
+          {
+            id: MenuEnum.AcademicPeriod,
+            label: "MENUITEMS.ACADEMICS.LIST.ACADEMICPERIODS",
+            parentId: MenuEnum.Academics,
+            link: "/",
+          },
+        ],
+      }
     ],
   },
   {
@@ -123,34 +153,6 @@ export const MENU: MenuItem[] = [
     icon: " ri-parent-line",
     link: "/",
   },
-
-  {
-    id: MenuEnum.Academics,
-    label: "MENUITEMS.ACADEMICS.TEXT",
-    icon: " ri-calendar-2-line",
-    collapseid: "sidebarAcademics",
-    subItems: [
-      {
-        id: MenuEnum.AcademicYear,
-        label: "MENUITEMS.ACADEMICS.LIST.ACADEMICYEARS",
-        parentId: MenuEnum.Academics,
-        link: "/",
-      },
-      {
-        id: MenuEnum.AcademicTerm,
-        label: "MENUITEMS.ACADEMICS.LIST.ACADEMICTERMS",
-        parentId: MenuEnum.Academics,
-        link: "/",
-      },
-      {
-        id: MenuEnum.AcademicPeriod,
-        label: "MENUITEMS.ACADEMICS.LIST.ACADEMICPERIODS",
-        parentId: MenuEnum.Academics,
-        link: "/",
-      },
-    ],
-  },
-
   {
     id: MenuEnum.Attendance,
     label: "MENUITEMS.ATTENDANCE.TEXT",
