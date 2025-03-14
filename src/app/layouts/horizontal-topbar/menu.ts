@@ -1,4 +1,3 @@
-import { icon } from "leaflet";
 import { MenuItem } from "./menu.model";
 import { MenuEnum } from "src/app/core/enums/menu-enum";
 
