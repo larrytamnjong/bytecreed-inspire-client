@@ -14,6 +14,7 @@
     "CONFIGURATIONS": {
       "TEXT": "Configurations",
       "LIST": {
+        "ADMISSION": "Admission",
         "CLASSES": "Classes",
         "SECTIONS": "Sections",
         "SUBJECTS": "Subjects",

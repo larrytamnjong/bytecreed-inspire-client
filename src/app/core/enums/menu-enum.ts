@@ -45,4 +45,5 @@ export enum MenuEnum {
   Teachers = 43,
   HeaderMore = 44,
   ExamTypes = 45,
+  Admission = 46
 }

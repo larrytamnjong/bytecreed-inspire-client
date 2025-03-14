@@ -28,6 +28,13 @@ export const MENU: MenuItem[] = [
         link: "/",
       },
       {
+        id: MenuEnum.Admission,
+        label: "MENUITEMS.CONFIGURATIONS.LIST.ADMISSION",
+        parentId: MenuEnum.Configuration,
+        link: "/",
+        icon: "ri-user-add-line",
+      },
+      {
         id: MenuEnum.Sections,
         label: "MENUITEMS.CONFIGURATIONS.LIST.SECTIONS",
         parentId: MenuEnum.Configuration,
@@ -141,7 +148,7 @@ export const MENU: MenuItem[] = [
       {
         id: MenuEnum.StudentRegistration,
         label: "MENUITEMS.STUDENTS.LIST.REGISTRATION",
-        icon: " ri-user-add-line",
+        icon: "ri-user-add-line",
         parentId: MenuEnum.Students,
         link: "/",
       },

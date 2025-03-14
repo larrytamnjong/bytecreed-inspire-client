@@ -26,6 +26,12 @@ export const MENU: MenuItem[] = [
         link: "/",
       },
       {
+        id: MenuEnum.Admission,
+        label: "MENUITEMS.CONFIGURATIONS.LIST.ADMISSION",
+        parentId: MenuEnum.Configuration,
+        link: "/",
+      },
+      {
         id: MenuEnum.Sections,
         label: "MENUITEMS.CONFIGURATIONS.LIST.SECTIONS",
         parentId: MenuEnum.Configuration,

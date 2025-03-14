@@ -14,12 +14,15 @@
     "CONFIGURATIONS": {
       "TEXT": "Configurations",
       "LIST": {
+        "ADMISSION": "Admission",
         "CLASSES": "Classes",
         "SECTIONS": "Sections",
         "SUBJECTS": "Subjects",
         "GRADING": "Grading",
         "COURSES": "Courses",
-        "SCHOOL": "School"
+        "SCHOOL": "School",
+        "ACADEMICS": "Academics",
+        "EXAMTYPES": "Exam Types"
       }
     },
     "GRADING": {
@@ -49,7 +52,6 @@
       "TEXT": "Parents"
     },
     "ACADEMICS": {
-      "TEXT": "Academics",
       "LIST": {
         "ACADEMICYEARS": "Years",
         "ACADEMICTERMS": "Terms",
