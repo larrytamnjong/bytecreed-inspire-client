@@ -47,4 +47,5 @@ export enum MenuEnum {
   ExamTypes = 45,
   Admission = 46,
   Analytics = 47,
+  Reporting = 48,
 }

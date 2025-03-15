@@ -125,7 +125,34 @@ export const MENU: MenuItem[] = [
       }
     ],
   },
-
+  {
+    id: MenuEnum.Reports,
+    label: "MENUITEMS.REPORTS.TEXT",
+    icon: " ri-pie-chart-line",
+    subItems: [
+      {
+        id: MenuEnum.ReportCards,
+        label: "MENUITEMS.REPORTS.LIST.REPORTCARDS",
+        parentId: MenuEnum.Reports,
+        icon: "ri-file-paper-2-line",
+        link: "/",
+      },
+      {
+        id: MenuEnum.Transcripts,
+        label: "MENUITEMS.REPORTS.LIST.TRANSCRIPTS",
+        parentId: MenuEnum.Reports,
+        icon: " ri-file-list-3-line",
+        link: "/",
+      },
+      {
+        id: MenuEnum.MasterSheets,
+        label: "MENUITEMS.REPORTS.LIST.MASTERSHEETS",
+        parentId: MenuEnum.Reports,
+        icon: "ri-survey-line",
+        link: "/",
+      },
+    ],
+  },
   {
     id: MenuEnum.Personnel,
     label: "MENUITEMS.PERSONNEL.TEXT",
@@ -141,7 +168,7 @@ export const MENU: MenuItem[] = [
       {
         id: MenuEnum.Teachers,
         label: "MENUITEMS.PERSONNEL.LIST.TEACHERS",
-        icon: " ri-team-fill",
+        icon: "ri-team-line",
         parentId: MenuEnum.Personnel,
         link: "/",
       },
@@ -151,7 +178,7 @@ export const MENU: MenuItem[] = [
   {
     id: MenuEnum.Students,
     label: "MENUITEMS.STUDENTS.TEXT",
-    icon: " ri-team-fill",
+    icon: "ri-team-line",
     subItems: [
       {
         id: MenuEnum.StudentRegistration,
@@ -229,31 +256,6 @@ export const MENU: MenuItem[] = [
         icon: "ri-pencil-ruler-line",
         link: "/",
       },
-      {
-        id: MenuEnum.Reports,
-        label: "MENUITEMS.REPORTS.TEXT",
-        icon: " ri-pie-chart-line",
-        subItems: [
-          {
-            id: MenuEnum.ReportCards,
-            label: "MENUITEMS.REPORTS.LIST.REPORTCARDS",
-            parentId: MenuEnum.Reports,
-            link: "/",
-          },
-          {
-            id: MenuEnum.Transcripts,
-            label: "MENUITEMS.REPORTS.LIST.TRANSCRIPTS",
-            parentId: MenuEnum.Reports,
-            link: "/",
-          },
-          {
-            id: MenuEnum.MasterSheets,
-            label: "MENUITEMS.REPORTS.LIST.MASTERSHEETS",
-            parentId: MenuEnum.Reports,
-            link: "/",
-          },
-        ],
-      },
 
       {
         id: MenuEnum.Library,
@@ -298,7 +300,7 @@ export const MENU: MenuItem[] = [
       {
         id: MenuEnum.Users,
         label: "MENUITEMS.USERS.TEXT",
-        icon: "ri-team-fill",
+        icon: "ri-team-line",
         subItems: [
           {
             id: MenuEnum.Roles,

@@ -116,6 +116,33 @@ export const MENU: MenuItem[] = [
     ],
   },
   {
+    id: MenuEnum.ReportCards,
+    label: "MENUITEMS.REPORTING.TEXT",
+    isTitle: true,
+  },
+  {
+    id: MenuEnum.ReportCards,
+    label: "MENUITEMS.REPORTS.LIST.REPORTCARDS",
+    parentId: MenuEnum.Reports,
+    link: "/",
+    icon: "ri-file-paper-2-line",
+  },
+  {
+    id: MenuEnum.Transcripts,
+    label: "MENUITEMS.REPORTS.LIST.TRANSCRIPTS",
+    parentId: MenuEnum.Reports,
+    link: "/",
+    icon: " ri-file-list-3-line",
+  },
+  {
+    id: MenuEnum.MasterSheets,
+    label: "MENUITEMS.REPORTS.LIST.MASTERSHEETS",
+    parentId: MenuEnum.Reports,
+    link: "/",
+    icon: "ri-survey-line",
+  },
+
+  {
     id: MenuEnum.Core,
     label: "MENUITEMS.CORE.TEXT",
     isTitle: true,
@@ -143,7 +170,7 @@ export const MENU: MenuItem[] = [
   {
     id: MenuEnum.Students,
     label: "MENUITEMS.STUDENTS.TEXT",
-    icon: " ri-team-fill",
+    icon: "ri-team-line",
     isCollapsed: true,
     subItems: [
       {
@@ -214,34 +241,6 @@ export const MENU: MenuItem[] = [
       },
     ],
   },
-
-  {
-    id: MenuEnum.Reports,
-    label: "MENUITEMS.REPORTS.TEXT",
-    icon: " ri-pie-chart-line",
-    isCollapsed: true,
-    subItems: [
-      {
-        id: MenuEnum.ReportCards,
-        label: "MENUITEMS.REPORTS.LIST.REPORTCARDS",
-        parentId: MenuEnum.Reports,
-        link: "/",
-      },
-      {
-        id: MenuEnum.Transcripts,
-        label: "MENUITEMS.REPORTS.LIST.TRANSCRIPTS",
-        parentId: MenuEnum.Reports,
-        link: "/",
-      },
-      {
-        id: MenuEnum.MasterSheets,
-        label: "MENUITEMS.REPORTS.LIST.MASTERSHEETS",
-        parentId: MenuEnum.Reports,
-        link: "/",
-      },
-    ],
-  },
-
   {
     id: MenuEnum.Library,
     label: "MENUITEMS.LIBRARY.TEXT",
@@ -290,7 +289,7 @@ export const MENU: MenuItem[] = [
   {
     id: MenuEnum.Users,
     label: "MENUITEMS.USERS.TEXT",
-    icon: "ri-team-fill",
+    icon: "ri-team-line",
     isCollapsed: true,
     subItems: [
       {
