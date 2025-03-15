@@ -11,7 +11,7 @@ export const MENU: MenuItem[] = [
   {
     id: MenuEnum.Dashboard,
     label: "MENUITEMS.DASHBOARD.TEXT",
-    icon: "ri-dashboard-fill",
+    icon: "ri-home-4-line",
     link: "/",
   },
   
