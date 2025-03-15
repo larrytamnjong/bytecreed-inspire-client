@@ -1,3 +1,4 @@
+import { icon } from "leaflet";
 import { MenuItem } from "./menu.model";
 import { MenuEnum } from "src/app/core/enums/menu-enum";
 
@@ -11,7 +12,14 @@ export const MENU: MenuItem[] = [
   {
     id: MenuEnum.Dashboard,
     label: "MENUITEMS.DASHBOARD.TEXT",
-    icon: " ri-apps-line",
+    icon: "ri-dashboard-fill",
+    link: "/",
+  },
+
+  {
+    id: MenuEnum.Analytics,
+    label: "MENUITEMS.ANALYTICS.TEXT",
+    icon: "ri-line-chart-line",
     link: "/",
   },
 
@@ -124,9 +132,9 @@ export const MENU: MenuItem[] = [
     icon: "ri-admin-line",
     subItems: [
       {
-        id: MenuEnum.PersonnelStaff,
+        id: MenuEnum.Employees,
         icon: "ri-admin-fill",
-        label: "MENUITEMS.PERSONNEL.LIST.STAFF",
+        label: "MENUITEMS.PERSONNEL.LIST.EMPLOYEES",
         parentId: MenuEnum.Personnel,
         link: "/",
       },
@@ -163,16 +171,38 @@ export const MENU: MenuItem[] = [
   },
 
   {
-    id: MenuEnum.Parents,
-    label: "MENUITEMS.PARENTS.TEXT",
-    icon: " ri-parent-line",
-    link: "/",
+    id: MenuEnum.Results,
+    label: "MENUITEMS.RESULTS.TEXT",
+    icon: " ri-pages-line",
+    subItems: [
+      {
+        id: MenuEnum.RegisterResults,
+        label: "MENUITEMS.RESULTS.LIST.REGISTERRESULTS",
+        parentId: MenuEnum.Results,
+        icon : "ri-edit-line",
+        link: "/",
+      },
+      {
+        id: MenuEnum.ResultHistory,
+        label: "MENUITEMS.RESULTS.LIST.RESULTHISTORY",
+        parentId: MenuEnum.Results,
+        icon : "ri-history-line",
+        link: "/",
+      },
+    ],
   },
+
   {
     id: MenuEnum.HeaderMore,
     label: "HEADER.MORE.TEXT",
     icon: "ri-briefcase-2-line",
     subItems: [
+      {
+        id: MenuEnum.Parents,
+        label: "MENUITEMS.PARENTS.TEXT",
+        icon: " ri-parent-line",
+        link: "/",
+      },
       {
         id: MenuEnum.Attendance,
         label: "MENUITEMS.ATTENDANCE.TEXT",
@@ -199,30 +229,10 @@ export const MENU: MenuItem[] = [
         icon: "ri-pencil-ruler-line",
         link: "/",
       },
-
-      {
-        id: MenuEnum.Results,
-        label: "MENUITEMS.RESULTS.TEXT",
-        icon: "ri-file-edit-fill",
-        subItems: [
-          {
-            id: MenuEnum.RegisterResults,
-            label: "MENUITEMS.RESULTS.LIST.REGISTERRESULTS",
-            parentId: MenuEnum.Results,
-            link: "/",
-          },
-          {
-            id: MenuEnum.ResultHistory,
-            label: "MENUITEMS.RESULTS.LIST.RESULTHISTORY",
-            parentId: MenuEnum.Results,
-            link: "/",
-          },
-        ],
-      },
       {
         id: MenuEnum.Reports,
         label: "MENUITEMS.REPORTS.TEXT",
-        icon: "ri-pie-chart-2-fill",
+        icon: " ri-pie-chart-line",
         subItems: [
           {
             id: MenuEnum.ReportCards,
@@ -248,7 +258,7 @@ export const MENU: MenuItem[] = [
       {
         id: MenuEnum.Library,
         label: "MENUITEMS.LIBRARY.TEXT",
-        icon: " ri-book-fill",
+        icon: "ri-book-2-fill",
         subItems: [],
       },
       {
@@ -297,8 +307,8 @@ export const MENU: MenuItem[] = [
             link: "/",
           },
           {
-            id: MenuEnum.UserAccess,
-            label: "MENUITEMS.USERS.LIST.USERSACCESS",
+            id: MenuEnum.ManageUsers,
+            label: "MENUITEMS.USERS.LIST.MANAGEUSERS",
             parentId: MenuEnum.Users,
             link: "/",
           },

@@ -18,7 +18,7 @@ export enum MenuEnum {
   Users = 16,
   General = 17,
   Core = 18,
-  PersonnelStaff = 19,
+  Employees = 19,
   StudentRegistration = 20,
   StudentEnrollments = 21,
   AcademicYear =  22,
@@ -31,7 +31,7 @@ export enum MenuEnum {
   Transcripts = 29,
   MasterSheets = 30,
   Roles = 31,
-  UserAccess = 32,
+  ManageUsers = 32,
   Subscription = 33,
   Classes = 34,
   Sections = 35,
@@ -45,5 +45,6 @@ export enum MenuEnum {
   Teachers = 43,
   HeaderMore = 44,
   ExamTypes = 45,
-  Admission = 46
+  Admission = 46,
+  Analytics = 47,
 }

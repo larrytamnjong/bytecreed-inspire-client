@@ -11,6 +11,9 @@
     "DASHBOARD": {
       "TEXT": "Dashboard"
     },
+    "ANALYTICS": {
+      "TEXT": "Analytics"
+    },
     "CONFIGURATIONS": {
       "TEXT": "Configurations",
       "LIST": {
@@ -37,7 +40,7 @@
     "PERSONNEL": {
       "TEXT": "Personnel",
       "LIST": {
-        "STAFF": "Staff",
+        "EMPLOYEES": "Employees",
         "TEACHERS": "Teachers"
       }
     },
@@ -109,7 +112,7 @@
       "TEXT": "Users",
       "LIST": {
         "ROLES": "Roles",
-        "USERSACCESS": "User Access"
+        "MANAGEUSERS": "Manage Users"
       }
     }
   }

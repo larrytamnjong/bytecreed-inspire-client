@@ -11,7 +11,14 @@ export const MENU: MenuItem[] = [
   {
     id: MenuEnum.Dashboard,
     label: "MENUITEMS.DASHBOARD.TEXT",
-    icon: " ri-apps-line",
+    icon: "ri-dashboard-fill",
+    link: "/",
+  },
+  
+  {
+    id: MenuEnum.Analytics,
+    label: "MENUITEMS.ANALYTICS.TEXT",
+    icon: "ri-line-chart-line",
     link: "/",
   },
   {
@@ -120,8 +127,8 @@ export const MENU: MenuItem[] = [
     collapseid: "sidebarPersonnel",
     subItems: [
       {
-        id: MenuEnum.PersonnelStaff,
-        label: "MENUITEMS.PERSONNEL.LIST.STAFF",
+        id: MenuEnum.Employees,
+        label: "MENUITEMS.PERSONNEL.LIST.EMPLOYEES",
         parentId: MenuEnum.Personnel,
         link: "/",
       },
@@ -190,7 +197,7 @@ export const MENU: MenuItem[] = [
   {
     id: MenuEnum.Results,
     label: "MENUITEMS.RESULTS.TEXT",
-    icon: "ri-file-edit-fill",
+    icon: " ri-pages-line",
     collapseid: "sidebarResults",
     subItems: [
       {
@@ -211,7 +218,7 @@ export const MENU: MenuItem[] = [
   {
     id: MenuEnum.Reports,
     label: "MENUITEMS.REPORTS.TEXT",
-    icon: "ri-pie-chart-2-fill",
+    icon: " ri-pie-chart-line",
     collapseid: "sidebarReports",
     subItems: [
       {
@@ -238,7 +245,7 @@ export const MENU: MenuItem[] = [
   {
     id: MenuEnum.Library,
     label: "MENUITEMS.LIBRARY.TEXT",
-    icon: " ri-book-fill",
+    icon: "ri-book-2-fill",
     collapseid: "sidebarLibrary",
     subItems: [],
   },
@@ -293,8 +300,8 @@ export const MENU: MenuItem[] = [
         link: "/",
       },
       {
-        id: MenuEnum.UserAccess,
-        label: "MENUITEMS.USERS.LIST.USERSACCESS",
+        id: MenuEnum.ManageUsers,
+        label: "MENUITEMS.USERS.LIST.MANAGEUSERS",
         parentId: MenuEnum.Users,
         link: "/",
       },
