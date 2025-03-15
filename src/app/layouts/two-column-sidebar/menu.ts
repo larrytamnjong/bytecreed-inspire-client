@@ -274,7 +274,7 @@ export const MENU: MenuItem[] = [
   {
     id: MenuEnum.Boarding,
     label: "MENUITEMS.BOARDING.TEXT",
-    icon: " ri-community-fill",
+    icon: "ri-community-line",
     collapseid: "sidebarBoarding",
     subItems: [],
   },
