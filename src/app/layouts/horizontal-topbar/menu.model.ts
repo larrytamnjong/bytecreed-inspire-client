@@ -1,3 +1,5 @@
+import { PermissionActionEnum } from "src/app/core/enums/permission-action-enum";
+
 export interface MenuItem {
     id?: number;
     label?: any;
@@ -8,4 +10,5 @@ export interface MenuItem {
     badge?: any;
     parentId?: number;
     isLayout?: boolean;
+    permissionAction?: PermissionActionEnum;
   }
