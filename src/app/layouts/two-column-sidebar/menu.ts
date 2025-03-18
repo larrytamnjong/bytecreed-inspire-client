@@ -1,114 +1,114 @@
 import { MenuItem } from './menu.model';
 
-import { MenuEnum } from "src/app/core/enums/menu-enum";
+import { SchoolMenuEnum } from "src/app/core/enums/menu-enum";
 
 export const MENU: MenuItem[] = [
   {
-    id: MenuEnum.General,
+    id: SchoolMenuEnum.General,
     label: "MENUITEMS.GENERAL.TEXT",
     isTitle: true,
   },
   {
-    id: MenuEnum.Dashboard,
+    id: SchoolMenuEnum.Dashboard,
     label: "MENUITEMS.DASHBOARD.TEXT",
     icon: "ri-home-4-line",
     link: "/",
   },
   
   {
-    id: MenuEnum.Analytics,
+    id: SchoolMenuEnum.Analytics,
     label: "MENUITEMS.ANALYTICS.TEXT",
     icon: "ri-line-chart-line",
     link: "/",
   },
   {
-    id: MenuEnum.Configuration,
+    id: SchoolMenuEnum.Configuration,
     label: "MENUITEMS.CONFIGURATIONS.TEXT",
     icon: " ri-settings-3-line",
     collapseid: "sidebarConfiguration",
     subItems: [
       {
-        id: MenuEnum.School,
+        id: SchoolMenuEnum.School,
         label: "MENUITEMS.CONFIGURATIONS.LIST.SCHOOL",
-        parentId: MenuEnum.Configuration,
+        parentId: SchoolMenuEnum.Configuration,
         link: "/",
       },
       {
-        id: MenuEnum.Admission,
+        id: SchoolMenuEnum.Admission,
         label: "MENUITEMS.CONFIGURATIONS.LIST.ADMISSION",
-        parentId: MenuEnum.Configuration,
+        parentId: SchoolMenuEnum.Configuration,
         link: "/",
       },
       {
-        id: MenuEnum.Sections,
+        id: SchoolMenuEnum.Sections,
         label: "MENUITEMS.CONFIGURATIONS.LIST.SECTIONS",
-        parentId: MenuEnum.Configuration,
+        parentId: SchoolMenuEnum.Configuration,
         link: "/",
       },
       {
-        id: MenuEnum.ExamTypes,
+        id: SchoolMenuEnum.ExamTypes,
         label: "MENUITEMS.CONFIGURATIONS.LIST.EXAMTYPES",
-        parentId: MenuEnum.Configuration,
+        parentId: SchoolMenuEnum.Configuration,
         link: "/",
       },
       {
-        id: MenuEnum.Subjects,
+        id: SchoolMenuEnum.Subjects,
         label: "MENUITEMS.CONFIGURATIONS.LIST.SUBJECTS",
-        parentId: MenuEnum.Configuration,
+        parentId: SchoolMenuEnum.Configuration,
         link: "/",
       },
       {
-        id: MenuEnum.Courses,
+        id: SchoolMenuEnum.Courses,
         label: "MENUITEMS.CONFIGURATIONS.LIST.COURSES",
-        parentId: MenuEnum.Configuration,
+        parentId: SchoolMenuEnum.Configuration,
         link: "/",
       },
       {
-        id: MenuEnum.Grading,
+        id: SchoolMenuEnum.Grading,
         label: "MENUITEMS.CONFIGURATIONS.LIST.GRADING",
-        parentId: MenuEnum.Configuration,
+        parentId: SchoolMenuEnum.Configuration,
         subItems: [
           {
-            id: MenuEnum.GradingSystems,
+            id: SchoolMenuEnum.GradingSystems,
             label: 'MENUITEMS.GRADING.LIST.GRADINGSYSTEMS',
             link: '/',
-            parentId: MenuEnum.Grading
+            parentId: SchoolMenuEnum.Grading
           },
           {
-            id: MenuEnum.GradeSetup,
+            id: SchoolMenuEnum.GradeSetup,
             label: 'MENUITEMS.GRADING.LIST.GRADESETUP',
             link: '/',
-            parentId: MenuEnum.Grading
+            parentId: SchoolMenuEnum.Grading
           },
         ]
       },
       {
-        id: MenuEnum.Classes,
+        id: SchoolMenuEnum.Classes,
         label: "MENUITEMS.CONFIGURATIONS.LIST.CLASSES",
-        parentId: MenuEnum.Configuration,
+        parentId: SchoolMenuEnum.Configuration,
         link: "/",
       },
       {
-        id: MenuEnum.Academics,
+        id: SchoolMenuEnum.Academics,
         label: "MENUITEMS.CONFIGURATIONS.LIST.ACADEMICS",
         icon: " ri-calendar-2-line",
         subItems: [
           {
-            id: MenuEnum.AcademicYear,
+            id: SchoolMenuEnum.AcademicYear,
             label: "MENUITEMS.ACADEMICS.LIST.ACADEMICYEARS",
-            parentId: MenuEnum.Academics,
+            parentId: SchoolMenuEnum.Academics,
             link: "/",
           },
           {
-            id: MenuEnum.AcademicTerm,
+            id: SchoolMenuEnum.AcademicTerm,
             label: "MENUITEMS.ACADEMICS.LIST.ACADEMICTERMS",
-            parentId: MenuEnum.Academics,
+            parentId: SchoolMenuEnum.Academics,
             link: "/",
           },
           {
-            id: MenuEnum.AcademicPeriod,
+            id: SchoolMenuEnum.AcademicPeriod,
             label: "MENUITEMS.ACADEMICS.LIST.ACADEMICPERIODS",
-            parentId: MenuEnum.Academics,
+            parentId: SchoolMenuEnum.Academics,
             link: "/",
           },
         ],
@@ -117,140 +117,140 @@ export const MENU: MenuItem[] = [
   },
 
   {
-    id: MenuEnum.Reporting,
+    id: SchoolMenuEnum.Reporting,
     label: "MENUITEMS.REPORTING.TEXT",
     isTitle: true,
   },
   {
-    id: MenuEnum.ReportCards,
+    id: SchoolMenuEnum.ReportCards,
     label: "MENUITEMS.REPORTS.LIST.REPORTCARDS",
-    parentId: MenuEnum.Reports,
+    parentId: SchoolMenuEnum.Reports,
     link: "/",
     icon: "ri-file-paper-2-line",
   },
   {
-    id: MenuEnum.Transcripts,
+    id: SchoolMenuEnum.Transcripts,
     label: "MENUITEMS.REPORTS.LIST.TRANSCRIPTS",
-    parentId: MenuEnum.Reports,
+    parentId: SchoolMenuEnum.Reports,
     link: "/",
     icon: " ri-file-list-3-line",
   },
   {
-    id: MenuEnum.MasterSheets,
+    id: SchoolMenuEnum.MasterSheets,
     label: "MENUITEMS.REPORTS.LIST.MASTERSHEETS",
-    parentId: MenuEnum.Reports,
+    parentId: SchoolMenuEnum.Reports,
     link: "/",
     icon: "ri-survey-line",
   },
 
   {
-    id: MenuEnum.Core,
+    id: SchoolMenuEnum.Core,
     label: "MENUITEMS.CORE.TEXT",
     isTitle: true,
   },
   {
-    id: MenuEnum.Personnel,
+    id: SchoolMenuEnum.Personnel,
     label: "MENUITEMS.PERSONNEL.TEXT",
     icon: "ri-admin-line",
     collapseid: "sidebarPersonnel",
     subItems: [
       {
-        id: MenuEnum.Employees,
+        id: SchoolMenuEnum.Employees,
         label: "MENUITEMS.PERSONNEL.LIST.EMPLOYEES",
-        parentId: MenuEnum.Personnel,
+        parentId: SchoolMenuEnum.Personnel,
         link: "/",
       },
       {
-        id: MenuEnum.Teachers,
+        id: SchoolMenuEnum.Teachers,
         label: "MENUITEMS.PERSONNEL.LIST.TEACHERS",
-        parentId: MenuEnum.Personnel,
+        parentId: SchoolMenuEnum.Personnel,
         link: "/",
       },
     ],
   },
   {
-    id: MenuEnum.Students,
+    id: SchoolMenuEnum.Students,
     label: "MENUITEMS.STUDENTS.TEXT",
     icon: "ri-team-line",
     collapseid: "sidebarStudents",
     subItems: [
       {
-        id: MenuEnum.StudentRegistration,
+        id: SchoolMenuEnum.StudentRegistration,
         label: "MENUITEMS.STUDENTS.LIST.REGISTRATION",
-        parentId: MenuEnum.Students,
+        parentId: SchoolMenuEnum.Students,
         link: "/",
       },
       {
-        id: MenuEnum.StudentEnrollments,
+        id: SchoolMenuEnum.StudentEnrollments,
         label: "MENUITEMS.STUDENTS.LIST.ENROLLMENTS",
-        parentId: MenuEnum.Students,
+        parentId: SchoolMenuEnum.Students,
         link: "/",
       },
     ],
   },
   {
-    id: MenuEnum.Parents,
+    id: SchoolMenuEnum.Parents,
     label: "MENUITEMS.PARENTS.TEXT",
     icon: " ri-parent-line",
     link: "/",
   },
   {
-    id: MenuEnum.Attendance,
+    id: SchoolMenuEnum.Attendance,
     label: "MENUITEMS.ATTENDANCE.TEXT",
     icon: "ri-user-voice-line",
     collapseid: "sidebarAttendance",
     subItems: [
       {
-        id: MenuEnum.StudentAttendance,
+        id: SchoolMenuEnum.StudentAttendance,
         label: "MENUITEMS.ATTENDANCE.LIST.STUDENTATTENDANCE",
-        parentId: MenuEnum.Attendance,
+        parentId: SchoolMenuEnum.Attendance,
         link: "/",
       },
       {
-        id: MenuEnum.TeacherAttendance,
+        id: SchoolMenuEnum.TeacherAttendance,
         label: "MENUITEMS.ATTENDANCE.LIST.TEACHERATTENDANCE",
-        parentId: MenuEnum.Attendance,
+        parentId: SchoolMenuEnum.Attendance,
         link: "/",
       },
     ],
   },
 
   {
-    id: MenuEnum.Exams,
+    id: SchoolMenuEnum.Exams,
     label: "MENUITEMS.EXAMS.TEXT",
     icon: "ri-pencil-ruler-line",
     link: "/",
   },
 
   {
-    id: MenuEnum.Results,
+    id: SchoolMenuEnum.Results,
     label: "MENUITEMS.RESULTS.TEXT",
     icon: " ri-pages-line",
     collapseid: "sidebarResults",
     subItems: [
       {
-        id: MenuEnum.RegisterResults,
+        id: SchoolMenuEnum.RegisterResults,
         label: "MENUITEMS.RESULTS.LIST.REGISTERRESULTS",
-        parentId: MenuEnum.Results,
+        parentId: SchoolMenuEnum.Results,
         link: "/",
       },
       {
-        id: MenuEnum.ResultHistory,
+        id: SchoolMenuEnum.ResultHistory,
         label: "MENUITEMS.RESULTS.LIST.RESULTHISTORY",
-        parentId: MenuEnum.Results,
+        parentId: SchoolMenuEnum.Results,
         link: "/",
       },
     ],
   },
   {
-    id: MenuEnum.Library,
+    id: SchoolMenuEnum.Library,
     label: "MENUITEMS.LIBRARY.TEXT",
     icon: "ri-book-2-fill",
     collapseid: "sidebarLibrary",
     subItems: [],
   },
   {
-    id: MenuEnum.Inventory,
+    id: SchoolMenuEnum.Inventory,
     label: "MENUITEMS.INVENTORY.TEXT",
     icon: " ri-shopping-cart-2-fill",
     collapseid: "sidebarInventory",
@@ -258,21 +258,21 @@ export const MENU: MenuItem[] = [
   },
 
   {
-    id: MenuEnum.Finance,
+    id: SchoolMenuEnum.Finance,
     label: "MENUITEMS.FINANCE.TEXT",
     icon: " ri-hand-coin-fill",
     collapseid: "sidebarFinance",
     subItems: [
       {
-        id: MenuEnum.Subscription,
+        id: SchoolMenuEnum.Subscription,
         label: "MENUITEMS.FINANCE.LIST.SUBSCRIPTIONS",
-        parentId: MenuEnum.Finance,
+        parentId: SchoolMenuEnum.Finance,
         link: "/",
       },
     ],
   },
   {
-    id: MenuEnum.Boarding,
+    id: SchoolMenuEnum.Boarding,
     label: "MENUITEMS.BOARDING.TEXT",
     icon: "ri-community-line",
     collapseid: "sidebarBoarding",
@@ -280,7 +280,7 @@ export const MENU: MenuItem[] = [
   },
 
   {
-    id: MenuEnum.Transportation,
+    id: SchoolMenuEnum.Transportation,
     label: "MENUITEMS.TRANSPORTATION.TEXT",
     icon: "ri-bus-line",
     collapseid: "sidebarTransportation",
@@ -288,21 +288,21 @@ export const MENU: MenuItem[] = [
   },
 
   {
-    id: MenuEnum.Users,
+    id: SchoolMenuEnum.Users,
     label: "MENUITEMS.USERS.TEXT",
     icon: "ri-team-line",
     collapseid: "sidebarUsers",
     subItems: [
       {
-        id: MenuEnum.Roles,
+        id: SchoolMenuEnum.Roles,
         label: "MENUITEMS.USERS.LIST.ROLES",
-        parentId: MenuEnum.Users,
+        parentId: SchoolMenuEnum.Users,
         link: "/",
       },
       {
-        id: MenuEnum.ManageUsers,
+        id: SchoolMenuEnum.ManageUsers,
         label: "MENUITEMS.USERS.LIST.MANAGEUSERS",
-        parentId: MenuEnum.Users,
+        parentId: SchoolMenuEnum.Users,
         link: "/",
       },
     ],

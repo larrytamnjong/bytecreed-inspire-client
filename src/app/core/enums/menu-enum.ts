@@ -1,5 +1,4 @@
-export enum MenuEnum {
-  
+export enum SchoolMenuEnum {
   Dashboard = 1,
   Configuration = 2,
   Personnel = 3,
@@ -48,4 +47,16 @@ export enum MenuEnum {
   Admission = 46,
   Analytics = 47,
   Reporting = 48,
+}
+
+export enum StudentMenuEnum{
+
+}
+
+export enum ParentMenuEnum{
+
+}
+
+export enum AdminMenuEnum{
+
 }
