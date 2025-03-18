@@ -26,9 +26,9 @@ import { PagesRoutingModule } from "./pages-routing.module";
 import { SharedModule } from "../shared/shared.module";
 import { DashboardComponent } from './dashboards/dashboard/dashboard.component';
 import { DashboardsModule } from "./dashboards/dashboards.module";
-import { StudentModule } from './student/student.module';
-import { SchoolModule } from './school/school.module';
-import { ParentModule } from './parent/parent.module';
+import { StudentsModule } from './students/students.module';
+import { SchoolsModule } from './schools/schools.module';
+import { ParentsModule } from './parents/parents.module';
 import { AdminModule } from './admin/admin.module';
 
 @NgModule({
@@ -51,9 +51,9 @@ import { AdminModule } from './admin/admin.module';
     SlickCarouselModule,
     LightboxModule,
     DashboardsModule,
-    StudentModule,
-    SchoolModule,
-    ParentModule,
+    StudentsModule,
+    SchoolsModule,
+    ParentsModule,
     AdminModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

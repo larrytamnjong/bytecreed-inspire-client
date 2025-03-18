@@ -13,16 +13,16 @@ const routes: Routes = [
       path: '', loadChildren: () => import('./dashboards/dashboards.module').then(m => m.DashboardsModule)
     },
     {
-      path: 'school', loadChildren: () => import('./school/school.module').then(m => m.SchoolModule)
+      path: 'school', loadChildren: () => import('./schools/schools.module').then(m => m.SchoolsModule)
     },
     {
       path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
     },
     {
-      path: 'parent', loadChildren: () => import('./parent/parent.module').then(m => m.ParentModule)
+      path: 'parent', loadChildren: () => import('./parents/parents.module').then(m => m.ParentsModule)
     },
     {
-      path: 'student', loadChildren: () => import('./student/student.module').then(m => m.StudentModule)
+      path: 'student', loadChildren: () => import('./students/students.module').then(m => m.StudentsModule)
     },
 ];
 

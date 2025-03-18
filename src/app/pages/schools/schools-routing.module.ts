@@ -10,4 +10,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 
-export class ParentRoutingModule { }
+export class SchoolsRoutingModule { }
