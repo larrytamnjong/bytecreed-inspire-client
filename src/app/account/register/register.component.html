@@ -22,7 +22,7 @@
                                 <img src="assets/images/logo-light.png" alt="" height="20">
                             </a>
                         </div>
-                        <p class="mt-3 fs-15 fw-medium">Believe, Innovate & Elevate</p>
+                        <p class="mt-3 fs-15 fw-medium">Believe, Innovate And Elevate</p>
                     </div>
                 </div>
             </div>
@@ -41,40 +41,42 @@
                                 <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
 
                                     <div class="mb-3">
-                                        <label for="useremail" class="form-label">Email <span
-                                                class="text-danger">*</span></label>
-                                        <input type="email" class="form-control" id="useremail"
-                                            placeholder="Enter email address" required formControlName="email"
-                                            [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
-                                        <div class="invalid-feedback">
-                                            Please enter email
-                                        </div>
+                                        <label for="familyName" class="form-label">Family Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="familyName" placeholder="Enter Family Name" required formControlName="familyName"
+                                            [ngClass]="{ 'is-invalid': submitted && f['familyName'].errors }">
+                                        <div class="invalid-feedback">Please Enter Family Name </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="givenNames" class="form-label">Given Names <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="givenNames" placeholder="Enter Given Names" required formControlName="givenNames"
+                                            [ngClass]="{ 'is-invalid': submitted && f['givenNames'].errors }">
+                                        <div class="invalid-feedback"> Please Enter Given Names </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="phone" placeholder="Enter Phone Number" required formControlName="phone"
+                                            [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }">
+                                        <div class="invalid-feedback"> Please Enter phone </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="username" class="form-label">Username <span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="username"
-                                            placeholder="Enter username" required formControlName="name"
-                                            [ngClass]="{ 'is-invalid': submitted && f['name'].errors }">
-                                        <div class="invalid-feedback">
-                                            Please enter username
-                                        </div>
+                                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                                        <input type="password" class="form-control" id="password" placeholder="Enter Password" required formControlName="password"
+                                            [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
+                                        <div class="invalid-feedback"> Please Enter Password </div>
                                     </div>
 
                                     <div class="mb-2">
-                                        <label for="userpassword" class="form-label">Password <span
-                                                class="text-danger">*</span></label>
-                                        <input type="password" class="form-control" id="userpassword"
-                                            placeholder="Enter password" required formControlName="password"
-                                            [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
-                                        <div class="invalid-feedback">
-                                            Please enter password
-                                        </div>
+                                        <label for="confirmPassword" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                                        <input type="password" class="form-control" id="confirmPassword" placeholder="Enter password" required formControlName="confirmPassword"
+                                            [ngClass]="{ 'is-invalid': submitted && f['confirmPassword'].errors }">
+                                        <div class="invalid-feedback"> Please Enter Confirm Password </div>
                                     </div>
 
                                     <div class="mb-4">
-                                        <p class="mb-0 fs-12 text-muted">By registering you agree to our <a href="javascript:void(0);"
-                                                class="text-primary text-decoration-underline fst-normal fw-medium">Terms of Use</a></p>
+                                        <p class="mb-0 fs-12 text-muted text-center">By registering you agree to our <a href="javascript:void(0);"
+                                                class="text-primary text-decoration-underline fst-normal fw-medium">Terms and Conditions</a></p>
                                     </div>
 
                                     <div class="mt-4">
@@ -90,7 +92,7 @@
 
                     <div class="mt-4 text-center">
                         <p class="mb-0">Already have an account ? <a routerLink="/auth/login"
-                                class="fw-semibold text-primary text-decoration-underline"> Signin </a> </p>
+                                class="fw-semibold text-primary text-decoration-underline"> Sign In </a> </p>
                     </div>
 
                 </div>

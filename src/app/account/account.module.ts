@@ -16,6 +16,9 @@ import { SigninModule } from "./auth/signin/signin.module";
 import { SignupModule } from "./auth/signup/signup.module";
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { ApiHttpService } from '../core/services/common/base-api-http-service';
+import { UserApi } from '../core/services/authentication/user-api';
+import { IdentityApiHttpService } from '../core/services/common/base-identity-api-http-service';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,7 @@ import { LoginComponent } from './login/login.component';
     AccountRoutingModule,
     SigninModule
   ],
+  providers: [ApiHttpService, UserApi, IdentityApiHttpService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AccountModule {

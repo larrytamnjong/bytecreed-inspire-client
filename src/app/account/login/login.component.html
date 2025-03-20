@@ -21,7 +21,7 @@
                                 <img src="assets/images/logo-light.png" alt="" height="20">
                             </a>
                         </div>
-                        <p class="mt-3 fs-15 fw-medium">Believe, Innovate & Elevate</p>
+                        <p class="mt-3 fs-15 fw-medium">Believe, Innovate And Elevate</p>
                     </div>
                 </div>
             </div>
@@ -40,16 +40,12 @@
                                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
                                     <div class="mb-3">
-                                        <label class="form-label" for="username">Email</label>
-                                        <input type="email" class="form-control" id="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" placeholder="Enter email">
-                                        @if (submitted && f['email'].errors) {
+                                        <label class="form-label" for="phone">Phone</label>
+                                        <input type="text" class="form-control" id="phone" formControlName="phone" [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }" placeholder="Enter Phone Number">
+                                        @if (submitted && f['phone'].errors) {
                                         <div class="invalid-feedback">
-                                            @if(f['email'].errors['required']){
-                                            <div>Email is required</div>}
-                                            @if(f['email'].errors['email']){
-                                            <div>Email must be a valid email address
-                                            </div>
-                                            }
+                                            @if(f['phone'].errors['required']){
+                                            <div>Phone is required</div>}
                                         </div>
                                         }
                                     </div>
