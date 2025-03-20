@@ -10,5 +10,5 @@ export interface MenuItem {
     badge?: any;
     parentId?: number;
     isLayout?: boolean;
-    permissionAction?: PermissionActionEnum;
+    permission?: PermissionActionEnum;
   }

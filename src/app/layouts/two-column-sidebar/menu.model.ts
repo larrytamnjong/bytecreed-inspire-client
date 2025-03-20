@@ -10,5 +10,5 @@ export interface MenuItem {
   parentId?: number;
   isLayout?: boolean;
   collapseid?: string;
-  permissionAction?: PermissionActionEnum;
+  permission?: PermissionActionEnum;
 }
