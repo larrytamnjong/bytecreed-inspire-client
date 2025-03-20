@@ -3,11 +3,8 @@ import { DOCUMENT } from '@angular/common';
 import { EventService } from '../../core/services/event.service';
 
 //Logout
-import { environment } from '../../../environments/environment';
-import { AuthenticationService } from '../../core/services/auth.service';
-import { AuthfakeauthenticationService } from '../../core/services/authfake.service';
 import { Router } from '@angular/router';
-import { TokenStorageService } from '../../core/services/token-storage.service';
+import { TokenService } from 'src/app/core/services/authentication/token-service';
 
 // Language
 import { CookieService } from 'ngx-cookie-service';
@@ -45,11 +42,13 @@ export class TopbarComponent implements OnInit {
   notifyId: any;
 
   constructor(@Inject(DOCUMENT) private document: any, private eventService: EventService, public languageService: LanguageService, private modalService: NgbModal,
-    public _cookiesService: CookieService, public translate: TranslateService, private authService: AuthenticationService, private authFackservice: AuthfakeauthenticationService,
-    private router: Router, private TokenStorageService: TokenStorageService) { }
+    public _cookiesService: CookieService, public translate: TranslateService, 
+    private router: Router, private tokenService : TokenService) {
+    this.languageService.setLanguage(this.cookieValue);
+  }
 
   ngOnInit(): void {
-    this.userData = this.TokenStorageService.getUser();
+    this.userData = this.tokenService.getUser();
     this.element = document.documentElement;
 
     // Cookies wise Language set
@@ -169,7 +168,7 @@ export class TopbarComponent implements OnInit {
    * Logout the user
    */
   logout() {
-    this.authService.logout();
+    this.tokenService.signOut();
     this.router.navigate(['/auth/login']);
   }
 

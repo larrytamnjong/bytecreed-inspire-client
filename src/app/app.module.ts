@@ -28,7 +28,7 @@ import { rootReducer } from './store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthenticationEffects } from './store/Authentication/authentication.effects';
+
 
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -61,7 +61,7 @@ if (environment.defaultauth === 'firebase') {
             logOnly: environment.production, // Restrict extension to log-only mode
         }),
         EffectsModule.forRoot([
-            AuthenticationEffects,
+ 
         ]),
         PagesModule,
         NgPipesModule], providers: [
