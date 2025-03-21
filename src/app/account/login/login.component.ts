@@ -82,8 +82,7 @@ export class LoginComponent implements OnInit {
         },
         error: (error: any) => {
           SimpleAlerts.showError();
-        },
-        complete: () => {},
+        }
       });
   }
 

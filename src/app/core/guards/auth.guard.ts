@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { PermissionActionEnum } from "../enums/permission-action-enum";
 import {
   Router,
   ActivatedRouteSnapshot,
@@ -10,15 +11,26 @@ import { TokenService } from "../services/authentication/token-service";
 export class AuthGuard {
   constructor(private router: Router, private tokenService: TokenService) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.tokenService.isTokenValid()) {
-      console.log(this.tokenService.getUserPermissions());
-      console.log(this.tokenService.getDecodeToken());
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  
+    if(this.tokenService.generateToken()){
+      if (!this.tokenService.isTokenValid()) {
+        this.router.navigate(["/auth/login"], { queryParams: { returnUrl: state.url } });
+        return false;
+      }
+  
+      const requiredPermission = route.data["permission"] as PermissionActionEnum;
+      const userPermissions = this.tokenService.getUserPermissions();
+  
+      if (requiredPermission && !userPermissions.includes(requiredPermission)) {
+        this.router.navigate(["/auth/errors/unauthorized"]); 
+        return false;
+      }
       return true;
+    }else
+    {
+      this.router.navigate(["/auth/login"], { queryParams: { returnUrl: state.url } });
+      return false;
     }
-    this.router.navigate(["/auth/login"], {
-      queryParams: { returnUrl: state.url },
-    });
-    return false;
-  }
+    }
 }

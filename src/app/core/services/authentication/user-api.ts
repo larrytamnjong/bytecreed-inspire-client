@@ -5,6 +5,7 @@ import { User } from "../../Models/users/user";
 import { RequestHelper } from "../common/request-helper";
 import { UserLogin } from "../../Models/users/user-login";
 
+
 @Injectable()
 export class UserApi {
   private readonly controller: string = "v1/users";
@@ -17,5 +18,9 @@ export class UserApi {
 
   loginUser(data: UserLogin): Observable<any> {
     return this.api.post(`${this.controller}/auth/login`, RequestHelper.createServiceRequest(data));
+  }
+
+  generateToken(refreshToken: string): Observable<any> {
+    return this.api.post(`${this.controller}/institution-login-sessions/token`, RequestHelper.createServiceRequest({value: refreshToken}));
   }
 }

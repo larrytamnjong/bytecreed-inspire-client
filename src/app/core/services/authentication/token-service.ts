@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { jwtDecode } from "jwt-decode";
+import { UserApi } from "./user-api";
 
 const TOKEN_KEY = "auth-token";
 const USER_KEY = "currentUser";
@@ -9,9 +10,9 @@ const REFRESH_TOKEN_KEY = "refresh-token";
 })
 export class TokenService {
   jwtToken: string = "";
-  decodedToken: { [key: string]: string } = {};
+  decodedToken: { [key: string]: any } = {};
 
-  constructor() {}
+  constructor(private userService: UserApi) {}
 
   signOut(): void {
     window.sessionStorage.clear();
@@ -22,8 +23,39 @@ export class TokenService {
     window.sessionStorage.setItem(TOKEN_KEY, token);
   }
 
-  getDecodeToken() {
+  public generateToken(): boolean {
+    const refreshToken = this.getRefreshToken();
+    if (refreshToken && this.isTokenExpired()) {
+      try {
+        this.userService.generateToken(refreshToken).subscribe({
+          next: (response: any) => {
+            if (response.success) {
+              this.saveToken(response.data.jwtToken.value);
+              return true;
+            } else {
+              return false;
+            }
+          },
+          error: (error: any) => {
+            return false;
+          },
+        });
+      } catch (e) {
+        return false;
+      }
+    } else if (!refreshToken && !this.isTokenExpired()) {
+      return true;
+    } else if (!this.isTokenExpired()) {
+      return true;
+    }
+    return false;
+  }
+
+  getDecodeToken() : any {
     this.jwtToken = sessionStorage.getItem("auth-token") || "";
+    if(this.jwtToken == ""){
+      return null;
+    }
     this.decodedToken = jwtDecode(this.jwtToken);
     return this.decodedToken;
   }
@@ -67,8 +99,26 @@ export class TokenService {
   public saveRefreshToken(refreshToken: string): void {
     window.sessionStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
   }
+
   public getRefreshToken(): string | null {
     return sessionStorage.getItem("refresh-token");
+  }
+
+  getExpiryTime() {
+    this.getDecodeToken();
+    return this.decodedToken ? this.decodedToken["exp"] : null;
+  }
+
+  isTokenExpired(): boolean {
+    if (!this.getExpiryTime()) {
+      return true;
+    }
+    const expiryTime: number = this.getExpiryTime();
+    if (expiryTime) {
+      return 1000 * expiryTime - new Date().getTime() < 40000;
+    } else {
+      return true;
+    }
   }
 
   public saveUser(user: any): void {

@@ -12,28 +12,24 @@ export class JwtInterceptor implements HttpInterceptor {
         public router:Router
     ) { }
 
-    intercept(
-        request: HttpRequest<any>,
-        next: HttpHandler
+    intercept( request: HttpRequest<any>, next: HttpHandler
     ): Observable<HttpEvent<any>> {
       
-            // add authorization header with jwt token if available
-            let token = this.tokenService.getToken();
-            if (token && token) {
-                request = request.clone({
-                    setHeaders: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+        if (this.tokenService.generateToken()) {
+            const token = this.tokenService.getToken();
+            if (token) { 
+                request = request.clone({setHeaders: { Authorization: `Bearer ${token}`,},});
             }
-        
-        return next.handle(request).pipe(
+          }
+          
+          return next.handle(request).pipe(
             catchError((error) => {
               if (error.status === 401) {
+                this.tokenService.signOut();
                 this.router.navigate(['/auth/login']);
               }
-              return throwError(error);
+              return throwError(() => error); 
             })
-          );;
+          );
     }
 }
