@@ -11,7 +11,9 @@ export class AuthGuard {
   constructor(private router: Router, private tokenService: TokenService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.tokenService.getUser()) {
+    if (this.tokenService.isTokenValid()) {
+      console.log(this.tokenService.getUserPermissions());
+      console.log(this.tokenService.getDecodeToken());
       return true;
     }
     this.router.navigate(["/auth/login"], {

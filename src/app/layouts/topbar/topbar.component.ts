@@ -44,7 +44,7 @@ export class TopbarComponent implements OnInit {
   constructor(@Inject(DOCUMENT) private document: any, private eventService: EventService, public languageService: LanguageService, private modalService: NgbModal,
     public _cookiesService: CookieService, public translate: TranslateService, 
     private router: Router, private tokenService : TokenService) {
-    this.languageService.setLanguage(this.cookieValue);
+    this.languageService.setLanguage(this.cookieValue ?? "en");
   }
 
   ngOnInit(): void {
