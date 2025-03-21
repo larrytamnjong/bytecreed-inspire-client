@@ -15,6 +15,7 @@ import { ApiHttpService } from '../core/services/common/base-api-http-service';
 import { UserApi } from '../core/services/authentication/user-api';
 import { IdentityApiHttpService } from '../core/services/common/base-identity-api-http-service';
 import { TokenService } from '../core/services/authentication/token-service';
+import { LookUpApi } from '../core/services/common/look-up-service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,13 @@ import { TokenService } from '../core/services/authentication/token-service';
     AccountRoutingModule,
     SigninModule
   ],
-  providers: [ApiHttpService, UserApi, IdentityApiHttpService, TokenService],
+  providers: [
+    ApiHttpService, 
+    UserApi, 
+    IdentityApiHttpService, 
+    TokenService,
+    LookUpApi
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AccountModule {

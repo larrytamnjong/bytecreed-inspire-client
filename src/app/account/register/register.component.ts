@@ -1,15 +1,15 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  Validators,
-} from "@angular/forms";
+import {UntypedFormBuilder, UntypedFormGroup,Validators} from "@angular/forms";
 
 // Register Auth
 import { Router } from "@angular/router";
 import { first } from "rxjs/operators";
+import { LookUpView } from "src/app/core/Models/look-ups/look-up-view";
 import { UserApi } from "src/app/core/services/authentication/user-api";
+import { LookUpApi } from "src/app/core/services/common/look-up-service";
 import { SimpleAlerts } from "src/app/core/services/notifications/sweet-alerts";
+import { LookUpData } from "src/app/core/Models/look-ups/look-up-data";
+import { LookUpTable } from "src/app/core/enums/look-up-table";
 
 @Component({
   selector: "app-register",
@@ -28,21 +28,28 @@ export class RegisterComponent implements OnInit {
   // set the current year
   year: number = new Date().getFullYear();
 
+  lookUps: LookUpView = new LookUpView();
+  genderOptions: LookUpData[] = [];
+
   constructor(
     private formBuilder: UntypedFormBuilder,
     private router: Router,
     private userService: UserApi,
+    private lookUpService: LookUpApi,
   ) {}
 
   ngOnInit(): void {
-    
+
+    this.getLookUps();
+
     this.signupForm = this.formBuilder.group({
       phone: ["", [Validators.required]],
       familyName: ["", [Validators.required]],
       givenNames: ["", Validators.required],
       password: ["", Validators.required],
       confirmPassword: ["", Validators.required],
-    });
+      gender: ["", Validators.required],
+    },);
   }
 
 
@@ -61,7 +68,7 @@ export class RegisterComponent implements OnInit {
       familyName: this.f["familyName"].value,
       givenNames: this.f["givenNames"].value,
       password: this.f["password"].value,
-      sex: 1
+      sex: Number(this.f["gender"].value),
     };
 
     this.userService.registerUser(userData).pipe(first()).subscribe({
@@ -73,9 +80,17 @@ export class RegisterComponent implements OnInit {
             SimpleAlerts.showError();
           }
         },
-        error: (error: any) => {
-          SimpleAlerts.showError();
-        },
+        error: () => {SimpleAlerts.showError(); },
       });
+  }
+
+  getLookUps() {
+    this.lookUpService.getAll().subscribe({
+      next: (response) => {
+        this.lookUps = response; 
+        this.genderOptions = this.lookUps.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTable.Sex) || [];
+        },
+      error: () => {}
+    });
   }
 }

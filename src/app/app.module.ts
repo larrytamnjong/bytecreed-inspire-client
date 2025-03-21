@@ -29,6 +29,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { UserApi } from './core/services/authentication/user-api';
 import { IdentityApiHttpService } from './core/services/common/base-identity-api-http-service';
 import { ApiHttpService } from './core/services/common/base-api-http-service';
+import { LookUpApi } from './core/services/common/look-up-service';
 
 
 export function createTranslateLoader(http: HttpClient): any {
@@ -63,6 +64,7 @@ export function createTranslateLoader(http: HttpClient): any {
           UserApi,
           IdentityApiHttpService,
           ApiHttpService,
+          LookUpApi,
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         provideHttpClient(withInterceptorsFromDi()),
