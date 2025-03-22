@@ -74,7 +74,7 @@
                                             [ngClass]="{ 'is-invalid': submitted && f['confirmPassword'].errors }">
                                         <div class="invalid-feedback"> Please Enter Confirm Password </div>
                                     </div> -->
-                                    <div class="mb-2">
+                                    <div class="mb-3">
                                         <label for="confirmPassword" class="form-label">Confirm Password <span class="text-danger">*</span></label>
                                         <input type="password" class="form-control" id="confirmPassword" placeholder="Enter password" required formControlName="confirmPassword"
                                           [ngClass]="{ 'is-invalid': submitted && (f['confirmPassword'].errors || signupForm.errors?.['passwordMismatch']) }">
@@ -84,7 +84,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="mb-2">
+                                    <div class="mb-3">
                                         <label for="sex" class="form-label">Gender <span class="text-danger">*</span></label>
                                         <select id="sex" class="form-select" formControlName="sex" [ngClass]="{ 'is-invalid': submitted && f['sex'].errors }">
                                           <option value="" disabled selected>Select </option>
