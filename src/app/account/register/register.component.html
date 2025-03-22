@@ -67,18 +67,27 @@
                                         <div class="invalid-feedback"> Please Enter Password </div>
                                     </div>
 
-                                    <div class="mb-2">
+                                    <!-- <div class="mb-2">
                                         <label for="confirmPassword" class="form-label">Confirm Password <span class="text-danger">*</span></label>
                                         <input type="password" class="form-control" id="confirmPassword" placeholder="Enter password" required formControlName="confirmPassword"
                                             [ngClass]="{ 'is-invalid': submitted && f['confirmPassword'].errors }">
                                         <div class="invalid-feedback"> Please Enter Confirm Password </div>
-                                    </div>
+                                    </div> -->
+                                    <div class="mb-2">
+                                        <label for="confirmPassword" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                                        <input type="password" class="form-control" id="confirmPassword" placeholder="Enter password" required formControlName="confirmPassword"
+                                          [ngClass]="{ 'is-invalid': submitted && (f['confirmPassword'].errors || signupForm.errors?.['passwordMismatch']) }">
+                                        <div class="invalid-feedback">
+                                          <span *ngIf="f['confirmPassword'].errors?.['required']">Please Enter Confirm Password</span>
+                                          <span *ngIf="signupForm.errors?.['passwordMismatch']">Passwords do not match</span>
+                                        </div>
+                                      </div>
 
                                     <div class="mb-2">
-                                        <label for="gender" class="form-label">Choose Gender <span class="text-danger">*</span></label>
-                                        <select id="gender" class="form-select" formControlName="gender" [ngClass]="{ 'is-invalid': submitted && f['gender'].errors }">
+                                        <label for="sex" class="form-label">Choose Gender <span class="text-danger">*</span></label>
+                                        <select id="sex" class="form-select" formControlName="sex" [ngClass]="{ 'is-invalid': submitted && f['sex'].errors }">
                                           <option value="" disabled selected>Select </option>
-                                          <option *ngFor="let gender of genderOptions" [value]="gender.dataCode">{{ gender.text }}</option>
+                                          <option *ngFor="let sex of sexOptions" [value]="sex.dataCode">{{ sex.text }}</option>
                                         </select>
                                         <div class="invalid-feedback">Please select gender</div>
                                       </div>
