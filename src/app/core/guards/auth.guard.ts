@@ -5,7 +5,7 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
 } from "@angular/router";
-import { TokenService } from "../services/authentication/token-service";
+import { TokenService } from "../services/token-service";
 
 @Injectable({ providedIn: "root" })
 export class AuthGuard {

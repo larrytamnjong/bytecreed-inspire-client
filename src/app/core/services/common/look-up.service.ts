@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { ApiHttpService } from "./base-api-http-service";
-import { LookUpView } from "../../Models/look-ups/look-up-view";
+import { ApiHttpService } from "./base-api-http.service";
+import { LookUpView } from "../../Models/common/look-up-view";
 import { forkJoin, map } from "rxjs";
 
 

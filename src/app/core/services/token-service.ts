@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { jwtDecode } from "jwt-decode";
-import { UserApi } from "./user-api";
+import { UserApi } from "./identity/user-api.service";
 
 const TOKEN_KEY = "auth-token";
-const USER_KEY = "currentUser";
+const USER_KEY = "current-user";
 const REFRESH_TOKEN_KEY = "refresh-token";
 @Injectable({
   providedIn: "root",

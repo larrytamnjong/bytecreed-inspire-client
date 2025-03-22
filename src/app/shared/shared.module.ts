@@ -22,7 +22,8 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
     NgbAccordionModule,
     NgbDropdownModule,
     SlickCarouselModule,
-    CountUpModule
+    CountUpModule,
+    
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   exports: [BreadcrumbsComponent]

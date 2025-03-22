@@ -26,10 +26,12 @@ import { rootReducer } from './store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { UserApi } from './core/services/authentication/user-api';
-import { IdentityApiHttpService } from './core/services/common/base-identity-api-http-service';
-import { ApiHttpService } from './core/services/common/base-api-http-service';
-import { LookUpApi } from './core/services/common/look-up-service';
+import { UserApi } from './core/services/identity/user-api.service';
+import { IdentityApiHttpService } from './core/services/common/base-identity-api-http.service';
+import { ApiHttpService } from './core/services/common/base-api-http.service';
+import { LookUpApi } from './core/services/common/look-up.service';
+import { InstitutionApi } from './core/services/identity/institution-api.service';
+import { UserRoleApi } from './core/services/identity/user-role.service';
 
 
 export function createTranslateLoader(http: HttpClient): any {
@@ -65,6 +67,8 @@ export function createTranslateLoader(http: HttpClient): any {
           IdentityApiHttpService,
           ApiHttpService,
           LookUpApi,
+          InstitutionApi,
+          UserRoleApi,
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         provideHttpClient(withInterceptorsFromDi()),

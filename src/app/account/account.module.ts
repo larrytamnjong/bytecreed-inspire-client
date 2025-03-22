@@ -11,11 +11,14 @@ import { SigninModule } from "./auth/signin/signin.module";
 import { SignupModule } from "./auth/signup/signup.module";
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
-import { ApiHttpService } from '../core/services/common/base-api-http-service';
-import { UserApi } from '../core/services/authentication/user-api';
-import { IdentityApiHttpService } from '../core/services/common/base-identity-api-http-service';
-import { TokenService } from '../core/services/authentication/token-service';
-import { LookUpApi } from '../core/services/common/look-up-service';
+import { ApiHttpService } from '../core/services/common/base-api-http.service';
+import { UserApi } from '../core/services/identity/user-api.service';
+import { IdentityApiHttpService } from '../core/services/common/base-identity-api-http.service';
+import { TokenService } from '../core/services/token-service';
+import { LookUpApi } from '../core/services/common/look-up.service';
+import { SharedModule } from '../shared/shared.module';
+import { InstitutionApi } from '../core/services/identity/institution-api.service';
+import { UserRoleApi } from '../core/services/identity/user-role.service';
 
 @NgModule({
   declarations: [
@@ -29,14 +32,17 @@ import { LookUpApi } from '../core/services/common/look-up-service';
     FormsModule,
     NgbToastModule,
     AccountRoutingModule,
-    SigninModule
+    SigninModule,
+    SharedModule
   ],
   providers: [
     ApiHttpService, 
     UserApi, 
     IdentityApiHttpService, 
     TokenService,
-    LookUpApi
+    LookUpApi,
+    InstitutionApi,
+    UserRoleApi
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

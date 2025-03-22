@@ -4,11 +4,11 @@ import { FormGroup, AbstractControl, ValidationErrors, ValidatorFn } from "@angu
 // Register Auth
 import { Router } from "@angular/router";
 import { first } from "rxjs/operators";
-import { LookUpView } from "src/app/core/Models/look-ups/look-up-view";
-import { UserApi } from "src/app/core/services/authentication/user-api";
-import { LookUpApi } from "src/app/core/services/common/look-up-service";
+import { LookUpView } from "src/app/core/Models/common/look-up-view";
+import { UserApi } from "src/app/core/services/identity/user-api.service";
+import { LookUpApi } from "src/app/core/services/common/look-up.service";
 import { SimpleAlerts } from "src/app/core/services/notifications/sweet-alerts";
-import { LookUpData } from "src/app/core/Models/look-ups/look-up-data";
+import { LookUpData } from "src/app/core/Models/common/look-up-data";
 import { LookUpTable } from "src/app/core/enums/look-up-table";
 
 export function passwordMatchValidator(): ValidatorFn {
@@ -22,7 +22,6 @@ export function passwordMatchValidator(): ValidatorFn {
       if (password && confirmPassword && password !== confirmPassword) {
           return { passwordMismatch: true };
       }
-
       return null;
   };
 }

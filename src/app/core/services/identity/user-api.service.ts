@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
-import { IdentityApiHttpService } from "../common/base-identity-api-http-service";
+import { IdentityApiHttpService } from "../common/base-identity-api-http.service";
 import { Observable } from "rxjs";
-import { User } from "../../Models/users/user";
+import { User } from "../../Models/identity/user";
 import { RequestHelper } from "../common/request-helper";
-import { UserLogin } from "../../Models/users/user-login";
+import { UserLogin } from "../../Models/identity/user-login";
 
 
 @Injectable()
@@ -21,6 +21,6 @@ export class UserApi {
   }
 
   generateToken(refreshToken: string): Observable<any> {
-    return this.api.post(`${this.controller}/institution-login-sessions/token`, RequestHelper.createServiceRequest({value: refreshToken}));
+    return this.api.post(`v1/institution-login-sessions/token`, RequestHelper.createServiceRequest({value: refreshToken}));
   }
 }
