@@ -132,11 +132,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="closeSelectInstitutionModal()" ></button>
     </div>
     <div style="background-color: #F3F3F9; padding: 1rem;">
+        <div class="modal-body">
         @for (institution of institutions; track $index) {
-            <form   class="tablelist-form" autocomplete="off">
-                <div class="modal-body">
-                    <div class="col-md-6 col-lg-12">
-                        <div class="card mb-3">
+                    <div class="col-12">
+                        <div class="card g-2">
                             <div class="card-body">
                                 <div class="d-lg-flex align-items-center">
                                     <div class="flex-shrink-0">
@@ -151,11 +150,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </form>
-        }
-    </div>
+                  </div>
+                }
+            </div>
+        </div>
 </ng-template>
 
 <ng-template #selectAppContent role="document" let-modal>
