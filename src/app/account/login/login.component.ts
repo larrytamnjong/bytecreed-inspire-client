@@ -141,9 +141,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.tokenService.saveToken(response.data.jwtToken.value);
           this.tokenService.saveRefreshToken(response.data.refreshToken.value);
           this.router.navigate(["/"]);
-        }else{
-          this.handleLoginToInstitutionError();
-        }
+        }else{this.handleLoginToInstitutionError();}
      },
      error: () =>{this.handleLoginToInstitutionError();},
      complete :() =>{this.loading = false;}
