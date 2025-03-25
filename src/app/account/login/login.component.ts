@@ -7,14 +7,14 @@ import { ApplicationTypeEnum } from "src/app/core/enums/application-type";
 import { Institution } from "src/app/core/Models/identity/institution";
 import { RootReducerState } from "src/app/store";
 import { Store } from "@ngrx/store";
-import { selectInstitutionLoading, selectLoggedInToInstitutionData } from "src/app/store/identity/institution/institution.selector";
 import { selectUserLoading, selectUserLoggedInData } from "src/app/store/identity/user/user.selector";
 import { userLoginAction } from "src/app/store/identity/user/user.action";
-import { loginToInstitutionAction } from "src/app/store/identity/institution/institution.action";
 import { SimpleAlerts } from "src/app/core/services/notifications/sweet-alerts";
-import { combineLatest, map } from "rxjs";
+import { Observable } from "rxjs";
 import { Subscription } from "rxjs";
 import { NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
+import { InstitutionService } from "src/app/core/services/identity/institution.service";
+
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
@@ -30,11 +30,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   @ViewChild('selectInstitutionContent') selectInstitutionContent!: TemplateRef<any>;
   @ViewChild('selectAppContent') selectAppContent!: TemplateRef<any>;
 
-  loadingLogin$ = this.userStore.select(selectUserLoading);
-  loggedInData$ = this.userStore.select(selectUserLoggedInData);
-  loadingLoginToInstitution$ = this.institutionStore.select(selectInstitutionLoading);
-  loggedInToInstitutionData$ = this.institutionStore.select(selectLoggedInToInstitutionData);
+  loadingLogin$ : Observable<boolean> = this.userStore.select(selectUserLoading);
+  loggedInData$ : Observable<any> = this.userStore.select(selectUserLoggedInData);
 
+  
   loading = false;
   institutions: Institution[] = [];
   selectedInstitution?: Institution;
@@ -52,7 +51,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private tokenService: TokenService,
     private modalService: NgbModal,
     private userStore: Store<{ data: RootReducerState }>,
-    private institutionStore: Store<{ data: RootReducerState }>
+    private institutionService: InstitutionService
   ) {
     this.loginForm = this.formBuilder.group({
       phone: ["", [Validators.required]],
@@ -65,9 +64,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.router.navigate(["/"]);
       return;
     }
-    const loadingSubscription = combineLatest([this.loadingLogin$, this.loadingLoginToInstitution$])
-    .pipe(map(([loadingLogin, loadingInstitution]) => loadingLogin || loadingInstitution))
-    .subscribe((loading) => {this.loading = loading;});
+    const loadingSubscription = this.loadingLogin$.subscribe((loading) => this.loading = loading);
     this.subscriptions.push(loadingSubscription);
   }
 
@@ -83,7 +80,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     };
 
     this.userStore.dispatch(userLoginAction({ payload: login }));
-   const loginLoadingSubscription = this.loadingLogin$.subscribe((loading) => {
+     const loginLoadingSubscription = this.loadingLogin$.subscribe((loading) => {
       if(!loading){
      const loggedInDataSubscription = this.loggedInData$.subscribe((data) => {
         if (!data){
@@ -100,11 +97,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
     });
     this.subscriptions.push(loginLoadingSubscription);
-
-
   }
 
   handleInstitutionSelection() {
+    if(!this.institutions.length){
+      this.handleInstitutionLogin();
+    }
     if (this.institutions.length === 1) {
       this.selectedInstitution = this.institutions[0];
       this.setApplicationTypes();
@@ -130,25 +128,26 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   handleInstitutionLogin(applicationType?: ApplicationTypeEnum) {
+    this.loading = true;
     if (!this.selectedInstitution){
+      this.loading = false;
       this.router.navigate(["/"]);
       return;
     }
-      this.institutionStore.dispatch(loginToInstitutionAction({ institutionId: this.selectedInstitution!.id, applicationType: applicationType }));
-      const loadingLoginInstitutionSubscription = this.loadingLoginToInstitution$.subscribe((loading) => {
-      if (!loading) {
-        const loggedInInstitutionDataSubscription = this.loggedInToInstitutionData$.subscribe((data) => {
-          if (data) {
-            this.tokenService.saveToken(data.jwtToken.value);
-            this.tokenService.saveRefreshToken(data.refreshToken.value);
-            this.modalService.dismissAll();
-            this.router.navigate(["/"]);
-          } 
-        });
-        this.subscriptions.push(loggedInInstitutionDataSubscription);
-      }
+
+    this.institutionService.logInToInstitution(this.selectedInstitution!.id!, applicationType).subscribe({
+     next: (response) => {
+        if(response.data){
+          this.tokenService.saveToken(response.data.jwtToken.value);
+          this.tokenService.saveRefreshToken(response.data.refreshToken.value);
+          this.router.navigate(["/"]);
+        }else{
+          this.handleLoginToInstitutionError();
+        }
+     },
+     error: () =>{this.handleLoginToInstitutionError();},
+     complete :() =>{this.loading = false;}
     });
-    this.subscriptions.push(loadingLoginInstitutionSubscription);
   }
 
   setApplicationTypes() {
@@ -167,7 +166,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   closeSelectInstitutionModal() {
     this.tokenService.signOut();
     this.selectInstitutionModalRef.close();
-    setTimeout(() => {location.reload();}, 100); 
+    this.reloadLocation();
   }
 
   openSelectApplicationModal() {
@@ -178,10 +177,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   closeSelectApplicationModal() {
     this.tokenService.signOut();
     this.selectApplicationModalRef.close();
-    setTimeout(() => {location.reload();}, 100); 
+    this.reloadLocation();
   }
 
   onSelectInstitution(institution: Institution) {
+    this.selectInstitutionModalRef.close();
     this.selectedInstitution = institution;
     this.setApplicationTypes();
     this.handleApplicationSelection();
@@ -189,6 +189,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onSelectApplication(application: ApplicationTypeEnum) {
     if (this.applicationTypes.includes(application)) {
+      this.selectApplicationModalRef.close();
       this.selectedApplicationType = application;
       this.handleInstitutionLogin(application);
     }
@@ -198,7 +199,17 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.fieldTextType = !this.fieldTextType;
   }
 
+  handleLoginToInstitutionError(){
+    SimpleAlerts.showError();
+    this.tokenService.signOut();
+    this.reloadLocation();
+  }
+
+  reloadLocation(){
+    setTimeout(() => {location.reload();}, 100); 
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-}
+  }
 }

@@ -13,7 +13,7 @@ export class SimpleAlerts {
     static showError(message?: string, timer?: number) {
         Swal.fire({
             icon: 'error',
-            title: 'Operation was unsuccessful',
+            title: 'Operation was not successful',
             text: message,
             showConfirmButton: false,
             timer: timer ?? 1500
