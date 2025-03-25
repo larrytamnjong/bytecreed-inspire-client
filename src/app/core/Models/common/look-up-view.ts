@@ -1,4 +1,4 @@
-export class LookUpView{
-    lookUp?: [];
-    lookUpData?: [];
+export interface LookUpView{
+    lookUp: [];
+    lookUpData: [];
 }

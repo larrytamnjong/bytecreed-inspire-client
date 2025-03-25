@@ -56,7 +56,7 @@
 
                                     <div class="mb-3">
                                         <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="phone" placeholder="Enter Phone Number" required formControlName="phone"
+                                        <input type="text" class="form-control" id="phone" placeholder="Enter Phone Number (+237000000000)" required formControlName="phone"
                                             [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }">
                                         <div class="invalid-feedback"> Please Enter phone </div>
                                     </div>
@@ -68,12 +68,6 @@
                                         <div class="invalid-feedback"> Please Enter Password </div>
                                     </div>
 
-                                    <!-- <div class="mb-2">
-                                        <label for="confirmPassword" class="form-label">Confirm Password <span class="text-danger">*</span></label>
-                                        <input type="password" class="form-control" id="confirmPassword" placeholder="Enter password" required formControlName="confirmPassword"
-                                            [ngClass]="{ 'is-invalid': submitted && f['confirmPassword'].errors }">
-                                        <div class="invalid-feedback"> Please Enter Confirm Password </div>
-                                    </div> -->
                                     <div class="mb-3">
                                         <label for="confirmPassword" class="form-label">Confirm Password <span class="text-danger">*</span></label>
                                         <input type="password" class="form-control" id="confirmPassword" placeholder="Enter password" required formControlName="confirmPassword"
@@ -99,10 +93,14 @@
                                     </div>
 
                                     <div class="mt-4">
-                                        <button class="btn btn-primary w-100" type="submit">Sign Up</button>
+                                        <button class="btn btn-primary w-100" type="submit" [disabled]="loading$ | async">Sign Up</button>
                                     </div>
                                 </form>
-
+                                <div id="elmLoader" *ngIf="loading$ | async">
+                                    <div class="spinner-border text-primary avatar-sm" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- end card body -->

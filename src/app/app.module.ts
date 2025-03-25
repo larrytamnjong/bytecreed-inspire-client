@@ -1,37 +1,31 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-// search module
 import { NgPipesModule } from 'ngx-pipes';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 import { LayoutsModule } from "./layouts/layouts.module";
 import { PagesModule } from "./pages/pages.module";
-
-// Auth
 import { HttpClient, HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { ErrorInterceptor } from './core/helpers/error.interceptor';
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
-
-// Language
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-
-// Store
 import { rootReducer } from './store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { UserApi } from './core/services/identity/user-api.service';
+import { UserService } from './core/services/identity/user.service';
 import { IdentityApiHttpService } from './core/services/common/base-identity-api-http.service';
 import { ApiHttpService } from './core/services/common/base-api-http.service';
-import { LookUpApi } from './core/services/common/look-up.service';
-import { InstitutionApi } from './core/services/identity/institution-api.service';
-import { UserRoleApi } from './core/services/identity/user-role.service';
+import { LookUpService } from './core/services/common/look-up.service';
+import { InstitutionService } from './core/services/identity/institution.service';
+import { UserEffects } from './store/identity/user/user.effect';
+import { LookUpEffects } from './store/common/look-up/look-up.effect';
+import { RoleService } from './core/services/identity/role.service';
+import { PermissionService } from './core/services/identity/permission.service';
+import { InstitutionEffects } from './store/identity/institution/institution.effect';
 
 
 export function createTranslateLoader(http: HttpClient): any {
@@ -59,16 +53,19 @@ export function createTranslateLoader(http: HttpClient): any {
             logOnly: environment.production, // Restrict extension to log-only mode
         }),
         EffectsModule.forRoot([
- 
+          UserEffects,
+          LookUpEffects,
+          InstitutionEffects
         ]),
         PagesModule,
         NgPipesModule], providers: [
-          UserApi,
+          UserService,
           IdentityApiHttpService,
           ApiHttpService,
-          LookUpApi,
-          InstitutionApi,
-          UserRoleApi,
+          LookUpService,
+          InstitutionService,
+          RoleService,
+          PermissionService,
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         provideHttpClient(withInterceptorsFromDi()),

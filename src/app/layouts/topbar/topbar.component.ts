@@ -4,7 +4,7 @@ import { EventService } from '../../core/services/event.service';
 
 //Logout
 import { Router } from '@angular/router';
-import { TokenService } from 'src/app/core/services/token-service';
+import { TokenService } from 'src/app/core/services/token.service';
 
 // Language
 import { CookieService } from 'ngx-cookie-service';

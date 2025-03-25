@@ -12,13 +12,14 @@ import { SignupModule } from "./auth/signup/signup.module";
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ApiHttpService } from '../core/services/common/base-api-http.service';
-import { UserApi } from '../core/services/identity/user-api.service';
+import { UserService } from '../core/services/identity/user.service';
 import { IdentityApiHttpService } from '../core/services/common/base-identity-api-http.service';
-import { TokenService } from '../core/services/token-service';
-import { LookUpApi } from '../core/services/common/look-up.service';
+import { TokenService } from '../core/services/token.service';
+import { LookUpService } from '../core/services/common/look-up.service';
 import { SharedModule } from '../shared/shared.module';
-import { InstitutionApi } from '../core/services/identity/institution-api.service';
-import { UserRoleApi } from '../core/services/identity/user-role.service';
+import { InstitutionService } from '../core/services/identity/institution.service';
+import { RoleService } from '../core/services/identity/role.service';
+import { PermissionService } from '../core/services/identity/permission.service';
 
 @NgModule({
   declarations: [
@@ -37,12 +38,14 @@ import { UserRoleApi } from '../core/services/identity/user-role.service';
   ],
   providers: [
     ApiHttpService, 
-    UserApi, 
+    UserService, 
     IdentityApiHttpService, 
     TokenService,
-    LookUpApi,
-    InstitutionApi,
-    UserRoleApi
+    LookUpService,
+    InstitutionService,
+    RoleService,
+    PermissionService
+   
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

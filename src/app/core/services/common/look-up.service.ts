@@ -4,9 +4,8 @@ import { ApiHttpService } from "./base-api-http.service";
 import { LookUpView } from "../../Models/common/look-up-view";
 import { forkJoin, map } from "rxjs";
 
-
-@Injectable()
-export class LookUpApi {
+@Injectable({ providedIn: 'root'})
+export class LookUpService {
   private readonly look_up_controller: string = "v1/look-ups";
   private readonly look_up_data_controller: string = "v1/look-up-data";
 
@@ -26,5 +25,4 @@ export class LookUpApi {
         lookUpData: this.getLookUpData().pipe(map(response => response?.data || [])),
     });
   }
-
 }

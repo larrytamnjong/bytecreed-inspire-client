@@ -1,11 +1,7 @@
 import { Injectable } from "@angular/core";
 import { PermissionActionEnum } from "../enums/permission-action-enum";
-import {
-  Router,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-} from "@angular/router";
-import { TokenService } from "../services/token-service";
+import { Router,ActivatedRouteSnapshot,RouterStateSnapshot} from "@angular/router";
+import { TokenService } from "../services/token.service";
 
 @Injectable({ providedIn: "root" })
 export class AuthGuard {

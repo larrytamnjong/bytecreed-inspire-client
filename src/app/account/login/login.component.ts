@@ -1,211 +1,204 @@
-import { Component, OnInit } from "@angular/core";
-import {UntypedFormBuilder,UntypedFormGroup,Validators,} from "@angular/forms";
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { TokenService } from "src/app/core/services/token-service";
-import { first } from "rxjs/operators";
-import { ToastService } from "./toast-service";
-import { UserApi } from "src/app/core/services/identity/user-api.service";
-import { SimpleAlerts } from "src/app/core/services/notifications/sweet-alerts";
+import { TokenService } from "src/app/core/services/token.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { TemplateRef, ViewChild } from "@angular/core";
 import { ApplicationTypeEnum } from "src/app/core/enums/application-type";
-import { InstitutionApi } from "src/app/core/services/identity/institution-api.service";
 import { Institution } from "src/app/core/Models/identity/institution";
-import { UserRoleApi } from "src/app/core/services/identity/user-role.service";
+import { RootReducerState } from "src/app/store";
+import { Store } from "@ngrx/store";
+import { selectInstitutionLoading, selectLoggedInToInstitutionData } from "src/app/store/identity/institution/institution.selector";
+import { selectUserLoading, selectUserLoggedInData } from "src/app/store/identity/user/user.selector";
+import { userLoginAction } from "src/app/store/identity/user/user.action";
+import { loginToInstitutionAction } from "src/app/store/identity/institution/institution.action";
+import { SimpleAlerts } from "src/app/core/services/notifications/sweet-alerts";
+import { combineLatest, map } from "rxjs";
+import { Subscription } from "rxjs";
+import { NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.scss"],
 })
-
-/**
- * Login Component
- */
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
+   private subscriptions: Subscription[] = [];
   public ApplicationTypeEnum = ApplicationTypeEnum;
-  
+
+  selectApplicationModalRef!: NgbModalRef;
+  selectInstitutionModalRef!: NgbModalRef;
+
   @ViewChild('selectInstitutionContent') selectInstitutionContent!: TemplateRef<any>;
   @ViewChild('selectAppContent') selectAppContent!: TemplateRef<any>;
 
-  userInstitutions: Institution[] = [];
+  loadingLogin$ = this.userStore.select(selectUserLoading);
+  loggedInData$ = this.userStore.select(selectUserLoggedInData);
+  loadingLoginToInstitution$ = this.institutionStore.select(selectInstitutionLoading);
+  loggedInToInstitutionData$ = this.institutionStore.select(selectLoggedInToInstitutionData);
+
+  loading = false;
+  institutions: Institution[] = [];
   selectedInstitution?: Institution;
-
-  userApps: ApplicationTypeEnum[] = []
-  selectedApp?: ApplicationTypeEnum;
-  user: any;
-
-  isLoading = false;
-
-  // Login Form
+  applicationTypes: any = [];
+  selectedApplicationType?: ApplicationTypeEnum;
   loginForm!: UntypedFormGroup;
   submitted = false;
-  fieldTextType!: boolean;
-
-  //toast!: false;
-
+  options : any;
+  fieldTextType = false;
   year: number = new Date().getFullYear();
 
   constructor(
     private formBuilder: UntypedFormBuilder,
     private router: Router,
-    public toastService: ToastService,
-    private userService: UserApi,
     private tokenService: TokenService,
     private modalService: NgbModal,
-    private institutionService: InstitutionApi,
-    private userRoleService: UserRoleApi
+    private userStore: Store<{ data: RootReducerState }>,
+    private institutionStore: Store<{ data: RootReducerState }>
   ) {
-  }
-
-  ngOnInit(): void {
-    if (sessionStorage.getItem("currentUser")) {
-      this.router.navigate(["/"]);
-    }
-
     this.loginForm = this.formBuilder.group({
       phone: ["", [Validators.required]],
       password: ["", [Validators.required]],
     });
+  }
 
-    this.hideLoader();
+  ngOnInit(): void {
+    if (this.tokenService.isUserLoggedIn()) {
+      this.router.navigate(["/"]);
+      return;
+    }
+    const loadingSubscription = combineLatest([this.loadingLogin$, this.loadingLoginToInstitution$])
+    .pipe(map(([loadingLogin, loadingInstitution]) => loadingLogin || loadingInstitution))
+    .subscribe((loading) => {this.loading = loading;});
+    this.subscriptions.push(loadingSubscription);
   }
 
   get f() {return this.loginForm.controls;}
 
   onSubmit() {
-    this.showLoader();
     this.submitted = true;
+    if (this.loginForm.invalid) return;
 
-    if (this.loginForm.invalid) {
-      this.hideLoader()
-      return;
-    }
-
-    const loginData = {
+    const login = {
       phone: this.f["phone"].value,
       password: this.f["password"].value,
     };
 
-    this.userService.loginUser(loginData).subscribe({
-        next: (response: any) => {
-          if (response.success) {
-            this.user = response.data.user;
-            this.tokenService.saveToken(response.data.jwtToken.value);
-            this.tokenService.saveUser(this.user);
-            this.getUserInstitutions(this.user.id);
-
-            if(!this.userInstitutions || this.userInstitutions.length < 1) {
-              this.router.navigate(["/"]);
-            }
-
-            if(this.userInstitutions && this.userInstitutions.length > 1){
-              this.openSelectInstitutionModal();
-            }
-
-            if(this.userInstitutions && this.userInstitutions.length == 1){
-                this.selectedInstitution = this.userInstitutions[0];
-                this.getUserApps();
-              }             
-          } else {
-            SimpleAlerts.showError();
-          }
-        },
-        error: () => {
+    this.userStore.dispatch(userLoginAction({ payload: login }));
+   const loginLoadingSubscription = this.loadingLogin$.subscribe((loading) => {
+      if(!loading){
+     const loggedInDataSubscription = this.loggedInData$.subscribe((data) => {
+        if (!data){
           SimpleAlerts.showError();
+          return;
         }
+        this.options = data.options;
+        this.tokenService.saveToken(data.jwtToken.value);
+        this.tokenService.saveUser(data.user);
+        this.institutions = data.options.map((option: any) => option.institution);
+        this.handleInstitutionSelection();
       });
-        this.hideLoader();
+      this.subscriptions.push(loggedInDataSubscription);
+    }
+    });
+    this.subscriptions.push(loginLoadingSubscription);
+
+
   }
 
-  logInToInstitution() {
-    this.showLoader();
-    this.institutionService.logInToInstitution(this.selectedInstitution!.id!, this.selectedApp).subscribe({
-      next: (response: any) => {
-        if (response.success) {
-          this.tokenService.saveToken(response.data.jwtToken.value);
-          this.tokenService.saveUser(this.user);
-          this.tokenService.saveRefreshToken(response.data.refreshToken.value);
-          this.router.navigate(["/"]);
-        } else {
-          SimpleAlerts.showError();
-        }
-      },
-      error: () => {
-        SimpleAlerts.showError();
+  handleInstitutionSelection() {
+    if (this.institutions.length === 1) {
+      this.selectedInstitution = this.institutions[0];
+      this.setApplicationTypes();
+      this.handleApplicationSelection();
+    } else if (this.institutions.length > 1) {
+      this.openSelectInstitutionModal();
+    }else{
+      this.handleInstitutionLogin();
+    }
+  }
+
+  handleApplicationSelection() {
+    if (!this.applicationTypes.length) {
+      this.handleInstitutionLogin();
+    } else if (this.applicationTypes.length === 1) {
+      this.selectedApplicationType = this.applicationTypes[0];
+      this.handleInstitutionLogin(this.selectedApplicationType);
+    } else if (this.applicationTypes.length > 1) {
+      this.openSelectApplicationModal();
+    }else{
+      this.handleInstitutionLogin();
+    }
+  }
+
+  handleInstitutionLogin(applicationType?: ApplicationTypeEnum) {
+    if (!this.selectedInstitution){
+      this.router.navigate(["/"]);
+      return;
+    }
+      this.institutionStore.dispatch(loginToInstitutionAction({ institutionId: this.selectedInstitution!.id, applicationType: applicationType }));
+      const loadingLoginInstitutionSubscription = this.loadingLoginToInstitution$.subscribe((loading) => {
+      if (!loading) {
+        const loggedInInstitutionDataSubscription = this.loggedInToInstitutionData$.subscribe((data) => {
+          if (data) {
+            this.tokenService.saveToken(data.jwtToken.value);
+            this.tokenService.saveRefreshToken(data.refreshToken.value);
+            this.modalService.dismissAll();
+            this.router.navigate(["/"]);
+          } 
+        });
+        this.subscriptions.push(loggedInInstitutionDataSubscription);
       }
     });
-    this.hideLoader();
+    this.subscriptions.push(loadingLoginInstitutionSubscription);
   }
 
-  getUserInstitutions(userId: string) {
-    this.institutionService.getUserInstitutions(userId).subscribe({
-      next: (response: any) => {
-        if (response.success) {
-          this.userInstitutions = response.data;
-        }
-      },
-      error: () => { }
-    });
+  setApplicationTypes() {
+    if (!this.selectedInstitution){
+      this.router.navigate(["/"]);
+      return;
+    }
+    const selectedOption = this.options.find((option: any) => option.institution.id === this.selectedInstitution!.id);
+    this.applicationTypes = selectedOption ? selectedOption.applicationTypes : [];
   }
 
-  getUserApps() {
-    this.userRoleService.getUserApplicationTypes(this.user.id, this.selectedInstitution!.id!).subscribe({
-      next: (response: any) => {
-        if (response.success) {
-          this.userApps = response.data;
-          if(this.userApps && this.userApps.length == 1){
-            this.selectedApp = this.userApps[0];
-            this.logInToInstitution();
-          }
-          if(this.userApps && this.userApps.length > 1){
-          this.openSelectAppModal();
-         }else{
-         this.logInToInstitution();
-        }
-        }
-      },
-      error: () => {
-        SimpleAlerts.showError();
-      }
-    });
+  openSelectInstitutionModal() {
+    this.selectInstitutionModalRef = this.modalService.open(this.selectInstitutionContent, { size: 'lg', centered: true, backdrop: 'static', keyboard: false });
+  }
+
+  closeSelectInstitutionModal() {
+    this.tokenService.signOut();
+    this.selectInstitutionModalRef.close();
+    setTimeout(() => {location.reload();}, 100); 
+  }
+
+  openSelectApplicationModal() {
+    this.modalService.dismissAll();
+    this.selectApplicationModalRef = this.modalService.open(this.selectAppContent, { size: 'lg', centered: true, backdrop: 'static', keyboard: false });
+  }
+
+  closeSelectApplicationModal() {
+    this.tokenService.signOut();
+    this.selectApplicationModalRef.close();
+    setTimeout(() => {location.reload();}, 100); 
+  }
+
+  onSelectInstitution(institution: Institution) {
+    this.selectedInstitution = institution;
+    this.setApplicationTypes();
+    this.handleApplicationSelection();
+  }
+
+  onSelectApplication(application: ApplicationTypeEnum) {
+    if (this.applicationTypes.includes(application)) {
+      this.selectedApplicationType = application;
+      this.handleInstitutionLogin(application);
+    }
   }
 
   toggleFieldTextType() {
     this.fieldTextType = !this.fieldTextType;
   }
 
-  openSelectInstitutionModal() {
-    this.submitted = false;
-    this.modalService.open(this.selectInstitutionContent, { size: 'lg', centered: true });
-  }
-
-  openSelectAppModal() {
-    this.modalService.dismissAll();
-    this.submitted = false;
-    this.modalService.open(this.selectAppContent, { size: 'lg', centered: true });
-  }
-
-  onSelectInstitution(institution: any) {
-   this.selectedInstitution = institution;
-   this.getUserApps();
-  }
-
-  onSelectApp(app: ApplicationTypeEnum) {
-   if(app && this.userApps.includes(app) ) {
-    this.selectedApp = app;
-    this.logInToInstitution();
-   }else{
-    return;
-   }
-  }
-
-  showLoader() {
-    this.isLoading = true;
-    document.getElementById('elmLoader')?.classList.remove('d-none');
-  }
-
-  hideLoader() {
-    this.isLoading = false;
-    document.getElementById('elmLoader')?.classList.add('d-none');
-  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+}
 }

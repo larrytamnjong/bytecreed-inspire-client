@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { jwtDecode } from "jwt-decode";
-import { UserApi } from "./identity/user-api.service";
+import { InstitutionService } from "./identity/institution.service";
 
 const TOKEN_KEY = "auth-token";
 const USER_KEY = "current-user";
@@ -12,7 +12,7 @@ export class TokenService {
   jwtToken: string = "";
   decodedToken: { [key: string]: any } = {};
 
-  constructor(private userService: UserApi) {}
+  constructor(private institutionService: InstitutionService) {}
 
   signOut(): void {
     window.sessionStorage.clear();
@@ -27,7 +27,7 @@ export class TokenService {
     const refreshToken = this.getRefreshToken();
     if (refreshToken && this.isTokenExpired()) {
       try {
-        this.userService.generateToken(refreshToken).subscribe({
+        this.institutionService.generateToken(refreshToken).subscribe({
           next: (response: any) => {
             if (response.success) {
               this.saveToken(response.data.jwtToken.value);
@@ -133,5 +133,9 @@ export class TokenService {
     }
 
     return {};
+  }
+
+  public isUserLoggedIn() : boolean{
+    return sessionStorage.getItem(USER_KEY) !== null;
   }
 }
