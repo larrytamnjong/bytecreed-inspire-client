@@ -7,11 +7,13 @@
         "collapseid",
         "flagvalue",
         "français",
+        "lockscreen",
         "lordicon",
         "simplebar",
         "Swal",
         "sweetalert",
         "topbar",
+        "twostep",
         "valueset"
     ]
 }
