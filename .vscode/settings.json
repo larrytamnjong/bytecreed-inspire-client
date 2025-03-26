@@ -6,6 +6,8 @@
         "français",
         "simplebar",
         "Swal",
-        "sweetalert"
+        "sweetalert",
+        "topbar",
+        "valueset"
     ]
 }
