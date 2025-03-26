@@ -36,7 +36,7 @@ export class TokenService {
               return false;
             }
           },
-          error: (error: any) => {
+          error: () => {
             return false;
           },
         });
