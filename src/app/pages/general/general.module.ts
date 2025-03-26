@@ -13,9 +13,11 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { GeneralRoutingModule } from './general-routing.module';
 import { SharedModule } from '../../shared/shared.module';
+import { InstitutionComponent } from './institution/institution.component';
 
 @NgModule({
   declarations: [
+    InstitutionComponent
   ],
   imports: [
     CommonModule,

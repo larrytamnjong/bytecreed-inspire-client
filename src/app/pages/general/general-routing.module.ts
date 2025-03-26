@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { InstitutionComponent } from './institution/institution.component';
 
 
 const routes: Routes = [
+  { path: 'institution', component: InstitutionComponent }
 ];
 
 @NgModule({

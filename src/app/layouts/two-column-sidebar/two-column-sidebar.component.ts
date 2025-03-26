@@ -164,11 +164,11 @@ export class TwoColumnSidebarComponent implements OnInit {
         if (!item.classList.contains("active")) {
           item.setAttribute("aria-expanded", false);
         }
-        item.nextElementSibling.classList.remove("show");
+        item.nextElementSibling?.classList.remove("show");
       }
       if (item.classList.contains("nav-link")) {
         if (item.nextElementSibling) {
-          item.nextElementSibling.classList.remove("show");
+          item.nextElementSibling?.classList.remove("show");
         }
         if (item.parentElement) {
           item.parentElement.closest(".collapse")?.classList.remove("show");
