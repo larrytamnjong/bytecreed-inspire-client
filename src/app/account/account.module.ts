@@ -2,7 +2,6 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
-// Load Icons
 import { defineElement } from "@lordicon/element";
 import lottie from 'lottie-web';
 import { ToastsContainer } from './login/toasts-container.component';
@@ -36,7 +35,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     AccountRoutingModule,
     SigninModule,
     SharedModule,
-    NgSelectModule
+    NgSelectModule,
+    SignupModule
   ],
   providers: [
     ApiHttpService, 
