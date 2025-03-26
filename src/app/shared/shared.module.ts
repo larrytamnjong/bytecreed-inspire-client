@@ -1,6 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbNavModule, NgbAccordionModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 // Swiper Slider
 import { SlickCarouselModule } from 'ngx-slick-carousel';
@@ -23,6 +24,7 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
     NgbDropdownModule,
     SlickCarouselModule,
     CountUpModule,
+    NgSelectModule,
     
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],

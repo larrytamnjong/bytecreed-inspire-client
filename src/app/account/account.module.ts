@@ -20,6 +20,7 @@ import { SharedModule } from '../shared/shared.module';
 import { InstitutionService } from '../core/services/identity/institution.service';
 import { RoleService } from '../core/services/identity/role.service';
 import { PermissionService } from '../core/services/identity/permission.service';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { PermissionService } from '../core/services/identity/permission.service'
     NgbToastModule,
     AccountRoutingModule,
     SigninModule,
-    SharedModule
+    SharedModule,
+    NgSelectModule
   ],
   providers: [
     ApiHttpService, 

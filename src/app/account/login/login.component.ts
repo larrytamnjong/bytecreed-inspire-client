@@ -5,15 +5,11 @@ import { TokenService } from "src/app/core/services/token.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ApplicationTypeEnum } from "src/app/core/enums/application-type";
 import { Institution } from "src/app/core/Models/identity/institution";
-import { RootReducerState } from "src/app/store";
-import { Store } from "@ngrx/store";
-import { selectUserLoading, selectUserLoggedInData } from "src/app/store/identity/user/user.selector";
-import { userLoginAction } from "src/app/store/identity/user/user.action";
 import { SimpleAlerts } from "src/app/core/services/notifications/sweet-alerts";
-import { Observable } from "rxjs";
-import { Subscription } from "rxjs";
 import { NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { InstitutionService } from "src/app/core/services/identity/institution.service";
+import { UserService } from "src/app/core/services/identity/user.service";
+import { finalize } from "rxjs";
 
 @Component({
   selector: "app-login",
@@ -21,7 +17,7 @@ import { InstitutionService } from "src/app/core/services/identity/institution.s
   styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-   private subscriptions: Subscription[] = [];
+
   public ApplicationTypeEnum = ApplicationTypeEnum;
 
   selectApplicationModalRef!: NgbModalRef;
@@ -30,10 +26,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   @ViewChild('selectInstitutionContent') selectInstitutionContent!: TemplateRef<any>;
   @ViewChild('selectAppContent') selectAppContent!: TemplateRef<any>;
 
-  loadingLogin$ : Observable<boolean> = this.userStore.select(selectUserLoading);
-  loggedInData$ : Observable<any> = this.userStore.select(selectUserLoggedInData);
-
-  
   loading = false;
   institutions: Institution[] = [];
   selectedInstitution?: Institution;
@@ -50,8 +42,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private tokenService: TokenService,
     private modalService: NgbModal,
-    private userStore: Store<{ data: RootReducerState }>,
-    private institutionService: InstitutionService
+    private institutionService: InstitutionService,
+    private userService: UserService,
   ) {
     this.loginForm = this.formBuilder.group({
       phone: ["", [Validators.required]],
@@ -64,39 +56,41 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.router.navigate(["/"]);
       return;
     }
-    const loadingSubscription = this.loadingLogin$.subscribe((loading) => this.loading = loading);
-    this.subscriptions.push(loadingSubscription);
   }
 
   get f() {return this.loginForm.controls;}
 
   onSubmit() {
     this.submitted = true;
-    if (this.loginForm.invalid) return;
+    this.loading = true;
+
+    if (this.loginForm.invalid){
+      this.loading = false;
+      return;
+    } 
 
     const login = {
       phone: this.f["phone"].value,
       password: this.f["password"].value,
     };
 
-    this.userStore.dispatch(userLoginAction({ payload: login }));
-     const loginLoadingSubscription = this.loadingLogin$.subscribe((loading) => {
-      if(!loading){
-     const loggedInDataSubscription = this.loggedInData$.subscribe((data) => {
-        if (!data){
-          SimpleAlerts.showError();
-          return;
-        }
-        this.options = data.options;
-        this.tokenService.saveToken(data.jwtToken.value);
-        this.tokenService.saveUser(data.user);
-        this.institutions = data.options.map((option: any) => option.institution);
-        this.handleInstitutionSelection();
-      });
-      this.subscriptions.push(loggedInDataSubscription);
-    }
-    });
-    this.subscriptions.push(loginLoadingSubscription);
+  this.userService.loginUser(login).pipe(
+    finalize(() => {
+      this.loading = false;
+    })
+  ).subscribe({
+    next: (response) => {
+      if(response.data){
+      this.tokenService.saveToken(response.data.jwtToken.value);
+      this.tokenService.saveUser(response.data.user);
+      this.options = response.data.options;
+      this.institutions = response.data.options.map((option: any) => option.institution);
+      this.handleInstitutionSelection();
+      }else{SimpleAlerts.showError();}
+    },
+    error: () => {SimpleAlerts.showError();}
+  });
+
   }
 
   handleInstitutionSelection() {
@@ -135,7 +129,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.institutionService.logInToInstitution(this.selectedInstitution!.id!, applicationType).subscribe({
+    this.institutionService.logInToInstitution(this.selectedInstitution!.id!, applicationType).pipe(
+      finalize(() => {
+        this.loading = false;
+      })
+    ).subscribe({
      next: (response) => {
         if(response.data){
           this.tokenService.saveToken(response.data.jwtToken.value);
@@ -144,7 +142,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         }else{this.handleLoginToInstitutionError();}
      },
      error: () =>{this.handleLoginToInstitutionError();},
-     complete :() =>{this.loading = false;}
     });
   }
 
@@ -178,9 +175,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.reloadLocation();
   }
 
-  onSelectInstitution(institution: Institution) {
+  onSelectInstitutionContinue() {
+    if(!this.selectedInstitution)return;
     this.selectInstitutionModalRef.close();
-    this.selectedInstitution = institution;
     this.setApplicationTypes();
     this.handleApplicationSelection();
   }
@@ -207,7 +204,5 @@ export class LoginComponent implements OnInit, OnDestroy {
     setTimeout(() => {location.reload();}, 100); 
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-  }
+  ngOnDestroy(): void {}
 }

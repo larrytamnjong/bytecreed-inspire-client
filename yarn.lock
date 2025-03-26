@@ -3288,10 +3288,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@ng-select/ng-select@^13.2.0":
-  version "13.2.0"
-  resolved "https://registry.npmjs.org/@ng-select/ng-select/-/ng-select-13.2.0.tgz"
-  integrity sha512-Oh4UaUvYJa6D+G4nEcdzqOgRP2TKqwwRpQBVVyLMUgzebSY3Cw9aJXqudqJ/EYiK3Bz+4uKJXPZIrYgNqqx02g==
+"@ng-select/ng-select@^13.9.1":
+  version "13.9.1"
+  resolved "https://registry.npmjs.org/@ng-select/ng-select/-/ng-select-13.9.1.tgz"
+  integrity sha512-+DzQkQp8coGWZREflJM/qx7BXipV6HEVpZCXoa6fJJRHJfmUMsxa5uV6kUVmClUE98Rkffk9CPHt6kZcj8PuqQ==
   dependencies:
     tslib "^2.3.1"
 
