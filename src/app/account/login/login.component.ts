@@ -9,7 +9,7 @@ import { SimpleAlerts } from "src/app/core/services/notifications/sweet-alerts";
 import { NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { InstitutionService } from "src/app/core/services/identity/institution.service";
 import { UserService } from "src/app/core/services/identity/user.service";
-import { finalize } from "rxjs";
+
 
 @Component({
   selector: "app-login",
@@ -62,10 +62,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.submitted = true;
-    this.loading = true;
+    this.toggleLoading();
 
     if (this.loginForm.invalid){
-      this.loading = false;
+      this.toggleLoading();
       return;
     } 
 
@@ -74,11 +74,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: this.f["password"].value,
     };
 
-  this.userService.loginUser(login).pipe(
-    finalize(() => {
-      this.loading = false;
-    })
-  ).subscribe({
+  this.userService.loginUser(login).subscribe({
     next: (response) => {
       if(response.data){
       this.tokenService.saveToken(response.data.jwtToken.value);
@@ -87,10 +83,14 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.institutions = response.data.options.map((option: any) => option.institution);
       this.handleInstitutionSelection();
       }else{SimpleAlerts.showError();}
+      this.toggleLoading();
     },
-    error: () => {SimpleAlerts.showError();}
+    error: () => 
+      {
+        SimpleAlerts.showError();
+        this.toggleLoading();
+      }
   });
-
   }
 
   handleInstitutionSelection() {
@@ -122,26 +122,27 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   handleInstitutionLogin(applicationType?: ApplicationTypeEnum) {
-    this.loading = true;
+    this.toggleLoading();
     if (!this.selectedInstitution){
-      this.loading = false;
+      this.toggleLoading();
       this.router.navigate(["/"]);
       return;
     }
 
-    this.institutionService.logInToInstitution(this.selectedInstitution!.id!, applicationType).pipe(
-      finalize(() => {
-        this.loading = false;
-      })
-    ).subscribe({
+    this.institutionService.logInToInstitution(this.selectedInstitution!.id!, applicationType).subscribe({
      next: (response) => {
         if(response.data){
           this.tokenService.saveToken(response.data.jwtToken.value);
           this.tokenService.saveRefreshToken(response.data.refreshToken.value);
           this.router.navigate(["/"]);
         }else{this.handleLoginToInstitutionError();}
+        this.toggleLoading();
      },
-     error: () =>{this.handleLoginToInstitutionError();},
+     error: () =>
+      {
+        this.handleLoginToInstitutionError();
+        this.toggleLoading();
+      },
     });
   }
 
@@ -204,5 +205,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     setTimeout(() => {location.reload();}, 100); 
   }
 
+  toggleLoading() {
+    this.loading = !this.loading;
+  }
   ngOnDestroy(): void {}
 }

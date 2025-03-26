@@ -7,15 +7,13 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-    constructor(
-        private tokenService: TokenService,
-        public router:Router
-    ) { }
+    constructor(private tokenService: TokenService,public router:Router) { }
 
-    intercept( request: HttpRequest<any>, next: HttpHandler
-    ): Observable<HttpEvent<any>> {
-      
-        if (this.tokenService.generateToken()) {
+    intercept( request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+      var isValid = false;
+      this.tokenService.tokenValidationProcess().subscribe((response) => {isValid = response;});
+
+        if (isValid) {
             const token = this.tokenService.getToken();
             if (token) { 
                 request = request.clone({setHeaders: { Authorization: `Bearer ${token}`,},});

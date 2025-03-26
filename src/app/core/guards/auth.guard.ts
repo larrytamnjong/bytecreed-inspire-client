@@ -8,16 +8,12 @@ export class AuthGuard {
   constructor(private router: Router, private tokenService: TokenService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-  
-    if(this.tokenService.generateToken()){
-      if (!this.tokenService.isTokenValid()) {
-        this.router.navigate(["/auth/login"], { queryParams: { returnUrl: state.url } });
-        return false;
-      }
-  
+   var isValid = false;
+   this.tokenService.tokenValidationProcess().subscribe((response) => {isValid = response;});
+
+    if(isValid){
       const requiredPermission = route.data["permission"] as PermissionActionEnum;
       const userPermissions = this.tokenService.getUserPermissions();
-  
       if (requiredPermission && !userPermissions.includes(requiredPermission)) {
         this.router.navigate(["/auth/errors/unauthorized"]); 
         return false;
@@ -28,5 +24,5 @@ export class AuthGuard {
       this.router.navigate(["/auth/login"], { queryParams: { returnUrl: state.url } });
       return false;
     }
-    }
+  }
 }

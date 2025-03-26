@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { jwtDecode } from "jwt-decode";
 import { InstitutionService } from "./identity/institution.service";
+import { Observable, of, switchMap } from 'rxjs';
+import { catchError } from "rxjs";
 
 const TOKEN_KEY = "auth-token";
 const USER_KEY = "current-user";
@@ -23,37 +25,40 @@ export class TokenService {
     window.sessionStorage.setItem(TOKEN_KEY, token);
   }
 
-  public generateToken(): boolean {
-    const refreshToken = this.getRefreshToken();
-    if (refreshToken && this.isTokenExpired()) {
-      try {
-        this.institutionService.generateToken(refreshToken).subscribe({
-          next: (response: any) => {
-            if (response.success) {
-              this.saveToken(response.data.jwtToken.value);
-              return true;
-            } else {
-              return false;
-            }
-          },
-          error: () => {
-            return false;
-          },
-        });
-      } catch (e) {
-        return false;
-      }
-    } else if (!refreshToken && !this.isTokenExpired()) {
-      return true;
-    } else if (!this.isTokenExpired()) {
-      return true;
+  public tokenValidationProcess(): Observable<boolean> {
+
+    if (this.isTokenValid()) {
+      return of(true);
     }
-    return false;
+
+    const refreshToken = this.getRefreshToken();
+    const isExpired = this.isTokenExpired();
+
+    if (refreshToken && isExpired) {
+      return this.institutionService.generateToken(refreshToken).pipe(
+        switchMap((response) => {
+          if (response.success) {
+            this.saveToken(response.data.jwtToken.value);
+            return of(true);
+          } else {
+            return of(false);
+          }
+        }),
+        catchError(() => of(false))
+      );
+    }
+    if (!refreshToken && !isExpired) {
+      return of(true);
+    }
+    if (!isExpired) {
+      return of(true);
+    }
+    return of(false);
   }
 
-  getDecodeToken() : any {
+  getDecodeToken(): any {
     this.jwtToken = sessionStorage.getItem("auth-token") || "";
-    if(this.jwtToken == ""){
+    if (this.jwtToken == "") {
       return null;
     }
     this.decodedToken = jwtDecode(this.jwtToken);
@@ -135,7 +140,7 @@ export class TokenService {
     return {};
   }
 
-  public isUserLoggedIn() : boolean{
+  public isUserLoggedIn(): boolean {
     return sessionStorage.getItem(USER_KEY) !== null;
   }
 }
