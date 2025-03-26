@@ -26,11 +26,9 @@ export class TokenService {
   }
 
   public tokenValidationProcess(): Observable<boolean> {
-
     if (this.isTokenValid()) {
       return of(true);
     }
-
     const refreshToken = this.getRefreshToken();
     const isExpired = this.isTokenExpired();
 
@@ -67,15 +65,12 @@ export class TokenService {
 
   isTokenValid(): boolean {
     const token = this.getToken();
-
     if (!token) {
       return false;
     }
-
     try {
       const decodedToken: any = jwtDecode(token);
       const currentTime = Math.floor(Date.now() / 1000);
-
       return decodedToken.exp && decodedToken.exp > currentTime;
     } catch (error) {
       return false;
@@ -133,10 +128,7 @@ export class TokenService {
 
   public getUser(): any {
     const user = window.sessionStorage.getItem(USER_KEY);
-    if (user) {
-      return JSON.parse(user);
-    }
-
+    if (user) {return JSON.parse(user);}
     return {};
   }
 
