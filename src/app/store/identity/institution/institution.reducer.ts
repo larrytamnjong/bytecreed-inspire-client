@@ -6,12 +6,12 @@ import * as InstitutionActions from './institution.action';
 
 export interface InstitutionState extends BaseState {
     userInstitutions: Institution[] | any;
-    loggedInToInstitutionData: any;
+    loggedInInstitution: any;
 }
 
 export const initialState: InstitutionState = {
     userInstitutions: null,
-    loggedInToInstitutionData: null,
+    loggedInInstitution: null,
     loading: false,
     message: null,
     success: false,
@@ -23,8 +23,8 @@ export const InstitutionReducer = createReducer(initialState,
     on(InstitutionActions.getUserInstitutionsAction, (state, {userId}) => {return{...state, loading: true, success: false, message: null, code: null, userInstitutions: null }}),
     on(InstitutionActions.getUserInstitutionsResponseAction, (state, {response}) => {return{...state, loading: false, success: response.success, message: response.message, code: response.code, userInstitutions: response.data }}),
 
-    on(InstitutionActions.loginToInstitutionAction, (state, {institutionId, applicationType}) => {return {...state, loggedInToInstitutionData: null, loading: true, success: false, message: null, code: null }}),
-    on(InstitutionActions.loginToInstitutionResponseAction, (state, {response}) => {return {...state, loggedInToInstitutionData: response.data, loading: false, success: response.success, message: response.message, code: response.code }}),
+    on(InstitutionActions.loginToInstitutionAction, (state, {institutionId, applicationType}) => {return {...state, loggedInInstitution: null, loading: true, success: false, message: null, code: null }}),
+    on(InstitutionActions.loginToInstitutionResponseAction, (state, {response}) => {return {...state, loggedInInstitution: response.data, loading: false, success: response.success, message: response.message, code: response.code }}),
 
     on(InstitutionActions.institutionErrorAction, (state, {error}) => { return {...state, loading: false, success: false, message: error, user: null }}),
 );

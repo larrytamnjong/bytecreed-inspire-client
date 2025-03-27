@@ -17,7 +17,7 @@ export class InstitutionEffects {
     )
   );
 
-  logIntoInstitution$ = createEffect(() =>
+  loginToInstitution$ = createEffect(() =>
     this.actions$.pipe(ofType(InstitutionActions.loginToInstitutionAction),
       mergeMap(({ institutionId, applicationType }) => this.institutionService.logInToInstitution(institutionId, applicationType)
           .pipe(map((response) => InstitutionActions.loginToInstitutionResponseAction({response})),
