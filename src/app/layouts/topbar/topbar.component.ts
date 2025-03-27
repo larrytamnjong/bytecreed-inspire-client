@@ -1,14 +1,14 @@
 import { Component, OnInit, EventEmitter, Output, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { EventService } from '../../core/services/event.service';
+import { EventService } from '../../core/services/general/event.service';
 
 //Logout
 import { Router } from '@angular/router';
-import { TokenService } from 'src/app/core/services/token.service';
+import { TokenService } from 'src/app/core/services/general/token.service';
 
 // Language
 import { CookieService } from 'ngx-cookie-service';
-import { LanguageService } from '../../core/services/language.service';
+import { LanguageService } from '../../core/services/general/language.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 

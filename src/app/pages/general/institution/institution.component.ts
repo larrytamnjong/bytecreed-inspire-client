@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PaginationService } from 'src/app/core/services/pagination.service';
+import { PaginationService } from 'src/app/core/services/general/pagination.service';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { cloneDeep } from 'lodash';

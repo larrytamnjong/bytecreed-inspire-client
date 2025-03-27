@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { jwtDecode } from "jwt-decode";
-import { InstitutionService } from "./identity/institution.service";
+import { InstitutionService } from "../identity/institution.service";
 
 const TOKEN_KEY = "auth-token";
 const USER_KEY = "current-user";

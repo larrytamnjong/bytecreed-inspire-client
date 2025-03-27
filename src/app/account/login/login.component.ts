@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { TokenService } from "src/app/core/services/token.service";
+import { TokenService } from "src/app/core/services/general/token.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ApplicationTypeEnum } from "src/app/core/enums/application-type";
 import { Institution } from "src/app/core/Models/identity/institution";

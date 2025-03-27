@@ -13,7 +13,7 @@ import { LoginComponent } from './login/login.component';
 import { ApiHttpService } from '../core/services/common/base-api-http.service';
 import { UserService } from '../core/services/identity/user.service';
 import { IdentityApiHttpService } from '../core/services/common/base-identity-api-http.service';
-import { TokenService } from '../core/services/token.service';
+import { TokenService } from '../core/services/general/token.service';
 import { LookUpService } from '../core/services/common/look-up.service';
 import { SharedModule } from '../shared/shared.module';
 import { InstitutionService } from '../core/services/identity/institution.service';
