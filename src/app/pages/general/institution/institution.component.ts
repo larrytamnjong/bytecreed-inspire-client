@@ -88,8 +88,7 @@ export class InstitutionComponent {
     finalize(() => this.toggleLoading())).subscribe({
     next: (response) =>{
       if(response){
-        this.afterSuccessfulCreate();
-        SimpleAlerts.showSuccess();
+        this.afterSuccessfulCreate(response);
       }else{
         SimpleAlerts.showError();
       }
@@ -98,11 +97,12 @@ export class InstitutionComponent {
   });
 }
 
-afterSuccessfulCreate(){
-  this.searchTerm = '';
-  this.institutionForm.reset();
-  this.submitted = false;
-  this.getUserInstitutions();
+afterSuccessfulCreate(data: any){
+  this.tokenService.saveInstitution(data.institution);
+  this.tokenService.saveToken(data.token.jwtToken.value);
+  this.tokenService.saveRefreshToken(data.token.refreshToken.value);
+  SimpleAlerts.showSuccess();
+  setTimeout(() => {location.reload();}, 1100);
 }
 
   changePage() {
@@ -126,9 +126,8 @@ afterSuccessfulCreate(){
     this.institutionListCopy = this.service.changePage(this.searchResults)
   }
 
-  ngOnDestroy(): void {}
+ngOnDestroy(): void {}
 
-toggleLoading() {
-  this.loading = !this.loading;
-}
+toggleLoading() {this.loading = !this.loading;}
+
 }

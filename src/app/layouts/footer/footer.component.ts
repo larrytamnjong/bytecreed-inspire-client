@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TokenService } from 'src/app/core/services/general/token.service';
 
 @Component({
   selector: 'app-footer',
@@ -6,11 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-
-  // set the current year
+ 
+  institution : any;
   year: number = new Date().getFullYear();
 
-  constructor() { }
+  constructor(private tokenService: TokenService) {
+    this.getInstitution();
+   }
+
+  getInstitution(){
+    this.institution = this.tokenService.getInstitution() ?? '';
+  }
 
   ngOnInit(): void {
   }

@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 const TOKEN_KEY = "auth-token";
 const USER_KEY = "current-user";
 const REFRESH_TOKEN_KEY = "refresh-token";
+const INSTITUTION_KEY = "institution";
 @Injectable({
   providedIn: "root",
 })
@@ -92,9 +93,32 @@ export class TokenService {
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 
+  public saveInstitution(institution: any): void {
+    window.sessionStorage.removeItem(INSTITUTION_KEY);
+    window.sessionStorage.setItem(INSTITUTION_KEY, JSON.stringify(institution));
+  }
+
+  public getInstitution(){
+    const institution = window.sessionStorage.getItem(INSTITUTION_KEY);
+    if (institution) {
+      try {
+        return JSON.parse(institution);
+      } catch (error) {
+        return {};
+      }
+    }
+    return {};
+  }
+
   public getUser(): any {
     const user = window.sessionStorage.getItem(USER_KEY);
-    if (user) {return JSON.parse(user);}
+    if (user) {
+      try{
+        return JSON.parse(user);
+      }catch(error){
+        return {};
+      }
+    }
     return {};
   }
 
