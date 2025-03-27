@@ -19,7 +19,7 @@
                 <div class="row g-3">
                     <div class="col-xl-6">
                         <div class="search-box">
-                            <input type="text" name="searchTerm" class="form-control" placeholder="Search for name, code, status or something..." [(ngModel)]="searchTerm" (ngModelChange)="performSearch()">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="Search for something name, code..." [(ngModel)]="searchTerm" (ngModelChange)="performSearch()">
                             <i class="ri-search-line search-icon"></i>
                         </div>
                     </div>
@@ -36,20 +36,21 @@
                                     <th class="sort" (click)="onSort('code')">Code</th>
                                     <th class="sort" (click)="onSort('name')">Name</th>
                                     <th class="sort" (click)="onSort('isActive')">Status</th>
+                                    <th class="sort" (click)="onSort('dateCreated')">Created Date</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @for( data of institutionListCopy; track $index){
                                 <tr id="c_{{data.id}}">
                                     <td>
-                                        <ngb-highlight [result]="data.code" [term]="searchTerm">
-                                        </ngb-highlight>
+                                        <ngb-highlight [result]="data.code" [term]="searchTerm"></ngb-highlight>
                                     </td>
                                     <td>
-                                        <ngb-highlight [result]="data.name" [term]="searchTerm">
-                                        </ngb-highlight>
+                                        <ngb-highlight [result]="data.name" [term]="searchTerm"></ngb-highlight>
                                     </td>
-                                    <td class="status"><span class="badge text-uppercase" [ngClass]=" { 'bg-success-subtle text-success': data.status == true, 'bg-danger-subtle text-danger': data.status != true }">{{data.status}}</span>
+                                    <td class="status"><span class="badge text-uppercase" [ngClass]=" { 'bg-success-subtle text-success': data.isActive == true, 'bg-danger-subtle text-danger': data.isActive != true }">{{getStatusLabel(data.isActive)}}</span></td>
+                                    <td>
+                                        <ngb-highlight [result]="data.dateCreated | date :'longDate'" [term]="searchTerm"></ngb-highlight>
                                     </td>
                                 </tr>
                                 }
@@ -79,7 +80,7 @@
                         <h5 class="modal-title" id="exampleModalLabel">Create Institution</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="modal.dismiss('Cross click')"></button>
                     </div>
-                    <form (ngSubmit)="saveInstitution()" [formGroup]="institutionForm" class="tablelist-form" autocomplete="off">
+                    <form (ngSubmit)="createInstitution()" [formGroup]="institutionForm" class="tablelist-form" autocomplete="off">
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Institution Name</label>

@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 import { ServiceResponse } from 'src/app/core/Models/common/service-response';
 import { Institution } from 'src/app/core/Models/identity/institution';
@@ -8,4 +9,7 @@ export const getUserInstitutionsResponseAction = createAction('[Institution] Get
 export const loginToInstitutionAction = createAction('[Institution] Login to Institution', props<{ institutionId: any, applicationType?: number }>());
 export const loginToInstitutionResponseAction = createAction('[Institution] Login to Institution Response',props<{ response: ServiceResponse<any>}>());
 
-export const institutionErrorAction = createAction('[Institution] Error Action', props<{ error: Error }>());
+export const createInstitutionAction = createAction('[Institution] Create Institution', props<{ institution: Institution }>());
+export const createInstitutionResponseAction = createAction('[Institution] Create Institution Response',props<{ response: ServiceResponse<any>}>());
+
+export const institutionErrorAction = createAction('[Institution] Error Action', props<{ error: HttpErrorResponse }>());

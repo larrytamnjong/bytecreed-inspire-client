@@ -8,4 +8,5 @@ export const selectLoggedInInstitution = createSelector(selectInstitutionState, 
 export const selectInstitutionLoading = createSelector(selectInstitutionState, (state: InstitutionState) => state.loading);
 export const selectInstitutionMessage = createSelector(selectInstitutionState, (state: InstitutionState) => state.message);
 export const selectInstitutionSuccess = createSelector(selectInstitutionState, (state: InstitutionState) => state.success);
+export const selectCreatedInstitution = createSelector(selectInstitutionState, (state: InstitutionState) => state.createdInstitution);
 export const selectInstitutionCode = createSelector(selectInstitutionState, (state: InstitutionState) => state.code);

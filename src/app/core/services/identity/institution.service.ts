@@ -6,12 +6,14 @@ import { map } from "rxjs";
 import { TokenService } from "../general/token.service";
 import { catchError } from "rxjs";
 import { throwError } from "rxjs";
+import { Institution } from "../../Models/identity/institution";
 
 
 @Injectable({ providedIn: 'root'})
 export class InstitutionService {
   private readonly institution_user_controller: string = "v1/institution-users";
   private readonly institution_login_session: string = "v1/institution-login-sessions";
+  private readonly institution_controller: string = "v1/institutions";
 
 
   constructor(private identityApiService: IdentityApiHttpService, private readonly tokenService: TokenService) {}
@@ -22,6 +24,10 @@ export class InstitutionService {
 
   logInToInstitution(institutionId: string, applicationType?: number): Observable<any> {
     return this.identityApiService.post(`${this.institution_user_controller}/user/institutions/${institutionId}/login?applicationType=${applicationType}`, {});
+  }
+
+  createInstitution(institution: Institution): Observable<any> {
+    return this.identityApiService.post(`${this.institution_controller}`, RequestHelper.createServiceRequest(institution));
   }
 
   generateToken(refreshToken: string): Observable<any> {

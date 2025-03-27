@@ -27,5 +27,15 @@ export class InstitutionEffects {
     )
   );
 
+  createInstitution$ =  createEffect(() =>
+    this.actions$.pipe(ofType(InstitutionActions.createInstitutionAction),
+      mergeMap(({ institution }) => this.institutionService.createInstitution(institution)
+          .pipe(map((response) => InstitutionActions.createInstitutionResponseAction({response})),
+          catchError((error) => of(InstitutionActions.institutionErrorAction({error})))
+        )
+      )
+    )
+  );
+
   constructor(private actions$: Actions, private institutionService: InstitutionService) {}
 }

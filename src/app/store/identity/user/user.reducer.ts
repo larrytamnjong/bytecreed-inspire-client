@@ -31,5 +31,5 @@ export const UserReducer = createReducer(initialState,
     on(UserActions.getUserApplicationTypesAction, (state, {userId, institutionId}) => {return{...state, loading: true, success: false, message: null,code: null, userApplicationTypes: null}}),
     on(UserActions.getUserApplicationTypesResponseAction, (state, {response}) => {return {...state, userApplicationTypes: response.data, loading: false, success: response.success, message: response.message, code: response.code }}),
 
-    on(UserActions.userErrorAction, (state, {error}) => { return {...state, loading: false, success: false, message: error, user: null, userApplicationTypes: null, loggedInUser: null }}),
+    on(UserActions.userErrorAction, (state, {error}) => { return {...state, loading: false, success: false, message: error.error.message, user: null, userApplicationTypes: null, loggedInUser: null }}),
 );
