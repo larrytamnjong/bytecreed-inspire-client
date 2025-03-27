@@ -3,5 +3,6 @@ export interface Institution {
     name: string;
     code?: string;
     isActive: boolean;
+    dateCreated: Date;
   }
   

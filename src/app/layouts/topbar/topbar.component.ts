@@ -145,7 +145,7 @@ export class TopbarComponent implements OnInit {
    * Logout the user
    */
   logout() {
-    this.tokenService.signOut();
+    this.tokenService.clearSessionData();
     this.router.navigate(['/auth/login']);
   }
 

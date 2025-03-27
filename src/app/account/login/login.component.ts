@@ -160,7 +160,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   closeSelectInstitutionModal() {
-    this.tokenService.signOut();
+    this.tokenService.clearSessionData();
     this.selectInstitutionModalRef.close();
     this.reloadLocation();
   }
@@ -171,7 +171,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   closeSelectApplicationModal() {
-    this.tokenService.signOut();
+    this.tokenService.clearSessionData();
     this.selectApplicationModalRef.close();
     this.reloadLocation();
   }
@@ -197,7 +197,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   handleLoginToInstitutionError(){
     SimpleAlerts.showError();
-    this.tokenService.signOut();
+    this.tokenService.clearSessionData();
     this.reloadLocation();
   }
 
