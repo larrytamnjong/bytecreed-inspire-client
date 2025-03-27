@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
 import { jwtDecode } from "jwt-decode";
 import { InstitutionService } from "./identity/institution.service";
-import { Observable, of, switchMap } from 'rxjs';
-import { catchError } from "rxjs";
 
 const TOKEN_KEY = "auth-token";
 const USER_KEY = "current-user";
@@ -23,35 +21,6 @@ export class TokenService {
   public saveToken(token: string): void {
     window.sessionStorage.removeItem(TOKEN_KEY);
     window.sessionStorage.setItem(TOKEN_KEY, token);
-  }
-
-  public tokenValidationProcess(): Observable<boolean> {
-    if (this.isTokenValid()) {
-      return of(true);
-    }
-    const refreshToken = this.getRefreshToken();
-    const isExpired = this.isTokenExpired();
-
-    if (refreshToken && isExpired) {
-      return this.institutionService.generateToken(refreshToken).pipe(
-        switchMap((response) => {
-          if (response.success) {
-            this.saveToken(response.data.jwtToken.value);
-            return of(true);
-          } else {
-            return of(false);
-          }
-        }),
-        catchError(() => of(false))
-      );
-    }
-    if (!refreshToken && !isExpired) {
-      return of(true);
-    }
-    if (!isExpired) {
-      return of(true);
-    }
-    return of(false);
   }
 
   getDecodeToken(): any {
