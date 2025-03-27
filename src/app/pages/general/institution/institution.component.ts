@@ -51,10 +51,8 @@ export class InstitutionComponent {
 
   getUserInstitutions(){
     this.toggleLoading();
-    this.institutionService.getUserInstitutions(this.user.id!).pipe(
-      map(response => response.data),
-      finalize(() => this.toggleLoading())
-    ).subscribe({
+    this.institutionService.getUserInstitutions(this.user.id!).pipe(map(response => response.data),
+      finalize(() => this.toggleLoading())).subscribe({
         next: (institutions: Institution[]) => {
         this.institutionListCopy = institutions;
         this.institutionList = cloneDeep(institutions);
@@ -86,12 +84,11 @@ export class InstitutionComponent {
   }
 
   this.closeCreateInstitutionModal();
-  this.institutionService.createInstitution(institution).pipe(
-    map(response => response.data),
-    finalize(() => this.toggleLoading())
-  ).subscribe({
-    next : (response) =>{
+  this.institutionService.createInstitution(institution).pipe(map(response => response.data),
+    finalize(() => this.toggleLoading())).subscribe({
+    next: (response) =>{
       if(response){
+        this.afterSuccessfulCreate();
         SimpleAlerts.showSuccess();
       }else{
         SimpleAlerts.showError();
@@ -99,6 +96,13 @@ export class InstitutionComponent {
     },
     error: (error)=>{}
   });
+}
+
+afterSuccessfulCreate(){
+  this.searchTerm = '';
+  this.institutionForm.reset();
+  this.submitted = false;
+  this.getUserInstitutions();
 }
 
   changePage() {
