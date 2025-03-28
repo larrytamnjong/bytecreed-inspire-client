@@ -14,8 +14,8 @@
     "ANALYTICS": {
       "TEXT": "Analytics"
     },
-    "CONFIGURATIONS": {
-      "TEXT": "Configurations",
+    "CONFIGURATION": {
+      "TEXT": "Configuration",
       "LIST": {
         "ADMISSION": "Admission",
         "CLASSES": "Classes",

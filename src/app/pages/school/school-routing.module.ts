@@ -3,6 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 const routes: Routes = [
+  {
+    path: 'configuration',
+    loadChildren: () => import('./configuration/configuration.module').then(m => m.ConfigurationModule)
+  }
 ];
 
 @NgModule({
@@ -10,4 +14,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 
-export class SchoolsRoutingModule { }
+export class SchoolRoutingModule { }
