@@ -26,9 +26,9 @@ import { PagesRoutingModule } from "./pages-routing.module";
 import { SharedModule } from "../shared/shared.module";
 import { DashboardComponent } from './dashboards/dashboard/dashboard.component';
 import { DashboardsModule } from "./dashboards/dashboards.module";
-import { StudentsModule } from './students/students.module';
+import { StudentsModule } from './student/student.module';
 import { SchoolsModule } from './schools/schools.module';
-import { ParentsModule } from './parents/parents.module';
+import { ParentModule } from './parent/parent.module';
 import { AdminModule } from './admin/admin.module';
 
 @NgModule({
@@ -53,7 +53,7 @@ import { AdminModule } from './admin/admin.module';
     DashboardsModule,
     StudentsModule,
     SchoolsModule,
-    ParentsModule,
+    ParentModule,
     AdminModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

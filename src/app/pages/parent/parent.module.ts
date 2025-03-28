@@ -11,7 +11,7 @@ import { SimplebarAngularModule } from 'simplebar-angular';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { FlatpickrModule } from 'angularx-flatpickr';
-import { ParentsRoutingModule } from './parents.routing.module';
+import { ParentRoutingModule } from './parent.routing.module';
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
@@ -29,7 +29,7 @@ import { SharedModule } from '../../shared/shared.module';
     NgApexchartsModule,
     SlickCarouselModule,
     FlatpickrModule.forRoot(),
-    ParentsRoutingModule,
+    ParentRoutingModule,
     SharedModule,
     NgbPaginationModule,
     NgbTypeaheadModule,
@@ -39,4 +39,4 @@ import { SharedModule } from '../../shared/shared.module';
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ParentsModule { }
+export class ParentModule { }

@@ -22,7 +22,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 
 
 //Module
-import { StudentsRoutingModule } from './students.routing.module';
+import { StudentRoutingModule } from './student.routing.module';
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
@@ -40,7 +40,7 @@ import { SharedModule } from '../../shared/shared.module';
     NgApexchartsModule,
     SlickCarouselModule,
     FlatpickrModule.forRoot(),
-    StudentsRoutingModule,
+    StudentRoutingModule,
     SharedModule,
     NgbPaginationModule,
     NgbTypeaheadModule,
