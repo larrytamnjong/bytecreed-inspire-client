@@ -9,6 +9,8 @@ import { SimpleAlerts } from "src/app/core/services/notifications/sweet-alerts";
 import { NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { InstitutionService } from "src/app/core/services/identity/institution.service";
 import { UserService } from "src/app/core/services/identity/user.service";
+import { HttpErrorResponse } from "@angular/common/http";
+import { getErrorMessage } from "src/app/core/helpers/error-filter";
 
 
 @Component({
@@ -85,9 +87,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       }else{SimpleAlerts.showError();}
       this.toggleLoading();
     },
-    error: () => 
+    error: (error) => 
       {
-        SimpleAlerts.showError();
+        SimpleAlerts.showError(getErrorMessage(error));
         this.toggleLoading();
       }
   });
@@ -139,9 +141,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         }else{this.handleLoginToInstitutionError();}
         this.toggleLoading();
      },
-     error: () =>
+     error: (error) =>
       {
-        this.handleLoginToInstitutionError();
+        this.handleLoginToInstitutionError(error);
         this.toggleLoading();
       },
     });
@@ -196,8 +198,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.fieldTextType = !this.fieldTextType;
   }
 
-  handleLoginToInstitutionError(){
-    SimpleAlerts.showError();
+  handleLoginToInstitutionError(error?: HttpErrorResponse){
+    SimpleAlerts.showError(getErrorMessage(error));
     this.tokenService.clearSessionData();
     this.reloadLocation();
   }

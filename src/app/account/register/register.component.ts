@@ -92,7 +92,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             SimpleAlerts.showSuccess();
             this.router.navigate(["/auth/login"]);
           } else {
-            SimpleAlerts.showError();
+            SimpleAlerts.showError(this.message);
           }
         });
         this.subscriptions.push(successSubscription);

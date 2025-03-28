@@ -11,6 +11,7 @@ import { User } from 'src/app/core/Models/identity/user';
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 import { finalize } from 'rxjs';
 import { map } from 'rxjs';
+import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 
 @Component({
   selector: 'app-institution',
@@ -93,7 +94,9 @@ export class InstitutionComponent {
         SimpleAlerts.showError();
       }
     },
-    error: (error)=>{}
+    error: (error) => {
+      SimpleAlerts.showError(getErrorMessage(error));
+    }
   });
 }
 
