@@ -4,6 +4,7 @@ import { InstitutionComponent } from './institution/institution.component';
 
 
 const routes: Routes = [
+  { path: '', redirectTo: 'institution', pathMatch: 'full' },
   { path: 'institution', component: InstitutionComponent }
 ];
 

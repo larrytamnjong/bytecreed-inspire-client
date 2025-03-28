@@ -7,7 +7,7 @@ import { AuthGuard } from '../core/guards/auth.guard';
 const routes: Routes = [
   
     { path: "", component: DashboardComponent},
-  //  { path: '', loadChildren: () => import('./dashboards/dashboards.module').then(m => m.DashboardsModule), canActivate: [AuthGuard], data: { permission: PermissionActionEnum.School_ViewDashboard }},
+   // { path: '', loadChildren: () => import('./dashboards/dashboards.module').then(m => m.DashboardsModule), canActivate: [AuthGuard], data: { permission: PermissionActionEnum.School_ViewDashboard }},
     { path: '', loadChildren: () => import('./dashboards/dashboards.module').then(m => m.DashboardsModule)},
     { path: 'school', loadChildren: () => import('./schools/schools.module').then(m => m.SchoolsModule) },
     { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
