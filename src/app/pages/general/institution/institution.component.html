@@ -1,4 +1,4 @@
-<app-breadcrumbs title="Institutions" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<app-breadcrumbs title="Institution" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
 <div class="row">
     <div class="col-lg-12">
@@ -6,7 +6,7 @@
             <div class="card-header border-bottom-dashed">
                 <div class="row g-4 align-items-center">
                     <div class="col-sm">
-                        <div><h5 class="card-title mb-0">Institution List</h5></div>
+                        <!-- <div><h5 class="card-title mb-0">Institution List</h5></div> -->
                     </div>
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
@@ -17,9 +17,9 @@
             </div>
             <div class="card-body border-bottom-dashed border-bottom">
                 <div class="row g-3">
-                    <div class="col-xl-6">
+                    <div class="col-xl-12 col-sm-12">
                         <div class="search-box">
-                            <input type="text" name="searchTerm" class="form-control" placeholder="Search for something name, code..." [(ngModel)]="searchTerm" (ngModelChange)="performSearch()">
+                            <input type="text" name="searchTerm" class="form-control search bg-light border-light" placeholder="Search for name or code..." [(ngModel)]="searchTerm" (ngModelChange)="performSearch()">
                             <i class="ri-search-line search-icon"></i>
                         </div>
                     </div>
