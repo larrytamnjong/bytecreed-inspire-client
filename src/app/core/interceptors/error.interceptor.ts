@@ -38,7 +38,6 @@ export class ErrorInterceptor implements HttpInterceptor {
     private addToken(request: HttpRequest<any>, token: string) {
         return request.clone({setHeaders: {Authorization: `Bearer ${token}` }});}
     
-
       private handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (!this.isRefreshing) {
             this.isRefreshing = true;
