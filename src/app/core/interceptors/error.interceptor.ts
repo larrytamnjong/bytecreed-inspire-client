@@ -23,7 +23,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 if (error.status === 401) {
                     if (!this.tokenService.getRefreshToken()) {
                         this.tokenService.clearSessionData();
-                        this.router.navigate(["/"]);
+                        this.router.navigate(["/auth/login"]);
                     } else {
                         return this.handle401Error(request, next);
                     }
@@ -53,7 +53,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 catchError((err) => {
                     this.isRefreshing = false;
                     this.tokenService.clearSessionData();
-                    this.router.navigate(["/"]);
+                    this.router.navigate(["/auth/login"]);
                     return throwError(() => err);
                 })
             );
