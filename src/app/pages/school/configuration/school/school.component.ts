@@ -4,13 +4,13 @@ import { Address } from 'src/app/core/Models/common/address';
 import { Country } from 'src/app/core/Models/common/country';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { UntypedFormGroup } from '@angular/forms';
-import { AddressService } from 'src/app/core/services/api/address.service';
 import { LookUpService } from 'src/app/core/services/common/look-up.service';
 import { SchoolService } from 'src/app/core/services/api/school.service';
 import { FileService } from 'src/app/core/services/api/file.service';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 import { finalize } from 'rxjs';
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
+import { File } from 'src/app/core/Models/api/file';
 
 
 @Component({
@@ -25,6 +25,7 @@ export class SchoolComponent implements OnInit {
   schoolForm!: UntypedFormGroup;
   addressForm!: UntypedFormGroup;
   countries: Country[] = [];
+  logoFile: File | undefined = undefined;
   submitted = false;
 
   get fSchool() {return this.schoolForm.controls;}
@@ -33,7 +34,6 @@ export class SchoolComponent implements OnInit {
   constructor(
     private addressFormBuilder: UntypedFormBuilder, 
     private schoolFormBuilder: UntypedFormBuilder,
-    private addressService: AddressService,
     private lookUpService: LookUpService,
     private schoolService: SchoolService,
     private fileService: FileService
@@ -97,6 +97,46 @@ export class SchoolComponent implements OnInit {
   });
 }
 
+onLogoFileChange(event: any): void {
+  this.toggleLoading();
+  const file = event.target.files[0];
+  if (!file) {
+    this.toggleLoading();
+    return;
+  }
+    this.fileService.addFile(file).pipe(
+      finalize(() => this.toggleLoading())).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.logoFile = response.data;
+          this.schoolForm.patchValue({ logoFileId: response.data?.id });
+          this.onSubmit();
+        }
+      },
+      error: (error) => {SimpleAlerts.showError(getErrorMessage(error));}
+    });
+}
+
+getLogoFile() {
+  if (this.schoolForm.get('logoFileId')?.value) {
+    this.fileService.getFile(this.schoolForm.get('logoFileId')?.value).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.logoFile = response.data;
+        }
+      },
+      error: (error) => {}
+    });
+  }
+}
+
+getImageSrc(): string {
+  if (this.logoFile?.data && this.logoFile?.mimeType) {
+    return `data:${this.logoFile.mimeType};base64,${this.logoFile.data}`;
+  }
+  return 'assets/images/upload.jpg';
+}
+
 setSchoolValues(school: School) {
   this.schoolForm.setValue({
     name: school.name,
@@ -130,6 +170,7 @@ getSchool() {
    next: (response) => {
      if(response.data?.school){
       this.setSchoolValues(response.data.school);
+      this.getLogoFile();
     }
     if(response.data?.address){
       this.setAddressValues(response.data.address);
@@ -142,4 +183,5 @@ getSchool() {
 toggleLoading() {
   this.loading = !this.loading;
 }
+
 }

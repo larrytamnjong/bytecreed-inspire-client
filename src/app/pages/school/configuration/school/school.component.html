@@ -21,9 +21,9 @@
             <div class="card-body p-4">
                 <div class="text-center">
                     <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
-                        <img src="assets/images/upload.jpg" class="rounded-circle avatar-xl img-thumbnail user-profile-image material-shadow" alt="school-logo">
+                        <img [src]="getImageSrc()"  class="rounded-circle avatar-xl img-thumbnail user-profile-image material-shadow" alt="school-logo">
                         <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
-                            <input id="profile-img-file-input" type="file" class="profile-img-file-input">
+                            <input id="profile-img-file-input" type="file" class="profile-img-file-input" (change)="onLogoFileChange($event)" accept="image/*">>
                             <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
                                 <span class="avatar-title rounded-circle bg-light text-body material-shadow">
                                     <i class="ri-camera-fill"></i>
