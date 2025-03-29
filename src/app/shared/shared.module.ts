@@ -2,15 +2,13 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbNavModule, NgbAccordionModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
-
-// Swiper Slider
 import { SlickCarouselModule } from 'ngx-slick-carousel';
-
-// Counter
 import { CountUpModule } from 'ngx-countup';
-
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
-
+import { FileService } from '../core/services/api/file.api';
+import { SchoolService } from '../core/services/api/school.api';
+import { AddressService } from '../core/services/api/address.api';
+import { LookUpService } from '../core/services/common/look-up.service';
 
 
 @NgModule({
@@ -25,7 +23,12 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
     SlickCarouselModule,
     CountUpModule,
     NgSelectModule,
-    
+  ],
+  providers: [
+    FileService,
+    SchoolService,
+    AddressService,
+    LookUpService
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   exports: [BreadcrumbsComponent]

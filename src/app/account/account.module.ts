@@ -47,7 +47,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
     InstitutionService,
     RoleService,
     PermissionService
-   
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

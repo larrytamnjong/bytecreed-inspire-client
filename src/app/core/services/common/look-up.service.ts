@@ -8,21 +8,27 @@ import { forkJoin, map } from "rxjs";
 export class LookUpService {
   private readonly look_up_controller: string = "v1/look-ups";
   private readonly look_up_data_controller: string = "v1/look-up-data";
+  private readonly countries_controller: string = "v1/countries";
 
   constructor(private api: ApiHttpService) {}
 
-  getLookUps(): Observable<any> {
+  private getLookUps(): Observable<any> {
     return this.api.get(`${this.look_up_controller}`);
   }
 
-  getLookUpData(): Observable<any> {
+  private getLookUpData(): Observable<any> {
     return this.api.get(`${this.look_up_data_controller}`);
+  }
+
+  private getCountries(): Observable<any> {
+    return this.api.get(`${this.countries_controller}`);
   }
 
   getAll(): Observable<LookUpView> {
     return forkJoin({
         lookUp: this.getLookUps().pipe(map(response => response?.data || [])),
         lookUpData: this.getLookUpData().pipe(map(response => response?.data || [])),
+        countries: this.getCountries().pipe(map(response => response?.data || [])),
     });
   }
 }

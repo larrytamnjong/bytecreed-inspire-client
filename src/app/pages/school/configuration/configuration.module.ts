@@ -14,6 +14,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { ConfigurationRoutingModule } from './configuration-routing.module';
 import { SharedModule } from '../../../shared/shared.module';
 import { SchoolComponent } from './school/school.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { SchoolComponent } from './school/school.component';
     NgbTypeaheadModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbTooltipModule
+    NgbTooltipModule,
+    NgSelectModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
