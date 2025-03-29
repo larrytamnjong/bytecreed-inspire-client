@@ -5,9 +5,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { CountUpModule } from 'ngx-countup';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
-import { FileService } from '../core/services/api/file.api';
-import { SchoolService } from '../core/services/api/school.api';
-import { AddressService } from '../core/services/api/address.api';
+import { FileService } from '../core/services/api/file.service';
+import { SchoolService } from '../core/services/api/school.service';
+import { AddressService } from '../core/services/api/address.service';
 import { LookUpService } from '../core/services/common/look-up.service';
 
 

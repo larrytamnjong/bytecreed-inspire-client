@@ -4,9 +4,13 @@ import { Address } from 'src/app/core/Models/common/address';
 import { Country } from 'src/app/core/Models/common/country';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { UntypedFormGroup } from '@angular/forms';
-import { AddressService } from 'src/app/core/services/api/address.api';
+import { AddressService } from 'src/app/core/services/api/address.service';
 import { LookUpService } from 'src/app/core/services/common/look-up.service';
-import { SchoolService } from 'src/app/core/services/api/school.api';
+import { SchoolService } from 'src/app/core/services/api/school.service';
+import { FileService } from 'src/app/core/services/api/file.service';
+import { getErrorMessage } from 'src/app/core/helpers/error-filter';
+import { finalize } from 'rxjs';
+import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 
 
 @Component({
@@ -17,13 +21,10 @@ import { SchoolService } from 'src/app/core/services/api/school.api';
 export class SchoolComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
 
+  loading: boolean = false;
   schoolForm!: UntypedFormGroup;
   addressForm!: UntypedFormGroup;
-
-  school: School = new School();
-  address: Address = new Address();
   countries: Country[] = [];
-  selectedCountryId: string | null = null;
   submitted = false;
 
   get fSchool() {return this.schoolForm.controls;}
@@ -34,24 +35,26 @@ export class SchoolComponent implements OnInit {
     private schoolFormBuilder: UntypedFormBuilder,
     private addressService: AddressService,
     private lookUpService: LookUpService,
-    private schoolService: SchoolService
+    private schoolService: SchoolService,
+    private fileService: FileService
   ) { }
 
   ngOnInit(): void {
-
+    this.toggleLoading();
      this.breadCrumbItems = [
       { label: 'Configuration' },
       { label: 'School', active: true }
     ];
   
     this.getCountries();
+    this.getSchool();
 
     this.schoolForm = this.schoolFormBuilder.group({
       name: ['', [Validators.required]],
       phone: ['',[Validators.required]],
       email: [''],
-      logoFileId: [''],
-      addressId: ['']
+      logoFileId: [null],
+      addressId: [null]
     });
 
     this.addressForm = this.addressFormBuilder.group({
@@ -61,17 +64,37 @@ export class SchoolComponent implements OnInit {
       postalCode: ['']
     });
 
-    this.addressForm.get('countryId')?.valueChanges.subscribe(value => {
-      this.selectedCountryId = value;
-    });
-
+    this.addressForm.get('countryId')?.valueChanges.subscribe(value => {});
+    this.toggleLoading();
   }
 
   onSubmit() {
+    this.toggleLoading();
     this.submitted = true;
     if (this.schoolForm.invalid || this.addressForm.invalid) {
+      this.toggleLoading();
       return;
   }
+
+  this.schoolService.updateCurrentSchool({school: this.schoolForm.value, address: this.addressForm.value }).pipe(
+    finalize(() => this.toggleLoading())
+  ).subscribe({
+    next: (response) => {
+      if(!response.success) {
+        SimpleAlerts.showError(response.message);
+      }
+      if (response.data?.school) {
+        this.setSchoolValues(response.data.school);
+        SimpleAlerts.showSuccess();
+      }
+      if (response.data?.address) { 
+        this.setAddressValues(response.data.address);
+      }
+    },
+    error: (error) => {
+      SimpleAlerts.showError(getErrorMessage(error));
+    }
+  });
 }
 
 setSchoolValues(school: School) {
@@ -94,9 +117,29 @@ setAddressValues(address: Address) {
 }
 
   getCountries() {
-  this.lookUpService.getAll().subscribe(response => {
-    this.countries = response.countries;
+  this.lookUpService.getAll().subscribe({
+    next: (response) => {
+      this.countries = response.countries;
+    },
+    error: (error) => {}
   });
 }
 
+getSchool() {
+  this.schoolService.getCurrentSchool().subscribe({
+   next: (response) => {
+     if(response.data?.school){
+      this.setSchoolValues(response.data.school);
+    }
+    if(response.data?.address){
+      this.setAddressValues(response.data.address);
+    }
+   },
+   error: (error) => {SimpleAlerts.showError(getErrorMessage(error));}
+  });
+}
+
+toggleLoading() {
+  this.loading = !this.loading;
+}
 }
