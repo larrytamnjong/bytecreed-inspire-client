@@ -100,7 +100,7 @@ export class SchoolComponent implements OnInit {
 onLogoFileChange(event: any): void {
   this.toggleLoading();
   const file = event.target.files[0];
-  if (!file) {
+  if (!file || this.schoolForm.invalid || this.addressForm.invalid ) {
     this.toggleLoading();
     return;
   }
