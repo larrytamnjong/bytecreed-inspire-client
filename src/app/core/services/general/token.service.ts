@@ -44,6 +44,11 @@ export class TokenService {
     }
   }
 
+  isTokenAvailable(): boolean {
+    const token = this.getToken();
+    return !!token;
+  }
+
   getUserPermissions(): number[] {
     this.decodedToken = this.getDecodeToken();
     if (this.decodedToken && this.decodedToken["Permissions"]) {

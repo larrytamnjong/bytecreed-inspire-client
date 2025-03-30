@@ -9,7 +9,7 @@ export class AuthGuard {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
-    if(this.tokenService.isTokenValid()){
+    if(this.tokenService.isTokenAvailable()){
       const requiredPermission = route.data["permission"] as PermissionActionEnum;
       const userPermissions = this.tokenService.getUserPermissions();
       if (requiredPermission && !userPermissions.includes(requiredPermission)) {
