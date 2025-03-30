@@ -66,7 +66,7 @@ export class AdmissionComponent implements OnInit {
         this.admissionNumberConfigurationForm.setValue({...response.data!});
         }
       },
-      error: (error) => {}
+      error: (error) => {SimpleAlerts.showError(getErrorMessage(error));}
     });
   }
  
