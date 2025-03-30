@@ -3,7 +3,6 @@ import { Observable } from "rxjs";
 import { ApiHttpService } from "../common/base-api-http.service";
 import { ServiceResponse } from "../../Models/common/service-response";
 import { File } from "../../Models/api/file";
-import { RequestHelper } from "../common/service-request-helper";
 
 @Injectable({ providedIn: 'root'})
 export class FileService {
@@ -13,11 +12,17 @@ export class FileService {
   
   getFile(fileId: string): Observable<ServiceResponse<File>> {
     return this.apiService.get(`${this.file_controller}/${fileId}/file`);
+  } 
+
+  updateFile(file: any, fileId: string): Observable<ServiceResponse<File>> {
+    const formData = new FormData();
+    formData.append("data", file);
+    return this.apiService.put(`${this.file_controller}/${fileId}/file`, formData);
   }
 
   addFile(file: any): Observable<ServiceResponse<File>> {
     const formData = new FormData();
     formData.append("data", file);
-    return this.apiService.post(`${this.file_controller}/file`, formData );
+    return this.apiService.post(`${this.file_controller}/file`, formData);
   }
 }

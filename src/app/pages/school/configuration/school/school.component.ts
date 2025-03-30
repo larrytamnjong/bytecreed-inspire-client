@@ -26,6 +26,7 @@ export class SchoolComponent implements OnInit {
   addressForm!: UntypedFormGroup;
   countries: Country[] = [];
   logoFile: File | undefined = undefined;
+  logoFileId: null | undefined = null;
   submitted = false;
 
   get fSchool() {return this.schoolForm.controls;}
@@ -64,7 +65,8 @@ export class SchoolComponent implements OnInit {
       postalCode: ['']
     });
 
-    this.addressForm.get('countryId')?.valueChanges.subscribe(value => {});
+    this.schoolForm.get('logoFileId')?.valueChanges.subscribe(value => {this.logoFileId = value;});
+
     this.toggleLoading();
   }
 
@@ -77,12 +79,9 @@ export class SchoolComponent implements OnInit {
   }
 
   this.schoolService.updateCurrentSchool({school: this.schoolForm.value, address: this.addressForm.value }).pipe(
-    finalize(() => this.toggleLoading())
-  ).subscribe({
+    finalize(() => this.toggleLoading())).subscribe({
     next: (response) => {
-      if(!response.success) {
-        SimpleAlerts.showError(response.message);
-      }
+      if(!response.success) {SimpleAlerts.showError(response.message);}
       if (response.data?.school) {
         this.setSchoolValues(response.data.school);
         SimpleAlerts.showSuccess();
@@ -104,6 +103,21 @@ onLogoFileChange(event: any): void {
     this.toggleLoading();
     return;
   }
+
+   if(this.logoFileId){
+     this.fileService.updateFile(file, this.logoFileId).pipe(
+      finalize(() => this.toggleLoading())).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.logoFile = response.data;
+          this.logoFile = response.data;
+          this.schoolForm.patchValue({ logoFileId: response.data?.id });
+          this.onSubmit();
+        }
+      },
+      error: (error) => {SimpleAlerts.showError(getErrorMessage(error));}
+    });
+   }else{
     this.fileService.addFile(file).pipe(
       finalize(() => this.toggleLoading())).subscribe({
       next: (response) => {
@@ -115,6 +129,7 @@ onLogoFileChange(event: any): void {
       },
       error: (error) => {SimpleAlerts.showError(getErrorMessage(error));}
     });
+   }
 }
 
 getLogoFile() {
