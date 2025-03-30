@@ -135,7 +135,7 @@
         <div class="col-12">
             <div class="mb-4">
                 <p class="text-muted"><code>Multiple institutions found.</code> Please select a default institution. You can always change it later.</p>
-                <ng-select class="w-100" [(ngModel)]="selectedInstitution" placeholder="Select Institution">
+                <ng-select class="w-100" [(ngModel)]="selectedInstitution" placeholder="Search or select institution">
                     <ng-option *ngFor="let institution of institutions" [value]="institution">{{institution.name}}({{institution.code}})</ng-option>
                 </ng-select>
             </div>
