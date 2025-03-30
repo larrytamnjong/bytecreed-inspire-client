@@ -15,10 +15,12 @@ import { ConfigurationRoutingModule } from './configuration-routing.module';
 import { SharedModule } from '../../../shared/shared.module';
 import { SchoolComponent } from './school/school.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AdmissionComponent } from './admission/admission.component';
 
 @NgModule({
   declarations: [
-    SchoolComponent
+    SchoolComponent,
+    AdmissionComponent
   ],
   imports: [
     CommonModule,

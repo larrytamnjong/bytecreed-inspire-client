@@ -9,6 +9,7 @@ import { FileService } from '../core/services/api/file.service';
 import { SchoolService } from '../core/services/api/school.service';
 import { AddressService } from '../core/services/api/address.service';
 import { LookUpService } from '../core/services/common/look-up.service';
+import { AdmissionNumberConfigurationService } from '../core/services/api/admission-number-configuration.service';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { LookUpService } from '../core/services/common/look-up.service';
     FileService,
     SchoolService,
     AddressService,
-    LookUpService
+    LookUpService,
+    AdmissionNumberConfigurationService
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   exports: [BreadcrumbsComponent]

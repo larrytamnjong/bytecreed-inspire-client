@@ -1,0 +1,58 @@
+<app-breadcrumbs title="Admission" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <div class="col-xxl-12">
+        <div class="card">
+            <div class="card-body">
+                <ul ngbNav #Bordered="ngbNav" [activeId]="2" class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
+                  <li [ngbNavItem]="1"><a ngbNavLink><i class=" ri-calendar-event-line"></i> Period Settings</a>
+                      <ng-template ngbNavContent>
+                        <form></form>
+                      </ng-template>
+                  </li>
+                  <li [ngbNavItem]="2"><a ngbNavLink><i class="ri-list-ordered"></i> Number Configuration</a>
+                      <ng-template ngbNavContent>
+                        <form [formGroup]="admissionNumberConfigurationForm" (ngSubmit)="onSaveAdmissionForm()">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <label for="leading" class="form-label">Leading</label>
+                                        <input type="text" class="form-control" id="leading" placeholder="Enter Leading Value" formControlName="leading"  >
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <label for="startFromNumber" class="form-label">Start From <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" id="startFromNumber" placeholder="Enter Start From number" formControlName="startFromNumber"  required [ngClass]="{ 'is-invalid': submittedAdmissionNumberConfigurationForm && fAdmissionNumberConfiguration['startFromNumber'].errors }">
+                                        <div class="invalid-feedback">Please Enter Start From Value</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <label for="trailing" class="form-label">Trailing</label>
+                                        <input type="text" class="form-control" id="trailing" placeholder="Enter Trailing Value" formControlName="trailing">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="hstack gap-2 justify-content-end">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="button" class="btn btn-warning" (click)="resetAdmissionForm()">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                      </ng-template>
+                  </li>
+                </ul>
+                <div class="tab-content text-muted">
+                  <div [ngbNavOutlet]="Bordered"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="elmLoader" *ngIf="loading">
+        <div class="spinner-border text-primary avatar-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>

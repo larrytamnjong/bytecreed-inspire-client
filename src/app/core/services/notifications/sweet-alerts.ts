@@ -19,4 +19,18 @@ export class SimpleAlerts {
             timer: timer ?? 1500
         });
     }
+
+    static async confirmDialog(title?: string, text: string = 'Are you sure you want to proceed with this action?'): Promise<boolean> {
+        const result = await Swal.fire({
+            title,
+            text,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#364574',
+            cancelButtonColor: '#D29C40',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+        });
+        return result.isConfirmed;
+    }
 }
