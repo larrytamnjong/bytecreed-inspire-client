@@ -98,8 +98,7 @@ export class SectionsComponent implements OnInit {
       return;
     }
     
-    this.dismissModal();
-    this.reset();
+    this.modalService.dismissAll();
 
     if(this.isCreateMode){
       this.classService.addClassSection(this.classSectionForm.value).pipe(
@@ -126,10 +125,13 @@ export class SectionsComponent implements OnInit {
         error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
       })
     }
+
+    this.reset();
   }
 
   dismissModal() {
     this.modalService.dismissAll();
+    this.reset();
   }
 
   reset() {
