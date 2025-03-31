@@ -71,7 +71,7 @@ export class SectionsComponent implements OnInit {
   }
 
   changePage() {
-    this.classSections = this.paginationService?.changePage(this.classSections)
+    this.classSectionsCopy = this.paginationService?.changePage(this.classSections)
   }
 
   getClassSections() {
@@ -102,7 +102,7 @@ export class SectionsComponent implements OnInit {
 
     if(this.isCreateMode){
       this.classService.addClassSection(this.classSectionForm.value).pipe(
-        finalize(() => {this.toggleLoading();})
+        finalize(() => {this.toggleLoading(); this.reset();})
       ).subscribe({
         next: (response) => {
           if(response.success){
@@ -113,20 +113,22 @@ export class SectionsComponent implements OnInit {
         error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
       });
     }else{
-      this.classService.updateClassSection(this.classSectionForm.value).pipe(
-        finalize(() => {this.toggleLoading();})
-      ).subscribe({
-        next: (response) => {
-          if(response.success){
-            this.getClassSections();
-            SimpleAlerts.showSuccess();
-          }
-        },
-        error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
-      })
+      SimpleAlerts.confirmDialog().then((result) => {
+        if (result) {
+          this.classService.updateClassSection(this.classSectionForm.value).pipe(
+            finalize(() => {this.toggleLoading(); this.reset();})
+          ).subscribe({
+            next: (response) => {
+              if(response.success){
+                this.getClassSections();
+                SimpleAlerts.showSuccess();
+              }
+            },
+            error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
+          })
+        }
+      });
     }
-
-    this.reset();
   }
 
   dismissModal() {
