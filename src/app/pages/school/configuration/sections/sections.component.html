@@ -98,7 +98,7 @@
         <form  class="tablelist-form" autocomplete="off" [formGroup]="classSectionForm" (ngSubmit)="onSubmit()">
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="name" class="form-label">Section Name</label>
+                    <label for="name" class="form-label">Name</label>
                     <input type="text" id="name" class="form-control" placeholder="Enter class section Name" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
                     <div class="invalid-feedback">Please enter a class section name</div>
                 </div>
