@@ -60,21 +60,19 @@
                     <div class="row justify-content-md-between align-items-md-center">
                         <div class="col col-sm-5">
                             <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
-                                Showing {{service.startIndex}} to {{service.endIndex}} of {{institutionList?.length}} entries
+                                Showing {{service.startIndex}} to {{service.endIndex}} of {{institutionList?.length ?? 0}} entries
                             </div>
                         </div>
-                        <!-- Pagination -->
                         <div class="col col-sm-5">
                             <div class="text-sm-right float-sm-end listjs-pagination">
                                 <ngb-pagination [collectionSize]="institutionList?.length" [(page)]="service.page" [pageSize]="service.pageSize" (pageChange)="changePage()">
                                 </ngb-pagination>
                             </div>
                         </div>
-                        <!-- End Pagination -->
                     </div>
                 </div>
 
-                <!-- Institution Create Model -->
+
                 <ng-template #content role="document" let-modal>
                     <div class="modal-header bg-light p-3">
                         <h5 class="modal-title" id="exampleModalLabel">Create Institution</h5>
@@ -96,18 +94,13 @@
                         </div>
                     </form>
                 </ng-template>
-                <!--End Modal -->
   
                 <div id="elmLoader" *ngIf="loading">
                     <div class="spinner-border text-primary avatar-sm" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
                 </div>
-
             </div>
         </div>
-
     </div>
-    <!--end col-->
 </div>
-<!--end row-->

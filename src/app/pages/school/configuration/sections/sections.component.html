@@ -1,0 +1,110 @@
+<app-breadcrumbs title="Sections" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<div class="row">
+    <div class="col-xxl-12">
+        <div class="card">
+            <div class="card-body">
+                <ul ngbNav #Bordered="ngbNav" [activeId]="2" class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
+                  <li [ngbNavItem]="1"><a ngbNavLink><i class="ri-list-settings-line"></i> General</a>
+                      <ng-template ngbNavContent>
+                        <form></form>
+                      </ng-template>
+                  </li>
+                  <li [ngbNavItem]="2"><a ngbNavLink><i class="ri-artboard-line"></i> Class Sections</a>
+                      <ng-template ngbNavContent>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card" id="ticketsList">
+                                    <div class="card-header border-0">
+                                        <div class="d-flex align-items-center">
+                                            <h5 class="card-title mb-0 flex-grow-1">Class Sections</h5>
+                                            <div class="flex-shrink-0  hstack gap-2">
+                                                <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="openModal(content)"><i class="ri-add-line align-bottom me-1"></i> Create Section</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body border border-dashed border-end-0 border-start-0">
+                        
+                                        <div class="row g-3">
+                                            <div class="col-xxl-12 col-sm-12">
+                                                <div class="search-box">
+                                                    <input type="text" name="searchTerm" class="form-control search bg-light border-light" placeholder="Search for name..." [(ngModel)]="searchTerm" (ngModelChange)="performSearch()">
+                                                    <i class="ri-search-line search-icon"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive table-card mb-3">
+                                            <table class="table align-middle table-nowrap mb-0" id="ticketTable">
+                                                <thead class="table-light text-muted">
+                                                    <tr>
+                                                        <th class="sort" (click)="onSort('name')">Name</th>
+                                                        <th class="sort">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="list form-check-all" id="ticket-list-data">
+                                                    @for ( data of classSectionsCopy; track $index) {
+                                                    <tr id="t_{{data._id}}">
+                                                        <td>
+                                                            <ngb-highlight [result]="data.name" [term]="searchTerm"></ngb-highlight>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-light"><i class="ri-pencil-fill align-bottom text-muted"></i>  Edit</button>
+                                                        </td>
+                                                    </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="row justify-content-md-between align-items-md-center">
+                                            <div class="col col-sm-5">
+                                                <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                                    Showing {{paginationService.startIndex}} to {{paginationService.endIndex}} of {{classSections?.length ?? 0}} entries
+                                                </div>
+                                            </div>
+                                            <div class="col col-sm-5">
+                                                <div class="text-sm-right float-sm-end listjs-pagination">
+                                                    <ngb-pagination [collectionSize]="classSections?.length" [(page)]="paginationService.page" [pageSize]="paginationService.pageSize" (pageChange)="changePage()">
+                                                    </ngb-pagination>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </ng-template>
+                  </li>
+                </ul>
+                <div class="tab-content text-muted">
+                  <div [ngbNavOutlet]="Bordered"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="elmLoader" *ngIf="loading">
+        <div class="spinner-border text-primary avatar-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <ng-template #content role="document" let-modal>
+        <div class="modal-header p-3 bg-primary-subtle">
+            <h5 class="modal-title" id="exampleModalLabel">Add Class Section</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <form  class="tablelist-form" autocomplete="off">
+            <div class="modal-body">
+     
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="modal.close('Close click')">Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+</div>

@@ -10,6 +10,7 @@ import { SchoolService } from '../core/services/api/school.service';
 import { AddressService } from '../core/services/api/address.service';
 import { LookUpService } from '../core/services/common/look-up.service';
 import { AdmissionNumberConfigurationService } from '../core/services/api/admission-number-configuration.service';
+import { ClassService } from '../core/services/api/class.service';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { AdmissionNumberConfigurationService } from '../core/services/api/admiss
     SchoolService,
     AddressService,
     LookUpService,
-    AdmissionNumberConfigurationService
+    AdmissionNumberConfigurationService,
+    ClassService
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   exports: [BreadcrumbsComponent]
