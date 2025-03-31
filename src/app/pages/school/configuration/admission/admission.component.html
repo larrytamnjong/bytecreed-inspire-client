@@ -5,12 +5,12 @@
         <div class="card">
             <div class="card-body">
                 <ul ngbNav #Bordered="ngbNav" [activeId]="2" class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
-                  <li [ngbNavItem]="1"><a ngbNavLink><i class=" ri-calendar-event-line"></i> Period Settings</a>
+                  <li [ngbNavItem]="1"><a ngbNavLink><i class=" ri-calendar-event-line"></i> Registration</a>
                       <ng-template ngbNavContent>
                         <form></form>
                       </ng-template>
                   </li>
-                  <li [ngbNavItem]="2"><a ngbNavLink><i class="ri-list-ordered"></i> Number Configuration</a>
+                  <li [ngbNavItem]="2"><a ngbNavLink><i class="ri-list-ordered"></i> Matricul Configuration</a>
                       <ng-template ngbNavContent>
                         <form [formGroup]="admissionNumberConfigurationForm" (ngSubmit)="onSaveAdmissionForm()">
                             <div class="row">
