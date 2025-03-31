@@ -128,8 +128,6 @@ export class SectionsComponent implements OnInit {
     }
   }
 
-  
-
   dismissModal() {
     this.modalService.dismissAll();
   }
