@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { ApiHttpService } from "../common/base-api-http.service";
 import { ServiceResponse } from "../../Models/common/service-response";
 import { ClassSection } from "../../Models/api/class-section";
+import { RequestHelper } from "../common/service-request-helper";
 
 @Injectable({ providedIn: 'root'})
 export class ClassService {
@@ -14,10 +15,10 @@ export class ClassService {
   }
 
   addClassSection(data: ClassSection): Observable<ServiceResponse<ClassSection>> {
-    return this.apiService.post(`${this.class_section_controller}/class-section`, data);
+    return this.apiService.post(`${this.class_section_controller}/class-section`, RequestHelper.createServiceRequest(data));
   }
 
   updateClassSection(data: ClassSection): Observable<ServiceResponse<ClassSection>> {
-    return this.apiService.put(`${this.class_section_controller}/class-sections`, data);
+    return this.apiService.put(`${this.class_section_controller}/class-section`, RequestHelper.createServiceRequest(data));
   }
 }

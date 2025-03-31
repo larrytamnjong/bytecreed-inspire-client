@@ -18,7 +18,7 @@
                                         <div class="d-flex align-items-center">
                                             <h5 class="card-title mb-0 flex-grow-1">Class Sections</h5>
                                             <div class="flex-shrink-0  hstack gap-2">
-                                                <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="openModal(content)"><i class="ri-add-line align-bottom me-1"></i> Create Section</button>
+                                                <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-add-line align-bottom me-1"></i> Create Section</button>
                                             </div>
                                         </div>
                                     </div>
@@ -49,7 +49,7 @@
                                                             <ngb-highlight [result]="data.name" [term]="searchTerm"></ngb-highlight>
                                                         </td>
                                                         <td>
-                                                            <button type="button" class="btn btn-sm btn-light"><i class="ri-pencil-fill align-bottom text-muted"></i>  Edit</button>
+                                                            <button type="button" class="btn btn-sm btn-light" (click)="editModal(content, data.id)"><i class="ri-pencil-fill align-bottom text-muted"></i>  Edit</button>
                                                         </td>
                                                     </tr>
                                                     }
@@ -92,16 +92,20 @@
 
     <ng-template #content role="document" let-modal>
         <div class="modal-header p-3 bg-primary-subtle">
-            <h5 class="modal-title" id="exampleModalLabel">Add Class Section</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="modal.dismiss('Cross click')"></button>
+            <h5 class="modal-title" id="exampleModalLabel">{{isCreateMode ? "Add" : "Update"}} Class Section</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
         </div>
-        <form  class="tablelist-form" autocomplete="off">
+        <form  class="tablelist-form" autocomplete="off" [formGroup]="classSectionForm" (ngSubmit)="onSubmit()">
             <div class="modal-body">
-     
+                <div class="mb-3">
+                    <label for="name" class="form-label">Section Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Enter class section Name" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
+                    <div class="invalid-feedback">Please enter a class section name</div>
+                </div>
             </div>
             <div class="modal-footer">
                 <div class="hstack gap-2 justify-content-end">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="modal.close('Close click')">Close</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()">Close</button>
                     <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
                 </div>
             </div>
