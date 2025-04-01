@@ -41,7 +41,7 @@
                                                     <tr>
                                                         <th>SN</th>
                                                         <th class="sort" (click)="onSort('name')">Name</th>
-                                                        <th>Action</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="list form-check-all" id="ticket-list-data">
@@ -52,7 +52,7 @@
                                                             <ngb-highlight [result]="data.name" [term]="searchTerm"></ngb-highlight>
                                                         </td>
                                                         <td>
-                                                            <button type="button" class="btn btn-sm btn-light" (click)="editModal(content, data.id)"><i class="ri-pencil-fill align-bottom text-muted"></i></button>
+                                                            <a href="javascript:void(0);" class="link-primary"><i class="ri-pencil-fill" (click)="editModal(content, data.id)"></i></a>
                                                         </td>
                                                     </tr>
                                                     }
