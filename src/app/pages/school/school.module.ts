@@ -1,24 +1,30 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {NgbToastModule} from '@ng-bootstrap/ng-bootstrap';
-import { NgbPaginationModule, NgbTypeaheadModule, NgbDropdownModule, NgbNavModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FeatherModule } from 'angular-feather';
-import { allIcons } from 'angular-feather/icons';
-import { CountUpModule } from 'ngx-countup';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { SimplebarAngularModule } from 'simplebar-angular';
-import { NgApexchartsModule } from 'ng-apexcharts';
-import { SlickCarouselModule } from 'ngx-slick-carousel';
-import { FlatpickrModule } from 'angularx-flatpickr';
-import { SchoolRoutingModule } from './school-routing.module';
-import { SharedModule } from '../../shared/shared.module';
-import { ConfigurationModule } from './configuration/configuration.module';
-import { NgSelectModule } from '@ng-select/ng-select';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { NgbToastModule } from "@ng-bootstrap/ng-bootstrap";
+import {
+  NgbPaginationModule,
+  NgbTypeaheadModule,
+  NgbDropdownModule,
+  NgbNavModule,
+  NgbTooltipModule,
+} from "@ng-bootstrap/ng-bootstrap";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FeatherModule } from "angular-feather";
+import { allIcons } from "angular-feather/icons";
+import { CountUpModule } from "ngx-countup";
+import { LeafletModule } from "@asymmetrik/ngx-leaflet";
+import { SimplebarAngularModule } from "simplebar-angular";
+import { NgApexchartsModule } from "ng-apexcharts";
+import { SlickCarouselModule } from "ngx-slick-carousel";
+import { FlatpickrModule } from "angularx-flatpickr";
+import { SchoolRoutingModule } from "./school-routing.module";
+import { SharedModule } from "../../shared/shared.module";
+import { ConfigurationModule } from "./configuration/configuration.module";
+import { NgSelectModule } from "@ng-select/ng-select";
+import { ReportCardsComponent } from "./reporting/report-cards.component";
 
 @NgModule({
-  declarations: [
-  ],
+  declarations: [ReportCardsComponent],
   imports: [
     CommonModule,
     NgbToastModule,
@@ -39,8 +45,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReactiveFormsModule,
     NgbTooltipModule,
     ConfigurationModule,
-    NgSelectModule
+    NgSelectModule,
   ],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class SchoolModule { }
+export class SchoolModule {}
