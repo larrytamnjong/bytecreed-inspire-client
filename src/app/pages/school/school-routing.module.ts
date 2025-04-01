@@ -3,10 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 const routes: Routes = [
-  {
-    path: 'configuration',
-    loadChildren: () => import('./configuration/configuration.module').then(m => m.ConfigurationModule)
-  }
+  {path: 'configuration', loadChildren: () => import('./configuration/configuration.module').then(m => m.ConfigurationModule),},
+  {path: 'academics', loadChildren: () => import('./configuration/academics/academics.module').then(m => m.AcademicsModule),}
 ];
 
 @NgModule({

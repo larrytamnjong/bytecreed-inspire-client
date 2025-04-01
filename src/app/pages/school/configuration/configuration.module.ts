@@ -17,12 +17,16 @@ import { SchoolComponent } from './school/school.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AdmissionComponent } from './admission/admission.component';
 import { SectionsComponent } from './sections/sections.component';
+import { ExamTypesComponent } from './exam-types/exam-types.component';
+import { AcademicsModule } from './academics/academics.module';
+import { GradingModule } from './grading/grading.module';
 
 @NgModule({
   declarations: [
     SchoolComponent,
     AdmissionComponent,
-    SectionsComponent
+    SectionsComponent,
+    ExamTypesComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +47,9 @@ import { SectionsComponent } from './sections/sections.component';
     FormsModule,
     ReactiveFormsModule,
     NgbTooltipModule,
-    NgSelectModule
+    NgSelectModule,
+    AcademicsModule,
+    GradingModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
