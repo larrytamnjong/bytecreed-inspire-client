@@ -17,7 +17,7 @@
                                     <div  class="card-header border-bottom-dashed">
                                         <div class="row g-4 align-items-center">
                                             <div class="col-sm">
-                                                <div><h5 class="card-title mb-0 flex-grow-1"><i class="ri-artboard-line text-muted fs-18 align-middle me-1">   </i>Class Sections</h5></div>
+                                                <div><h5 class="card-title mb-0"><i class="ri-artboard-line text-muted fs-18 align-middle me-1">   </i>Class Sections</h5></div>
                                             </div>
                                             <div class="col-sm-auto">
                                                 <div class="d-flex flex-wrap align-items-start gap-2">
@@ -26,55 +26,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-body border-bottom-dashed border-bottom">
-                                        <div class="row g-3">
-                                            <div class="col-xxl-12 col-sm-12">
-                                                <div class="search-box">
-                                                    <input type="text" name="searchTerm" class="form-control search bg-light border-light" placeholder="Search for name..." [(ngModel)]="searchTerm" (ngModelChange)="performSearch()">
-                                                    <i class="ri-search-line search-icon"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover table-striped table-gridjs" id="classSectionsTable">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="sort" (click)="onSort('name')">Name</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="list form-check-all" id="ticket-list-data">
-                                                    @for ( data of classSectionsCopy; track $index) {
-                                                    <tr id="t_{{data._id}}">
-                                                        <td>
-                                                            <ngb-highlight [result]="data.name" [term]="searchTerm"></ngb-highlight>
-                                                        </td>
-                                                        <td>
-                                                            <a href="javascript:void(0);" class="link-primary"><i class="ri-pencil-fill fs-16" (click)="editModal(content, data.id)"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="row justify-content-md-between align-items-md-center">
-                                            <div class="col col-sm-5">
-                                                <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
-                                                    <!-- item
-                                                    {{paginationService.startIndex}} to
-                                                    {{paginationService.endIndex}} of {{classSections?.length ?? 0}}
-                                                    items -->
-                                                </div>
-                                            </div>
-                                            <div class="col col-sm-5">
-                                                <div class="text-sm-right float-sm-end listjs-pagination gap-2">
-                                                    <ngb-pagination [collectionSize]="classSections?.length" [ellipses]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="paginationService.page" [pageSize]="paginationService.pageSize" (pageChange)="changePage()"></ngb-pagination>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <generic-app-table [headers]="headers" [data]="classSections" [showActions]="true" [showDelete]="true" [showDelete]="false" (editClicked)="editModal(content, $event)"></generic-app-table>
                                 </div>
                             </div>
                         </div>
