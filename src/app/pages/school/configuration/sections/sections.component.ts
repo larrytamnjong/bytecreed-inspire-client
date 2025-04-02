@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs';
 import { ClassService } from 'src/app/core/services/api/class.service';
@@ -17,7 +17,7 @@ export class SectionsComponent implements OnInit {
 
   loading: boolean = false;
   submitted: boolean = false;
-  
+
   searchTerm: any;
   searchResults: any;
   classSections: any = [];

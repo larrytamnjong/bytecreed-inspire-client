@@ -20,6 +20,10 @@ import { SectionsComponent } from './sections/sections.component';
 import { ExamTypesComponent } from './exam-types/exam-types.component';
 import { AcademicsModule } from './academics/academics.module';
 import { GradingModule } from './grading/grading.module';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -49,7 +53,11 @@ import { GradingModule } from './grading/grading.module';
     NgbTooltipModule,
     NgSelectModule,
     AcademicsModule,
-    GradingModule
+    GradingModule,
+    MatSortModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatFormFieldModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })

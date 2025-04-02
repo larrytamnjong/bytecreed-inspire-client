@@ -31,17 +31,16 @@
                         <table class="table table-hover table-striped table-gridjs">
                             <thead>
                                 <tr>
-                                    <th>SN</th>
                                     <th class="sort" (click)="onSort('code')">Code</th>
                                     <th class="sort" (click)="onSort('name')">Name</th>
-                                    <th class="sort" (click)="onSort('isActive')">Status</th>
-                                    <th class="sort" (click)="onSort('dateCreated')">Created Date</th>
+                                    <th >Status</th>
+                                    <th >Created Date</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @for( data of institutionListCopy; track $index){
                                 <tr id="c_{{data.id}}">
-                                    <td>{{$index + 1}}</td>
                                     <td>
                                         <ngb-highlight [result]="data.code" [term]="searchTerm"></ngb-highlight>
                                     </td>
@@ -51,6 +50,9 @@
                                     <td class="status"><span class="badge text-uppercase" [ngClass]=" { 'bg-success-subtle text-success': data.isActive == true, 'bg-danger-subtle text-danger': data.isActive != true }">{{getStatusLabel(data.isActive)}}</span></td>
                                     <td>
                                         <ngb-highlight [result]="data.dateCreated | date :'longDate'" [term]="searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0);" class="link-primary"><i class="ri-login-circle-line fs-16" ></i></a>
                                     </td>
                                 </tr>
                                 }

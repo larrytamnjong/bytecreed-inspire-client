@@ -41,7 +41,6 @@
                                             <table class="table table-hover table-striped table-gridjs" id="classSectionsTable">
                                                 <thead>
                                                     <tr>
-                                                        <th>SN</th>
                                                         <th class="sort" (click)="onSort('name')">Name</th>
                                                         <th></th>
                                                     </tr>
@@ -49,12 +48,11 @@
                                                 <tbody class="list form-check-all" id="ticket-list-data">
                                                     @for ( data of classSectionsCopy; track $index) {
                                                     <tr id="t_{{data._id}}">
-                                                        <td>{{ $index + 1 }}</td>
                                                         <td>
                                                             <ngb-highlight [result]="data.name" [term]="searchTerm"></ngb-highlight>
                                                         </td>
                                                         <td>
-                                                            <a href="javascript:void(0);" class="link-primary"><i class="ri-pencil-fill" (click)="editModal(content, data.id)"></i></a>
+                                                            <a href="javascript:void(0);" class="link-primary"><i class="ri-pencil-fill fs-16" (click)="editModal(content, data.id)"></i></a>
                                                         </td>
                                                     </tr>
                                                     }
