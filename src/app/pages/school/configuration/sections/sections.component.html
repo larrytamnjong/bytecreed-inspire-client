@@ -62,7 +62,10 @@
                                         <div class="row justify-content-md-between align-items-md-center">
                                             <div class="col col-sm-5">
                                                 <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
-                                                    {{classSections?.length ?? 0}} Records
+                                                    item
+                                                    {{paginationService.startIndex}} to
+                                                    {{paginationService.endIndex}} of {{classSections?.length ?? 0}}
+                                                    items
                                                 </div>
                                             </div>
                                             <div class="col col-sm-5">
