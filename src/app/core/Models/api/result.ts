@@ -1,6 +1,3 @@
-// // export class Result{
-// //     admissionNumber ?: string
-// // }
 export class ResultBaseNew {
   studentId!: string;
   academicPeriodId!: string;
@@ -9,8 +6,9 @@ export class ResultBaseNew {
   classProfiles?: ClassProfileResponse[];
   disciplines?: DisciplineResponseNew[];
   finalResults?: FinalResultResponseNew[];
-  schools?:SchoolResponseNew[];
-  academicPeriodName?: string;
+  schools?: SchoolResponseNew[];
+  academicPeriodName?: null;
+  students?: null;
 }
 
 export class StudentResultNew {
@@ -84,4 +82,28 @@ export class Address {
   city?: string;
   state?: string;
   country?: string;
+}
+
+export class Student {
+  id!: string;
+  familyName!: string;
+  givenNames!: string;
+  dateOfBirth?: Date;
+  sex!: SexEnum;
+  admissionNumber!: string;
+  studentStatus!: StudentStatusEnum;
+  userId?: string;
+  addressId?: string;
+  address?: Address;
+}
+export enum SexEnum {
+  Male = 1,
+  Female = 2,
+}
+
+export enum StudentStatusEnum {
+  Active = 0,
+  Graduated = 1,
+  DroppedOut = 2,
+  Expelled = 3,
 }

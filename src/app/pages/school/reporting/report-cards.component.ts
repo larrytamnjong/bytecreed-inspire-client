@@ -40,7 +40,8 @@ export class ReportCardsComponent implements OnInit {
       disciplines: [],
       finalResults: [],
       schools: [],
-      academicPeriodName: "",
+      academicPeriodName: null,
+      students:null,
       studentResults: [
         {
           admissionNumber: this.inputData,
@@ -63,7 +64,6 @@ export class ReportCardsComponent implements OnInit {
         debugger;
         console.log("Result generated:", response);
         this.data = response.data;
-        alert("Result generated successfully!");
       },
       error: (error) => {
         console.error("Error generating result:", error);
