@@ -17,10 +17,12 @@ export class SectionsComponent implements OnInit {
 
   loading: boolean = false;
   submitted: boolean = false;
+  
   searchTerm: any;
   searchResults: any;
   classSections: any = [];
   classSectionsCopy: any = [];
+
   classSectionForm!: UntypedFormGroup;
   isCreateMode: boolean = true;
   get form() {return this.classSectionForm.controls;}
