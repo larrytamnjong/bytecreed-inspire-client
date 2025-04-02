@@ -4,9 +4,221 @@
   [breadcrumbItems]="breadCrumbItems"
 ></app-breadcrumbs>
 <!-- End Breadcrumbs -->
-
 <p>
-  This is report cards component
+  This is the report cards component
   <br />
-  Created by Pooja patel
+  Created by Pooja Patel
 </p>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card" id="reportList">
+      <div class="card-header border-bottom-dashed">
+        <div class="row g-4 align-items-center">
+          <div class="col-sm">
+            <div>
+              <h5 class="card-title mb-0">
+                <i class="bx bxs-school text-muted fs-18 align-middle me-1"></i>
+                Reports
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body border-bottom-dashed border-bottom">
+        <div class="row g-3">
+          <div class="col-xl-6 col-sm-6">
+            <div>
+              <label for="AdmissionNumber" class="form-label">
+                Enter Admission Number
+              </label>
+              <input
+                type="text"
+                id="AdmissionNumber"
+                class="form-control bg-light border-light"
+                placeholder="Enter admission number"
+                [(ngModel)]="inputData"
+              />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="d-flex flex-wrap align-items-start gap-2">
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="generateResult()"
+              >
+                <i class="ri-add-line align-bottom me-1"></i> Generate Result
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Start Displaying Results -->
+      <div *ngIf="data">
+        <div class="mt-4">
+          <div class="container mt-4">
+            <div class="table-responsive">
+              <table class="table table-bordered text-center">
+                <thead class="table-dark">
+                  <tr>
+                    <th>Subject Name</th>
+                    <th>Coefficient</th>
+                    <th>SE Q1</th>
+                    <th>SE Q2</th>
+                    <th>Term</th>
+                    <th>Total</th>
+                    <th>Grade</th>
+                    <th>Rank</th>
+                    <th>Subject Average</th>
+                    <th>Remark</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let result of data.studentResults">
+                    <td>{{ result.subjectName || "N/A" }}</td>
+                    <td>{{ result.coefficient }}</td>
+                    <td>{{ result.seq1 }}</td>
+                    <td>{{ result.seq2 }}</td>
+                    <td>{{ result.term }}</td>
+                    <td>{{ result.total }}</td>
+                    <td>{{ result.grade }}</td>
+                    <td>{{ result.rank }}</td>
+                    <td>{{ result.subjectAvg }}</td>
+                    <td>{{ result.remark }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="report-card">
+            <div class="row header">
+              <div class="col-4">Sequential Results</div>
+              <div class="col-4">Final Results</div>
+              <div class="col-4">Class Profile</div>
+            </div>
+            <div class="row">
+              <!-- Sequential Results  Section -->
+              <div class="col-4">
+                <table class="table">
+                  <tr>
+                    <th>Sequence</th>
+                    <th>Average</th>
+                    <th>Rank</th>
+                  </tr>
+                  <tr>
+                    <td>First Sequence</td>
+                    <td>12.26</td>
+                    <td>5 / 12</td>
+                  </tr>
+                  <tr>
+                    <td>Second Sequence</td>
+                    <td>15.13</td>
+                    <td>2 / 12</td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- Final Results Section -->
+              <div class="col-4">
+                <table class="table">
+                  <tr>
+                    <th>Subjects Registered</th>
+                    <th>Subjects Sat</th>
+                    <th>Subjects Passed</th>
+                    <th>Terminal Average</th>
+                    <th>Terminal Rank</th>
+                  </tr>
+                  <tr *ngIf="data.finalResults.length">
+                    <td>
+                      {{ data.finalResults[0].numberOfSubjectsRegistered }}
+                    </td>
+                    <td>{{ data.finalResults[0].numberOfSubjectsSat }}</td>
+                    <td>{{ data.finalResults[0].numberOfSubjectsPassed }}</td>
+                    <td>{{ data.finalResults[0].average }}</td>
+                    <td>{{ data.finalResults[0].rank }}</td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- Class Profile Section-->
+              <div class="col-4 text-center">
+                <tr>
+                  <th>Class Average</th>
+                  <th>Highest Average</th>
+                  <th>Lowest Average</th>
+                  <th>Percentage Pass</th>
+                  <th>Median Average</th>
+                </tr>
+                <tr *ngIf="data.classProfiles.length">
+                  <td>{{ data.classProfiles[0].classAverage }}</td>
+                  <td>{{ data.classProfiles[0].highestAverage }}</td>
+                  <td>{{ data.classProfiles[0].lowestAverage }}</td>
+                  <td>{{ data.classProfiles[0].percentagePass }}</td>
+                  <td>{{ data.classProfiles[0].medianAverage }}</td>
+                </tr>
+              </div>
+            </div>
+
+            <!-- Discipline, Grading System, and Parent Signature Header -->
+            <div class="row header">
+              <div class="col-4">Discipline</div>
+              <div class="col-4">Grading System</div>
+              <div class="col-4">Parent Guardian Signature</div>
+            </div>
+
+            <div class="row">
+              <!-- Discipline Section -->
+              <div class="col-4">
+                <table class="table">
+                  <tr>
+                    <th>Type</th>
+                    <th>Remarks</th>
+                  </tr>
+                  <tr *ngFor="let discipline of data.disciplines">
+                    <td>{{ discipline.disciplineTypeName }}</td>
+                    <td>{{ discipline.remarks }}</td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- Grading System Section -->
+              <div class="col-4">
+                <table class="table">
+                  <tr>
+                    <th>Grade</th>
+                    <th>Point</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                  </tr>
+                  <tr *ngFor="let grade of data.grades">
+                    <td>{{ grade.grade }}</td>
+                    <td>{{ grade.sortOrder }}</td>
+                    <td>{{ grade.minMark }}</td>
+                    <td>{{ grade.maxMark }}</td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- Parent Guardian Signature -->
+              <div class="col-4 text-center">
+                <img
+                  src="assets/sample-stamp.png"
+                  alt="Sample Stamp"
+                  width="100"
+                />
+              </div>
+            </div>
+
+            <!-- <div class="footer">
+               <p>Buea, {{  date:'fullDate' }}</p> 
+              <strong>The Principal</strong>
+            </div> -->
+          </div>
+
+          <!-- End Displaying Results -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

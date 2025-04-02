@@ -1,0 +1,38 @@
+.report-card {
+    width: 100%;
+    border: 1px solid #000;
+    padding: 10px;
+  }
+  
+  .row {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    padding: 5px 0;
+  }
+  
+  .header {
+    font-weight: bold;
+    background: #f2f2f2;
+  }
+  
+  .col {
+    flex: 1;
+    padding: 5px;
+    border-right: 1px solid #ccc;
+    text-align: center;
+  }
+  
+  .sub-row {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .signature {
+    text-align: center;
+  }
+  
+  .footer {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
