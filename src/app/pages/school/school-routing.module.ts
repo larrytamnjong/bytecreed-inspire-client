@@ -1,15 +1,30 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { ReportCardsComponent } from "./reporting/report-cards.component";
 
 const routes: Routes = [
-  {path: 'configuration', loadChildren: () => import('./configuration/configuration.module').then(m => m.ConfigurationModule),},
-  {path: 'academics', loadChildren: () => import('./configuration/academics/academics.module').then(m => m.AcademicsModule),}
+  {
+    path: "configuration",
+    loadChildren: () =>
+      import("./configuration/configuration.module").then(
+        (m) => m.ConfigurationModule
+      ),
+  },
+  {
+    path: "reporting/report-cards",
+    component: ReportCardsComponent,
+  },
+  {
+    path: "academics",
+    loadChildren: () =>
+      import("./configuration/academics/academics.module").then(
+        (m) => m.AcademicsModule
+      ),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-
-export class SchoolRoutingModule { }
+export class SchoolRoutingModule {}
