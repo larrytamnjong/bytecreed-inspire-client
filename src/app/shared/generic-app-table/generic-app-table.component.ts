@@ -64,4 +64,14 @@ export class GenericAppTableComponent {
       this.currentPage = page;
     }
   }
+
+  onPageSizeChange(event: Event) {
+    this.pageSize = Number((event.target as HTMLSelectElement).value);
+    this.currentPage = 0; 
+  }
+
+  onSearchChange() {
+    this.currentPage = 0; 
+  }
+  
 }
