@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'generic-app-table',
@@ -15,6 +15,8 @@ export class GenericAppTableComponent {
   @Input() showDelete: boolean = true;
   @Output() editClicked = new EventEmitter<any>();
   @Output() deleteClicked = new EventEmitter<any>();
+
+  @Input() customTemplates: { [key: string]: TemplateRef<any> } = {};
 
   searchTerm: string = '';
   sortColumn: string = '';

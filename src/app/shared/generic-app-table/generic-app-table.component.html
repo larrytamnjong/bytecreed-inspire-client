@@ -25,9 +25,15 @@
                 <tbody>
                     <tr *ngFor="let item of paginatedData; let i = index" (click)="onRowClick(item)">
                         <td>{{ i + 1 }}</td>
+                        <!-- <td *ngFor="let header of headers" [ngClass]="clickableColumns.includes(header.key) ? 'text-primary text-decoration-underline cursor-pointer' : ''">
+                            {{ item[header.key] }}
+                        </td> -->
                         <td *ngFor="let header of headers" 
                             [ngClass]="clickableColumns.includes(header.key) ? 'text-primary text-decoration-underline cursor-pointer' : ''">
-                            {{ item[header.key] }}
+                            <ng-container *ngIf="customTemplates[header.key]; else defaultTemplate">
+                                <ng-container *ngTemplateOutlet="customTemplates[header.key]; context: { $implicit: item[header.key], row: item }"></ng-container>
+                            </ng-container>
+                            <ng-template #defaultTemplate>{{ item[header.key] }}</ng-template>
                         </td>
                         <td *ngIf="showActions">
                             <div class="d-flex gap-2">

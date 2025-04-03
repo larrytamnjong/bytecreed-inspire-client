@@ -15,7 +15,22 @@
                     </div>
                 </div>
             </div>
-            <generic-app-table [headers]="headers" [data]="academicYears" [showActions]="true"  [showDelete]="false" (editClicked)="editModal(content, $event)"></generic-app-table>
+            
+            <generic-app-table 
+                [headers]="headers" 
+                [data]="academicYears" 
+                [showActions]="true"  
+                [showDelete]="false"
+                [customTemplates]="{ 'isActive': statusTemplate, 'startDate': dateTemplate, 'endDate': dateTemplate }"
+                (editClicked)="editModal(content, $event)">
+            </generic-app-table>
+
+                <ng-template #statusTemplate let-status let-row="row">
+                    <div class="status">
+                        <span class="badge text-uppercase" [ngClass]="{ 'bg-success-subtle text-success': status === true, 'bg-danger-subtle text-danger': status !== true }">{{ getStatusLabel(status) }}</span>
+                    </div>
+                </ng-template>
+                <ng-template #dateTemplate let-date let-row="row">{{ date | date: 'longDate' }}</ng-template>
         </div>
     </div>
 

@@ -134,4 +134,8 @@ export class AcademicYearsComponent implements OnInit {
     this.loading = !this.loading;
   }
 
+  getStatusLabel(isActive: boolean): string {
+    return isActive ? 'Active' : 'Inactive';
+  }
+
 }
