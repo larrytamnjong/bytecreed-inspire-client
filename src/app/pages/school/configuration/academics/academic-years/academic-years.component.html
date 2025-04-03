@@ -1,0 +1,67 @@
+<app-breadcrumbs title="Academic Years" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card" id="academicYears">
+            <div class="card-header border-bottom-dashed">
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm">
+                        <div><h5 class="card-title mb-0"><i class=" ri-calendar-event-fill text-muted fs-18 align-middle me-1">     </i>Academic Years</h5></div>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="d-flex flex-wrap align-items-start gap-2">
+                            <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-add-line align-bottom me-1"></i> Create Year</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <generic-app-table [headers]="headers" [data]="academicYears" [showActions]="true"  [showDelete]="false" (editClicked)="editModal(content, $event)"></generic-app-table>
+        </div>
+    </div>
+
+    <div id="elmLoader" *ngIf="loading">
+        <div class="spinner-border text-primary avatar-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <ng-template #content role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title" id="modalLabel">{{isCreateMode ? "Create" : "Update"}} Academic Year</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
+        </div>
+        <form  class="tablelist-form" autocomplete="off" [formGroup]="academicYearForm" (ngSubmit)="onSubmit()">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Enter Academic Year Name" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
+                    <div class="invalid-feedback">Please enter a name</div>
+                </div>
+                <div class="mb-3">
+                   <label class="form-label mb-0">Start Date</label>
+                   <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="F j, Y" dateFormat="Y-m-d" required formControlName="startDate" [ngClass]="{ 'is-invalid': submitted && form['startDate'].errors }" placeholder="Select Start Date" />
+                   <div class="invalid-feedback">Please select a start date</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label mb-0">End Date</label>
+                    <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="F j, Y" dateFormat="Y-m-d"  formControlName="endDate"  placeholder="Select End Date" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label mb-0">Is Active</label>
+                    <select class="form-select" aria-label=".form-select-sm" formControlName="isActive" [ngClass]="{ 'is-invalid': submitted && academicYearForm.controls['isActive'].invalid }">
+                        <option selected [ngValue]="null">Select status</option>
+                        <option [ngValue]="true">Yes</option>
+                        <option [ngValue]="false">No</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="submitted && academicYearForm.controls['isActive'].invalid">Please select an option</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()">Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+</div>

@@ -1,7 +1,7 @@
 import { Component, OnInit   } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs';
-import { ClassService } from 'src/app/core/services/api/class.service';
+import { ClassSectionService } from 'src/app/core/services/api/class-section.service';
 import { UntypedFormBuilder, Validators, UntypedFormGroup} from '@angular/forms';
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
@@ -24,7 +24,7 @@ export class SectionsComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal, 
-    private classService: ClassService,
+    private classSectionService: ClassSectionService,
     private classSectionFormBuilder: UntypedFormBuilder
   ) {}
 
@@ -59,7 +59,7 @@ export class SectionsComponent implements OnInit {
 
   getClassSections() {
     this.toggleLoading();
-    this.classService.getClassSections().pipe(
+    this.classSectionService.getClassSections().pipe(
       finalize(() => {this.loading = false;})
     ).subscribe({
       next: (response) => {
@@ -82,7 +82,7 @@ export class SectionsComponent implements OnInit {
     this.modalService.dismissAll();
 
     if(this.isCreateMode){
-      this.classService.addClassSection(this.classSectionForm.value).pipe(
+      this.classSectionService.addClassSection(this.classSectionForm.value).pipe(
         finalize(() => {this.toggleLoading(); this.reset();})
       ).subscribe({
         next: (response) => {
@@ -96,7 +96,7 @@ export class SectionsComponent implements OnInit {
     }else{
       SimpleAlerts.confirmDialog().then((result) => {
         if (result) {
-          this.classService.updateClassSection(this.classSectionForm.value).pipe(
+          this.classSectionService.updateClassSection(this.classSectionForm.value).pipe(
             finalize(() => {this.toggleLoading(); this.reset();})
           ).subscribe({
             next: (response) => {
@@ -126,5 +126,5 @@ export class SectionsComponent implements OnInit {
   toggleLoading() {
     this.loading = !this.loading;
   } 
-
+  
 }

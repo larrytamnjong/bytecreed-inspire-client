@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AcademicTerm } from 'src/app/core/Models/api/academics';
+import { AcademicYear } from 'src/app/core/Models/api/academics';
 import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
@@ -9,61 +9,68 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-academic-terms',
-  templateUrl: './academic-terms.component.html',
-  styleUrl: './academic-terms.component.scss'
+  selector: 'app-academic-years',
+  templateUrl: './academic-years.component.html',
+  styleUrl: './academic-years.component.scss'
 })
-export class AcademicTermsComponent implements OnInit {
+export class AcademicYearsComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
 
-  loading: boolean = false;
-  submitted: boolean = false;
+    loading: boolean = false;
+    submitted: boolean = false;
+  
+    academicYears: AcademicYear[] | undefined | any = [];
+    academicYearForm!: UntypedFormGroup;
+    isCreateMode: boolean = true;
+    get form() {return this.academicYearForm.controls;}
+  
+    headers: any = [
+      { key: 'name', displayName: 'Name' },
+      { key: 'isActive', displayName: 'Status' },
+      { key: 'startDate', displayName: 'Start Date' },
+      { key: 'endDate', displayName: 'End Date' },
+    ]
+  
+    constructor(
+      private modalService: NgbModal,
+      private academicFormBuilder: UntypedFormBuilder,
+      private academicService: AcademicService
+    ) {}
 
-  academicTerms: AcademicTerm[] | undefined | any = [];
-  academicTermForm!: UntypedFormGroup;
-  isCreateMode: boolean = true;
-  get form() {return this.academicTermForm.controls;}
-
-  headers: any = [
-    { key: 'name', displayName: 'Name' }
-  ]
-
-constructor(
-  private modalService: NgbModal, 
-  private academicFormBuilder: UntypedFormBuilder, 
-  private academicService: AcademicService
-) { }
 
   ngOnInit(): void {
-    this.breadCrumbItems = [{ label: 'Configuration' },{ label: 'Academics'}, { label: 'Academic Terms', active: true }];
+    this.breadCrumbItems = [{ label: 'Configuration' },{ label: 'Academics'}, { label: 'Academic Years', active: true }];
 
-    this.academicTermForm = this.academicFormBuilder.group({
+    this.academicYearForm = this.academicFormBuilder.group({
       id: [null],
       name: ['',[Validators.required]],
+      isActive: [null, [Validators.required]],
+      startDate: [null, [Validators.required]],
+      endDate: [null],
     });
 
-    this.getAcademicTerms();
+    this.getAcademicYears();
  }
 
-  addModal(content: any) {
-    this.isCreateMode = true;
-    this.submitted = false;
-    this.modalService.open(content, { size: 'md', centered: true });
-  }
+ addModal(content: any) {
+  this.isCreateMode = true;
+  this.submitted = false;
+  this.modalService.open(content, { size: 'md', centered: true });
+}
 
-  editModal(content: any, academicTerm: AcademicTerm) {
+  editModal(content: any, academicYear: AcademicYear) {
     this.isCreateMode = false;
     this.submitted = false;
-    this.academicTermForm.setValue({...academicTerm});
+    this.academicYearForm.setValue({...academicYear});
     this.modalService.open(content, { size: 'md', centered: true });
   }
 
-  getAcademicTerms() {
+  getAcademicYears() {
     this.toggleLoading();
-    this.academicService.getAcademicTerms().pipe(finalize(() => this.toggleLoading()))
+    this.academicService.getAcademicYears().pipe(finalize(() => this.toggleLoading()))
       .subscribe({
         next: (response) => {
-          this.academicTerms = response.data;
+          this.academicYears = response.data;
         },
         error: (error) => {
           SimpleAlerts.showError(getErrorMessage(error));
@@ -74,7 +81,7 @@ constructor(
   onSubmit() {
     this.toggleLoading();
     this.submitted = true;
-    if (this.academicTermForm.invalid) {
+    if (this.academicYearForm.invalid) {
       this.toggleLoading();
       return;
     }
@@ -82,12 +89,12 @@ constructor(
     this.modalService.dismissAll();
 
     if(this.isCreateMode){
-      this.academicService.createAcademicTerm(this.academicTermForm.value).pipe(
+      this.academicService.createAcademicYear(this.academicYearForm.value).pipe(
         finalize(() => {this.toggleLoading(); this.reset();})
       ).subscribe({
         next: (response) => {
           if(response.success){
-            this.getAcademicTerms();
+            this.getAcademicYears();
             SimpleAlerts.showSuccess();
           }
         },
@@ -96,12 +103,12 @@ constructor(
     }else{
       SimpleAlerts.confirmDialog().then((result) => {
         if (result) {
-          this.academicService.updateAcademicTerm(this.academicTermForm.value).pipe(
+          this.academicService.updateAcademicYear(this.academicYearForm.value).pipe(
             finalize(() => {this.toggleLoading(); this.reset();})
           ).subscribe({
             next: (response) => {
               if(response.success){
-                this.getAcademicTerms();
+                this.getAcademicYears();
                 SimpleAlerts.showSuccess();
               }
             },
@@ -120,7 +127,7 @@ constructor(
   reset() {
     this.submitted = false;
     this.isCreateMode = true;
-    this.academicTermForm.reset();
+    this.academicYearForm.reset();
   }
 
   toggleLoading() {

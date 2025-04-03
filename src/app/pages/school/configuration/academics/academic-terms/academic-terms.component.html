@@ -1,1 +1,48 @@
 <app-breadcrumbs title="Academic Terms" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card" id="academicTerms">
+            <div class="card-header border-bottom-dashed">
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm">
+                        <div><h5 class="card-title mb-0"><i class=" ri-calendar-event-fill text-muted fs-18 align-middle me-1">     </i>Academic Terms</h5></div>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="d-flex flex-wrap align-items-start gap-2">
+                            <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-add-line align-bottom me-1"></i> Create Term</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <generic-app-table [headers]="headers" [data]="academicTerms" [showActions]="true"  [showDelete]="false" (editClicked)="editModal(content, $event)"></generic-app-table>
+        </div>
+    </div>
+
+    <div id="elmLoader" *ngIf="loading">
+        <div class="spinner-border text-primary avatar-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <ng-template #content role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title" id="modalLabel">{{isCreateMode ? "Create" : "Update"}} Academic Term</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
+        </div>
+        <form  class="tablelist-form" autocomplete="off" [formGroup]="academicTermForm" (ngSubmit)="onSubmit()">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Enter Academic Term Name" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
+                    <div class="invalid-feedback">Please enter a name</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()">Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+</div>

@@ -15,11 +15,15 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AcademicsRoutingModule } from './academics-routing.module';
 import { AcademicTermsComponent } from './academic-terms/academic-terms.component';
+import { AcademicPeriodsComponent } from './academic-periods/academic-periods.component';
+import { AcademicYearsComponent } from './academic-years/academic-years.component';
 
 
 @NgModule({
   declarations: [
-  AcademicTermsComponent
+  AcademicTermsComponent,
+  AcademicPeriodsComponent,
+  AcademicYearsComponent
   ],
   imports: [
     CommonModule,

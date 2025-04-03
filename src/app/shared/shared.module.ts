@@ -10,9 +10,10 @@ import { SchoolService } from '../core/services/api/school.service';
 import { AddressService } from '../core/services/api/address.service';
 import { LookUpService } from '../core/services/common/look-up.service';
 import { AdmissionNumberConfigurationService } from '../core/services/api/admission-number-configuration.service';
-import { ClassService } from '../core/services/api/class.service';
+import { ClassSectionService } from '../core/services/api/class-section.service';
 import { FormsModule } from '@angular/forms';
 import { GenericAppTableComponent } from './generic-app-table/generic-app-table.component';
+import { AcademicService } from '../core/services/api/academics.service';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { GenericAppTableComponent } from './generic-app-table/generic-app-table.
     AddressService,
     LookUpService,
     AdmissionNumberConfigurationService,
-    ClassService
+    ClassSectionService,
+    AcademicService
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   exports: [GenericAppTableComponent, BreadcrumbsComponent]

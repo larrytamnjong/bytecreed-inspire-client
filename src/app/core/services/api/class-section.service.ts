@@ -6,7 +6,7 @@ import { ClassSection } from "../../Models/api/class-section";
 import { RequestHelper } from "../common/service-request-helper";
 
 @Injectable({ providedIn: 'root'})
-export class ClassService {
+export class ClassSectionService {
     private readonly class_section_controller: string = "v1/class-sections";
   constructor(private apiService: ApiHttpService) {}
 
