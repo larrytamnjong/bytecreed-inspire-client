@@ -12,9 +12,10 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-hover table-striped table-gridjs">
+            <table class="table table-hover table-striped table-gridjs table-sm table-xs">
                 <thead>
                     <tr>
+                        <th>SN</th>
                         <th *ngFor="let header of headers" (click)="onSort(header.key)" style="cursor: pointer;">{{ header.displayName }}
                             <span *ngIf="sortColumn === header.key">{{ sortDirection ? '▲' : '▼' }}</span>
                         </th>
@@ -22,7 +23,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of paginatedData" (click)="onRowClick(item)">
+                    <tr *ngFor="let item of paginatedData; let i = index" (click)="onRowClick(item)">
+                        <td>{{ i + 1 }}</td>
                         <td *ngFor="let header of headers" 
                             [ngClass]="clickableColumns.includes(header.key) ? 'text-primary text-decoration-underline cursor-pointer' : ''">
                             {{ item[header.key] }}
@@ -41,7 +43,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="d-flex flex-wrap justify-content-between align-items-center mt-3"> 
+        <div class="d-flex flex-wrap justify-content-between align-items-center mt-2"> 
             <div class="d-flex align-items-center mb-2 mb-md-0">
                 <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 0" class="btn btn-light mx-2">&lt;</button>
                 <span class="mx-2">Page {{ currentPage + 1 }} of {{ totalPages }}</span>

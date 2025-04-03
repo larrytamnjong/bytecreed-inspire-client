@@ -1,13 +1,11 @@
 <app-breadcrumbs title="Sections" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 <div class="row">
-    <div class="col-xxl-12">
+    <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
                 <ul ngbNav #Bordered="ngbNav" [activeId]="2" class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
                   <li [ngbNavItem]="1"><a ngbNavLink><i class="ri-list-settings-line"></i> General</a>
-                      <ng-template ngbNavContent>
-                        <form></form>
-                      </ng-template>
+                      <ng-template ngbNavContent><form></form></ng-template>
                   </li>
                   <li [ngbNavItem]="2"><a ngbNavLink><i class="ri-artboard-line"></i> Class Sections</a>
                       <ng-template ngbNavContent>
@@ -46,8 +44,8 @@
     </div>
 
     <ng-template #content role="document" let-modal>
-        <div class="modal-header p-3 bg-primary-subtle">
-            <h5 class="modal-title" id="exampleModalLabel">{{isCreateMode ? "Add" : "Update"}} Class Section</h5>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title" id="modalLabel">{{isCreateMode ? "Create" : "Update"}} Class Section</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
         </div>
         <form  class="tablelist-form" autocomplete="off" [formGroup]="classSectionForm" (ngSubmit)="onSubmit()">
@@ -55,7 +53,7 @@
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
                     <input type="text" id="name" class="form-control" placeholder="Enter class section Name" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
-                    <div class="invalid-feedback">Please enter a class section name</div>
+                    <div class="invalid-feedback">Please enter a name</div>
                 </div>
             </div>
             <div class="modal-footer">

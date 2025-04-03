@@ -47,14 +47,14 @@ export class SectionsComponent implements OnInit {
   addModal(content: any) {
     this.isCreateMode = true;
     this.submitted = false;
-    this.modalService.open(content, { size: 'lg', centered: true });
+    this.modalService.open(content, { size: 'md', centered: true });
   }
 
   editModal(content: any, classSection: ClassSection) {
     this.isCreateMode = false; 
     this.submitted = false;
     this.classSectionForm.setValue({...classSection});
-    this.modalService.open(content, { size: 'lg', centered: true });
+    this.modalService.open(content, { size: 'md', centered: true });
   }
 
   getClassSections() {
