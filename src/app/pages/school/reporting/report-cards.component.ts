@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  ResultRequestNew,
-  ResultResponseNew,
-  StudentResultNew,
-} from "src/app/core/Models/api/result";
+import { ResultRequestNew } from "src/app/core/Models/api/result";
 import { ReportCardService } from "src/app/core/services/api/reports.service";
+
+import {} from "pdfmake/build/pdfmake";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 @Component({
   selector: "app-report-cards",
@@ -41,7 +41,7 @@ export class ReportCardsComponent implements OnInit {
       finalResults: [],
       schools: [],
       academicPeriodName: null,
-      students:null,
+      students: null,
       studentResults: [
         {
           admissionNumber: this.inputData,
@@ -68,6 +68,20 @@ export class ReportCardsComponent implements OnInit {
       error: (error) => {
         console.error("Error generating result:", error);
       },
+    });
+  }
+
+  exportToPDF() {
+    const DATA: any = document.getElementById("report-content");
+
+    html2canvas(DATA, { scale: 2 }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      const imgWidth = 210; // A4 width in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      pdf.addImage(imgData, "PNG", 0, 10, imgWidth, imgHeight);
+      pdf.save("ReportCard.pdf");
     });
   }
 }

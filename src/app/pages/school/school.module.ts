@@ -24,7 +24,9 @@ import { NgSelectModule } from "@ng-select/ng-select";
 import { ReportCardsComponent } from "./reporting/report-cards.component";
 
 @NgModule({
-  declarations: [ReportCardsComponent],
+  declarations: [
+    ReportCardsComponent
+  ],
   imports: [
     CommonModule,
     NgbToastModule,
