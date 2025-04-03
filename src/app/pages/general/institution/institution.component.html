@@ -27,14 +27,15 @@
             </div>
             <div class="card-body">
                 <div>
-                    <div class="table-responsive table-card mb-1">
-                        <table class="table">
-                            <thead class="table-light text-muted">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped table-gridjs">
+                            <thead>
                                 <tr>
                                     <th class="sort" (click)="onSort('code')">Code</th>
                                     <th class="sort" (click)="onSort('name')">Name</th>
-                                    <th class="sort" (click)="onSort('isActive')">Status</th>
-                                    <th class="sort" (click)="onSort('dateCreated')">Created Date</th>
+                                    <th >Status</th>
+                                    <th >Created Date</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,6 +51,9 @@
                                     <td>
                                         <ngb-highlight [result]="data.dateCreated | date :'longDate'" [term]="searchTerm"></ngb-highlight>
                                     </td>
+                                    <td>
+                                        <a href="javascript:void(0);" class="link-primary"><i class="ri-login-circle-line fs-16" ></i></a>
+                                    </td>
                                 </tr>
                                 }
                             </tbody>
@@ -58,12 +62,11 @@
                     <div class="row justify-content-md-between align-items-md-center">
                         <div class="col col-sm-5">
                             <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
-                                Showing {{service.startIndex}} to {{service.endIndex}} of {{institutionList?.length ?? 0}} entries
                             </div>
                         </div>
                         <div class="col col-sm-5">
                             <div class="text-sm-right float-sm-end listjs-pagination">
-                                <ngb-pagination [collectionSize]="institutionList?.length" [(page)]="service.page" [pageSize]="service.pageSize" (pageChange)="changePage()">
+                                <ngb-pagination [collectionSize]="institutionList?.length" [ellipses]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="service.page" [pageSize]="service.pageSize" (pageChange)="changePage()">
                                 </ngb-pagination>
                             </div>
                         </div>

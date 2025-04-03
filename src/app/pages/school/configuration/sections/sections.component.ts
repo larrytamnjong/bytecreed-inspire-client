@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit   } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { finalize } from 'rxjs';
 import { ClassService } from 'src/app/core/services/api/class.service';
-import { PaginationService } from 'src/app/core/services/general/pagination.service';
-import { cloneDeep } from 'lodash';
 import { UntypedFormBuilder, Validators, UntypedFormGroup} from '@angular/forms';
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
+import { ClassSection } from 'src/app/core/Models/api/class-section';
 @Component({
   selector: 'app-sections',
   templateUrl: './sections.component.html',
@@ -17,20 +16,22 @@ export class SectionsComponent implements OnInit {
 
   loading: boolean = false;
   submitted: boolean = false;
-  searchTerm: any;
-  searchResults: any;
   classSections: any = [];
-  classSectionsCopy: any = [];
+
   classSectionForm!: UntypedFormGroup;
   isCreateMode: boolean = true;
   get form() {return this.classSectionForm.controls;}
 
   constructor(
     private modalService: NgbModal, 
-    public paginationService: PaginationService, 
     private classService: ClassService,
     private classSectionFormBuilder: UntypedFormBuilder
   ) {}
+
+
+  headers = [
+    { key: 'name', displayName: 'Name' },
+  ];
 
   ngOnInit(): void {
       this.breadCrumbItems = [{ label: 'Configuration' },{ label: 'Sections', active: true }];
@@ -49,29 +50,11 @@ export class SectionsComponent implements OnInit {
     this.modalService.open(content, { size: 'lg', centered: true });
   }
 
-  editModal(content: any, id: any) {
+  editModal(content: any, classSection: ClassSection) {
     this.isCreateMode = false; 
     this.submitted = false;
-    var classSection = this.classSections.find((x: any) => x.id === id)
     this.classSectionForm.setValue({...classSection});
     this.modalService.open(content, { size: 'lg', centered: true });
-  }
-
-  performSearch(): void {
-    this.searchResults = this.classSections?.filter((item: any) => {
-      return (
-        item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-    });
-    this.classSectionsCopy = this.paginationService?.changePage(this.searchResults)
-  }
-
-  onSort(column: any) {
-    this.classSectionsCopy = this.paginationService.onSort(column, this.classSectionsCopy)
-  }
-
-  changePage() {
-    this.classSectionsCopy = this.paginationService?.changePage(this.classSections)
   }
 
   getClassSections() {
@@ -81,9 +64,7 @@ export class SectionsComponent implements OnInit {
     ).subscribe({
       next: (response) => {
         if(response.success){
-        this.classSectionsCopy = response.data;
-        this.classSections = cloneDeep(response.data);
-        this.classSectionsCopy = this.paginationService.changePage(this.classSections)
+        this.classSections = response.data;
         }
       },
       error: (error) => {},

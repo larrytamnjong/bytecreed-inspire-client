@@ -14,65 +14,19 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card" id="classSectionList">
-                                    <div class="row g-4 align-items-center">
-                                        <div class="col-sm">
-                                            <div><h5 class="card-title mb-0 flex-grow-1"><i class="ri-artboard-line text-muted fs-18 align-middle me-1">   </i>Class Sections</h5></div>
-                                        </div>
-                                        <div class="col-sm-auto">
-                                            <div class="d-flex flex-wrap align-items-start gap-2">
-                                                <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-add-line align-bottom me-1"></i> Create Section</button>
+                                    <div  class="card-header border-bottom-dashed">
+                                        <div class="row g-4 align-items-center">
+                                            <div class="col-sm">
+                                                <div><h5 class="card-title mb-0"><i class="ri-artboard-line text-muted fs-18 align-middle me-1">   </i>Class Sections</h5></div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body border-bottom-dashed border-bottom">
-                                        <div class="row g-3">
-                                            <div class="col-xxl-12 col-sm-12">
-                                                <div class="search-box">
-                                                    <input type="text" name="searchTerm" class="form-control search bg-light border-light" placeholder="Search for name..." [(ngModel)]="searchTerm" (ngModelChange)="performSearch()">
-                                                    <i class="ri-search-line search-icon"></i>
+                                            <div class="col-sm-auto">
+                                                <div class="d-flex flex-wrap align-items-start gap-2">
+                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-add-line align-bottom me-1"></i> Create Section</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive table-card mb-3">
-                                            <table class="table align-middle table-nowrap mb-0" id="ticketTable">
-                                                <thead class="table-light text-muted">
-                                                    <tr>
-                                                        <th class="sort" (click)="onSort('name')">Name</th>
-                                                        <th class="sort">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="list form-check-all" id="ticket-list-data">
-                                                    @for ( data of classSectionsCopy; track $index) {
-                                                    <tr id="t_{{data._id}}">
-                                                        <td>
-                                                            <ngb-highlight [result]="data.name" [term]="searchTerm"></ngb-highlight>
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-sm btn-light" (click)="editModal(content, data.id)"><i class="ri-pencil-fill align-bottom text-muted"></i>  Edit</button>
-                                                        </td>
-                                                    </tr>
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                        <div class="row justify-content-md-between align-items-md-center">
-                                            <div class="col col-sm-5">
-                                                <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
-                                                    Showing {{paginationService.startIndex}} to {{paginationService.endIndex}} of {{classSections?.length ?? 0}} entries
-                                                </div>
-                                            </div>
-                                            <div class="col col-sm-5">
-                                                <div class="text-sm-right float-sm-end listjs-pagination">
-                                                    <ngb-pagination [collectionSize]="classSections?.length" [(page)]="paginationService.page" [pageSize]="paginationService.pageSize" (pageChange)="changePage()">
-                                                    </ngb-pagination>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
+                                    <generic-app-table [headers]="headers" [data]="classSections" [showActions]="true" [showDelete]="true" [showDelete]="false" (editClicked)="editModal(content, $event)"></generic-app-table>
                                 </div>
                             </div>
                         </div>

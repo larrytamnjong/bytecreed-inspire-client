@@ -11,11 +11,14 @@ import { AddressService } from '../core/services/api/address.service';
 import { LookUpService } from '../core/services/common/look-up.service';
 import { AdmissionNumberConfigurationService } from '../core/services/api/admission-number-configuration.service';
 import { ClassService } from '../core/services/api/class.service';
+import { FormsModule } from '@angular/forms';
+import { GenericAppTableComponent } from './generic-app-table/generic-app-table.component';
 
 
 @NgModule({
   declarations: [
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
+    GenericAppTableComponent
   ],
   imports: [
     CommonModule,
@@ -25,6 +28,7 @@ import { ClassService } from '../core/services/api/class.service';
     SlickCarouselModule,
     CountUpModule,
     NgSelectModule,
+    FormsModule,
   ],
   providers: [
     FileService,
@@ -35,6 +39,6 @@ import { ClassService } from '../core/services/api/class.service';
     ClassService
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
-  exports: [BreadcrumbsComponent]
+  exports: [GenericAppTableComponent, BreadcrumbsComponent]
 })
 export class SharedModule { }

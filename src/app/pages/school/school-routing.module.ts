@@ -14,6 +14,13 @@ const routes: Routes = [
     path: "reporting/report-cards",
     component: ReportCardsComponent,
   },
+  {
+    path: "academics",
+    loadChildren: () =>
+      import("./configuration/academics/academics.module").then(
+        (m) => m.AcademicsModule
+      ),
+  },
 ];
 
 @NgModule({

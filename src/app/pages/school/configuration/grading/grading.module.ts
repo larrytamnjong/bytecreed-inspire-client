@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbToastModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbToastModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule, NgbTypeaheadModule, NgbDropdownModule, NgbNavModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FeatherModule } from 'angular-feather';
@@ -11,11 +11,14 @@ import { SimplebarAngularModule } from 'simplebar-angular';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { FlatpickrModule } from 'angularx-flatpickr';
-import { StudentRoutingModule } from './student.routing.module';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { GradingRoutingModule } from './grading-routing.module';
+
 
 @NgModule({
   declarations: [
+
   ],
   imports: [
     CommonModule,
@@ -29,14 +32,15 @@ import { SharedModule } from '../../shared/shared.module';
     NgApexchartsModule,
     SlickCarouselModule,
     FlatpickrModule.forRoot(),
-    StudentRoutingModule,
+    GradingRoutingModule,
     SharedModule,
     NgbPaginationModule,
     NgbTypeaheadModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbTooltipModule
+    NgbTooltipModule,
+    NgSelectModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
-export class StudentsModule { }
+export class GradingModule { }
