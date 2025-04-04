@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 import { LookUpView } from "src/app/core/Models/common/look-up-view";
 import { SimpleAlerts } from "src/app/core/services/notifications/sweet-alerts";
 import { LookUpData } from "src/app/core/Models/common/look-up-data";
-import { LookUpTable } from "src/app/core/enums/look-up-table";
+import { LookUpTableEnum } from "src/app/core/enums/look-up-table";
 import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
 import { RootReducerState } from "src/app/store";
@@ -106,7 +106,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.store.select(selectLookUpsView).subscribe((lookUps) => {
       if(lookUps){
        this.lookUps = lookUps;
-       this.sexOptions = this.lookUps?.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTable.Sex) || [];
+       this.sexOptions = this.lookUps?.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTableEnum.Sex) || [];
       }
     });
   }

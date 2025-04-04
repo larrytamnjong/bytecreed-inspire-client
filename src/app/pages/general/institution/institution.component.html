@@ -15,70 +15,29 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body border-bottom-dashed border-bottom">
-                <div class="row g-3">
-                    <div class="col-xl-12 col-sm-12">
-                        <div class="search-box">
-                            <input type="text" name="searchTerm" class="form-control search bg-light border-light" placeholder="Search for name or code..." [(ngModel)]="searchTerm" (ngModelChange)="performSearch()">
-                            <i class="ri-search-line search-icon"></i>
-                        </div>
-                    </div>
+
+            <generic-app-table 
+            [headers]="headers" 
+            [data]="institutionList" 
+            [showActions]="false"  
+            [customTemplates]="{ 'isActive': statusTemplate, 'dateCreated': dateTemplate }"
+            (rowClicked)="onRowClicked($event)"
+            [clickableColumns]="clickableColumns"
+            >
+        </generic-app-table>
+
+            <ng-template #statusTemplate let-status let-row="row">
+                <div class="status">
+                    <span class="badge text-uppercase" [ngClass]="{ 'bg-success-subtle text-success': status === true, 'bg-danger-subtle text-danger': status !== true }">{{ getStatusLabel(status) }}</span>
                 </div>
-            </div>
-            <div class="card-body">
-                <div>
-                    <div class="table-responsive">
-                        <table class="table table-hover table-striped table-gridjs">
-                            <thead>
-                                <tr>
-                                    <th class="sort" (click)="onSort('code')">Code</th>
-                                    <th class="sort" (click)="onSort('name')">Name</th>
-                                    <th >Status</th>
-                                    <th >Created Date</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for( data of institutionListCopy; track $index){
-                                <tr id="c_{{data.id}}">
-                                    <td>
-                                        <ngb-highlight [result]="data.code" [term]="searchTerm"></ngb-highlight>
-                                    </td>
-                                    <td>
-                                        <ngb-highlight [result]="data.name" [term]="searchTerm"></ngb-highlight>
-                                    </td>
-                                    <td class="status"><span class="badge text-uppercase" [ngClass]=" { 'bg-success-subtle text-success': data.isActive == true, 'bg-danger-subtle text-danger': data.isActive != true }">{{getStatusLabel(data.isActive)}}</span></td>
-                                    <td>
-                                        <ngb-highlight [result]="data.dateCreated | date :'longDate'" [term]="searchTerm"></ngb-highlight>
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0);" class="link-primary"><i class="ri-login-circle-line fs-16" ></i></a>
-                                    </td>
-                                </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row justify-content-md-between align-items-md-center">
-                        <div class="col col-sm-5">
-                            <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
-                            </div>
-                        </div>
-                        <div class="col col-sm-5">
-                            <div class="text-sm-right float-sm-end listjs-pagination">
-                                <ngb-pagination [collectionSize]="institutionList?.length" [ellipses]="true" [maxSize]="5" [boundaryLinks]="true" [(page)]="service.page" [pageSize]="service.pageSize" (pageChange)="changePage()">
-                                </ngb-pagination>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-  
+            </ng-template>
+            <ng-template #dateTemplate let-date let-row="row">{{ date | date: 'longDate' }}</ng-template>
+    
                 <div id="elmLoader" *ngIf="loading">
                     <div class="spinner-border text-primary avatar-sm" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 

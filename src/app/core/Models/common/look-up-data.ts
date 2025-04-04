@@ -3,5 +3,5 @@ export interface LookUpData {
   dataCode: number;
   locale: string;
   abbreviation: string;
-  text: boolean;
+  text: string;
 }

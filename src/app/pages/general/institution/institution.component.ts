@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PaginationService } from 'src/app/core/services/general/pagination.service';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { cloneDeep } from 'lodash';
 import { TokenService } from 'src/app/core/services/general/token.service';
 import { Institution } from 'src/app/core/Models/identity/institution';
 import { InstitutionService } from 'src/app/core/services/identity/institution.service';
@@ -12,6 +10,13 @@ import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 import { finalize } from 'rxjs';
 import { map } from 'rxjs';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
+import { Store } from '@ngrx/store';
+import { RootReducerState } from 'src/app/store';
+import { LookUpView } from 'src/app/core/Models/common/look-up-view';
+import { LookUpData } from 'src/app/core/Models/common/look-up-data';
+import { getLookUpsAction } from 'src/app/store/common/look-up/look-up.action';
+import { selectLookUpsView } from 'src/app/store/common/look-up/look-up.selector';
+import { LookUpTableEnum } from 'src/app/core/enums/look-up-table';
 
 @Component({
   selector: 'app-institution',
@@ -24,17 +29,30 @@ export class InstitutionComponent {
   loading = false;
   submitted = false;
   institutionForm!: UntypedFormGroup;
-  searchTerm: any;
-  searchResults: any;
-  institutionList: any;
-  institutionListCopy: any;
+  institutionList: Institution[] | undefined | any = [];
   user: User = new User();
 
+    lookUps?: LookUpView;
+    activeAndInactiveStatus: LookUpData[] = [];
+
+  headers: any = [
+    { key: 'code', displayName: 'Code' },
+    { key: 'name', displayName: 'Name' },
+    { key: 'isActive', displayName: 'Status' },
+    { key: 'dateCreated', displayName: 'Created Date' },
+  ]
+
+  clickableColumns: any = [
+    'code',
+    'name',
+    'isActive',
+    'dateCreated'
+  ]
   constructor(private modalService: NgbModal,
-              public service: PaginationService, 
               private formBuilder: UntypedFormBuilder, 
               private tokenService: TokenService,
               private institutionService: InstitutionService,
+              private store: Store<{ data: RootReducerState }>
             ){}
 
   ngOnInit(): void {
@@ -43,7 +61,7 @@ export class InstitutionComponent {
     this.institutionForm = this.formBuilder.group({
       name: ['', [Validators.required]],
     });
-    
+    this.getLookUps();
     this.user = this.tokenService.getUser();
     this.getUserInstitutions();
   }
@@ -52,12 +70,10 @@ export class InstitutionComponent {
 
   getUserInstitutions(){
     this.toggleLoading();
-    this.institutionService.getUserInstitutions(this.user.id!).pipe(map(response => response.data),
+    this.institutionService.getUserInstitutions(this.user.id!).pipe(
       finalize(() => this.toggleLoading())).subscribe({
-        next: (institutions: Institution[]) => {
-        this.institutionListCopy = institutions;
-        this.institutionList = cloneDeep(institutions);
-        this.institutionListCopy = this.service.changePage(this.institutionList)
+        next: (response: any) => {
+        this.institutionList = response.data;
         },
         error : () => {}
       });
@@ -66,10 +82,6 @@ export class InstitutionComponent {
   openModal(content: any) {
     this.submitted = false;
     this.modalService.open(content, { size: 'md', centered: true });
-  }
-
-  onSort(column: any) {
-    this.institutionListCopy = this.service.onSort(column, this.institutionListCopy)
   }
 
   createInstitution(){
@@ -99,7 +111,9 @@ export class InstitutionComponent {
     }
   });
 }
-
+onRowClicked(institution: Institution){
+  console.log(institution);
+}
 afterSuccessfulCreate(data: any){
   this.tokenService.saveInstitution(data.institution);
   this.tokenService.saveToken(data.token.jwtToken.value);
@@ -108,25 +122,24 @@ afterSuccessfulCreate(data: any){
   setTimeout(() => {location.reload();}, 1100);
 }
 
-  changePage() {
-    this.institutionListCopy = this.service.changePage(this.institutionList)
-  }
+getStatusLabel(status: boolean): string {
+  const statusCode = status ? 1 : 0;
+  const statusItem = this.activeAndInactiveStatus.find(item => item.dataCode === statusCode);
+  return statusItem!.text;
+}
 
-  getStatusLabel(status: boolean) : string {
-    return status ? 'Active' : 'Inactive';
-  }
+    getLookUps() {
+      this.store.dispatch(getLookUpsAction());
+      this.store.select(selectLookUpsView).subscribe((lookUps) => {
+        if(lookUps){
+         this.lookUps = lookUps;
+         this.activeAndInactiveStatus = this.lookUps?.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTableEnum.ActiveAndInactiveStatus) || [];
+        }
+      });
+    }
 
   closeCreateInstitutionModal() {
     this.modalService.dismissAll();
-  }
-
-  performSearch(): void {
-    this.searchResults = this.institutionList.filter((item: any) => {
-      return (
-        item.name.toLowerCase().includes(this.searchTerm.toLowerCase()) || item.code.toLowerCase().includes(this.searchTerm.toLowerCase()) 
-      );
-    });
-    this.institutionListCopy = this.service.changePage(this.searchResults)
   }
 
 ngOnDestroy(): void {}
