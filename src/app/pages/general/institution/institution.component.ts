@@ -32,8 +32,8 @@ export class InstitutionComponent {
   institutionList: Institution[] | undefined | any = [];
   user: User = new User();
 
-    lookUps?: LookUpView;
-    activeAndInactiveStatus: LookUpData[] = [];
+ lookUps?: LookUpView;
+ activeAndInactiveStatus: LookUpData[] = [];
 
   headers: any = [
     { key: 'code', displayName: 'Code' },
@@ -56,12 +56,12 @@ export class InstitutionComponent {
             ){}
 
   ngOnInit(): void {
+    this.getLookUps();
     this.breadCrumbItems = [{ label: 'General' }, { label: 'Institution', active: true }];
 
     this.institutionForm = this.formBuilder.group({
       name: ['', [Validators.required]],
     });
-    this.getLookUps();
     this.user = this.tokenService.getUser();
     this.getUserInstitutions();
   }
@@ -125,7 +125,7 @@ afterSuccessfulCreate(data: any){
 getStatusLabel(status: boolean): string {
   const statusCode = status ? 1 : 0;
   const statusItem = this.activeAndInactiveStatus.find(item => item.dataCode === statusCode);
-  return statusItem!.text;
+  return statusItem?.text ?? '';
 }
 
     getLookUps() {
