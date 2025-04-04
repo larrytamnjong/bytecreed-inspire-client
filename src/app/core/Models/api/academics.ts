@@ -13,9 +13,10 @@ export class AcademicYear {
 
 export class AcademicPeriod {
     id?: string;
-    name!: string; 
-    academicYearId!: string;
+    name?: string; 
+    academicYearId?: string;
     academicTermId?: string;
     academicYearName?: string;
     academicTermName?: string;
+    isActive: boolean = true;
 }
