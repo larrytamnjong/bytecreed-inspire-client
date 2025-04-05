@@ -22,7 +22,7 @@ import { LookUpTableEnum } from 'src/app/core/enums/look-up-table';
   styleUrl: './academic-periods.component.scss'
 })
 export class AcademicPeriodsComponent implements OnInit {
-  breadCrumbItems!: Array<{}>;
+    breadCrumbItems!: Array<{}>;
 
     loading: boolean = false;
     submitted: boolean = false;

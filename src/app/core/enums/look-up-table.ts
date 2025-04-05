@@ -4,4 +4,5 @@ export enum LookUpTableEnum {
     StudentStatus = 3,
     ApplicationTypes = 4,
     ActiveAndInactiveStatus = 5,
+    YesOrNoResponse = 6,
 }
