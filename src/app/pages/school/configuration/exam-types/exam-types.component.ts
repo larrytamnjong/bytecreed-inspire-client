@@ -65,6 +65,21 @@ export class ExamTypesComponent implements OnInit {
         weight: [null],
         academicTermId: [null, [Validators.required]],
       });
+
+      this.examTypeForm.get('useWeight')?.valueChanges.subscribe((useWeight: boolean) => {
+        const weightControl = this.examTypeForm.get('weight');
+    
+        if (useWeight === true) {
+          weightControl?.setValidators([Validators.required]);
+          weightControl?.enable();
+        } else {
+          weightControl?.clearValidators();
+          weightControl?.setValue(null); 
+          weightControl?.disable();
+        }
+    
+        weightControl?.updateValueAndValidity();
+      });
    }
   
    addModal(content: any) {
