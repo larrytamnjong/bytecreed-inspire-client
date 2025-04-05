@@ -48,12 +48,12 @@
         <form  class="tablelist-form" autocomplete="off" [formGroup]="academicYearForm" (ngSubmit)="onSubmit()">
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
+                    <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
                     <input type="text" id="name" class="form-control" placeholder="Enter Academic Year Name" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
                     <div class="invalid-feedback">Please enter a name</div>
                 </div>
                 <div class="mb-3">
-                   <label class="form-label mb-0">Start Date</label>
+                   <label class="form-label mb-0">Start Date <span class="text-danger">*</span></label>
                    <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="F j, Y" dateFormat="Y-m-d" required formControlName="startDate" [ngClass]="{ 'is-invalid': submitted && form['startDate'].errors }" placeholder="Select Start Date" />
                    <div class="invalid-feedback">Please select a start date</div>
                 </div>
@@ -62,7 +62,7 @@
                     <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="F j, Y" dateFormat="Y-m-d"  formControlName="endDate"  placeholder="Select End Date" />
                 </div>
                 <div class="mb-3">
-                    <label class="form-label mb-0">Is Active</label>
+                    <label class="form-label mb-0">Is Active <span class="text-danger">*</span></label>
                     <select class="form-select" aria-label=".form-select-sm" formControlName="isActive" [ngClass]="{ 'is-invalid': submitted && academicYearForm.controls['isActive'].invalid }">
                         <option selected [ngValue]="null">Select status</option>
                         <option [ngValue]="true">Yes</option>

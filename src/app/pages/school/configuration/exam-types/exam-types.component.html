@@ -49,17 +49,17 @@
         <form  class="tablelist-form" autocomplete="off" [formGroup]="examTypeForm" (ngSubmit)="onSubmit()">
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input  type="text" id="name" class="form-control" placeholder="Enter Exam Type Name" formControlName="name" [ngClass]="{ 'is-invalid': submitted && examTypeForm.controls['name'].invalid }">
+                    <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                    <input  type="text" id="name" class="form-control" placeholder="Enter Exam Type Name" formControlName="name" required [ngClass]="{ 'is-invalid': submitted && examTypeForm.controls['name'].invalid }">
                     <div class="invalid-feedback">Please enter a name</div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Academic Term</label>
+                    <label class="form-label">Academic Term <span class="text-danger">*</span></label>
                     <ng-select [items]="academicTerms" bindLabel="name" id="academicTerm" bindValue="id" required formControlName="academicTermId" placeholder="Select Academic Term" [ngClass]="{ 'is-invalid': submitted && examTypeForm.controls['academicTermId'].invalid }"></ng-select>
                     <div class="invalid-feedback">Please select an academic term</div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label mb-0">Use Weight</label>
+                    <label class="form-label mb-0">Use Weight <span class="text-danger">*</span></label>
                     <select class="form-select" aria-label=".form-select-sm" formControlName="useWeight" [ngClass]="{ 'is-invalid': submitted && examTypeForm.controls['useWeight'].invalid }">
                         <option selected [ngValue]="null">Select</option>
                         <option [ngValue]="true">Yes</option>

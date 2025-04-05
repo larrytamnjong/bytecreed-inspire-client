@@ -47,17 +47,17 @@
         <form  class="tablelist-form" autocomplete="off" [formGroup]="academicPeriodForm" (ngSubmit)="onSubmit()">
             <div class="modal-body">
                 <div class="mb-3">
-                    <label class="form-label">Academic Year</label>
+                    <label class="form-label">Academic Year <span class="text-danger">*</span></label>
                     <ng-select [items]="academicYears" bindLabel="name" id="academicYear" bindValue="id" required formControlName="academicYearId" placeholder="Select Academic Year" [ngClass]="{ 'is-invalid': submitted && academicPeriodForm.controls['academicYearId'].invalid }"></ng-select>
                     <div class="invalid-feedback">Please select an academic term</div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Academic Term</label>
+                    <label class="form-label">Academic Term <span class="text-danger">*</span></label>
                     <ng-select [items]="academicTerms" bindLabel="name" id="academicTerm" bindValue="id" required formControlName="academicTermId" placeholder="Select Academic Term" [ngClass]="{ 'is-invalid': submitted && academicPeriodForm.controls['academicTermId'].invalid }"></ng-select>
                     <div class="invalid-feedback">Please select an academic year</div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label mb-0">Is Active</label>
+                    <label class="form-label mb-0">Is Active <span class="text-danger">*</span></label>
                     <select class="form-select" aria-label=".form-select-sm" formControlName="isActive" [ngClass]="{ 'is-invalid': submitted && academicPeriodForm.controls['isActive'].invalid }">
                         <option selected [ngValue]="null">Select status</option>
                         <option [ngValue]="true">Yes</option>
