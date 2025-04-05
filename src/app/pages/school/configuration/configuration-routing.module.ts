@@ -4,6 +4,7 @@ import { SchoolComponent } from './school/school.component';
 import { AdmissionComponent } from './admission/admission.component';
 import { SectionsComponent } from './sections/sections.component';
 import { ExamTypesComponent } from './exam-types/exam-types.component';
+import { ClassesComponent } from './classes/classes.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: "exam-types", component: ExamTypesComponent, pathMatch: 'full'},
   {path: "grading", loadChildren: () => import('./grading/grading.module').then(m => m.GradingModule)},
   {path: "academics", loadChildren: () => import('./academics/academics.module').then(m => m.AcademicsModule)},
+  {path: "classes", component: ClassesComponent, pathMatch: 'full'},
 ];
 
 @NgModule({
@@ -21,4 +23,3 @@ const routes: Routes = [
 })
 
 export class ConfigurationRoutingModule { }
- 

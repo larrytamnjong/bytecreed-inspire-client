@@ -24,13 +24,15 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ClassesComponent } from './classes/classes.component';
 
 @NgModule({
   declarations: [
     SchoolComponent,
     AdmissionComponent,
     SectionsComponent,
-    ExamTypesComponent
+    ExamTypesComponent,
+    ClassesComponent
   ],
   imports: [
     CommonModule,

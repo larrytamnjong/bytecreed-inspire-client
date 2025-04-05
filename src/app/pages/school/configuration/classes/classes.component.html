@@ -1,0 +1,31 @@
+<app-breadcrumbs title="Classes" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <ul ngbNav #Bordered="ngbNav" [activeId]="2" class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
+                  <li [ngbNavItem]="1"><a ngbNavLink><i class="ri-artboard-line"></i> Classes</a>
+                      <ng-template ngbNavContent></ng-template>
+                  </li>
+                  <li [ngbNavItem]="2"><a ngbNavLink><i class="ri-menu-add-line"></i> Class Exam Types</a>
+                      <ng-template ngbNavContent></ng-template>
+                  </li>
+                  <li [ngbNavItem]="3"><a ngbNavLink><i class="ri-book-2-line"></i> Class Subjects</a>
+                    <ng-template ngbNavContent></ng-template>
+                  </li>
+                  <li [ngbNavItem]="4"><a ngbNavLink><i class="ri-menu-add-line"></i> Class Groups</a>
+                    <ng-template ngbNavContent></ng-template>
+                </li>
+                </ul>
+                <div class="tab-content text-muted">
+                  <div [ngbNavOutlet]="Bordered"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="elmLoader" *ngIf="loading">
+        <div class="spinner-border text-primary avatar-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>
