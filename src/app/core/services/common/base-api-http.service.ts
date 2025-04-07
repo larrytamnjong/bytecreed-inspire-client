@@ -30,9 +30,8 @@ import { environment } from 'src/environments/environment';
       });
     }
   
-    delete(endpoint: string, options?: { headers?: HttpHeaders; params?: HttpParams }): Observable<any> {
-      return this.http.delete(`${environment.apiServerUrl}/${endpoint}`, {
-        ...options, headers: this.getHeaders(),
-      });
+    delete(endpoint: string, data?: any, options?: { headers?: HttpHeaders; params?: HttpParams }): Observable<any> {
+      return this.http.delete(`${environment.apiServerUrl}/${endpoint}`, {...options, headers: this.getHeaders(), body: data,});
     }
+    
   }

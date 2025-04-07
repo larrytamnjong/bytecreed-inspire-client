@@ -25,6 +25,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ClassesComponent } from './classes/classes.component';
+import { SubjectsComponent } from './subjects/subjects.component';
+import { CoursesComponent } from './courses/courses.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { ClassesComponent } from './classes/classes.component';
     AdmissionComponent,
     SectionsComponent,
     ExamTypesComponent,
-    ClassesComponent
+    ClassesComponent,
+    SubjectsComponent,
+    CoursesComponent
   ],
   imports: [
     CommonModule,

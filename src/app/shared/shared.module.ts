@@ -14,6 +14,7 @@ import { ClassSectionService } from '../core/services/api/class-section.service'
 import { FormsModule } from '@angular/forms';
 import { GenericAppTableComponent } from './generic-app-table/generic-app-table.component';
 import { AcademicService } from '../core/services/api/academics.service';
+import { ClassService } from '../core/services/api/class.service';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { AcademicService } from '../core/services/api/academics.service';
     LookUpService,
     AdmissionNumberConfigurationService,
     ClassSectionService,
-    AcademicService
+    AcademicService,
+    ClassService
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   exports: [GenericAppTableComponent, BreadcrumbsComponent]

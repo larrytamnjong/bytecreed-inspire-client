@@ -15,9 +15,11 @@ import { SchoolRoutingModule } from './school-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { ConfigurationModule } from './configuration/configuration.module';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AnalyticsComponent } from './analytics/analytics.component';
 
 @NgModule({
   declarations: [
+    AnalyticsComponent
   ],
   imports: [
     CommonModule,

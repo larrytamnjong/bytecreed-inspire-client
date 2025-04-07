@@ -14,11 +14,14 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { GradingRoutingModule } from './grading-routing.module';
+import { GradeSetupComponent } from './grade-setup/grade-setup.component';
+import { GradingSystemsComponent } from './grading-systems/grading-systems.component';
 
 
 @NgModule({
   declarations: [
-
+    GradeSetupComponent,
+    GradingSystemsComponent
   ],
   imports: [
     CommonModule,
