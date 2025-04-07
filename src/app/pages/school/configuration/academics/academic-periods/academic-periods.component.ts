@@ -191,6 +191,7 @@ export class AcademicPeriodsComponent implements OnInit {
         error: (error) => { }
       });
   }
+  
   getAcademicYears() {
     this.academicService.getAcademicYears().subscribe({
         next: (response) => {

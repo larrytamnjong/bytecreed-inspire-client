@@ -3,7 +3,7 @@ export class Class {
     name!: string;
     nextClassId?: string;
     previousClassId?: string;
-    isActive: boolean = true;
+    isActive!: boolean;
     classGroupId?: string;
     sortOrder?: number;
     nextClassName?: string;
