@@ -9,6 +9,6 @@ export class SubjectsComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
 
   ngOnInit(): void {
-    this.breadCrumbItems = [{label: 'Subjects'},{ label: 'Subject', active: true }];
+    this.breadCrumbItems = [{label: 'Configuration'},{ label: 'Subject', active: true }];
   }
 }

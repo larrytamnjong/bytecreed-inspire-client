@@ -9,6 +9,6 @@ export class CoursesComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
 
   ngOnInit(): void {
-    this.breadCrumbItems = [{label: 'Courses'},{ label: 'Course', active: true }];
+    this.breadCrumbItems = [{label: 'Configuration'},{ label: 'Course', active: true }];
   }
 }
