@@ -86,7 +86,7 @@ export class ClassesComponent implements OnInit {
     }
 
     deleteClass(_class: Class) {
-      SimpleAlerts.confirmDialog().then((result) => {
+      SimpleAlerts.confirmDeleteDialog().then((result) => {
         if (result) {
           this.toggleLoading();
           this.classService.deleteClass(_class.id!).pipe(

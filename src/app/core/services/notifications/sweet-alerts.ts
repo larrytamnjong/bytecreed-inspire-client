@@ -33,4 +33,19 @@ export class SimpleAlerts {
         });
         return result.isConfirmed;
     }
+
+    static async confirmDeleteDialog(title?: string, text: string = 'Are you sure you want to proceed with this delete?'): Promise<boolean> {
+        const result = await Swal.fire({
+            title,
+            text,
+            icon: 'warning',
+            iconColor: '#FF0000',
+            showCancelButton: true,
+            confirmButtonColor: '#364574',
+            cancelButtonColor: '#D29C40',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+        });
+        return result.isConfirmed;
+    }
 }
