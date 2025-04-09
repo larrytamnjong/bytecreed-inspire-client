@@ -292,7 +292,6 @@ export class ClassesComponent implements OnInit {
       finalize(() => {this.toggleLoading();})).subscribe({
       next: (response) => {
         if(response.success){
-          console.log(response.data);
           this.classExamTypes = response.data;
         }
       },
