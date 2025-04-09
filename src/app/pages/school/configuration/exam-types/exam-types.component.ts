@@ -169,6 +169,7 @@ export class ExamTypesComponent implements OnInit {
       const responseItem = this.yesOrNoResponse.find(item => item.dataCode === response);
       return responseItem?.text ?? '';
     }
+    
     getAcademicTermName(academicTermId: string): string {
       const name = this.academicTerms?.find(item => item.id === academicTermId)?.name;
       return name?? '';

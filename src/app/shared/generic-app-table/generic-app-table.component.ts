@@ -15,6 +15,7 @@ export class GenericAppTableComponent {
   @Input() showDelete: boolean = true;
   @Output() editClicked = new EventEmitter<any>();
   @Output() deleteClicked = new EventEmitter<any>();
+  @Input() tableId: string = 'default'; 
 
   @Input() customTemplates: { [key: string]: TemplateRef<any> } = {};
 
