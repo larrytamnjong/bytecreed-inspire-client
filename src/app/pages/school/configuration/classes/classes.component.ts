@@ -283,11 +283,10 @@ export class ClassesComponent implements OnInit {
   }
 
   getClassExamTypes(){
-
+    this.classExamTypes = [];
     if(this.classId == null){
       return;
     }
-
     this.toggleLoading();
     this.classService.getClassExamTypes(this.classId).pipe(
       finalize(() => {this.toggleLoading();})).subscribe({
@@ -299,7 +298,6 @@ export class ClassesComponent implements OnInit {
       },
       error: () => {},
     });
- 
   }
 
   getExamTypeName(examTypeId: string): string {
