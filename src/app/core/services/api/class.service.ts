@@ -52,19 +52,19 @@ export class ClassService {
         return this.apiService.put(`${this.class_group_controller}`, RequestHelper.createServiceRequest([data]));
       }
     
-    addClassesSubject(data: any): Observable<ServiceResponse<ClassSubject[]>> {
-        return this.apiService.post(`${this.class_subject_controller}`, RequestHelper.createServiceRequest(data));
-      }
+    // addClassesSubject(data: any): Observable<ServiceResponse<ClassSubject[]>> {
+    //     return this.apiService.post(`${this.class_subject_controller}`, RequestHelper.createServiceRequest(data));
+    //   }
     
-    updateClassesSubjects(data: any): Observable<ServiceResponse<ClassSubject[]>> {
+    updateOrAddClassesSubjects(data: any): Observable<ServiceResponse<ClassSubject[]>> {
         return this.apiService.put(`${this.class_subject_controller}`, RequestHelper.createServiceRequest(data));
       }
     
     getClassSubjects(classId: any): Observable<ServiceResponse<ClassSubject[]>> {
-        return this.apiService.get(`${this.class_subject_controller}/${classId}`);
+        return this.apiService.get(`${this.class_subject_controller}/${classId}/subjects`);
       }
 
-    deleteClassSubject(classSubjectId: string, classes: any): Observable<ServiceResponse<ClassSubject>> {
-        return this.apiService.delete(`${this.class_subject_controller}/${classSubjectId}/classes`, RequestHelper.createServiceRequest(classes));
+    deleteClassSubject(subjectId: string, data: any): Observable<ServiceResponse<ClassSubject>> {
+        return this.apiService.delete(`${this.class_subject_controller}/${subjectId}/classes`, RequestHelper.createServiceRequest(data));
       }
 }

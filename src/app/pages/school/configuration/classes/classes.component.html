@@ -62,7 +62,7 @@
                                                 <div class="row g-3">
                                                     <div class="col-sm-8">
                                                         <div>
-                                                            <ng-select [items]="classes" bindLabel="name" [(ngModel)]="classId" bindValue="id" placeholder="Select Class"></ng-select>
+                                                            <ng-select [items]="classes" bindLabel="name" [(ngModel)]="classExamType_classId" bindValue="id" placeholder="Select Class"></ng-select>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
@@ -174,7 +174,7 @@
                     <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submittedClassExamType && classExamTypeF['classIds'].invalid }" placeholder="Select Classes">
                         <ng-template ng-header-tmp>
                             <div style="padding-left: 1px;">
-                              <button type="button" class="btn btn-link p-0 m-0" (click)="onSelectAllClasses()">Select All</button>
+                              <button type="button" class="btn btn-link p-0 m-0" (click)="classExamType_onSelectAllClasses()">Select All</button>
                             </div>
                           </ng-template>
                     </ng-select>
@@ -229,7 +229,7 @@
                     <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submitDeleteClassExamType && classExamTypeDeleteF['classIds'].invalid }" placeholder="Select Classes">
                         <ng-template ng-header-tmp>
                             <div style="padding-left: 1px;">
-                              <button type="button" class="btn btn-link p-0 m-0" (click)="onSelectAllClassesForDelete()">Select All</button>
+                              <button type="button" class="btn btn-link p-0 m-0" (click)="classExamType_onSelectAllClassesForDelete()">Select All</button>
                             </div>
                           </ng-template>
                     </ng-select>

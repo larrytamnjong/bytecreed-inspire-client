@@ -11,6 +11,7 @@ import { RootReducerState } from 'src/app/store';
 import { ExamTypeService } from 'src/app/core/services/api/exam-type.service';
 import { ExamType } from 'src/app/core/Models/api/exam-types';
 import { BaseComponent } from 'src/app/shared/base.component';
+import { SubjectService} from 'src/app/core/services/api/subject.service';
 
 @Component({
   selector: 'app-classes',
@@ -19,7 +20,6 @@ import { BaseComponent } from 'src/app/shared/base.component';
 })
 export class ClassesComponent extends BaseComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
-
 
   //Class
   submittedClass: boolean = false;
@@ -39,7 +39,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
   submitDeleteClassExamType: boolean = false;
   classExamTypes: any = [];
   examTypes: any | ExamType[] = [];
-  classId: any | null = null;
+  classExamType_classId: any | null = null;
   classExamTypeForm!: UntypedFormGroup;
   classExamTypeDeleteForm!: UntypedFormGroup;
   get classExamTypeF() {return this.classExamTypeForm.controls;}
@@ -51,6 +51,24 @@ export class ClassesComponent extends BaseComponent implements OnInit {
     { key: 'weight', displayName: 'Weight' },
   ]
 
+  //Class Subjects 
+  submittedClassSubjects: boolean = false;
+  submittedDeleteClassSubjects: boolean = false;
+  classSubjects: any = [];
+  subjects: any = [];
+  classSubject_classId: any | null = null;
+  classSubjectForm!: UntypedFormGroup;
+  classSubjectDeleteForm!: UntypedFormGroup;
+  get classSubjectF() {return this.classSubjectForm.controls;}
+  get classSubjectDeleteF() {return this.classSubjectDeleteForm.controls;}
+  classSubjectHeaders = [
+    { key: 'subjectId', displayName: 'Subject' },
+    { key: 'isActive', displayName: 'Status' },
+    { key: 'overrideDefaultCoefficient', displayName: 'Override Coefficient'},
+    { key: 'coefficient', displayName: 'Coefficient' },
+    { key: 'isRequired', displayName: 'Is Required'},
+  ]
+  
   constructor(
     private modalService: NgbModal,
     private classService: ClassService,
@@ -58,6 +76,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
     private classFormBuilder: UntypedFormBuilder,
     private classExamTypeFormBuilder: UntypedFormBuilder,
     private classExamTypeFormBuilderDelete: UntypedFormBuilder,
+    private subjectService: SubjectService,
     protected override store: Store<{ data: RootReducerState }>) {
     super(store);
   }
@@ -80,7 +99,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
       id: [null],
       examTypeId: [null,[Validators.required]],
       weight: [null],
-      overrideDefaultWeight: [null, [Validators.required]],
+      overrideDefaultWeight: [false, [Validators.required]],
       isActive: [true, [Validators.required]],
       classIds: [null, [Validators.required]],
     });
@@ -90,7 +109,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
       classIds: [null, [Validators.required]],
     });
 
-    this.classExamTypeForm.get('overrideDefaultWeight')?.valueChanges.subscribe((overrideDefaultWeight: boolean) => {
+     this.classExamTypeForm.get('overrideDefaultWeight')?.valueChanges.subscribe((overrideDefaultWeight: boolean) => {
       const weightControl = this.classExamTypeForm.get('weight');
   
       if (overrideDefaultWeight === true) {
@@ -105,14 +124,43 @@ export class ClassesComponent extends BaseComponent implements OnInit {
       weightControl?.updateValueAndValidity();
     });
 
+
+     this.classSubjectForm = this.classFormBuilder.group({
+        id: [null],
+        subjectId: [null,[Validators.required]],
+        coefficient: [null],
+        overrideDefaultCoefficient: [false, [Validators.required]],
+        isActive: [true, [Validators.required]],
+        classIds: [null, [Validators.required]],
+      });
+
+      this.classSubjectDeleteForm = this.classFormBuilder.group({
+        subjectId: [null,[Validators.required]],
+        classIds: [null, [Validators.required]],
+      });
+
+      this.classSubjectForm.get('overrideDefaultCoefficient')?.valueChanges.subscribe((overrideDefaultCoefficient: boolean) => {
+        const coefficientControl = this.classSubjectForm.get('coefficient');
+
+        if (overrideDefaultCoefficient === true) {
+          coefficientControl?.setValidators([Validators.required]);
+          coefficientControl?.enable();
+        } else {
+          coefficientControl?.clearValidators();
+          coefficientControl?.setValue(null);
+          coefficientControl?.disable();
+        }
+      });
+
     this.loadData();
   }
 
     //Class
     addClassModal(content: any) {
+      this.classExamTypeForm.get('weight')?.disable();
       this.isClassCreateMode = true;
       this.submittedClass = false;
-      this.modalService.open(content, { size: 'md', centered: true });
+      this.modalService.open(content, this.mdModalConfig);
     }
   
     editClassModal(content: any, _class: Class) {
@@ -128,7 +176,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
                  sortOrder: _class.sortOrder
                 }
       this.classForm.setValue(data);
-      this.modalService.open(content, { size: 'md', centered: true });
+      this.modalService.open(content, this.mdModalConfig);
     }
 
     deleteClass(_class: Class) {
@@ -213,20 +261,20 @@ export class ClassesComponent extends BaseComponent implements OnInit {
 
   // Class Exam Type
   addClassExamTypeModal(content: any) {
-    this.submittedClass = false;
-    this.modalService.open(content, { size: 'md', centered: true });
+    this.submittedClassExamType = false;
+    this.modalService.open(content, this.mdModalConfig);
   }
 
   deleteClassExamTypeModal(content: any) {
-    this.modalService.open(content, { size: 'md', centered: true });
+    this.modalService.open(content, this.mdModalConfig);
   }
 
-  public onSelectAllClasses() {
+  public classExamType_onSelectAllClasses() {
     const selected = this.classes.map((item: Class) => item.id);
     this.classExamTypeForm.get('classIds')?.patchValue(selected);
   }
 
-  public onSelectAllClassesForDelete() {
+  public classExamType_onSelectAllClassesForDelete() {
     const selected = this.classes.map((item: Class) => item.id);
     this.classExamTypeDeleteForm.get('classIds')?.patchValue(selected);
   }
@@ -276,11 +324,12 @@ export class ClassesComponent extends BaseComponent implements OnInit {
 
   getClassExamTypes(){
     this.classExamTypes = [];
-    if(this.classId == null){
+    if(this.classExamType_classId == null){
       return;
     }
+
     this.toggleLoading();
-    this.classService.getClassExamTypes(this.classId).pipe(
+    this.classService.getClassExamTypes(this.classExamType_classId).pipe(
       finalize(() => {this.toggleLoading();})).subscribe({
       next: (response) => {
         if(response.success){
@@ -296,7 +345,6 @@ export class ClassesComponent extends BaseComponent implements OnInit {
     return name?? '';
   }
 
-
   dismissClassExamTypeModal() {
     this.modalService.dismissAll();
     this.resetClassExamTypeForm();
@@ -307,22 +355,31 @@ export class ClassesComponent extends BaseComponent implements OnInit {
     this.submitDeleteClassExamType = false;
     this.classExamTypeForm.reset();
     this.classExamTypeDeleteForm.reset();
+    this.classExamTypeForm.patchValue({weight: null, isActive: true, overrideDefaultWeight: false});
   }
+
+  // Class Subject
+
 
   // General
   loadData(){
     this.getLookUps();
     this.getClasses();
     this.getExamtypes();
+    this.getSubjects();
   }
 
   getExamtypes() {
     this.examTypeService.getExamTypes().subscribe({
-        next: (response) => {
-          this.examTypes = response.data;
-        },
+        next: (response) => {this.examTypes = response.data;},
         error: (error) => {}
       });
   }
 
+  getSubjects(){
+    this.subjectService.getSubjects().subscribe({
+      next: (response) => {this.subjects = response.data;},
+      error: (error) => {}
+    });
+  }
 }
