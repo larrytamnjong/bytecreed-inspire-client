@@ -34,7 +34,7 @@
 
                                     <ng-template #statusTemplate let-status let-row="row">
                                         <div class="status">
-                                            <span class="badge text-uppercase" [ngClass]="{ 'bg-success-subtle text-success': status === true, 'bg-danger-subtle text-danger': status !== true }">{{ getStatusLabel(status) }}</span>
+                                            <span class="badge text-uppercase" [ngClass]="{ 'bg-success-subtle text-success': status === true, 'bg-danger-subtle text-danger': status !== true }">{{ getActiveOrInactiveLabel(status) }}</span>
                                         </div>
                                     </ng-template>
                                 </div>
@@ -84,7 +84,7 @@
 
                                     <ng-template #classExamTypeStatusTemplate let-status let-row="row">
                                         <div class="status">
-                                            <span class="badge text-uppercase" [ngClass]="{ 'bg-success-subtle text-success': status === true, 'bg-danger-subtle text-danger': status !== true }">{{ getStatusLabel(status) }}</span>
+                                            <span class="badge text-uppercase" [ngClass]="{ 'bg-success-subtle text-success': status === true, 'bg-danger-subtle text-danger': status !== true }">{{ getActiveOrInactiveLabel(status) }}</span>
                                         </div>
                                     </ng-template>
 
@@ -93,7 +93,7 @@
                                     </ng-template>
 
                                     <ng-template #overrideDefaultWeightTemplate let-overrideDefaultWeight let-row="row">
-                                        <span>{{ getYesNoLabel(overrideDefaultWeight) }}</span>
+                                        <span>{{ getYesOrNoLabel(overrideDefaultWeight) }}</span>
                                     </ng-template>
 
                                 </div>

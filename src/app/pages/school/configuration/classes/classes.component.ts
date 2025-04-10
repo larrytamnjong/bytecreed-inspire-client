@@ -6,29 +6,20 @@ import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 import { ClassService } from 'src/app/core/services/api/class.service';
 import { Class } from 'src/app/core/Models/api/class';
-import { LookUpView } from 'src/app/core/Models/common/look-up-view';
-import { LookUpData } from 'src/app/core/Models/common/look-up-data';
 import { Store } from '@ngrx/store';
 import { RootReducerState } from 'src/app/store';
-import { getLookUpsAction } from 'src/app/store/common/look-up/look-up.action';
-import { selectLookUpsView } from 'src/app/store/common/look-up/look-up.selector';
-import { LookUpTableEnum } from 'src/app/core/enums/look-up-table';
 import { ExamTypeService } from 'src/app/core/services/api/exam-type.service';
 import { ExamType } from 'src/app/core/Models/api/exam-types';
-
+import { BaseComponent } from 'src/app/shared/base.component';
 
 @Component({
   selector: 'app-classes',
   templateUrl: './classes.component.html',
   styleUrl: './classes.component.scss'
 })
-export class ClassesComponent implements OnInit {
+export class ClassesComponent extends BaseComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
 
-  loading: boolean = false;
-  lookUps?: LookUpView;
-  activeAndInactiveStatus: LookUpData[] = [];
-  yesOrNoResponse: LookUpData[] = [];
 
   //Class
   submittedClass: boolean = false;
@@ -67,8 +58,9 @@ export class ClassesComponent implements OnInit {
     private classFormBuilder: UntypedFormBuilder,
     private classExamTypeFormBuilder: UntypedFormBuilder,
     private classExamTypeFormBuilderDelete: UntypedFormBuilder,
-    private store: Store<{ data: RootReducerState }>
-  ) {}
+    protected override store: Store<{ data: RootReducerState }>) {
+    super(store);
+  }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Configuration' },{ label: 'Classes', active: true }];
@@ -324,28 +316,6 @@ export class ClassesComponent implements OnInit {
     this.getExamtypes();
   }
 
-  toggleLoading() {
-    this.loading = !this.loading;
-  }
-
-  getLookUps() {
-    this.store.dispatch(getLookUpsAction());
-    this.store.select(selectLookUpsView).subscribe((lookUps) => {
-      if(lookUps){
-       this.lookUps = lookUps;
-       this.activeAndInactiveStatus = this.lookUps?.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTableEnum.ActiveAndInactiveStatus) || [];
-       this.yesOrNoResponse = this.lookUps?.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTableEnum.YesOrNoResponse) || [];
-      }
-    });
-  }
-
-
-  getYesNoLabel(res: boolean): string {
-    const response = res ? 1 : 0;
-    const responseItem = this.yesOrNoResponse.find(item => item.dataCode === response);
-    return responseItem?.text ?? '';
-  }
-
   getExamtypes() {
     this.examTypeService.getExamTypes().subscribe({
         next: (response) => {
@@ -353,12 +323,6 @@ export class ClassesComponent implements OnInit {
         },
         error: (error) => {}
       });
-  }
-
-  getStatusLabel(status: boolean): string {
-    const statusCode = status ? 1 : 0;
-    const statusItem = this.activeAndInactiveStatus.find(item => item.dataCode === statusCode);
-    return statusItem?.text ?? '';
   }
 
 }
