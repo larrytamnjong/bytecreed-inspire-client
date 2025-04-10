@@ -344,7 +344,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
 
   getExamTypeName(examTypeId: string): string {
     const name = this.examTypes?.find((item : ExamType) => item.id === examTypeId)?.name;
-    return name?? '';
+    return name ?? '';
   }
 
   dismissClassExamTypeModal() {
