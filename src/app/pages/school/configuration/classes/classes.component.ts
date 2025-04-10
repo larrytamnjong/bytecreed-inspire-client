@@ -56,8 +56,8 @@ export class ClassesComponent implements OnInit {
   classExamTypeHeaders = [
     { key: 'examTypeId', displayName: 'Exam Type' },
     { key: 'isActive', displayName: 'Status' },
-    { key: 'weight', displayName: 'Weight' },
     { key: 'overrideDefaultWeight', displayName: 'Override Default Weight' },
+    { key: 'weight', displayName: 'Weight' },
   ]
 
   constructor(

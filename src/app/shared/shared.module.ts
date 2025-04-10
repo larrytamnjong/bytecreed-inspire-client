@@ -15,12 +15,15 @@ import { FormsModule } from '@angular/forms';
 import { GenericAppTableComponent } from './generic-app-table/generic-app-table.component';
 import { AcademicService } from '../core/services/api/academics.service';
 import { ClassService } from '../core/services/api/class.service';
+import { SubjectService } from '../core/services/api/subject.service';
+import { AppLoadingComponent } from './app-loading/app-loading.component';
 
 
 @NgModule({
   declarations: [
     BreadcrumbsComponent,
-    GenericAppTableComponent
+    GenericAppTableComponent,
+    AppLoadingComponent
   ],
   imports: [
     CommonModule,
@@ -40,9 +43,10 @@ import { ClassService } from '../core/services/api/class.service';
     AdmissionNumberConfigurationService,
     ClassSectionService,
     AcademicService,
-    ClassService
+    ClassService,
+    SubjectService
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
-  exports: [GenericAppTableComponent, BreadcrumbsComponent]
+  exports: [GenericAppTableComponent, AppLoadingComponent, BreadcrumbsComponent]
 })
 export class SharedModule { }

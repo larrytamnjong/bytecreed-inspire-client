@@ -54,7 +54,7 @@
                                             </div>
                                             <div class="col-sm-auto">
                                                 <div class="d-flex flex-wrap align-items-start gap-2">
-                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassExamTypeModal(addClassExamTypeContent)"><i class="ri-add-line align-bottom me-1"></i> Add</button>
+                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassExamTypeModal(addClassExamTypeContent)"><i class=" ri-pencil-fill align-bottom me-1"></i> Add / Update</button>
                                                     <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="deleteClassExamTypeModal(removeClassExamTypeContent)"><i class="ri-delete-bin-line align-bottom me-1"></i> Remove</button>
                                                 </div>
                                             </div>
@@ -159,7 +159,7 @@
     <!--Class Exam Type-->
     <ng-template #addClassExamTypeContent role="document" let-modal>
         <div class="modal-header p-3 bg-light">
-            <h5 class="modal-title">Add Exam Types</h5>
+            <h5 class="modal-title">Add or Update Exam Types</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissClassExamTypeModal()"></button>
         </div>
         <form  class="tablelist-form" autocomplete="off" [formGroup]="classExamTypeForm" (ngSubmit)="onSubmitAddClassExamType()">
