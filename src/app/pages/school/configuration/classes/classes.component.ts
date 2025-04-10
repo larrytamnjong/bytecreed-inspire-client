@@ -12,6 +12,7 @@ import { ExamTypeService } from 'src/app/core/services/api/exam-type.service';
 import { ExamType } from 'src/app/core/Models/api/exam-types';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { SubjectService} from 'src/app/core/services/api/subject.service';
+import { Subject } from 'src/app/core/Models/api/subject';
 
 @Component({
   selector: 'app-classes',
@@ -36,7 +37,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
 
   //Class Exam Type
   submittedClassExamType: boolean = false;
-  submitDeleteClassExamType: boolean = false;
+  submittedDeleteClassExamType: boolean = false;
   classExamTypes: any = [];
   examTypes: any | ExamType[] = [];
   classExamType_classId: any | null = null;
@@ -52,8 +53,8 @@ export class ClassesComponent extends BaseComponent implements OnInit {
   ]
 
   //Class Subjects 
-  submittedClassSubjects: boolean = false;
-  submittedDeleteClassSubjects: boolean = false;
+  submittedClassSubject: boolean = false;
+  submittedDeleteClassSubject: boolean = false;
   classSubjects: any = [];
   subjects: any = [];
   classSubject_classId: any | null = null;
@@ -281,7 +282,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
 
   onSubmitDeleteClassExamType(){
     this.toggleLoading();
-    this.submitDeleteClassExamType = true;
+    this.submittedDeleteClassExamType = true;
     if (this.classExamTypeDeleteForm.invalid) {
       this.toggleLoading();
       return; 
@@ -293,6 +294,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
       finalize(() => {this.toggleLoading(); this.resetClassExamTypeForm();})).subscribe({
       next: (response) => {
         if(response.success){
+          this.getClassExamTypes();
           SimpleAlerts.showSuccess();
         }
       },
@@ -352,14 +354,111 @@ export class ClassesComponent extends BaseComponent implements OnInit {
 
   resetClassExamTypeForm() {
     this.submittedClassExamType = false;
-    this.submitDeleteClassExamType = false;
+    this.submittedDeleteClassExamType = false;
     this.classExamTypeForm.reset();
     this.classExamTypeDeleteForm.reset();
     this.classExamTypeForm.patchValue({weight: null, isActive: true, overrideDefaultWeight: false});
   }
 
   // Class Subject
+  addClassSubjectModal(content: any) {
+    this.submittedClassSubject = false;
+    this.modalService.open(content, this.mdModalConfig);
+  }
 
+  deleteClassSubjectModal(content: any) {
+    this.modalService.open(content, this.mdModalConfig);
+  }
+
+  public classSubject_onSelectAllClasses() {
+    const selected = this.classes.map((item: Class) => item.id);
+    this.classSubjectForm.get('classIds')?.patchValue(selected);
+  }
+
+  public classSubject_onSelectAllClassesForDelete() {
+    const selected = this.classes.map((item: Class) => item.id);
+    this.classSubjectDeleteForm.get('classIds')?.patchValue(selected);
+  }
+
+  onSubmitDeleteClassSubject(){
+    this.toggleLoading();
+    this.submittedDeleteClassSubject = true;
+    if (this.classSubjectDeleteForm.invalid) {
+      this.toggleLoading();
+      return; 
+    }
+
+    this.modalService.dismissAll();
+
+    this.classService.deleteClassSubject(this.classSubjectDeleteForm.get('subjectId')?.value, (this.classSubjectDeleteForm.get('classIds')?.value)).pipe(
+      finalize(() => {this.toggleLoading(); this.resetClassSubjectForm();})).subscribe({
+      next: (response) => {
+        if(response.success){
+          this.getClassSubjects();
+          SimpleAlerts.showSuccess();
+        }
+      },
+      error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
+    });
+  }
+
+  onSubmitAddClassSubject() {
+    this.toggleLoading();
+    this.submittedClassSubject = true;
+    if (this.classSubjectForm.invalid) {
+      this.toggleLoading();
+      return;
+    }
+    
+    this.modalService.dismissAll();
+
+      this.classService.updateOrAddClassesSubjects(this.classSubjectForm.value).pipe(
+        finalize(() => {this.toggleLoading(); this.resetClassSubjectForm();})).subscribe({
+        next: (response) => {
+          if(response.success){
+            this.getClassSubjects();
+            SimpleAlerts.showSuccess();
+          }
+        },
+        error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
+      });
+  }
+
+  getClassSubjects(){
+    this.classSubjects = [];
+    if(this.classSubject_classId == null){
+      return;
+    }
+
+    this.toggleLoading();
+    this.classService.getClassSubjects(this.classSubject_classId).pipe(
+      finalize(() => {this.toggleLoading();})).subscribe({
+      next: (response) => {
+        if(response.success){
+          this.classSubjects = response.data;
+        }
+      },
+      error: () => {},
+    });
+  }
+
+  getClassSubjectName(subjectId: string): string {
+    const name = this.subjects?.find((item : Subject) => item.id === subjectId)?.name;
+    return name ?? '';
+  }
+
+  dismissClassSubjectModal() {
+    this.modalService.dismissAll();
+    this.resetClassSubjectForm();
+  }
+
+  resetClassSubjectForm() {
+    this.submittedClassSubject = false;
+    this.submittedDeleteClassSubject = false;
+    this.classSubjectForm.reset();
+    this.classSubjectDeleteForm.reset();
+    this.classSubjectForm.patchValue({coefficient: null, isActive: true, overrideDefaultCoefficient: false});
+  }
 
   // General
   loadData(){
@@ -382,4 +481,5 @@ export class ClassesComponent extends BaseComponent implements OnInit {
       error: (error) => {}
     });
   }
+
 }

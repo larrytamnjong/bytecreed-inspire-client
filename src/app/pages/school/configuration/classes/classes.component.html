@@ -102,7 +102,63 @@
                       </ng-template>
                   </li>
                   <li [ngbNavItem]="3"><a ngbNavLink><i class="ri-book-2-line"></i> Class Subjects</a>
-                    <ng-template ngbNavContent></ng-template>
+                    <ng-template ngbNavContent>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div  class="card-header border-bottom-dashed">
+                                        <div class="row g-4 align-items-center">
+                                            <div class="col-sm">
+                                                <div><h5 class="card-title mb-0"><i class="ri-menu-add-line text-muted fs-18 align-middle me-1">   </i>Class Subjects</h5></div>
+                                            </div>
+                                            <div class="col-sm-auto">
+                                                <div class="d-flex flex-wrap align-items-start gap-2">
+                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassSubjectModal(updateOrAddClassSubjectContent)"><i class=" ri-pencil-fill align-bottom me-1"></i> Add / Update</button>
+                                                    <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="deleteClassSubjectModal(removeClassSubjectContent)"><i class="ri-delete-bin-line align-bottom me-1"></i> Remove</button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12">
+                                                <div class="row g-3">
+                                                    <div class="col-sm-8">
+                                                        <div>
+                                                            <ng-select [items]="classes" bindLabel="name" [(ngModel)]="classSubject_classId" bindValue="id" placeholder="Select Class"></ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div>
+                                                            <button type="button" class="btn btn-primary w-100" (click)="getClassSubjects()"><i class="ri-equalizer-fill mx-2 align-bottom"></i>Filter</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <generic-app-table 
+                                    [headers]="classSubjectHeaders" 
+                                    [data]="classSubjects" 
+                                    [showActions]="false" 
+                                    tableId="classSubjectTable"
+                                    [customTemplates]="{ 'isActive': classSubjectStatusTemplate, 'subjectId': subjectTemplate, 'overrideDefaultCoefficient': overrideDefaultCoefficientTemplate }">
+                                    </generic-app-table>
+
+                                    <ng-template #classSubjectStatusTemplate let-status let-row="row">
+                                        <div class="status">
+                                            <span class="badge text-uppercase" [ngClass]="{ 'bg-success-subtle text-success': status === true, 'bg-danger-subtle text-danger': status !== true }">{{ getActiveOrInactiveLabel(status) }}</span>
+                                        </div>
+                                    </ng-template>
+
+                                    <ng-template #subjectTemplate let-subjectId let-row="row">
+                                        <span>{{ getClassSubjectName(subjectId) }}</span>
+                                    </ng-template>
+
+                                    <ng-template #overrideDefaultCoefficientTemplate let-overrideDefaultCoefficient let-row="row">
+                                        <span>{{ getYesOrNoLabel(overrideDefaultCoefficient) }}</span>
+                                    </ng-template>
+
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
                   </li>
                   <li [ngbNavItem]="4"><a ngbNavLink><i class="ri-menu-add-line"></i> Class Groups</a>
                     <ng-template ngbNavContent></ng-template>
@@ -120,7 +176,7 @@
         </div>
     </div>
 
-    <!--Class-->
+    <!--Class Modal -->
     <ng-template #content role="document" let-modal>
         <div class="modal-header p-3 bg-light">
             <h5 class="modal-title">{{isClassCreateMode ? "Create" : "Update"}} Class</h5>
@@ -156,7 +212,7 @@
         </form>
     </ng-template>
 
-    <!--Class Exam Type-->
+    <!--Class Exam Type Modals-->
     <ng-template #addClassExamTypeContent role="document" let-modal>
         <div class="modal-header p-3 bg-light">
             <h5 class="modal-title">Add or Update Exam Types</h5>
@@ -221,12 +277,12 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label class="form-label">Exam Type <span class="text-danger">*</span></label>
-                    <ng-select [items]="examTypes" bindLabel="name"  bindValue="id" formControlName="examTypeId" placeholder="Select ExamType"  [ngClass]="{ 'is-invalid': submitDeleteClassExamType && classExamTypeDeleteF['examTypeId'].invalid }"></ng-select>
+                    <ng-select [items]="examTypes" bindLabel="name"  bindValue="id" formControlName="examTypeId" placeholder="Select ExamType"  [ngClass]="{ 'is-invalid': submittedDeleteClassExamType && classExamTypeDeleteF['examTypeId'].invalid }"></ng-select>
                     <div class="invalid-feedback">Select Exam Type</div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Select classes <span class="text-danger">*</span></label>
-                    <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submitDeleteClassExamType && classExamTypeDeleteF['classIds'].invalid }" placeholder="Select Classes">
+                    <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submittedDeleteClassExamType && classExamTypeDeleteF['classIds'].invalid }" placeholder="Select Classes">
                         <ng-template ng-header-tmp>
                             <div style="padding-left: 1px;">
                               <button type="button" class="btn btn-link p-0 m-0" (click)="classExamType_onSelectAllClassesForDelete()">Select All</button>
@@ -244,4 +300,94 @@
             </div>
         </form>
     </ng-template>
+
+    <!--Class Subject Modals -->
+    <ng-template #updateOrAddClassSubjectContent role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title">Add or Update Class Subject</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissClassSubjectModal()"></button>
+        </div>
+        <form  class="tablelist-form" autocomplete="off" [formGroup]="classSubjectForm" (ngSubmit)="onSubmitAddClassSubject()">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Subject <span class="text-danger">*</span></label>
+                    <ng-select [items]="subjects" bindLabel="name"  bindValue="id" formControlName="subjectId" placeholder="Select Subject"  [ngClass]="{ 'is-invalid': submittedClassSubject && classSubjectF['subjectId'].invalid }"></ng-select>
+                    <div class="invalid-feedback">Select Subject</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Select classes <span class="text-danger">*</span></label>
+                    <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submittedClassSubject && classSubjectF['classIds'].invalid }" placeholder="Select Classes">
+                        <ng-template ng-header-tmp>
+                            <div style="padding-left: 1px;">
+                              <button type="button" class="btn btn-link p-0 m-0" (click)="classSubject_onSelectAllClasses()">Select All</button>
+                            </div>
+                          </ng-template>
+                    </ng-select>
+                    <div class="invalid-feedback">Select Classes</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label mb-0">Override Default Coefficient<span class="text-danger">*</span></label>
+                    <select class="form-select" aria-label=".form-select-sm" formControlName="overrideDefaultCoefficient" [ngClass]="{ 'is-invalid': submittedClassSubject && classSubjectF['overrideDefaultCoefficient'].invalid }">
+                        <option selected [ngValue]="null">Select</option>
+                        <option [ngValue]="true">Yes</option>
+                        <option [ngValue]="false">No</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="submittedClassSubject && classSubjectF['overrideDefaultCoefficient'].invalid">Please select an option</div>
+                </div>
+                <div class="mb-3">
+                    <label for="coefficient" class="form-label">Coefficient</label>
+                    <input type="number" id="coefficient" class="form-control" placeholder="Enter Coefficient" formControlName="coefficient" [ngClass]="{ 'is-invalid': submittedClassSubject && classSubjectF['coefficient'].invalid }">
+                    <div class="invalid-feedback" *ngIf="submittedClassSubject && classSubjectF['coefficient'].invalid">Coefficient required when 'Override Default Coefficient' is set to Yes</div>
+                </div> 
+                <div class="mb-3">
+                    <label class="form-label mb-0">Is Active <span class="text-danger">*</span></label>
+                    <select class="form-select" aria-label=".form-select-sm" formControlName="isActive" [ngClass]="{ 'is-invalid': submittedClassSubject && classSubjectF['isActive'].invalid }">
+                        <option selected [ngValue]="null">Select status</option>
+                        <option [ngValue]="true">Yes</option>
+                        <option [ngValue]="false">No</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="submittedClassSubject && classSubjectF['isActive'].invalid">Please select an option</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissClassSubjectModal()">Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #removeClassSubjectContent role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title">Remove Class Subject</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissClassSubjectModal()"></button>
+        </div>
+        <form  class="tablelist-form" autocomplete="off" [formGroup]="classSubjectDeleteForm" (ngSubmit)="onSubmitDeleteClassSubject()">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Class Subject <span class="text-danger">*</span></label>
+                    <ng-select [items]="subjects" bindLabel="name"  bindValue="id" formControlName="subjectId" placeholder="Select Subject"  [ngClass]="{ 'is-invalid': submittedDeleteClassSubject && classSubjectDeleteF['subjectId'].invalid }"></ng-select>
+                    <div class="invalid-feedback">Select Subject</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Select classes <span class="text-danger">*</span></label>
+                    <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submittedDeleteClassSubject && classSubjectDeleteF['classIds'].invalid }" placeholder="Select Classes">
+                        <ng-template ng-header-tmp>
+                            <div style="padding-left: 1px;">
+                              <button type="button" class="btn btn-link p-0 m-0" (click)="classSubject_onSelectAllClassesForDelete()">Select All</button>
+                            </div>
+                          </ng-template>
+                    </ng-select>
+                    <div class="invalid-feedback">Select Classes</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissClassSubjectModal()">Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
 </div>
