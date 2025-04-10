@@ -17,6 +17,7 @@ import { AcademicService } from '../core/services/api/academics.service';
 import { ClassService } from '../core/services/api/class.service';
 import { SubjectService } from '../core/services/api/subject.service';
 import { AppLoadingComponent } from './app-loading/app-loading.component';
+import { CourseService } from '../core/services/api/course.service';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { AppLoadingComponent } from './app-loading/app-loading.component';
     ClassSectionService,
     AcademicService,
     ClassService,
-    SubjectService
+    SubjectService,
+    CourseService
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   exports: [GenericAppTableComponent, AppLoadingComponent, BreadcrumbsComponent]

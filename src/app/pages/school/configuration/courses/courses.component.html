@@ -1,1 +1,51 @@
 <app-breadcrumbs title="Courses" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header border-bottom-dashed">
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm">
+                        <div><h5 class="card-title mb-0"><i class="ri-stack-line text-muted fs-18 align-middle me-1">     </i>Courses</h5></div>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="d-flex flex-wrap align-items-start gap-2">
+                            <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-add-line align-bottom me-1"></i> Create Course</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          <app-loading [loading]="loading"></app-loading>
+
+            <generic-app-table 
+                [headers]="headers" 
+                [data]="courses" 
+                [showActions]="true"  
+                (deleteClicked)="deleteCourse($event)"
+                (editClicked)="editModal(content, $event)">
+            </generic-app-table>
+        </div>
+    </div>
+    <ng-template #content role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title">{{isCreateMode ? "Create" : "Update"}} Course</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
+        </div>
+        <form  class="tablelist-form" autocomplete="off" [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                    <input  type="text" id="name" class="form-control" placeholder="Enter Subject Name" formControlName="name" required [ngClass]="{ 'is-invalid': submitted && form['name'].invalid }">
+                    <div class="invalid-feedback">Name is required</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()">Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+</div>

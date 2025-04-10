@@ -39,9 +39,9 @@ export class SubjectsComponent extends BaseComponent implements OnInit {
       private modalService: NgbModal,
       private subjectService: SubjectService,
       private subjectFormBuilder: UntypedFormBuilder,
-      protected override store: Store<{ data: RootReducerState }>
-    ) 
-    { super(store);}
+      protected override store: Store<{ data: RootReducerState }>) { 
+      super(store);
+    }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{label: 'Configuration'},{ label: 'Subject', active: true }];
@@ -72,17 +72,17 @@ export class SubjectsComponent extends BaseComponent implements OnInit {
       this.modalService.open(content, this.mdModalConfig);
     }
   
-    getSubjects() {
-        this.toggleLoading();
-        this.subjectService.getSubjects().pipe(finalize(() => this.toggleLoading())).subscribe({
-            next: (response) => {
-              this.subjects = response.data;
-            },
-            error: (error) => {
-              SimpleAlerts.showError(getErrorMessage(error));
-            }
-          });
-      }
+   getSubjects() {
+      this.toggleLoading();
+      this.subjectService.getSubjects().pipe(finalize(() => this.toggleLoading())).subscribe({
+          next: (response) => {
+            this.subjects = response.data;
+          },
+          error: (error) => {
+            SimpleAlerts.showError(getErrorMessage(error));
+          }
+        });
+    }
 
     onSubmit() {
       this.submitted = true;
