@@ -22,5 +22,5 @@ export class CourseService {
   }
   public deleteCourse(id: string): Observable<ServiceResponse<any>> {
     return this.apiService.delete(`${this.course_controller}/${id}/course`);
-}
+  }
 }
