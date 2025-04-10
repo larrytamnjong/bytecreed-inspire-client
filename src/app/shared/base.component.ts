@@ -12,6 +12,8 @@ export class BaseComponent  {
   lookUps?: LookUpView;
   activeAndInactiveStatus: LookUpData[] = [];
   yesOrNoResponse: LookUpData[] = [];
+
+  mdModalConfig = { size: 'md', centered: true };
   
   constructor(protected store: Store<{ data: RootReducerState }>) {}
 
