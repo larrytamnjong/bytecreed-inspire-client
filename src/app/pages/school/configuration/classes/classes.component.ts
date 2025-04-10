@@ -5,7 +5,7 @@ import { UntypedFormBuilder, Validators, UntypedFormGroup} from '@angular/forms'
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 import { ClassService } from 'src/app/core/services/api/class.service';
-import { Class } from 'src/app/core/Models/api/class';
+import { Class, ClassSubject } from 'src/app/core/Models/api/class';
 import { Store } from '@ngrx/store';
 import { RootReducerState } from 'src/app/store';
 import { ExamTypeService } from 'src/app/core/services/api/exam-type.service';
@@ -184,9 +184,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
       SimpleAlerts.confirmDeleteDialog().then((result) => {
         if (result) {
           this.toggleLoading();
-          this.classService.deleteClass(_class.id!).pipe(
-            finalize(() => {this.toggleLoading();})
-          ).subscribe({
+          this.classService.deleteClass(_class.id!).pipe(finalize(() => {this.toggleLoading();})).subscribe({
             next: (response) => {
               if(response.success){
                 this.getClasses();
@@ -233,6 +231,8 @@ export class ClassesComponent extends BaseComponent implements OnInit {
               },
               error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
             })
+          }else{
+            this.toggleLoading();
           }
         });
       }
@@ -399,6 +399,24 @@ export class ClassesComponent extends BaseComponent implements OnInit {
         }
       },
       error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
+    });
+  }
+
+  deleteClassSubject(classSubject: ClassSubject){
+    SimpleAlerts.confirmDialog().then((result) => {
+      if (result) {
+        this.toggleLoading();
+        this.classService.deleteClassSubject(classSubject.subjectId, [classSubject.classId]).pipe(
+          finalize(() => {this.toggleLoading();})).subscribe({
+          next: (response) => {
+            if(response.success){
+              this.getClassSubjects();
+              SimpleAlerts.showSuccess();
+            }
+          },
+          error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
+        });
+      }
     });
   }
 

@@ -136,7 +136,9 @@
                                     <generic-app-table 
                                     [headers]="classSubjectHeaders" 
                                     [data]="classSubjects" 
-                                    [showActions]="false" 
+                                    [showActions]="true" 
+                                    [showEdit]="false"
+                                    (deleteClicked)="deleteClassSubject($event)"
                                     tableId="classSubjectTable"
                                     [customTemplates]="{ 'isActive': classSubjectStatusTemplate, 'subjectId': subjectTemplate, 'overrideDefaultCoefficient': overrideDefaultCoefficientTemplate }">
                                     </generic-app-table>

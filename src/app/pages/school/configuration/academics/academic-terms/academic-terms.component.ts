@@ -107,6 +107,9 @@ constructor(
             },
             error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
           })
+        }else{
+          this.toggleLoading();
+          return;
         }
       });
     }
