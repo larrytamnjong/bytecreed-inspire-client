@@ -254,6 +254,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
       this.submittedClass = false;
       this.isClassCreateMode = true;
       this.classForm.reset();
+      this.classForm.patchValue({isActive: true});
     }
 
     dismissClassModal() {
