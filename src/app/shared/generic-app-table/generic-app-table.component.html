@@ -15,6 +15,9 @@
             <table class="table table-hover table-striped table-gridjs table-sm table-xs">
                 <thead>
                     <tr>
+                        <th *ngIf="showRowSelect">
+                            <input class="form-check-input" [checked]="isAllVisibleRowsSelected()" type="checkbox" (change)="toggleSelectAllRows($event)" />
+                        </th>
                         <th>SN</th>
                         <th *ngFor="let header of headers" (click)="onSort(header.key)" style="cursor: pointer;">{{ header.displayName }}
                             <span *ngIf="sortColumn === header.key">{{ sortDirection ? '▲' : '▼' }}</span>
@@ -24,6 +27,9 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of paginatedData; let i = index" (click)="onRowClick(item)">
+                        <td *ngIf="showRowSelect">
+                            <input class="form-check-input" type="checkbox" [checked]="isRowSelected(item)" (click)="$event.stopPropagation(); toggleRowSelection(item)" />
+                        </td>
                         <td>{{ i + 1 }}</td>
                         <!-- <td *ngFor="let header of headers" [ngClass]="clickableColumns.includes(header.key) ? 'text-primary text-decoration-underline cursor-pointer' : ''">
                             {{ item[header.key] }}

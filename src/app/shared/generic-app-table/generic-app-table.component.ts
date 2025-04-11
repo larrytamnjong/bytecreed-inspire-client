@@ -1,11 +1,11 @@
-import { Component, Input, Output, EventEmitter, TemplateRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, TemplateRef, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'generic-app-table',
   templateUrl: './generic-app-table.component.html',
   styleUrl: './generic-app-table.component.scss'
 })
-export class GenericAppTableComponent {
+export class GenericAppTableComponent implements OnChanges {
   @Input() headers: { key: string; displayName: string }[] = [];
   @Input() data: any[] = [];
   @Input() clickableColumns: string[] = []; 
@@ -16,14 +16,23 @@ export class GenericAppTableComponent {
   @Output() editClicked = new EventEmitter<any>();
   @Output() deleteClicked = new EventEmitter<any>();
   @Input() tableId: string = 'default'; 
-
+  @Input() showRowSelect: boolean = false;
+  @Output() selectedRowsChange = new EventEmitter<any[]>();
   @Input() customTemplates: { [key: string]: TemplateRef<any> } = {};
 
+  selectedRows = new Set<any>();
   searchTerm: string = '';
   sortColumn: string = '';
   sortDirection: boolean = true; 
   currentPage: number = 0;
   pageSize: number = 5; 
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data']) {
+      this.selectedRows.clear();
+      this.emitSelectedRows(); 
+    }
+  }
 
   onRowClick(row: any) {
     this.rowClicked.emit(row);
@@ -75,6 +84,41 @@ export class GenericAppTableComponent {
 
   onSearchChange() {
     this.currentPage = 0; 
+  }
+  
+
+  toggleRowSelection(row: any) {
+    if (this.selectedRows.has(row)) {
+      this.selectedRows.delete(row);
+    } else {
+      this.selectedRows.add(row);
+    }
+    this.emitSelectedRows();
+  }
+  
+  toggleSelectAllRows(event: Event) {
+    const checked = (event.target as HTMLInputElement).checked;
+    const currentPageData = this.paginatedData; 
+    
+    if (checked) {
+      currentPageData.forEach(row => this.selectedRows.add(row));
+    } else {
+      currentPageData.forEach(row => this.selectedRows.delete(row));
+    }
+    this.emitSelectedRows();
+  }
+  
+  isRowSelected(row: any): boolean {
+    return this.selectedRows.has(row);
+  }
+  
+  emitSelectedRows() {
+    this.selectedRowsChange.emit(Array.from(this.selectedRows));
+  }
+  
+  isAllVisibleRowsSelected(): boolean {
+    if (this.paginatedData.length === 0) return false;
+    return this.paginatedData.every(row => this.selectedRows.has(row));
   }
   
 }
