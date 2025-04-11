@@ -133,6 +133,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
         overrideDefaultCoefficient: [false, [Validators.required]],
         isActive: [true, [Validators.required]],
         classIds: [null, [Validators.required]],
+        isRequired: [null, [Validators.required] ]
       });
 
       this.classSubjectDeleteForm = this.classFormBuilder.group({
@@ -367,6 +368,21 @@ export class ClassesComponent extends BaseComponent implements OnInit {
   }
 
   deleteClassSubjectModal(content: any) {
+    this.modalService.open(content, this.mdModalConfig);
+  }
+
+  editClassSubjectModal(content: any, classSubject: ClassSubject) {
+    this.submittedClassSubject = false;
+    var data = {
+      id: null,
+      subjectId: classSubject.subjectId,
+      coefficient: classSubject.coefficient,
+      overrideDefaultCoefficient: classSubject.overrideDefaultCoefficient,
+      isActive: classSubject.isActive,
+      classIds: [classSubject.classId],
+      isRequired: classSubject.isRequired
+    };
+    this.classSubjectForm.setValue(data);
     this.modalService.open(content, this.mdModalConfig);
   }
 
