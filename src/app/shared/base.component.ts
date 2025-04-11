@@ -32,14 +32,14 @@ export class BaseComponent  {
     this.loading = !this.loading;
   }
 
-  public getActiveOrInactiveLabel(status: boolean): string {
+  public getActiveOrInactiveLabel(status: boolean | null): string {
     const statusCode = status ? 1 : 0;
     const statusItem = this.activeAndInactiveStatus.find(item => item.dataCode === statusCode);
     return statusItem?.text ?? '';
   }
 
-  public getYesOrNoLabel(res: boolean): string {
-    const response = res ? 1 : 0;
+  public getYesOrNoLabel(value: boolean): string {
+    const response = value ? 1 : 0;
     const responseItem = this.yesOrNoResponse.find(item => item.dataCode === response);
     return responseItem?.text ?? '';
   }

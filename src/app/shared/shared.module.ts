@@ -18,13 +18,15 @@ import { ClassService } from '../core/services/api/class.service';
 import { SubjectService } from '../core/services/api/subject.service';
 import { AppLoadingComponent } from './app-loading/app-loading.component';
 import { CourseService } from '../core/services/api/course.service';
+import { StatusBadgeComponent } from './status-badge/status-badge.component';
 
 
 @NgModule({
   declarations: [
     BreadcrumbsComponent,
     GenericAppTableComponent,
-    AppLoadingComponent
+    AppLoadingComponent,
+    StatusBadgeComponent
   ],
   imports: [
     CommonModule,
@@ -49,6 +51,6 @@ import { CourseService } from '../core/services/api/course.service';
     CourseService
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
-  exports: [GenericAppTableComponent, AppLoadingComponent, BreadcrumbsComponent]
+  exports: [GenericAppTableComponent, AppLoadingComponent, StatusBadgeComponent, BreadcrumbsComponent]
 })
 export class SharedModule { }
