@@ -19,17 +19,17 @@ import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 export class GradingSystemsComponent extends BaseComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
 
-    submitted: boolean = false;
-    gradingSystems: any = [];
-    gradingSystemForm!: UntypedFormGroup;
-    isCreateMode: boolean = true;
-    get form() {return this.gradingSystemForm.controls;}
-    headers = [
-      { key: 'name', displayName: 'Name' },
-      { key: 'scale', displayName: 'Scale' },
-      { key: 'isActive', displayName: 'Status' },
-      { key: 'gradingScale', displayName: 'Grading Scale' },
-    ];
+  submitted: boolean = false;
+  gradingSystems: any = [];
+  gradingSystemForm!: UntypedFormGroup;
+  isCreateMode: boolean = true;
+  get form() {return this.gradingSystemForm.controls;}
+  headers = [
+    { key: 'name', displayName: 'Name' },
+    { key: 'scale', displayName: 'Scale' },
+    { key: 'isActive', displayName: 'Status' },
+    { key: 'gradingScale', displayName: 'Grading Scale' },
+  ];
 
   constructor(
     protected override store: Store<{ data: RootReducerState }>,
