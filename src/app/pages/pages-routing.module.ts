@@ -11,7 +11,7 @@ const routes: Routes = [
     { path: 'school', loadChildren: () => import('./school/school.module').then(m => m.SchoolModule) },
     { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
     { path: 'parent', loadChildren: () => import('./parent/parent.module').then(m => m.ParentModule) },
-    { path: 'student', loadChildren: () => import('./student/student.module').then(m => m.StudentsModule) },
+    { path: 'student', loadChildren: () => import('./student/student.module').then(m => m.StudentModule) },
     { path: 'general', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule) },
 ];
 

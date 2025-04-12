@@ -16,6 +16,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { ConfigurationModule } from './configuration/configuration.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AnalyticsComponent } from './analytics/analytics.component';
+import { StudentsModule } from './students/students-module';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { AnalyticsComponent } from './analytics/analytics.component';
     ReactiveFormsModule,
     NgbTooltipModule,
     ConfigurationModule,
+    StudentsModule,
     NgSelectModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]

@@ -26,7 +26,7 @@ import { PagesRoutingModule } from "./pages-routing.module";
 import { SharedModule } from "../shared/shared.module";
 import { DashboardComponent } from './dashboards/dashboard/dashboard.component';
 import { DashboardsModule } from "./dashboards/dashboards.module";
-import { StudentsModule } from './student/student.module';
+import { StudentModule } from './student/student.module';
 import { SchoolModule } from './school/school.module';
 import { ParentModule } from './parent/parent.module';
 import { AdminModule } from './admin/admin.module';
@@ -51,7 +51,7 @@ import { AdminModule } from './admin/admin.module';
     SlickCarouselModule,
     LightboxModule,
     DashboardsModule,
-    StudentsModule,
+    StudentModule,
     SchoolModule,
     ParentModule,
     AdminModule

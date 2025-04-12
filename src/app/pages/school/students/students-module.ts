@@ -11,11 +11,15 @@ import { SimplebarAngularModule } from 'simplebar-angular';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { FlatpickrModule } from 'angularx-flatpickr';
-import { StudentRoutingModule } from './student.routing.module';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { StudentsRoutingModule } from './students-routing.module';
+import { StudentEnrollmentsComponent } from './student-enrollments/student-enrollments.component';
+import { StudentRegistrationComponent } from './student-registration/student-registration.component';
 
 @NgModule({
   declarations: [
+    StudentEnrollmentsComponent,
+    StudentRegistrationComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +33,7 @@ import { SharedModule } from '../../shared/shared.module';
     NgApexchartsModule,
     SlickCarouselModule,
     FlatpickrModule.forRoot(),
-    StudentRoutingModule,
+    StudentsRoutingModule,
     SharedModule,
     NgbPaginationModule,
     NgbTypeaheadModule,
@@ -39,4 +43,4 @@ import { SharedModule } from '../../shared/shared.module';
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
-export class StudentModule { }
+export class StudentsModule { }
