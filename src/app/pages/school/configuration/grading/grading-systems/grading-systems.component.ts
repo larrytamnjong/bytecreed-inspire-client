@@ -114,7 +114,6 @@ export class GradingSystemsComponent extends BaseComponent implements OnInit {
               error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
             })
           }else{
-            this.toggleLoading();
             return;
           }
         });

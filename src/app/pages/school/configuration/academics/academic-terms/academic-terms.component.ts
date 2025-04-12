@@ -72,16 +72,15 @@ constructor(
   }
 
   onSubmit() {
-    this.toggleLoading();
     this.submitted = true;
     if (this.academicTermForm.invalid) {
-      this.toggleLoading();
       return;
     }
     
     this.modalService.dismissAll();
 
     if(this.isCreateMode){
+      this.toggleLoading();
       this.academicService.createAcademicTerm(this.academicTermForm.value).pipe(
         finalize(() => {this.toggleLoading(); this.reset();})
       ).subscribe({
@@ -96,6 +95,7 @@ constructor(
     }else{
       SimpleAlerts.confirmDialog().then((result) => {
         if (result) {
+          this.toggleLoading();
           this.academicService.updateAcademicTerm(this.academicTermForm.value).pipe(
             finalize(() => {this.toggleLoading(); this.reset();})
           ).subscribe({
@@ -108,7 +108,6 @@ constructor(
             error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
           })
         }else{
-          this.toggleLoading();
           return;
         }
       });

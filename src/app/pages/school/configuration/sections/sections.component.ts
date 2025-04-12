@@ -110,7 +110,6 @@ export class SectionsComponent extends BaseComponent implements OnInit {
             error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
           })
         }else{
-          this.toggleLoading();
           return;
         }
       });

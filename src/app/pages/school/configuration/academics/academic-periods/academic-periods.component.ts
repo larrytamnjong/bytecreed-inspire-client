@@ -112,16 +112,15 @@ export class AcademicPeriodsComponent implements OnInit {
   }
 
   onSubmit() {
-    this.toggleLoading();
     this.submitted = true;
     if (this.academicPeriodForm.invalid) {
-      this.toggleLoading();
       return;
     }
     
     this.modalService.dismissAll();
 
     if(this.isCreateMode){
+      this.toggleLoading();
       this.academicService.createAcademicPeriod(this.academicPeriodForm.value).pipe(
         finalize(() => {this.toggleLoading(); this.reset();})
       ).subscribe({
@@ -136,6 +135,7 @@ export class AcademicPeriodsComponent implements OnInit {
     }else{
       SimpleAlerts.confirmDialog().then((result) => {
         if (result) {
+          this.toggleLoading();
           this.academicService.updateAcademicPeriod(this.academicPeriodForm.value).pipe(
             finalize(() => {this.toggleLoading(); this.reset();})
           ).subscribe({
@@ -148,7 +148,6 @@ export class AcademicPeriodsComponent implements OnInit {
             error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
           })
         }else{
-          this.toggleLoading();
           return;
         }
       });

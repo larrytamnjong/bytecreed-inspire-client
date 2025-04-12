@@ -1,1 +1,75 @@
 <app-breadcrumbs title="Grade Setup" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <div class="col-lg-12">
+            <div class="card">
+                <div  class="card-header border-bottom-dashed">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-sm">
+                            <div><h5 class="card-title mb-0"><i class="ri-edit-fill text-muted fs-18 align-middle me-1">   </i>Grade Setup</h5></div>
+                        </div>
+                        <div class="col-sm-auto">
+                            <div class="d-flex flex-wrap align-items-start gap-2">
+                                <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-add-line align-bottom me-1"></i> Create Setup</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <generic-app-table 
+                [headers]="headers" 
+                [data]="gradeSetups" 
+                [showActions]="true" 
+                [showDelete]="true" 
+                (deleteClicked)="deleteGradeSetup($event)"
+                [customTemplates]="{ 'gradingSystemId': gradingSystemTemplate}"
+                (editClicked)="editModal(content, $event)">
+                </generic-app-table>
+
+                <ng-template #gradingSystemTemplate let-subjectId let-row="row">
+                    <span>{{ getGradingSystemName(subjectId) }}</span>
+                </ng-template>
+
+            </div>
+     </div>
+     <app-loading [loading]="loading"></app-loading>
+    <ng-template #content role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title">{{isCreateMode ? "Create" : "Update"}} Grade Setup</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
+        </div>
+        <form  class="tablelist-form" autocomplete="off" [formGroup]="gradeSetupForm" (ngSubmit)="onSubmit()">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Grading System <span class="text-danger">*</span></label>
+                    <ng-select [items]="gradingSystems" bindLabel="name" bindValue="id" formControlName="gradingSystemId" placeholder="Select Grading System" [ngClass]="{ 'is-invalid': submitted && form['gradingSystemId'].errors }" ></ng-select>
+                    <div class="invalid-feedback">Please select Grading System</div>
+                </div>
+                <div class="mb-3">
+                    <label for="grade" class="form-label">Grade <span class="text-danger">*</span></label>
+                    <input type="text" id="grade" class="form-control" placeholder="Enter Grade" required formControlName="grade" [ngClass]="{ 'is-invalid': submitted && form['grade'].errors }" />
+                    <div class="invalid-feedback">Please enter grade</div>
+                </div>
+                <div class="mb-3">
+                    <label for="remark" class="form-label">Remark</label>
+                    <input type="text" id="remark" class="form-control" placeholder="Enter Remark" formControlName="remark"/>
+                </div>
+                <div class="mb-3">
+                    <label for="minMark" class="form-label">Minimum Mark <span class="text-danger">*</span></label>
+                    <input type="number" id="minMark" class="form-control" placeholder="Enter Minimum Mark" required formControlName="minMark" [ngClass]="{ 'is-invalid': submitted && form['minMark'].invalid }">
+                    <div class="invalid-feedback">Minimum mark is required</div>
+                </div>
+                <div class="mb-3">
+                    <label for="maxMark" class="form-label">Maximum Mark <span class="text-danger">*</span></label>
+                    <input type="number" id="maxMark" class="form-control" placeholder="Enter Maximum Mark" required formControlName="maxMark" [ngClass]="{ 'is-invalid': submitted && form['maxMark'].invalid }">
+                    <div class="invalid-feedback">Maximum mark is required</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()">Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+</div>

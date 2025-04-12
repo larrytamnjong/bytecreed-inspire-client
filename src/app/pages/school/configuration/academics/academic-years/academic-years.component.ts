@@ -91,16 +91,15 @@ export class AcademicYearsComponent implements OnInit {
   }
 
   onSubmit() {
-    this.toggleLoading();
     this.submitted = true;
     if (this.academicYearForm.invalid) {
-      this.toggleLoading();
       return;
     }
     
     this.modalService.dismissAll();
 
     if(this.isCreateMode){
+      this.toggleLoading();
       this.academicService.createAcademicYear(this.academicYearForm.value).pipe(
         finalize(() => {this.toggleLoading(); this.reset();})
       ).subscribe({
@@ -115,6 +114,7 @@ export class AcademicYearsComponent implements OnInit {
     }else{
       SimpleAlerts.confirmDialog().then((result) => {
         if (result) {
+          this.toggleLoading();
           this.academicService.updateAcademicYear(this.academicYearForm.value).pipe(
             finalize(() => {this.toggleLoading(); this.reset();})
           ).subscribe({
@@ -127,7 +127,6 @@ export class AcademicYearsComponent implements OnInit {
             error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
           })
         }else{
-          this.toggleLoading();
           return;
         }
       });

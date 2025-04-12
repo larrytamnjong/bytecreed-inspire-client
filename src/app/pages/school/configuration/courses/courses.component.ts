@@ -106,7 +106,6 @@ export class CoursesComponent extends BaseComponent implements OnInit {
                 error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
               })
             }else{
-              this.toggleLoading();
               return;
             }
           });
@@ -127,6 +126,8 @@ export class CoursesComponent extends BaseComponent implements OnInit {
               },
               error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
             });
+          }else{
+            return;
           }
         });
       }

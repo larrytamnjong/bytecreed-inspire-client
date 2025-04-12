@@ -10,6 +10,7 @@ import { GradeSetup, GradingSystem } from 'src/app/core/Models/api/grading';
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 
+
 @Component({
   selector: 'app-grade-setup',
   templateUrl: './grade-setup.component.html',
@@ -29,11 +30,12 @@ export class GradeSetupComponent extends BaseComponent implements OnInit {
     { key: 'remark', displayName: 'Remark' },
     { key: 'minMark', displayName: 'Min Mark' },
     { key: 'maxMark', displayName: 'Max Mark' },
+     {key: 'gradingSystemId', displayName: 'Grading System'}
   ];
 
   constructor(
     protected override store: Store<{ data: RootReducerState }>,
-    private gradingSystemService: GradingService, 
+    private gradingService: GradingService, 
     private gradeSetupFormBuilder: UntypedFormBuilder,
     private modalService: NgbModal ) {
     super(store);
@@ -47,7 +49,7 @@ export class GradeSetupComponent extends BaseComponent implements OnInit {
       remark: [null],
       minMark: [0, [Validators.required]],
       maxMark: [0, [Validators.required]],
-      gradingSystemId: [null, [Validators.required]],
+      gradingSystemId: [this.gradingSystems[0]?.id ?? null, [Validators.required]],
       sortOrder: [null],
     });
 
@@ -69,7 +71,7 @@ export class GradeSetupComponent extends BaseComponent implements OnInit {
   }
 
   getGradingSystems() {
-    this.gradingSystemService.getGradingSystems().subscribe({
+    this.gradingService.getGradingSystems().subscribe({
       next: (response) => {
         if(response.success){
         this.gradingSystems = response.data;
@@ -81,7 +83,7 @@ export class GradeSetupComponent extends BaseComponent implements OnInit {
 
   getGradeSetups() {
     this.toggleLoading();
-    this.gradingSystemService.getGradeSetups().pipe(
+    this.gradingService.getGradeSetups().pipe(
       finalize(() => {this.loading = false;})).subscribe({
       next: (response) => {
         if(response.success){
@@ -94,6 +96,7 @@ export class GradeSetupComponent extends BaseComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+
     if (this.gradeSetupForm.invalid) {
       return;
     }
@@ -102,7 +105,7 @@ export class GradeSetupComponent extends BaseComponent implements OnInit {
 
     if(this.isCreateMode){
       this.toggleLoading();
-      this.gradingSystemService.addGradeSetup(this.gradeSetupForm.value).pipe(
+      this.gradingService.addGradeSetup(this.gradeSetupForm.value).pipe(
         finalize(() => {this.toggleLoading(); this.reset();})).subscribe({
         next: (response) => {
           if(response.success){
@@ -116,9 +119,8 @@ export class GradeSetupComponent extends BaseComponent implements OnInit {
       SimpleAlerts.confirmDialog().then((result) => {
         if (result) {
           this.toggleLoading();
-          this.gradingSystemService.updateGradeSetup(this.gradeSetupForm.value).pipe(
-            finalize(() => {this.toggleLoading(); this.reset();})
-          ).subscribe({
+          this.gradingService.updateGradeSetup(this.gradeSetupForm.value).pipe(
+            finalize(() => {this.toggleLoading(); this.reset();})).subscribe({
             next: (response) => {
               if(response.success){
                 this.getGradeSetups();
@@ -128,7 +130,6 @@ export class GradeSetupComponent extends BaseComponent implements OnInit {
             error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
           })
         }else{
-          this.toggleLoading();
           return;
         }
       });
@@ -144,6 +145,31 @@ export class GradeSetupComponent extends BaseComponent implements OnInit {
     this.submitted = false;
     this.isCreateMode = true;
     this.gradeSetupForm.reset();
-    this.gradeSetupForm.patchValue({minMark: 0, maxMark: 0})
+    this.gradeSetupForm.patchValue({minMark: 0, maxMark: 0, gradingSystemId: this.gradingSystems[0]?.id ?? null})
   }
+
+  getGradingSystemName(gradingSystemId: string): string {
+    const name = this.gradingSystems?.find((item : GradingSystem) => item.id === gradingSystemId)?.name;
+    return name ?? '';
+  }
+
+  deleteGradeSetup(gradeSetup: GradeSetup){
+      SimpleAlerts.confirmDeleteDialog().then((result) => {
+        if (result) {
+          this.toggleLoading();
+          this.gradingService.deleteGradeSetup(gradeSetup.id!).pipe(
+            finalize(() => {this.toggleLoading();})).subscribe({
+            next: (response) => {
+              if(response.success){
+                this.getGradeSetups();
+                SimpleAlerts.showSuccess();
+              }
+            },
+            error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
+          });
+        }else{
+          return;
+        }
+      });
+    }
 }
