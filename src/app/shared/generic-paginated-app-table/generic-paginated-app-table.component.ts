@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, TemplateRef, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'generic-paginated-app-table',
   templateUrl: './generic-paginated-app-table.component.html',
@@ -9,7 +9,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 export class GenericPaginatedAppTableComponent implements OnChanges {
   @Input() headers: { key: string; displayName: string }[] = [];
   @Input() apiUrl: string = '';
-  @Input() queryParams: any = {};
+  @Input() isIdentityApi: boolean = false;
   @Input() clickableColumns: string[] = []; 
   @Output() rowClicked = new EventEmitter<any>();
   @Input() showActions: boolean = false;
@@ -34,7 +34,7 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
   totalRecords: number = 0;
   totalPages: number = 0;
   loading: boolean = false;
-  error: string | null = null;
+
 
   constructor(private http: HttpClient) {}
 
@@ -48,16 +48,8 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
     if (!this.apiUrl) return;
 
     this.loading = true;
-    this.error = null;
-
     let queryParams = new HttpParams();
-    
-    for (const key in this.queryParams) {
-      if (this.queryParams[key] !== null && this.queryParams[key] !== undefined) {
-        queryParams = queryParams.set(key, this.queryParams[key]);
-      }
-    }
-
+  
     if (this.searchTerm) {
       queryParams = queryParams.set('keyword', this.searchTerm);
     }
@@ -67,7 +59,7 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
       pageSize: this.pageSize
     };
 
-    this.http.post<any>(this.apiUrl, requestBody, { params: queryParams }).subscribe({
+    this.http.post<any>(`${this.isIdentityApi ? environment.identityServerUrl : environment.apiServerUrl}/${this.apiUrl}`, requestBody, { params: queryParams }).subscribe({
       next: (response) => {
         if (response.success) {
           this.data = response.data;
@@ -82,7 +74,11 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
           }
 
         } else {
-          this.error = response.message;
+          this.data = [];
+          this.filteredData = [];
+          this.totalRecords = 0;
+          this.totalPages = 0;
+          this.pageSize = 5;
         }
         this.loading = false;
       },

@@ -11,8 +11,7 @@
 </div>
 
 <div class="card-body">
-    <app-loading *ngIf="loading"></app-loading>
-    <div *ngIf="!loading" class="table-responsive">
+    <div class="table-responsive">
         <table class="table table-hover table-striped table-gridjs table-sm table-xs">
             <thead>
                 <tr>
@@ -54,9 +53,14 @@
                         </div>
                     </td>
                 </tr>
-                <tr *ngIf="data.length === 0">
+                <tr *ngIf="data.length === 0 && !loading">
                     <td [attr.colspan]="headers.length + (showRowSelect ? 2 : 1) + (showActions ? 1 : 0)" class="text-center py-3">
                         No records found
+                    </td>
+                </tr>
+                <tr *ngIf="loading">
+                    <td [attr.colspan]="headers.length + (showRowSelect ? 2 : 1) + (showActions ? 1 : 0)" class="text-center py-3">
+                        Loading records...
                     </td>
                 </tr>
             </tbody>
