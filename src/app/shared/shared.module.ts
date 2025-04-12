@@ -19,6 +19,7 @@ import { SubjectService } from '../core/services/api/subject.service';
 import { AppLoadingComponent } from './app-loading/app-loading.component';
 import { CourseService } from '../core/services/api/course.service';
 import { StatusBadgeComponent } from './status-badge/status-badge.component';
+import { GenericPaginatedAppTableComponent } from './generic-paginated-app-table/generic-paginated-app-table.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { StatusBadgeComponent } from './status-badge/status-badge.component';
     BreadcrumbsComponent,
     GenericAppTableComponent,
     AppLoadingComponent,
-    StatusBadgeComponent
+    StatusBadgeComponent,
+    GenericPaginatedAppTableComponent
   ],
   imports: [
     CommonModule,
@@ -51,6 +53,12 @@ import { StatusBadgeComponent } from './status-badge/status-badge.component';
     CourseService
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
-  exports: [GenericAppTableComponent, AppLoadingComponent, StatusBadgeComponent, BreadcrumbsComponent]
+  exports: [
+    GenericAppTableComponent, 
+    GenericPaginatedAppTableComponent, 
+    AppLoadingComponent, 
+    StatusBadgeComponent, 
+    BreadcrumbsComponent
+  ]
 })
 export class SharedModule { }

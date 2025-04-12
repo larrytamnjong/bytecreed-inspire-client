@@ -1,0 +1,179 @@
+import { Component, Input, Output, EventEmitter, TemplateRef, OnChanges, SimpleChanges } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+
+@Component({
+  selector: 'generic-paginated-app-table',
+  templateUrl: './generic-paginated-app-table.component.html',
+  styleUrls: ['./generic-paginated-app-table.component.scss']
+})
+export class GenericPaginatedAppTableComponent implements OnChanges {
+  @Input() headers: { key: string; displayName: string }[] = [];
+  @Input() apiUrl: string = '';
+  @Input() queryParams: any = {};
+  @Input() clickableColumns: string[] = []; 
+  @Output() rowClicked = new EventEmitter<any>();
+  @Input() showActions: boolean = false;
+  @Input() showEdit: boolean = true;
+  @Input() showDelete: boolean = true;
+  @Output() editClicked = new EventEmitter<any>();
+  @Output() deleteClicked = new EventEmitter<any>();
+  @Input() tableId: string = 'default'; 
+  @Input() showRowSelect: boolean = false;
+  @Output() selectedRowsChange = new EventEmitter<any[]>();
+  @Input() customTemplates: { [key: string]: TemplateRef<any> } = {};
+
+  selectedRows = new Set<any>();
+  searchTerm: string = '';
+  sortColumn: string = '';
+  sortDirection: boolean = true; 
+  currentPage: number = 0;
+  pageSize: number = 5;
+  
+  data: any[] = [];
+  filteredData: any[] = [];
+  totalRecords: number = 0;
+  totalPages: number = 0;
+  loading: boolean = false;
+  error: string | null = null;
+
+  constructor(private http: HttpClient) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['apiUrl'] || changes['queryParams']) {
+      this.loadData();
+    }
+  }
+
+  loadData() {
+    if (!this.apiUrl) return;
+
+    this.loading = true;
+    this.error = null;
+
+    let queryParams = new HttpParams();
+    
+    for (const key in this.queryParams) {
+      if (this.queryParams[key] !== null && this.queryParams[key] !== undefined) {
+        queryParams = queryParams.set(key, this.queryParams[key]);
+      }
+    }
+
+    if (this.searchTerm) {
+      queryParams = queryParams.set('keyword', this.searchTerm);
+    }
+
+    const requestBody = {
+      pageNumber: this.currentPage,
+      pageSize: this.pageSize
+    };
+
+    this.http.post<any>(this.apiUrl, requestBody, { params: queryParams }).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.data = response.data;
+          this.filteredData = [...response.data]; 
+          this.totalRecords = response.totalRecords;
+          this.totalPages = response.totalPages;
+          this.pageSize = response.pageSize;
+          this.currentPage = response.pageNumber;
+          
+          if (this.sortColumn) {
+            this.applyLocalSort();
+          }
+
+        } else {
+          this.error = response.message;
+        }
+        this.loading = false;
+      },
+      error: (error) => {
+        this.loading = false;
+      }
+    });
+  }
+
+  applyLocalSort() {
+    this.filteredData.sort((a, b) => {
+      const aValue = a[this.sortColumn];
+      const bValue = b[this.sortColumn];
+
+      if (aValue < bValue) return this.sortDirection ? -1 : 1;
+      if (aValue > bValue) return this.sortDirection ? 1 : -1;
+      return 0;
+    });
+  }
+
+  onSort(column: string) {
+    if (this.sortColumn === column) {
+      this.sortDirection = !this.sortDirection;
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = true;
+    }
+    
+    if (this.filteredData.length > 0) {
+      this.applyLocalSort();
+    }
+  }
+
+  get paginatedData() {
+    return this.filteredData;
+  }
+
+  onRowClick(row: any) {
+    this.rowClicked.emit(row);
+  }
+
+  onPageChange(page: number) {
+    if (page >= 0 && page < this.totalPages) {
+      this.currentPage = page;
+      this.loadData();
+    }
+  }
+
+  onPageSizeChange(event: Event) {
+    this.pageSize = Number((event.target as HTMLSelectElement).value);
+    this.currentPage = 0;
+    this.loadData();
+  }
+
+  onSearchChange() {
+    this.currentPage = 0;
+    this.loadData();
+  }
+
+  toggleRowSelection(row: any) {
+    if (this.selectedRows.has(row)) {
+      this.selectedRows.delete(row);
+    } else {
+      this.selectedRows.add(row);
+    }
+    this.emitSelectedRows();
+  }
+  
+  toggleSelectAllRows(event: Event) {
+    const checked = (event.target as HTMLInputElement).checked;
+    const currentPageData = this.paginatedData;
+    
+    if (checked) {
+      currentPageData.forEach(row => this.selectedRows.add(row));
+    } else {
+      currentPageData.forEach(row => this.selectedRows.delete(row));
+    }
+    this.emitSelectedRows();
+  }
+  
+  isRowSelected(row: any): boolean {
+    return this.selectedRows.has(row);
+  }
+  
+  emitSelectedRows() {
+    this.selectedRowsChange.emit(Array.from(this.selectedRows));
+  }
+  
+  isAllVisibleRowsSelected(): boolean {
+    if (this.paginatedData.length === 0) return false;
+    return this.paginatedData.every(row => this.selectedRows.has(row));
+  }
+
+}

@@ -1,0 +1,82 @@
+<div class="card-body border-bottom-dashed border-bottom">
+    <div class="row g-3">
+        <div class="col-xxl-12 col-sm-12">
+            <div class="search-box">
+                <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" 
+                       placeholder="Search..." class="form-control search bg-light border-light"/>
+                <i class="ri-search-line search-icon"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-body">
+    <app-loading *ngIf="loading"></app-loading>
+    <div *ngIf="!loading" class="table-responsive">
+        <table class="table table-hover table-striped table-gridjs table-sm table-xs">
+            <thead>
+                <tr>
+                    <th *ngIf="showRowSelect">
+                        <input class="form-check-input" [checked]="isAllVisibleRowsSelected()" 
+                               type="checkbox" (change)="toggleSelectAllRows($event)" />
+                    </th>
+                    <th>SN</th>
+                    <th *ngFor="let header of headers" (click)="onSort(header.key)" style="cursor: pointer;">
+                        {{ header.displayName }}
+                        <span *ngIf="sortColumn === header.key">{{ sortDirection ? '▲' : '▼' }}</span>
+                    </th>
+                    <th *ngIf="showActions"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of data; let i = index" (click)="onRowClick(item)">
+                    <td *ngIf="showRowSelect">
+                        <input class="form-check-input" type="checkbox" 
+                               [checked]="isRowSelected(item)" 
+                               (click)="$event.stopPropagation(); toggleRowSelection(item)" />
+                    </td>
+                    <td>{{ (currentPage * pageSize) + i + 1 }}</td>
+                    <td *ngFor="let header of headers" 
+                        [ngClass]="clickableColumns.includes(header.key) ? 'text-primary text-decoration-underline cursor-pointer' : ''">
+                        <ng-container *ngIf="customTemplates[header.key]; else defaultTemplate">
+                            <ng-container *ngTemplateOutlet="customTemplates[header.key]; context: { $implicit: item[header.key], row: item }"></ng-container>
+                        </ng-container>
+                        <ng-template #defaultTemplate>{{ item[header.key] }}</ng-template>
+                    </td>
+                    <td *ngIf="showActions">
+                        <div class="d-flex gap-2">
+                            <a *ngIf="showEdit" href="javascript:void(0);" class="link-primary" (click)="editClicked.emit(item)">
+                                <i class="ri-pencil-fill fs-16"></i>
+                            </a>
+                            <a *ngIf="showDelete" href="javascript:void(0);" class="link-danger" (click)="deleteClicked.emit(item)">
+                                <i class="ri-delete-bin-line fs-16"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="data.length === 0">
+                    <td [attr.colspan]="headers.length + (showRowSelect ? 2 : 1) + (showActions ? 1 : 0)" class="text-center py-3">
+                        No records found
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex flex-wrap justify-content-between align-items-center mt-2"> 
+        <div class="d-flex align-items-center mb-2 mb-md-0">
+            <span class="me-2">Showing {{ data.length }} of {{ totalRecords }} records</span>
+        </div>
+        <div class="d-flex align-items-center mb-2 mb-md-0">
+            <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 0 || loading" class="btn btn-light mx-2">&lt;</button>
+            <span class="mx-2">Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+            <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage >= totalPages - 1 || loading" class="btn btn-light mx-2">&gt;</button>
+        </div>
+        <div class="d-flex align-items-center mb-2 mb-md-0">
+            <label [for]="'pageSize-' + tableId" class="my-auto me-2">Rows</label> 
+            <select [id]="'pageSize-' + tableId" [(ngModel)]="pageSize" (change)="onPageSizeChange($event)" 
+                   [disabled]="loading" class="form-select" style="width: auto;">
+                <option *ngFor="let size of [5, 10, 20, 50, 100]" [value]="size">{{ size }}</option>
+            </select>
+        </div>
+    </div>
+</div>

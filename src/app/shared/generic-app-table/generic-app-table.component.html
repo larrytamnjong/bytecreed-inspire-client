@@ -63,7 +63,7 @@
             </div>
             <div class="d-flex align-items-center mb-2 mb-md-0">
                 <label [for]="'pageSize-' + tableId" class="my-auto me-2">Rows</label> 
-                <select [id]="'pageSize-' + tableId"  [(ngModel)]="pageSize" (change)="onPageSizeChange($event)" class="form-select" style="width: auto;"><option *ngFor="let size of [5, 10, 20]" [value]="size">{{ size }}</option></select>
+                <select [id]="'pageSize-' + tableId"  [(ngModel)]="pageSize" (change)="onPageSizeChange($event)" class="form-select" style="width: auto;"><option *ngFor="let size of [5, 10, 20, 50, 100]" [value]="size">{{ size }}</option></select>
             </div>
         </div>
     </div>
