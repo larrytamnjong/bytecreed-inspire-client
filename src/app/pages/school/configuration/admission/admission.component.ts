@@ -33,15 +33,14 @@ export class AdmissionComponent implements OnInit {
   }
 
   onSaveAdmissionForm() {
-    this.toggleLoading();
     this.submittedAdmissionNumberConfigurationForm = true;
     if(this.admissionNumberConfigurationForm.invalid) {
-      this.toggleLoading();
       return;
     }
    
     SimpleAlerts.confirmDialog().then((result) => {
       if (result) {
+        this.toggleLoading();
         this.admissionNumberConfigurationService.addOrUpdateAdmissionNumberConfiguration(this.admissionNumberConfigurationForm.value).pipe(
           finalize(() => this.toggleLoading())).subscribe({
           next: (response) => {
@@ -53,7 +52,6 @@ export class AdmissionComponent implements OnInit {
           error: (error) => {SimpleAlerts.showError(getErrorMessage(error));}
         });
       }else{
-        this.toggleLoading();
         return;
       }
     });
