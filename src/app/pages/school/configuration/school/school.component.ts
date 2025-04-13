@@ -181,22 +181,22 @@ setAddressValues(address: Address) {
 }
 
 getSchool() {
+  this.toggleLoading();
   this.schoolService.getCurrentSchool().subscribe({
    next: (response) => {
      if(response.data?.school){
       this.setSchoolValues(response.data.school);
       this.getLogoFile();
+      this.toggleLoading();
     }
     if(response.data?.address){
       this.setAddressValues(response.data.address);
     }
    },
-   error: (error) => {SimpleAlerts.showError(getErrorMessage(error));}
+   error: (error) => {SimpleAlerts.showError(getErrorMessage(error));this.toggleLoading();}
   });
 }
 
-toggleLoading() {
-  this.loading = !this.loading;
-}
+toggleLoading() {this.loading = !this.loading;}
 
 }
