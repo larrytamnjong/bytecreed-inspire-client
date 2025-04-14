@@ -76,7 +76,7 @@
             <label [for]="'pageSize-' + tableId" class="my-auto me-2">Rows</label> 
             <select [id]="'pageSize-' + tableId" [(ngModel)]="pageSize" (change)="onPageSizeChange($event)" 
                    [disabled]="loading" class="form-select" style="width: auto;">
-                <option *ngFor="let size of [1, 5, 10, 20, 50, 100]" [value]="size">{{ size }}</option>
+                <option *ngFor="let size of [5, 10, 20, 50, 100]" [value]="size">{{ size }}</option>
             </select>
         </div>
     </div>
