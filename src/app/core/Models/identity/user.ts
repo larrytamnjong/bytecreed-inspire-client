@@ -1,4 +1,4 @@
-import { SexEnum } from "../../enums/sex";
+import { SexEnum } from "../../enums/look-up-table";
 export class User {
   id?: string;
   familyName!: string;

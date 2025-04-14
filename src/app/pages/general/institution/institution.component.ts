@@ -112,7 +112,6 @@ export class InstitutionComponent {
   });
 }
 onRowClicked(institution: Institution){
-  console.log(institution);
 }
 afterSuccessfulCreate(data: any){
   this.tokenService.saveInstitution(data.institution);

@@ -16,7 +16,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { ConfigurationModule } from './configuration/configuration.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AnalyticsComponent } from './analytics/analytics.component';
-import { StudentsModule } from './students/students-module';
+import { StudentsModule } from './students/students.module';
 
 @NgModule({
   declarations: [

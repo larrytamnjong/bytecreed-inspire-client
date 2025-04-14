@@ -15,6 +15,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { StudentsRoutingModule } from './students-routing.module';
 import { StudentEnrollmentsComponent } from './student-enrollments/student-enrollments.component';
 import { StudentRegistrationComponent } from './student-registration/student-registration.component';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { NgStepperModule } from 'angular-ng-stepper';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -39,7 +43,11 @@ import { StudentRegistrationComponent } from './student-registration/student-reg
     NgbTypeaheadModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbTooltipModule
+    NgbTooltipModule,
+    CdkStepperModule,
+    NgStepperModule,
+    CKEditorModule,
+    NgSelectModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })

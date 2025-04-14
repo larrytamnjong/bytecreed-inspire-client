@@ -21,6 +21,7 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
   @Input() showRowSelect: boolean = false;
   @Output() selectedRowsChange = new EventEmitter<any[]>();
   @Input() customTemplates: { [key: string]: TemplateRef<any> } = {};
+  @Input() reload: any;
 
   selectedRows = new Set<any>();
   searchTerm: string = '';
@@ -39,7 +40,7 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
   constructor(private http: HttpClient) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['apiUrl'] || changes['queryParams']) {
+    if (changes['apiUrl'] || changes['queryParams'] || changes['reload']) {
       this.loadData();
     }
   }
@@ -55,7 +56,7 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
     }
 
     const requestBody = {
-      pageNumber: this.currentPage,
+      pageNumber: this.currentPage + 1,
       pageSize: this.pageSize
     };
 
@@ -67,12 +68,8 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
           this.totalRecords = response.totalRecords;
           this.totalPages = response.totalPages;
           this.pageSize = response.pageSize;
-          this.currentPage = response.pageNumber;
+          this.currentPage = response.pageNumber - 1;
           
-          if (this.sortColumn) {
-            this.applyLocalSort();
-          }
-
         } else {
           this.data = [];
           this.filteredData = [];
@@ -88,28 +85,21 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
     });
   }
 
-  applyLocalSort() {
-    this.filteredData.sort((a, b) => {
-      const aValue = a[this.sortColumn];
-      const bValue = b[this.sortColumn];
+
+  onSort(column: string) {
+    this.sortDirection = this.sortColumn === column ? !this.sortDirection : true;
+    this.sortColumn = column;
+
+    this.data.sort((a, b) => {
+      const aValue = a[column];
+      const bValue = b[column];
 
       if (aValue < bValue) return this.sortDirection ? -1 : 1;
       if (aValue > bValue) return this.sortDirection ? 1 : -1;
       return 0;
     });
-  }
-
-  onSort(column: string) {
-    if (this.sortColumn === column) {
-      this.sortDirection = !this.sortDirection;
-    } else {
-      this.sortColumn = column;
-      this.sortDirection = true;
-    }
     
-    if (this.filteredData.length > 0) {
-      this.applyLocalSort();
-    }
+    this.currentPage = 0; 
   }
 
   get paginatedData() {

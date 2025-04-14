@@ -68,9 +68,6 @@
     </div>
     <div class="d-flex flex-wrap justify-content-between align-items-center mt-2"> 
         <div class="d-flex align-items-center mb-2 mb-md-0">
-            <span class="me-2">Showing {{ data.length }} of {{ totalRecords }} records</span>
-        </div>
-        <div class="d-flex align-items-center mb-2 mb-md-0">
             <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 0 || loading" class="btn btn-light mx-2">&lt;</button>
             <span class="mx-2">Page {{ currentPage + 1 }} of {{ totalPages }}</span>
             <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage >= totalPages - 1 || loading" class="btn btn-light mx-2">&gt;</button>
@@ -79,7 +76,7 @@
             <label [for]="'pageSize-' + tableId" class="my-auto me-2">Rows</label> 
             <select [id]="'pageSize-' + tableId" [(ngModel)]="pageSize" (change)="onPageSizeChange($event)" 
                    [disabled]="loading" class="form-select" style="width: auto;">
-                <option *ngFor="let size of [5, 10, 20, 50, 100]" [value]="size">{{ size }}</option>
+                <option *ngFor="let size of [1, 5, 10, 20, 50, 100]" [value]="size">{{ size }}</option>
             </select>
         </div>
     </div>

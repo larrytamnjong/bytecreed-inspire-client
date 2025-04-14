@@ -21,7 +21,6 @@ import { CourseService } from '../core/services/api/course.service';
 import { StatusBadgeComponent } from './status-badge/status-badge.component';
 import { GenericPaginatedAppTableComponent } from './generic-paginated-app-table/generic-paginated-app-table.component';
 
-
 @NgModule({
   declarations: [
     BreadcrumbsComponent,

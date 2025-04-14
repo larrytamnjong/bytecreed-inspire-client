@@ -6,3 +6,15 @@ export enum LookUpTableEnum {
     ActiveAndInactiveStatus = 5,
     YesOrNoResponse = 6,
 }
+
+export enum SexEnum{
+    Male = 1,
+    Female = 2,
+}
+
+export enum StudentStatusEnum{
+    Active = 1,
+    Graduated = 2,
+    DroppedOut = 3,
+    Expelled = 4
+}
