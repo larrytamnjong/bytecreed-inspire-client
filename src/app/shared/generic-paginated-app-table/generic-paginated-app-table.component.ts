@@ -23,7 +23,7 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
   @Input() customTemplates: { [key: string]: TemplateRef<any> } = {};
   @Input() reload: any;
 
-  selectedRows = new Set<any>();
+  selectedRows = new Set<string>();
   searchTerm: string = '';
   sortColumn: string = '';
   sortDirection: boolean = true; 
@@ -129,10 +129,11 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
   }
 
   toggleRowSelection(row: any) {
-    if (this.selectedRows.has(row)) {
-      this.selectedRows.delete(row);
+    const rowId = row.id; 
+    if (this.selectedRows.has(rowId)) {
+      this.selectedRows.delete(rowId);
     } else {
-      this.selectedRows.add(row);
+      this.selectedRows.add(rowId);
     }
     this.emitSelectedRows();
   }
@@ -140,17 +141,21 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
   toggleSelectAllRows(event: Event) {
     const checked = (event.target as HTMLInputElement).checked;
     const currentPageData = this.paginatedData;
-    
-    if (checked) {
-      currentPageData.forEach(row => this.selectedRows.add(row));
-    } else {
-      currentPageData.forEach(row => this.selectedRows.delete(row));
-    }
+  
+    currentPageData.forEach(row => {
+      const rowId = row.id;
+      if (checked) {
+        this.selectedRows.add(rowId);
+      } else {
+        this.selectedRows.delete(rowId);
+      }
+    });
+  
     this.emitSelectedRows();
   }
-  
+
   isRowSelected(row: any): boolean {
-    return this.selectedRows.has(row);
+    return this.selectedRows.has(row.id);
   }
   
   emitSelectedRows() {
@@ -159,7 +164,7 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
   
   isAllVisibleRowsSelected(): boolean {
     if (this.paginatedData.length === 0) return false;
-    return this.paginatedData.every(row => this.selectedRows.has(row));
+    return this.paginatedData.every(row => this.selectedRows.has(row.id));
   }
 
 }
