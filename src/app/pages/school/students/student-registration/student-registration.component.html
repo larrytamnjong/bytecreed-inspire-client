@@ -25,14 +25,15 @@
             [showRowSelect]="true"
             [showDelete]="false"
             [reload]="reloadTable"
-            [customTemplates]="{ 'sex': sexTemplate, 'dateOfBirth': dateOfBirthTemplate }"
+            [customTemplates]="{ 'sex': sexTemplate, 'dateOfBirth': dateOfBirthTemplate, 'status': statusTemplate }"
             (selectedRowsChange)="onSelectedRowsChange($event)">
             
             <ng-template #sexTemplate let-value>{{getSexLabel(value)}}</ng-template>
             <ng-template #dateOfBirthTemplate let-value>{{value | date: 'longDate'}}</ng-template>
+            <ng-template #statusTemplate let-value let-row="row"><app-student-status-badge [status]="value" [label]="getStudentStatusLabel(value)"></app-student-status-badge></ng-template>
             </generic-paginated-app-table>
         </div>
-    </div>
+    </div>  
 
     <app-loading [loading]="loading"></app-loading>
     <ng-template #content role="document" let-modal>
