@@ -95,21 +95,18 @@ constructor(
   
       if (autoEnroll === true) {
         classId?.setValidators([Validators.required]);
-        classSectionId?.setValidators([Validators.required]);
         academicYearId?.setValidators([Validators.required]);
         classId?.enable();
-        classSectionId?.enable();
         academicYearId?.enable();
+        classSectionId?.enable();
       } else {
         classId?.clearValidators();
-        classSectionId?.clearValidators();
         academicYearId?.clearValidators();
         classId?.setValue(null); 
-        classSectionId?.setValue(null);
         academicYearId?.setValue(null);
         classId?.disable();
-        classSectionId?.disable();
         academicYearId?.disable();
+        classSectionId?.disable();
       }
   
       classId?.updateValueAndValidity();

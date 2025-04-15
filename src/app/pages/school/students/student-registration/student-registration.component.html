@@ -65,7 +65,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label mb-0">Date Of Birth <span class="text-danger">*</span></label>
-                                                <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="F j, Y" dateFormat="Y-m-d" required formControlName="dateOfBirth" [ngClass]="{ 'is-invalid': submitted && fStudent['dateOfBirth'].errors }" placeholder="Select Date of Birth" />
+                                                <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="F j, Y" dateFormat="Y-m-d" required formControlName="dateOfBirth" [ngClass]="{ 'is-invalid': submitted && fStudent['dateOfBirth'].invalid }" placeholder="Select Date of Birth" />
                                                 <div class="invalid-feedback">Date of birth is required</div>
                                              </div>
                                              <div class="mb-3">
@@ -80,7 +80,7 @@
                                                 <label for="admissionNumber" class="form-label">Admission Number</label>
                                                 <input  type="text" id="admissionNumber" class="form-control" placeholder="Enter Admission Number" formControlName="admissionNumber">
                                             </div>
-                                    </form>
+                                        </form>
                                   </div>
                                 </ng-template>
                             </li>
@@ -89,7 +89,7 @@
                                     <span class="d-sm-block">Address</span>
                                 </a>
                                 <ng-template ngbNavContent>
-                                    <form [formGroup]="addressForm">
+                                    <form autocomplete="off" class="tablelist-form" [formGroup]="addressForm">
                                         <div class="mb-3">
                                             <label class="form-label">Country</label>
                                             <ng-select [items]="countries" bindLabel="name" id="country" bindValue="id" formControlName="countryId" placeholder="Select a country"></ng-select>
@@ -115,7 +115,34 @@
                                     <span class="d-sm-block">Enrollment</span>
                                 </a>
                                 <ng-template ngbNavContent>
-                                 
+                                    <form autocomplete="off" class="tablelist-form" [formGroup]="extraForm">
+                                        <div class="mb-0">
+                                            <div class="mb-3">
+                                                <label class="form-label mb-0">Auto Enroll <span class="text-danger">*</span></label>
+                                                <select class="form-select" aria-label=".form-select-sm" formControlName="autoEnroll" [ngClass]="{ 'is-invalid': submitted && fExtra['autoEnroll'].invalid }">
+                                                    <option selected [ngValue]="null">Select status</option>
+                                                    <option [ngValue]="true">Yes</option>
+                                                    <option [ngValue]="false">No</option>
+                                                </select>
+                                                <div class="invalid-feedback" *ngIf="submitted && fExtra['autoEnroll'].invalid">Please select an option</div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Academic Year</label>
+                                                <ng-select [items]="academicYears" bindLabel="name" id="academicYear" bindValue="id" formControlName="academicYearId" placeholder="Select Academic Year" [ngClass]="{ 'is-invalid': submitted && fExtra['academicYearId'].invalid }"></ng-select>
+                                                <div class="invalid-feedback">Please select an academic term</div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Class</label>
+                                                <ng-select [items]="classes" bindLabel="name" id="class" bindValue="id" formControlName="classId" placeholder="Select Class" [ngClass]="{ 'is-invalid': submitted && fExtra['classId'].invalid }"></ng-select>
+                                                <div class="invalid-feedback">Please select a class</div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Class Section</label>
+                                                <ng-select [items]="classSections" bindLabel="name" id="classSections" bindValue="id" formControlName="classSectionId" placeholder="Select Class Section" [ngClass]="{ 'is-invalid': submitted && fExtra['classSectionId'].invalid }"></ng-select>
+                                                <div class="invalid-feedback">Please select a class section</div>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </ng-template>
                             </li>
                           </ul>
