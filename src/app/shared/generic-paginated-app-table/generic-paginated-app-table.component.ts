@@ -40,8 +40,10 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
   constructor(private http: HttpClient) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['apiUrl'] || changes['queryParams'] || changes['reload']) {
+    if (changes['reload']) {
       this.loadData();
+      this.selectedRows.clear();
+      this.emitSelectedRows();
     }
   }
 
