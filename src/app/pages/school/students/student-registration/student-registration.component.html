@@ -11,7 +11,7 @@
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
                             <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-user-add-line align-bottom me-1"></i> Register Student</button>
-                            <button type="button" class="btn btn-success" (click)="addModal(content)"><i class="ri-file-excel-2-line align-bottom me-1"></i> Import Students</button>
+                            <button type="button" class="btn btn-success" (click)="addBatchModal(content)"><i class="ri-file-excel-2-line align-bottom me-1"></i> Import Students</button>
                         </div>
                     </div>
                 </div>
@@ -48,10 +48,8 @@
                     <div class="row">
                         <div class="col-md-3">
                           <ul ngbNav #verticalNav="ngbNav" [activeId]="1" class="nav flex-column nav-pills text-center">
-                            <li [ngbNavItem]="1">
-                                <a ngbNavLink class="mb-2">
-                                    <span class="d-sm-block">General</span>
-                                </a>
+                            <li [ngbNavItem]="1" *ngIf="!isBatchCreateMode">
+                                <a ngbNavLink class="mb-2"><span class="d-sm-block">General</span></a>
                                 <ng-template ngbNavContent>
                                   <div class="mb-0">
                                       <form  class="tablelist-form" autocomplete="off" [formGroup]="studentForm">
@@ -86,10 +84,14 @@
                                   </div>
                                 </ng-template>
                             </li>
-                            <li [ngbNavItem]="2">
-                                <a ngbNavLink class="mb-2">
-                                    <span class="d-sm-block">Address</span>
-                                </a>
+                            <li [ngbNavItem]="1" *ngIf="isBatchCreateMode">
+                                <a ngbNavLink class="mb-2"><span class="d-sm-block">Batch Upload</span></a>
+                                <ng-template ngbNavContent>
+                                  
+                                </ng-template>
+                            </li>   
+                            <li [ngbNavItem]="2" *ngIf="!isBatchCreateMode">
+                                <a ngbNavLink class="mb-2"><span class="d-sm-block">Address</span></a>
                                 <ng-template ngbNavContent>
                                     <form autocomplete="off" class="tablelist-form" [formGroup]="addressForm">
                                         <div class="mb-3">
@@ -112,35 +114,33 @@
                                     </form>
                                 </ng-template>
                             </li>
-                            <li [ngbNavItem]="3" *ngIf="isCreateMode">
-                                <a ngbNavLink class="mb-2">
-                                    <span class="d-sm-block">Enrollment</span>
-                                </a>
+                            <li [ngbNavItem]="isBatchCreateMode ? 2 : 3" *ngIf="isCreateMode">
+                                <a ngbNavLink class="mb-2"><span class="d-sm-block">Enrollment</span></a>
                                 <ng-template ngbNavContent>
-                                    <form autocomplete="off" class="tablelist-form" [formGroup]="extraForm">
+                                    <form autocomplete="off" class="tablelist-form" [formGroup]="enrollmentForm">
                                         <div class="mb-0">
                                             <div class="mb-3">
                                                 <label class="form-label mb-0">Auto Enroll <span class="text-danger">*</span></label>
-                                                <select class="form-select" aria-label=".form-select-sm" formControlName="autoEnroll" [ngClass]="{ 'is-invalid': submitted && fExtra['autoEnroll'].invalid }">
+                                                <select class="form-select" aria-label=".form-select-sm" formControlName="autoEnroll" [ngClass]="{ 'is-invalid': submitted && fEnrollment['autoEnroll'].invalid }">
                                                     <option selected [ngValue]="null">Select status</option>
                                                     <option [ngValue]="true">Yes</option>
                                                     <option [ngValue]="false">No</option>
                                                 </select>
-                                                <div class="invalid-feedback" *ngIf="submitted && fExtra['autoEnroll'].invalid">Please select an option</div>
+                                                <div class="invalid-feedback" *ngIf="submitted && fEnrollment['autoEnroll'].invalid">Please select an option</div>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Academic Year</label>
-                                                <ng-select [items]="academicYears" bindLabel="name" id="academicYear" bindValue="id" formControlName="academicYearId" placeholder="Select Academic Year" [ngClass]="{ 'is-invalid': submitted && fExtra['academicYearId'].invalid }"></ng-select>
+                                                <ng-select [items]="academicYears" bindLabel="name" id="academicYear" bindValue="id" formControlName="academicYearId" placeholder="Select Academic Year" [ngClass]="{ 'is-invalid': submitted && fEnrollment['academicYearId'].invalid }"></ng-select>
                                                 <div class="invalid-feedback">Please select an academic term</div>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Class</label>
-                                                <ng-select [items]="classes" bindLabel="name" id="class" bindValue="id" formControlName="classId" placeholder="Select Class" [ngClass]="{ 'is-invalid': submitted && fExtra['classId'].invalid }"></ng-select>
+                                                <ng-select [items]="classes" bindLabel="name" id="class" bindValue="id" formControlName="classId" placeholder="Select Class" [ngClass]="{ 'is-invalid': submitted && fEnrollment['classId'].invalid }"></ng-select>
                                                 <div class="invalid-feedback">Please select a class</div>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Class Section</label>
-                                                <ng-select [items]="classSections" bindLabel="name" id="classSections" bindValue="id" formControlName="classSectionId" placeholder="Select Class Section" [ngClass]="{ 'is-invalid': submitted && fExtra['classSectionId'].invalid }"></ng-select>
+                                                <ng-select [items]="classSections" bindLabel="name" id="classSections" bindValue="id" formControlName="classSectionId" placeholder="Select Class Section" [ngClass]="{ 'is-invalid': submitted && fEnrollment['classSectionId'].invalid }"></ng-select>
                                                 <div class="invalid-feedback">Please select a class section</div>
                                             </div>
                                         </div>

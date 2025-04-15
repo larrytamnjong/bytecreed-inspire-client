@@ -25,10 +25,14 @@ export class StudentRegistrationComponent extends BaseComponent implements OnIni
 
   studentForm!: UntypedFormGroup;
   addressForm!: UntypedFormGroup;
-  extraForm!: UntypedFormGroup;
+  enrollmentForm!: UntypedFormGroup;
   reloadTable: boolean = false;
   submitted = false;
   isCreateMode = true;
+
+  isBatchCreateMode = false;
+  studentBatch: Student[] = [];
+
   headers: any = [
     { key: 'familyName', displayName: 'Family Name' },
     { key: 'givenNames', displayName: 'Given Names'}, 
@@ -40,7 +44,7 @@ export class StudentRegistrationComponent extends BaseComponent implements OnIni
 
   get fStudent() {return this.studentForm.controls;}
   get fAddress() {return this.addressForm.controls;}
-  get fExtra() {return this.extraForm.controls;}
+  get fEnrollment() {return this.enrollmentForm.controls;}
 
   classes: any = [];
   classSections: any = [];
@@ -51,7 +55,7 @@ constructor(
     private studentService: StudentService,
     private studentFormBuilder: UntypedFormBuilder,
     private addressFormBuilder: UntypedFormBuilder,
-    private extraFormBuilder: UntypedFormBuilder,
+    private enrollmentFormBuilder: UntypedFormBuilder,
     private classSectionService: ClassSectionService,
     private classService: ClassService,
     private academicService: AcademicService,
@@ -80,7 +84,7 @@ constructor(
       postalCode: [null]
     });
 
-    this.extraForm = this.extraFormBuilder.group({
+    this.enrollmentForm = this.enrollmentFormBuilder.group({
       autoEnroll: [false, [Validators.required]],
       classId: [null],
       classSectionId: [null],
@@ -88,10 +92,10 @@ constructor(
     });
 
 
-    this.extraForm.get('autoEnroll')?.valueChanges.subscribe((autoEnroll: boolean) => {
-      const classId = this.extraForm.get('classId');
-      const classSectionId = this.extraForm.get('classSectionId');
-      const academicYearId = this.extraForm.get('academicYearId');
+    this.enrollmentForm.get('autoEnroll')?.valueChanges.subscribe((autoEnroll: boolean) => {
+      const classId = this.enrollmentForm.get('classId');
+      const classSectionId = this.enrollmentForm.get('classSectionId');
+      const academicYearId = this.enrollmentForm.get('academicYearId');
   
       if (autoEnroll === true) {
         classId?.setValidators([Validators.required]);
@@ -119,40 +123,70 @@ constructor(
   }
 
    addModal(content: any) {
-    this.extraForm.get('classId')?.disable();
-    this.extraForm.get('classSectionId')?.disable();
-    this.extraForm.get('academicYearId')?.disable();
     this.isCreateMode = true;
     this.submitted = false;
+    this.enrollmentForm.get('classId')?.disable();
+    this.enrollmentForm.get('classSectionId')?.disable();
+    this.enrollmentForm.get('academicYearId')?.disable();
+    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
+  }
+
+  addBatchModal(content: any) {
+    this.isBatchCreateMode = true;
+    this.isCreateMode = true
+    this.submitted = false;
+    this.enrollmentForm.get('classId')?.disable();
+    this.enrollmentForm.get('classSectionId')?.disable();
+    this.enrollmentForm.get('academicYearId')?.disable();
     this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
   }
   
-    editModal(content: any, student: Student) {
-      this.isCreateMode = false;
-      this.submitted = false;
-      this.setStudentValues(student);
-      this.setAddressValues(student.address);
-      this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
-    }
+  editModal(content: any, student: Student) {
+    this.isCreateMode = false;
+    this.submitted = false;
+    this.setStudentValues(student);
+    this.setAddressValues(student.address);
+    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
+  }
 
   onSubmitStudent() {
     this.submitted = true;
+
+    if(this.enrollmentForm.invalid) {
+      return;
+    }
+    const enrollment = this.enrollmentForm.value;
+
+    if(this.isBatchCreateMode) {
+      if(this.studentBatch.length < 1) {
+        return;
+      }
+      this.toggleLoading();
+      this.studentService.registerStudents({students: [this.studentBatch], ...enrollment}).pipe(
+        finalize(() => {this.toggleLoading();})
+      ).subscribe({
+        next: (response) => {
+          if(!response.success) {SimpleAlerts.showError(response.message);}
+          if (response.success) {SimpleAlerts.showSuccess();}
+          this.toggleReloadTable();
+          this.dismissModal();
+        },
+        error: (error) => {
+          SimpleAlerts.showError(getErrorMessage(error));
+        }
+      });
+    }else{
     if (this.studentForm.invalid || this.addressForm.invalid) {
       return;
     }
     const student = this.studentForm.value;
     const address = this.addressForm.value;
-    const extra = this.extraForm.value;
     student.address = address;
     student.sex =  Number(this.fStudent["sex"].value);
     
     if(this.isCreateMode){
-      if(this.extraForm.invalid) {
-        return;
-      }
-
       this.toggleLoading();
-      this.studentService.registerStudents({students: [student], ...extra}).pipe(
+      this.studentService.registerStudents({students: [student], ...enrollment}).pipe(
         finalize(() => {this.toggleLoading();})
       ).subscribe({
         next: (response) => {
@@ -187,6 +221,7 @@ constructor(
       });
     }
   }
+}
 
   onSelectedRowsChange(event: any){
 
@@ -222,12 +257,13 @@ constructor(
 
   reset() {
     this.submitted = false;
+    this.isBatchCreateMode = false;
     this.isCreateMode = true;
     this.addressForm.reset();
     this.studentForm.reset();
     this.studentForm.patchValue({status: 1})
-    this.extraForm.reset();
-    this.extraForm.patchValue({autoEnroll: false});
+    this.enrollmentForm.reset();
+    this.enrollmentForm.patchValue({autoEnroll: false});
   }
 
   getClasses() {
