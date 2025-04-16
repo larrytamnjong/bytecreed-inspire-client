@@ -270,6 +270,7 @@ constructor(
     this.submitted = false;
     this.isBatchCreateMode = false;
     this.isCreateMode = true;
+    this.studentBatch = [];
     this.addressForm.reset();
     this.studentForm.reset();
     this.studentForm.patchValue({status: 1})
