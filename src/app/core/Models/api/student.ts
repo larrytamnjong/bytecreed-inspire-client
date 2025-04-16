@@ -4,9 +4,9 @@ export class Student{
     id?: string;
     familyName!: string;
     givenNames!: string;
-    dateOfBirth?: Date;
+    dateOfBirth!: string;
     sex!: SexEnum;
-    admissionNumber?: string;
+    admissionNumber?: string | null;
     status?: StudentStatusEnum;
     userId?: string;
     addressId?: string;

@@ -14,7 +14,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClassSectionService } from 'src/app/core/services/api/class-section.service';
 import { ClassService } from 'src/app/core/services/api/class.service';
 import { AcademicService } from 'src/app/core/services/api/academics.service';
-
+import { exportJsonToExcel } from 'src/app/core/helpers/excel-utility';
+import { studentSampleTemplate } from 'src/app/core/samples/student-sample';
+import { formatDateToLocalISOString } from 'src/app/core/helpers/date-utility';
 @Component({
   selector: 'app-student-registration',
   templateUrl: './student-registration.component.html',
@@ -23,6 +25,7 @@ import { AcademicService } from 'src/app/core/services/api/academics.service';
 export class StudentRegistrationComponent extends BaseComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
 
+  studentSampleTemplate = studentSampleTemplate;
   studentForm!: UntypedFormGroup;
   addressForm!: UntypedFormGroup;
   enrollmentForm!: UntypedFormGroup;
@@ -162,9 +165,16 @@ constructor(
         return;
       }
       this.toggleLoading();
-      this.studentService.registerStudents({students: [this.studentBatch], ...enrollment}).pipe(
-        finalize(() => {this.toggleLoading();})
-      ).subscribe({
+
+      this.studentBatch = this.studentBatch.map(student => {
+        return {
+          ...student,
+          dateOfBirth: formatDateToLocalISOString(new Date(student.dateOfBirth))
+        };
+      });
+
+      this.studentService.registerStudents({students: this.studentBatch, ...enrollment}).pipe(
+        finalize(() => {this.toggleLoading();})).subscribe({
         next: (response) => {
           if(!response.success) {SimpleAlerts.showError(response.message);}
           if (response.success) {SimpleAlerts.showSuccess();}
@@ -179,11 +189,13 @@ constructor(
     if (this.studentForm.invalid || this.addressForm.invalid) {
       return;
     }
+
     const student = this.studentForm.value;
     const address = this.addressForm.value;
     student.address = address;
     student.sex =  Number(this.fStudent["sex"].value);
-    
+    student.dateOfBirth = formatDateToLocalISOString(this.studentForm.get('dateOfBirth')?.value);
+
     if(this.isCreateMode){
       this.toggleLoading();
       this.studentService.registerStudents({students: [student], ...enrollment}).pipe(
@@ -222,7 +234,6 @@ constructor(
     }
   }
 }
-
   onSelectedRowsChange(event: any){
 
   }
@@ -243,10 +254,10 @@ constructor(
   
   setAddressValues(address?: Address) {
     this.addressForm.setValue({
-      countryId: address?.countryId,
-      addressLine1: address?.addressLine1,
-      addressLine2: address?.addressLine2,
-      postalCode: address?.postalCode
+      countryId: address?.countryId ?? null,
+      addressLine1: address?.addressLine1 ?? null,
+      addressLine2: address?.addressLine2 ?? null,
+      postalCode: address?.postalCode ?? null
     });
   }
 
@@ -299,6 +310,14 @@ constructor(
 
   toggleReloadTable(){
     this.reloadTable = !this.reloadTable;
+  }
+
+  handleBatchUpload(data: any[]) {
+    this.studentBatch = data;
+  }
+
+  downloadSampleTemplate(): void {
+    exportJsonToExcel(this.studentSampleTemplate, 'student_template.xlsx');
   }
 
 }

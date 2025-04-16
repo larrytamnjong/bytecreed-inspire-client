@@ -6,7 +6,7 @@
             <div class="card-header border-bottom-dashed">
                 <div class="row g-4 align-items-center">
                     <div class="col-sm">
-                        <div><h5 class="card-title mb-0"><i class="ri-pencil-ruler-line text-muted fs-18 align-middle me-1">     </i>Student Registration</h5></div>
+                        <div><h5 class="card-title mb-0"><i class="ri-user-add-line text-muted fs-18 align-middle me-1">     </i>Student Registration</h5></div>
                     </div>
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
@@ -84,10 +84,24 @@
                                   </div>
                                 </ng-template>
                             </li>
-                            <li [ngbNavItem]="1" *ngIf="isBatchCreateMode">
+                            <li [ngbNavItem]="1" [destroyOnHide]="false" *ngIf="isBatchCreateMode">
                                 <a ngbNavLink class="mb-2"><span class="d-sm-block">Batch Upload</span></a>
                                 <ng-template ngbNavContent>
-                                  
+                                    <div class="col-sm-12">
+                                        <ul class="list-inline user-chat-nav text-end mb-0">
+                                            <li class="list-inline-item m-0">
+                                                <div class="dropdown" ngbDropdown>
+                                                    <button class="btn btn-ghost-secondary btn-icon material-shadow-none arrow-none d-block" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+                                                        <i-feather name="info" class="icon-sm"></i-feather>
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                                                        <a class="dropdown-item" href="javascript:void(0);" (click)="downloadSampleTemplate()"><i class="ri-file-excel-2-line align-bottom text-muted me-2 float-start"></i>Template </a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                  <app-excel-import (data)="handleBatchUpload($event)" ></app-excel-import>
                                 </ng-template>
                             </li>   
                             <li [ngbNavItem]="2" *ngIf="!isBatchCreateMode">

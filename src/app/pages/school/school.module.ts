@@ -43,7 +43,8 @@ import { StudentsModule } from './students/students.module';
     NgbTooltipModule,
     ConfigurationModule,
     StudentsModule,
-    NgSelectModule
+    NgSelectModule,
+    
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })

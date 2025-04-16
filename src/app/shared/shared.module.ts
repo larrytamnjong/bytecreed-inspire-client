@@ -21,6 +21,8 @@ import { CourseService } from '../core/services/api/course.service';
 import { StatusBadgeComponent } from './status-badge/status-badge.component';
 import { GenericPaginatedAppTableComponent } from './generic-paginated-app-table/generic-paginated-app-table.component';
 import { StudentStatusBadgeComponent } from './student-status-badge/student-status-badge.component';
+import { ExcelImportComponent } from './excel-import/excel-import.component';
+import { ExcelExportComponent } from './excel-export/excel-export.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { StudentStatusBadgeComponent } from './student-status-badge/student-stat
     AppLoadingComponent,
     StatusBadgeComponent,
     GenericPaginatedAppTableComponent,
-    StudentStatusBadgeComponent
+    StudentStatusBadgeComponent,
+    ExcelImportComponent,
+    ExcelExportComponent
   ],
   imports: [
     CommonModule,
@@ -60,7 +64,9 @@ import { StudentStatusBadgeComponent } from './student-status-badge/student-stat
     AppLoadingComponent, 
     StatusBadgeComponent, 
     BreadcrumbsComponent,
-    StudentStatusBadgeComponent
+    StudentStatusBadgeComponent,
+    ExcelImportComponent,
+    ExcelExportComponent
   ]
 })
 export class SharedModule { }
