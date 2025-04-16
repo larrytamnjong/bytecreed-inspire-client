@@ -194,7 +194,7 @@ constructor(
     const address = this.addressForm.value;
     student.address = address;
     student.sex =  Number(this.fStudent["sex"].value);
-    student.dateOfBirth = formatDateToLocalISOString(this.studentForm.get('dateOfBirth')?.value);
+    student.dateOfBirth = formatDateToLocalISOString(new Date(this.studentForm.get('dateOfBirth')?.value));
 
     if(this.isCreateMode){
       this.toggleLoading();
