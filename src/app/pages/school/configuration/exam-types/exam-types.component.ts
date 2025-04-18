@@ -80,122 +80,120 @@ export class ExamTypesComponent implements OnInit {
     
         weightControl?.updateValueAndValidity();
       });
-   }
-  
-   addModal(content: any) {
-    this.isCreateMode = true;
-    this.submitted = false;
-    this.modalService.open(content, { size: 'md', centered: true });
-  }
-  
-    editModal(content: any, examType: ExamType) {
-      this.isCreateMode = false;
-      this.submitted = false;
-      this.examTypeForm.setValue({...examType});
-      this.modalService.open(content, { size: 'md', centered: true });
-    }
-  
-    getExamtypes() {
-      this.toggleLoading();
-      this.examTypeService.getExamTypes().pipe(finalize(() => this.toggleLoading()))
-        .subscribe({
-          next: (response) => {
-            this.examTypes = response.data;
-          },
-          error: (error) => {
-            SimpleAlerts.showError(getErrorMessage(error));
-          }
-        });
-    }
-  
-    onSubmit() {
-      this.toggleLoading();
-      this.submitted = true;
-      if (this.examTypeForm.invalid) {
-        this.toggleLoading();
-        return;
-      }
-      
-      this.modalService.dismissAll();
-  
-      if(this.isCreateMode){
-        this.examTypeService.createExamType(this.examTypeForm.value).pipe(
-          finalize(() => {this.toggleLoading(); this.reset();})
-        ).subscribe({
-          next: (response) => {
-            if(response.success){
-              this.getExamtypes();
-              SimpleAlerts.showSuccess();
-            }
-          },
-          error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
-        });
-      }else{
-        SimpleAlerts.confirmDialog().then((result) => {
-          if (result) {
-            this.examTypeService.updateExamType(this.examTypeForm.value).pipe(
-              finalize(() => {this.toggleLoading(); this.reset();})
-            ).subscribe({
-              next: (response) => {
-                if(response.success){
-                  this.getExamtypes();
-                  SimpleAlerts.showSuccess();
-                }
-              },
-              error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
-            })
-          }else{
-            this.toggleLoading();
-            return;
-          }
-        });
-      }
-    }
-  
-    dismissModal() {
-      this.modalService.dismissAll();
-      this.reset();
-    }
-  
-    reset() {
-      this.submitted = false;
-      this.isCreateMode = true;
-      this.examTypeForm.reset();
-    }
-  
-    toggleLoading() {
-      this.loading = !this.loading;
-    }
-  
-    getUseWeightLabel(res: boolean): string {
-      const response = res ? 1 : 0;
-      const responseItem = this.yesOrNoResponse.find(item => item.dataCode === response);
-      return responseItem?.text ?? '';
-    }
-    
-    getAcademicTermName(academicTermId: string): string {
-      const name = this.academicTerms?.find(item => item.id === academicTermId)?.name;
-      return name?? '';
     }
 
-    getLookUps() {
-      this.store.dispatch(getLookUpsAction());
-      this.store.select(selectLookUpsView).subscribe((lookUps) => {
-        if(lookUps){
-         this.lookUps = lookUps;
-         this.yesOrNoResponse = this.lookUps?.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTableEnum.YesOrNoResponse) || [];
+  addModal(content: any) {
+  this.isCreateMode = true;
+  this.submitted = false;
+  this.modalService.open(content, { size: 'md', centered: true });
+  }
+
+  editModal(content: any, examType: ExamType) {
+    this.isCreateMode = false;
+    this.submitted = false;
+    this.examTypeForm.setValue({...examType});
+    this.modalService.open(content, { size: 'md', centered: true });
+  }
+
+  getExamtypes() {
+    this.toggleLoading();
+    this.examTypeService.getExamTypes().pipe(finalize(() => this.toggleLoading()))
+      .subscribe({
+        next: (response) => {
+          this.examTypes = response.data;
+        },
+        error: (error) => {
+          SimpleAlerts.showError(getErrorMessage(error));
         }
       });
     }
-  
-    getAcademicTerms() {
-      this.academicService.getAcademicTerms().subscribe({
-          next: (response) => {
-            this.academicTerms = response.data;
-          },
-          error: (error) => { }
-        });
+
+  onSubmit() {
+    this.submitted = true;
+    if (this.examTypeForm.invalid) {
+      return;
     }
-  
+    
+    this.modalService.dismissAll();
+
+    if(this.isCreateMode){
+      this.toggleLoading();
+      this.examTypeService.createExamType(this.examTypeForm.value).pipe(
+        finalize(() => {this.toggleLoading(); this.reset();})
+      ).subscribe({
+        next: (response) => {
+          if(response.success){
+            this.getExamtypes();
+            SimpleAlerts.showSuccess();
+          }
+        },
+        error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
+      });
+    }else{
+      SimpleAlerts.confirmDialog().then((result) => {
+        if (result) {
+          this.toggleLoading();
+          this.examTypeService.updateExamType(this.examTypeForm.value).pipe(
+            finalize(() => {this.toggleLoading(); this.reset();})
+          ).subscribe({
+            next: (response) => {
+              if(response.success){
+                this.getExamtypes();
+                SimpleAlerts.showSuccess();
+              }
+            },
+            error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
+          })
+        }else{
+          return;
+        }
+      });
+    }
   }
+
+  dismissModal() {
+    this.modalService.dismissAll();
+    this.reset();
+  }
+
+  reset() {
+    this.submitted = false;
+    this.isCreateMode = true;
+    this.examTypeForm.reset();
+  }
+
+  toggleLoading() {
+    this.loading = !this.loading;
+  }
+
+  getUseWeightLabel(res: boolean): string {
+    const response = res ? 1 : 0;
+    const responseItem = this.yesOrNoResponse.find(item => item.dataCode === response);
+    return responseItem?.text ?? '';
+  }
+  
+  getAcademicTermName(academicTermId: string): string {
+    const name = this.academicTerms?.find(item => item.id === academicTermId)?.name;
+    return name?? '';
+  }
+
+  getLookUps() {
+    this.store.dispatch(getLookUpsAction());
+    this.store.select(selectLookUpsView).subscribe((lookUps) => {
+      if(lookUps){
+        this.lookUps = lookUps;
+        this.yesOrNoResponse = this.lookUps?.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTableEnum.YesOrNoResponse) || [];
+      }
+    });
+  }
+  
+  getAcademicTerms() {
+    this.academicService.getAcademicTerms().subscribe({
+        next: (response) => {
+          this.academicTerms = response.data;
+        },
+        error: (error) => { }
+      });
+  }
+}
   

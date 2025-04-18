@@ -60,6 +60,7 @@ export class GradeSetupComponent extends BaseComponent implements OnInit {
   addModal(content: any) {
     this.isCreateMode = true;
     this.submitted = false;
+    this.gradeSetupForm.patchValue({gradingSystemId: this.gradingSystems[0]?.id ?? null});
     this.modalService.open(content, this.mdModalConfig);
   }
 
