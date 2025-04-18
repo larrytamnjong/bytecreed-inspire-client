@@ -106,6 +106,24 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
       });
   }
 
+  onDeleteSubmit(){
+    SimpleAlerts.confirmDeleteDialog().then((result) => {
+      if (result) {
+        this.toggleLoading();
+        this.studentService.deleteStudentEnrollment(this.enrollmentIdsToDelete).pipe(
+          finalize(() => {this.toggleLoading(); this.reset();})).subscribe({
+          next: (response) => {
+            if(response.success){SimpleAlerts.showSuccess();
+            }else{SimpleAlerts.showError(response.message);}
+          },
+          error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
+        });
+      }else{
+        return;
+      }
+    });
+  }
+
   reset() {
     this.submitted = false;
     this.studentEnrollmentCreateForm.reset();
