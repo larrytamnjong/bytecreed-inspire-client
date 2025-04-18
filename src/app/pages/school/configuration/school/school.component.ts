@@ -41,7 +41,6 @@ export class SchoolComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.toggleLoading();
      this.breadCrumbItems = [
       { label: 'Configuration' },
       { label: 'School', active: true }
@@ -66,18 +65,14 @@ export class SchoolComponent implements OnInit {
     });
 
     this.schoolForm.get('logoFileId')?.valueChanges.subscribe(value => {this.logoFileId = value;});
-
-    this.toggleLoading();
   }
 
   onSubmit() {
-    this.toggleLoading();
     this.submitted = true;
     if (this.schoolForm.invalid || this.addressForm.invalid) {
-      this.toggleLoading();
       return;
   }
-
+  this.toggleLoading();
   this.schoolService.updateCurrentSchool({school: this.schoolForm.value, address: this.addressForm.value }).pipe(
     finalize(() => this.toggleLoading())).subscribe({
     next: (response) => {
@@ -97,14 +92,13 @@ export class SchoolComponent implements OnInit {
 }
 
 onLogoFileChange(event: any): void {
-  this.toggleLoading();
   const file = event.target.files[0];
   if (!file || this.schoolForm.invalid || this.addressForm.invalid ) {
-    this.toggleLoading();
     return;
   }
 
    if(this.logoFileId){
+    this.toggleLoading();
      this.fileService.updateFile(file, this.logoFileId).pipe(
       finalize(() => this.toggleLoading())).subscribe({
       next: (response) => {
@@ -118,6 +112,7 @@ onLogoFileChange(event: any): void {
       error: (error) => {SimpleAlerts.showError(getErrorMessage(error));}
     });
    }else{
+    this.toggleLoading();
     this.fileService.addFile(file).pipe(
       finalize(() => this.toggleLoading())).subscribe({
       next: (response) => {
@@ -182,12 +177,11 @@ setAddressValues(address: Address) {
 
 getSchool() {
   this.toggleLoading();
-  this.schoolService.getCurrentSchool().subscribe({
+  this.schoolService.getCurrentSchool().pipe(finalize(() => this.toggleLoading())).subscribe({
    next: (response) => {
      if(response.data?.school){
       this.setSchoolValues(response.data.school);
       this.getLogoFile();
-      this.toggleLoading();
     }
     if(response.data?.address){
       this.setAddressValues(response.data.address);
