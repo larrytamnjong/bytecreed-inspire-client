@@ -17,6 +17,7 @@ import { AcademicService } from 'src/app/core/services/api/academics.service';
 import { exportJsonToExcel } from 'src/app/core/helpers/excel-utility';
 import { studentSampleTemplate } from 'src/app/core/samples/student-sample';
 import { formatDateToLocalISOString } from 'src/app/core/helpers/date-utility';
+import { StudentEnrollment } from 'src/app/core/Models/api/student';
 
 @Component({
   selector: 'app-student-enrollments',
@@ -29,10 +30,11 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
   studentEnrollmentCreateForm!: UntypedFormGroup;
   studentEnrollmentGetForm!: UntypedFormGroup;
   studentEnrollments: any = [];
+  studentEnrollmentsToDisplay: any = [];
   submitted = false;
 
   enrollmentIdsToDelete: string[] = [];
-
+  
   headers: any = [
     { key: 'familyName', displayName: 'Family Name' },
     { key: 'givenNames', displayName: 'Given Names'}, 
@@ -139,6 +141,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     .subscribe({
         next: (response) => {
           this.studentEnrollments = response.data;
+          this.setStudentEnrollmentsToDisplay(this.studentEnrollments);
         },
         error: (error) => {
           SimpleAlerts.showError(getErrorMessage(error));
@@ -176,5 +179,18 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
       error: (error) => {},
     });
   }
-  
+
+  setStudentEnrollmentsToDisplay(enrollments: StudentEnrollment[]): void {
+    this.studentEnrollmentsToDisplay = enrollments.map((enrollment) => {
+      return {
+        id: enrollment.id,
+        familyName: enrollment.student?.familyName || '#',
+        givenNames: enrollment.student?.givenNames || '#',
+        dateOfBirth: enrollment.student?.dateOfBirth || '#',
+        sex: enrollment.student?.sex || '#',
+        admissionNumber: enrollment.student?.admissionNumber || '#',
+        class: enrollment.class?.name || '#'
+      };
+    });
+  }
 }
