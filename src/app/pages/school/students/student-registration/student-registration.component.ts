@@ -36,6 +36,8 @@ export class StudentRegistrationComponent extends BaseComponent implements OnIni
   isBatchCreateMode = false;
   studentBatch: Student[] = [];
 
+  selectedStudentIds: string[] = [];
+
   headers: any = [
     { key: 'familyName', displayName: 'Family Name' },
     { key: 'givenNames', displayName: 'Given Names'}, 
@@ -125,7 +127,7 @@ constructor(
     this.getAcademicYears();
   }
 
-   addModal(content: any) {
+  addModal(content: any) {
     this.isCreateMode = true;
     this.submitted = false;
     this.enrollmentForm.get('classId')?.disable();
@@ -235,7 +237,37 @@ constructor(
   }
 }
   onSelectedRowsChange(event: any){
+   this.selectedStudentIds = event;
+  }
 
+  enrollModal(content: any) {
+    this.submitted = false;
+    this.enrollmentForm.get('autoEnroll')?.setValue(true);
+    this.enrollmentForm.get('classId')?.enable();
+    this.enrollmentForm.get('classSectionId')?.enable();
+    this.enrollmentForm.get('academicYearId')?.enable();
+    this.modalService.open(content, {...this.mdModalConfig, backdrop: 'static'});
+  }
+
+  enrollSelectedStudents() {
+    if(this.selectedStudentIds.length < 1) {
+      return;
+    }
+    this.modalService.dismissAll();
+    this.toggleLoading();
+    this.studentService.addStudentsEnrollment({...this.enrollmentForm.value, studentIds: this.selectedStudentIds}).pipe(
+        finalize(() => {
+          this.toggleLoading(); 
+          this.reset();
+          this.toggleReloadTable();
+        })).subscribe({
+        next: (response) => {
+          if(response.success){
+            SimpleAlerts.showSuccess();
+          }
+        },
+        error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
+    });
   }
 
   setStudentValues(student: Student) {
@@ -276,6 +308,7 @@ constructor(
     this.studentForm.patchValue({status: 1})
     this.enrollmentForm.reset();
     this.enrollmentForm.patchValue({autoEnroll: false});
+    this.selectedStudentIds = [];
   }
 
   getClasses() {

@@ -31,9 +31,10 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
   studentEnrollmentGetForm!: UntypedFormGroup;
   studentEnrollments: any = [];
   studentEnrollmentsToDisplay: any = [];
+  students: any = [];
   submitted = false;
 
-  enrollmentIdsToDelete: string[] = [];
+  selectedEnrollments: any[] = [];
   
   headers: any = [
     { key: 'familyName', displayName: 'Family Name' },
@@ -86,19 +87,22 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
 
   addModal(content: any) {
     this.submitted = false;
-    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
+    this.modalService.open(content, {...this.mdModalConfig, backdrop: 'static'});
   }
 
   onCreateSubmit() {
+    this.studentEnrollmentCreateForm.patchValue({studentIds: this.selectedEnrollments.map((item: any) => item.studentId)});
     this.submitted = true;
     if (this.studentEnrollmentCreateForm.invalid) {
       return;
     }
-    
     this.modalService.dismissAll();
-      this.studentService.addStudentsEnrollment(this.studentEnrollmentCreateForm.value).pipe(
-        finalize(() => {this.toggleLoading(); this.reset();})
-      ).subscribe({
+    this.toggleLoading();
+    this.studentService.addStudentsEnrollment(this.studentEnrollmentCreateForm.value).pipe(
+        finalize(() => {
+          this.toggleLoading(); 
+          this.reset();
+        })).subscribe({
         next: (response) => {
           if(response.success){
             SimpleAlerts.showSuccess();
@@ -112,7 +116,8 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     SimpleAlerts.confirmDeleteDialog().then((result) => {
       if (result) {
         this.toggleLoading();
-        this.studentService.deleteStudentEnrollment(this.enrollmentIdsToDelete).pipe(
+        const enrollmentIds = this.selectedEnrollments.map((item: any) => item.id);
+        this.studentService.deleteStudentEnrollment(enrollmentIds).pipe(
           finalize(() => {this.toggleLoading(); this.reset();})).subscribe({
           next: (response) => {
             if(response.success){SimpleAlerts.showSuccess();
@@ -126,10 +131,17 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     });
   }
 
+  onDeleteClick(enrollment: any) {
+    this.selectedEnrollments.push(enrollment);
+    this.onDeleteSubmit();
+  }
+
   reset() {
     this.submitted = false;
     this.studentEnrollmentCreateForm.reset();
     this.studentEnrollments = [];
+    this.studentEnrollmentsToDisplay = [];
+    this.selectedEnrollments = [];
   }
 
   getStudentEnrollments() {
@@ -180,6 +192,15 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     });
   }
 
+  onSelectedRowsChange(selectedRows: any) {
+    this.selectedEnrollments = selectedRows;
+  }
+
+  dismissModal() {
+    this.modalService.dismissAll();
+    this.reset();
+  }
+
   setStudentEnrollmentsToDisplay(enrollments: StudentEnrollment[]): void {
     this.studentEnrollmentsToDisplay = enrollments.map((enrollment) => {
       return {
@@ -189,9 +210,10 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
         dateOfBirth: enrollment.student?.dateOfBirth || '#',
         sex: enrollment.student?.sex || '#',
         admissionNumber: enrollment.student?.admissionNumber || '#',
-        class: enrollment.class?.name || '#'
+        class: enrollment.class?.name || '#',
+        studentId: enrollment.student?.id || '#'
       };
     });
   }
-  
+
 }

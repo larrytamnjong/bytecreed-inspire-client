@@ -57,15 +57,26 @@
                                                 </div>
                                             </div>
                                             <div class="col-xl-12">
-                                                <div class="row g-3">
-                                                    <div class="col-sm-8">
-                                                        <div>
-                                                            <ng-select [items]="classes" bindLabel="name" [(ngModel)]="classExamType_classId" bindValue="id" placeholder="Select Class"></ng-select>
+                                                <div ngbAccordion activeIds="static-1" [closeOthers]="true">
+                                                    <div ngbAccordionItem class="material-shadow" id="static-1">
+                                                        <div ngbAccordionHeader class="accordion-header border-0 bg-transparent">
+                                                            <button ngbAccordionButton>Filters</button>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <div>
-                                                            <button type="button" class="btn btn-primary w-100" (click)="getClassExamTypes()"><i class="ri-equalizer-fill mx-2 align-bottom"></i>Filter</button>
+                                                        <div ngbAccordionCollapse>
+                                                            <div ngbAccordionBody>
+                                                                <div class="row g-3">
+                                                                    <div class="col-sm-8">
+                                                                        <div>
+                                                                            <ng-select [items]="classes" bindLabel="name" [(ngModel)]="classExamType_classId" bindValue="id" placeholder="Select Class"></ng-select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <div>
+                                                                            <button type="button" class="btn btn-primary w-100" (click)="getClassExamTypes()"><i class="ri-equalizer-fill mx-2 align-bottom"></i>Filter</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -114,15 +125,27 @@
                                                 </div>
                                             </div>
                                             <div class="col-xl-12">
-                                                <div class="row g-3">
-                                                    <div class="col-sm-8">
-                                                        <div>
-                                                            <ng-select [items]="classes" bindLabel="name" [(ngModel)]="classSubject_classId" bindValue="id" placeholder="Select Class"></ng-select>
+
+                                                <div ngbAccordion activeIds="static-1" [closeOthers]="true">
+                                                    <div ngbAccordionItem class="material-shadow" id="static-1">
+                                                        <div ngbAccordionHeader class="accordion-header border-0 bg-transparent">
+                                                            <button ngbAccordionButton>Filters</button>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <div>
-                                                            <button type="button" class="btn btn-primary w-100" (click)="getClassSubjects()"><i class="ri-equalizer-fill mx-2 align-bottom"></i>Filter</button>
+                                                        <div ngbAccordionCollapse>
+                                                            <div ngbAccordionBody>
+                                                                <div class="row g-3">
+                                                                    <div class="col-sm-8">
+                                                                        <div>
+                                                                            <ng-select [items]="classes" bindLabel="name" [(ngModel)]="classSubject_classId" bindValue="id" placeholder="Select Class"></ng-select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <div>
+                                                                            <button type="button" class="btn btn-primary w-100" (click)="getClassSubjects()"><i class="ri-equalizer-fill mx-2 align-bottom"></i>Filter</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -1,1 +1,101 @@
 <app-breadcrumbs title="Enrollment" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card" id="examTypes">
+            <div class="card-header border-bottom-dashed">
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm">
+                        <div><h5 class="card-title mb-0"><i class="ri-swap-box-line text-muted fs-18 align-middle me-1">     </i>Student Enrollments</h5></div>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="d-flex flex-wrap align-items-start gap-2">
+                            <button [disabled]="selectedEnrollments.length < 1" type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-add-line align-bottom me-1"></i> Enroll Students</button>
+                            <button [disabled]="selectedEnrollments.length < 1" class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-delete-bin-line align-bottom me-1"></i> Delete Enrollments</button>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div ngbAccordion activeIds="static-1" [closeOthers]="true">
+                            <div ngbAccordionItem class="material-shadow" id="static-1">
+                                <div ngbAccordionHeader class="accordion-header border-0 bg-transparent">
+                                    <button ngbAccordionButton>Filters</button>
+                                </div>
+                                <div ngbAccordionCollapse>
+                                    <div ngbAccordionBody>
+                                        <form class="tablelist-form" autocomplete="off" [formGroup]="studentEnrollmentGetForm" (ngSubmit)="getStudentEnrollments()" >
+                                            <div class="row g-3">
+                                                <div class="col-sm-3">
+                                                    <label class="form-label">Select Class <span class="text-danger">*</span></label>
+                                                    <ng-select [items]="classes" formControlName="classId" bindLabel="name" bindValue="id" placeholder="Select Class"></ng-select>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label class="form-label">Select Class Section</label>
+                                                    <ng-select [items]="classSections" formControlName="classSectionId" bindLabel="name" bindValue="id" placeholder="Select Class Section"></ng-select>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label class="form-label">Select Academic Year <span class="text-danger">*</span></label>
+                                                    <ng-select [items]="academicYears" formControlName="academicYearId" bindLabel="name" bindValue="id" placeholder="Select AcademicYear"></ng-select>
+                                                </div>
+                                                 <div class="col-sm-3">
+                                                    <label class="form-label">&nbsp;</label>
+                                                    <button type="button" class="btn btn-primary w-100" type="submit"><i class="ri-equalizer-fill mx-2 align-bottom"></i>Filter</button>
+                                                 </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <generic-app-table 
+                [headers]="headers" 
+                [data]="studentEnrollmentsToDisplay" 
+                [showActions]="true"  
+                [showDelete]="true"
+                [showEdit]="false"
+                (selectedRowsChange)="onSelectedRowsChange($event)"
+                [showRowSelect]="true"
+                (deleteClicked)="onDeleteClick($event)"
+                [customTemplates]="{ 'sex': sexTemplate, 'dateOfBirth': dateOfBirthTemplate}">
+                <ng-template #sexTemplate let-value>{{getSexLabel(value)}}</ng-template>
+                <ng-template #dateOfBirthTemplate let-value>{{value | date: 'longDate'}}</ng-template>
+            </generic-app-table>
+        </div>
+    </div>
+
+    <app-loading [loading]="loading"></app-loading>
+
+    <ng-template #content role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title" id="modalLabel">Make Enrollments</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
+        </div>
+        <form  class="tablelist-form" autocomplete="off" [formGroup]="studentEnrollmentCreateForm" (ngSubmit)="onCreateSubmit()">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Academic Year <span class="text-danger">*</span></label>
+                    <ng-select [items]="academicYears" bindLabel="name" id="academicYear" bindValue="id" formControlName="academicYearId" placeholder="Select Academic Year" [ngClass]="{ 'is-invalid': submitted && fStudentEnrollmentCreateForm['academicYearId'].invalid }"></ng-select>
+                    <div class="invalid-feedback">Please select an academic term</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Class <span class="text-danger">*</span></label>
+                    <ng-select [items]="classes" bindLabel="name" id="class" bindValue="id" formControlName="classId" placeholder="Select Class" [ngClass]="{ 'is-invalid': submitted && fStudentEnrollmentCreateForm['classId'].invalid }"></ng-select>
+                    <div class="invalid-feedback">Please select a class</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Class Section</label>
+                    <ng-select [items]="classSections" bindLabel="name" id="classSections" bindValue="id" formControlName="classSectionId" placeholder="Select Class Section"></ng-select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()">Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+</div>
