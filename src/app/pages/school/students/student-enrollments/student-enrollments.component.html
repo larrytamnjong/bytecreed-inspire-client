@@ -11,16 +11,22 @@
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
                             <div class="btn-group" ngbDropdown >
-                                <button [disabled]="selectedEnrollments.length < 1" class="btn btn-primary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" ngbDropdownToggle>
-                                   More Actions
+                                <button [disabled]="selectedEnrollments.length < 1" 
+                                        class="btn btn-primary dropdown-toggle" 
+                                        type="button" id="defaultDropdown" 
+                                        data-bs-toggle="dropdown" 
+                                        data-bs-auto-close="true" 
+                                        aria-expanded="false" 
+                                        ngbDropdownToggle>
+                                    Enrollment
                                 </button>
                                 <ul class="dropdown-menu dropdownmenu-primary" ngbDropdownMenu aria-labelledby="defaultDropdown">
                                     <li (click)="addModal(content)"><a class="dropdown-item" href="javascript:void(0);">Enroll Students</a></li>
                                     <li (click)="onDeleteSubmit()"><a class="dropdown-item" href="javascript:void(0);">Delete Enrollments</a></li>
-                                    <li><a class="dropdown-item" href="javascript:void(0);">Manage Courses</a></li>
-                                    <li><a class="dropdown-item" href="javascript:void(0);">Manage Subjects</a></li>
                                 </ul>
                             </div>
+                            <button [disabled]="selectedEnrollments.length < 1"  class="btn btn-secondary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-stack-line align-bottom me-1"></i> Manage Courses</button>
+                            <button [disabled]="selectedEnrollments.length < 1"  class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-book-line align-bottom me-1"></i> Manage Subjects</button>
                         </div>
                     </div>
                     <div class="col-xl-12">
@@ -64,7 +70,7 @@
                 [data]="studentEnrollmentsToDisplay" 
                 [showActions]="true"  
                 [showDelete]="true"
-                [showEdit]="false"
+                [showEdit]="true"
                 (selectedRowsChange)="onSelectedRowsChange($event)"
                 [showRowSelect]="true"
                 (deleteClicked)="onDeleteClick($event)"
