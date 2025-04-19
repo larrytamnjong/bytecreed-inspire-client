@@ -76,11 +76,6 @@
         <form  class="tablelist-form" autocomplete="off" [formGroup]="studentEnrollmentCreateForm" (ngSubmit)="onCreateSubmit()">
             <div class="modal-body">
                 <div class="mb-3">
-                    <label class="form-label">Academic Year <span class="text-danger">*</span></label>
-                    <ng-select [items]="academicYears" bindLabel="name" id="academicYear" bindValue="id" formControlName="academicYearId" placeholder="Select Academic Year" [ngClass]="{ 'is-invalid': submitted && fStudentEnrollmentCreateForm['academicYearId'].invalid }"></ng-select>
-                    <div class="invalid-feedback">Please select an academic term</div>
-                </div>
-                <div class="mb-3">
                     <label class="form-label">Class <span class="text-danger">*</span></label>
                     <ng-select [items]="classes" bindLabel="name" id="class" bindValue="id" formControlName="classId" placeholder="Select Class" [ngClass]="{ 'is-invalid': submitted && fStudentEnrollmentCreateForm['classId'].invalid }"></ng-select>
                     <div class="invalid-feedback">Please select a class</div>
@@ -88,6 +83,11 @@
                 <div class="mb-3">
                     <label class="form-label">Class Section</label>
                     <ng-select [items]="classSections" bindLabel="name" id="classSections" bindValue="id" formControlName="classSectionId" placeholder="Select Class Section"></ng-select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Academic Year <span class="text-danger">*</span></label>
+                    <ng-select [items]="academicYears" bindLabel="name" id="academicYear" bindValue="id" formControlName="academicYearId" placeholder="Select Academic Year" [ngClass]="{ 'is-invalid': submitted && fStudentEnrollmentCreateForm['academicYearId'].invalid }"></ng-select>
+                    <div class="invalid-feedback">Please select an academic term</div>
                 </div>
             </div>
             <div class="modal-footer">
