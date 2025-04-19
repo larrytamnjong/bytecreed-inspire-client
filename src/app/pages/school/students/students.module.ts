@@ -48,7 +48,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NgStepperModule,
     CKEditorModule,
     NgSelectModule,
-    NgbAccordionModule
+    NgbAccordionModule,
+    NgbDropdownModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })

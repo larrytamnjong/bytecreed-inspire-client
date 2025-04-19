@@ -10,8 +10,17 @@
                     </div>
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
-                            <button [disabled]="selectedEnrollments.length < 1" type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-add-line align-bottom me-1"></i> Enroll Students</button>
-                            <button [disabled]="selectedEnrollments.length < 1" class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-delete-bin-line align-bottom me-1"></i> Delete Enrollments</button>
+                            <div class="btn-group" ngbDropdown >
+                                <button [disabled]="selectedEnrollments.length < 1" class="btn btn-primary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" ngbDropdownToggle>
+                                   More Actions
+                                </button>
+                                <ul class="dropdown-menu dropdownmenu-primary" ngbDropdownMenu aria-labelledby="defaultDropdown">
+                                    <li (click)="addModal(content)"><a class="dropdown-item" href="javascript:void(0);">Enroll Students</a></li>
+                                    <li (click)="onDeleteSubmit()"><a class="dropdown-item" href="javascript:void(0);">Delete Enrollments</a></li>
+                                    <li><a class="dropdown-item" href="javascript:void(0);">Manage Courses</a></li>
+                                    <li><a class="dropdown-item" href="javascript:void(0);">Manage Subjects</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div class="col-xl-12">
