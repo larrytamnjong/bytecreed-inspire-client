@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ApiHttpService } from "../common/base-api-http.service";
-import { Student, StudentEnrollment } from "src/app/core/Models/api/student";
+import { Student, StudentCourse, StudentEnrollment, StudentSubject } from "src/app/core/Models/api/student";
 import { ServiceResponse } from "../../Models/common/service-response";
 import { RequestHelper } from "../common/service-request-helper";
 import { HttpParams } from "@angular/common/http";
@@ -9,6 +9,9 @@ import { HttpParams } from "@angular/common/http";
 export class StudentService {
     private readonly students_controller = 'v1/students';
     private readonly student_enrollment_controller = 'v1/student-enrollments';
+    private readonly student_course_controller = 'v1/student-courses';
+    private readonly student_subject_controller = 'v1/student-subjects';
+
   constructor(private apiService: ApiHttpService) {}
 
     registerStudents(data: any): Observable<ServiceResponse<Student[]>> {
@@ -43,5 +46,29 @@ export class StudentService {
             queryParams = queryParams.set('classSectionId', sectionId);
         }
         return this.apiService.get(`${this.student_enrollment_controller}`, {params: queryParams});
+    }
+
+    addStudentSubjects(data: any): Observable<ServiceResponse<StudentSubject[]>> {
+        return this.apiService.post(this.student_subject_controller, RequestHelper.createServiceRequest(data));
+    }
+
+    deleteStudentSubjects(data: any): Observable<ServiceResponse<any>> {
+        return this.apiService.delete(`${this.student_subject_controller}`, RequestHelper.createServiceRequest(data));
+    }
+
+    getStudentSubjects(data: any): Observable<ServiceResponse<StudentSubject>> {
+        return this.apiService.post(`${this.student_subject_controller}`, RequestHelper.createServiceRequest(data));
+    }
+
+    addStudentCourses(data: any): Observable<ServiceResponse<StudentCourse[]>> {
+        return this.apiService.post(this.student_course_controller, RequestHelper.createServiceRequest(data));
+    }
+
+    deleteStudentCourses(data: any): Observable<ServiceResponse<any>> {
+        return this.apiService.delete(`${this.student_course_controller}`, RequestHelper.createServiceRequest(data));
+    }
+
+    getCourseStudents(courseId: string): Observable<ServiceResponse<StudentCourse[]>> {
+        return this.apiService.get(`${this.student_course_controller}/${courseId}/students`);
     }
 }
