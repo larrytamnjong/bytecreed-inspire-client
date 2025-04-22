@@ -187,7 +187,7 @@ getSchool() {
       this.setAddressValues(response.data.address);
     }
    },
-   error: (error) => {SimpleAlerts.showError(getErrorMessage(error));this.toggleLoading();}
+   error: (error) => {SimpleAlerts.showError(getErrorMessage(error))}
   });
 }
 
