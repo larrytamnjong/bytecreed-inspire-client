@@ -29,6 +29,15 @@
                             <button [disabled]="selectedEnrollments.length < 1"  class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-book-line align-bottom me-1"></i> Manage Subjects</button>
                         </div>
                     </div>
+                    <div class="col-xl-12" *ngIf="studentEnrollmentsToDisplay.length > 0">
+                        <div class="hstack gap-3 flex-wrap">
+                            <div class="text-muted">Class : <span class="text-body fw-medium">{{class}}</span></div>
+                            <div class="vr"></div>
+                            <div class="text-muted">Year : <span class="text-body fw-medium">{{academicYear}}</span></div>
+                            <div class="vr"></div>
+                            <div class="text-muted">Section : <span class="text-body fw-medium">{{section ?? '#'}}</span></div>
+                        </div>
+                    </div>
                     <div class="col-xl-12">
                         <div ngbAccordion activeIds="static-1" [closeOthers]="true">
                             <div ngbAccordionItem class="material-shadow" id="static-1">
@@ -40,7 +49,7 @@
                                         <form class="tablelist-form" autocomplete="off" [formGroup]="studentEnrollmentGetForm" (ngSubmit)="getStudentEnrollments()" >
                                             <div class="row g-3">
                                                 <div class="col-sm-3">
-                                                    <label class="form-label">Select Class <span class="text-danger">*</span></label>
+                                                    <label class="form-label">Select Class</label>
                                                     <ng-select [items]="classes" formControlName="classId" bindLabel="name" bindValue="id" placeholder="Select Class"></ng-select>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -48,7 +57,7 @@
                                                     <ng-select [items]="classSections" formControlName="classSectionId" bindLabel="name" bindValue="id" placeholder="Select Class Section"></ng-select>
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <label class="form-label">Select Academic Year <span class="text-danger">*</span></label>
+                                                    <label class="form-label">Select Academic Year</label>
                                                     <ng-select [items]="academicYears" formControlName="academicYearId" bindLabel="name" bindValue="id" placeholder="Select AcademicYear"></ng-select>
                                                 </div>
                                                  <div class="col-sm-3">

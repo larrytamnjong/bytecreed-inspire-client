@@ -2,6 +2,8 @@ import { Address } from "../common/address";
 import { SexEnum, StudentStatusEnum } from "../../enums/look-up-table";
 import { Class } from "./class";
 import { Subject } from "./subject";
+import { AcademicYear } from "./academics";
+import { ClassSection } from "./class-section";
 export class Student{
     id?: string;
     familyName!: string;
@@ -24,6 +26,8 @@ export class StudentEnrollment{
     enrollmentDate?: string;
     student?: Student;
     class?: Class;
+    academicYear?: AcademicYear;
+    classSection?: ClassSection;
 }
 
 export class StudentCourse{
