@@ -18,6 +18,8 @@ import { exportJsonToExcel } from 'src/app/core/helpers/excel-utility';
 import { studentSampleTemplate } from 'src/app/core/samples/student-sample';
 import { formatDateToLocalISOString } from 'src/app/core/helpers/date-utility';
 import { StudentEnrollment } from 'src/app/core/Models/api/student';
+import { SubjectService } from 'src/app/core/services/api/subject.service';
+import { CourseService } from 'src/app/core/services/api/course.service';
 
 @Component({
   selector: 'app-student-enrollments',
@@ -29,6 +31,8 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
 
   studentEnrollmentCreateForm!: UntypedFormGroup;
   studentEnrollmentGetForm!: UntypedFormGroup;
+  studentSubjectForm!: UntypedFormGroup;
+  studentCourseForm!: UntypedFormGroup;
   studentEnrollments: any = [];
   academicYear: string | null = null;
   class: string | null = null;
@@ -38,6 +42,9 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
   submitted = false;
 
   selectedEnrollments: any[] = [];
+
+  subjects: any = [];
+  courses: any = [];
   
   headers: any = [
     { key: 'familyName', displayName: 'Family Name' },
@@ -46,10 +53,14 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     { key: 'sex', displayName: 'Sex' },
     { key: 'admissionNumber', displayName: 'Admission Number' },
     { key: 'class', displayName: 'Class' },
+    { key: 'section', displayName: 'Section' },
+    { key: 'year', displayName: 'Year' },
   ]
 
   get fStudentEnrollmentCreateForm() {return this.studentEnrollmentCreateForm.controls;}
   get fStudentEnrollmentGetForm() {return this.studentEnrollmentGetForm.controls;}
+  get fStudentSubjectForm() {return this.studentSubjectForm.controls;}
+  get fStudentCourseForm() {return this.studentCourseForm.controls;}
 
   classes: any = [];
   classSections: any = [];
@@ -60,9 +71,13 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
         private studentService: StudentService,
         private studentEnrollmentCreateFormBuilder: UntypedFormBuilder,
         private studentEnrollmentGetFormBuilder: UntypedFormBuilder,
+        private studentSubjectFormBuilder: UntypedFormBuilder,
+        private studentCourseFormBuilder: UntypedFormBuilder,
         private classSectionService: ClassSectionService,
         private classService: ClassService,
         private academicService: AcademicService,
+        private subjectService: SubjectService,
+        private courseService: CourseService,
         protected override store: Store<{ data: RootReducerState }>, ) {
         super(store);
       }
@@ -82,10 +97,22 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
       academicYearId: [null],
     });
 
+    this.studentSubjectForm = this.studentSubjectFormBuilder.group({
+      subjectIds: [null, [Validators.required]],
+      enrollmentIds: [null, [Validators.required]],
+    });
+
+    this.studentCourseForm = this.studentCourseFormBuilder.group({
+      courseId: [null, [Validators.required]],
+      studentIds: [null, [Validators.required]],
+    });
+
     this.getLookUps();
     this.getClassSections();
     this.getClasses();
     this.getAcademicYears();
+    this.getSubjects();
+    this.getCourses();
     this.getStudentEnrollments();
   }
 
@@ -100,21 +127,145 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     if (this.studentEnrollmentCreateForm.invalid) {
       return;
     }
-    this.modalService.dismissAll();
     this.toggleLoading();
-    this.studentService.addStudentsEnrollment(this.studentEnrollmentCreateForm.value).pipe(
-        finalize(() => {
-          this.toggleLoading(); 
-          this.reset();
-        })).subscribe({
+    this.studentService.addStudentsEnrollment(this.studentEnrollmentCreateForm.value).pipe(finalize(() => {this.toggleLoading();})).subscribe({
         next: (response) => {
           if(response.success){
             SimpleAlerts.showSuccess();
+            this.modalService.dismissAll();
+            this.reset();
+            this.getStudentEnrollments();
+          }else{
+            SimpleAlerts.showError(response.message);
           }
         },
         error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
       });
   }
+
+  onCreateStudentSubjects(){
+    this.studentSubjectForm.patchValue({enrollmentIds: this.selectedEnrollments.map((item: any) => item.id)});
+    this.submitted = true;
+    if (this.studentSubjectForm.invalid) {
+      return;
+    }
+
+    this.toggleLoading();
+    this.studentService.addStudentSubjects(this.studentSubjectForm.value).pipe(finalize(() => this.toggleLoading())).subscribe({
+      next: (response) => {
+        if(response.success){
+          SimpleAlerts.showSuccessWithOptions('Do you want to cancel selected items?').then((result) => {
+            if (result) {
+              this.reset();
+              this.dismissModal();
+              this.getStudentEnrollments();
+            }else{
+              this.modalService.dismissAll();
+              return;
+            }
+          });
+        }else{SimpleAlerts.showError(response.message);}
+      },
+      error: (error) => {
+        SimpleAlerts.showError(getErrorMessage(error));
+      }
+    });
+  }
+
+  onDeleteStudentSubjects(){
+    this.studentSubjectForm.patchValue({enrollmentIds: this.selectedEnrollments.map((item: any) => item.id)});
+    this.submitted = true;
+    if (this.studentSubjectForm.invalid) {
+      return;
+    }
+
+    this.toggleLoading();
+    this.studentService.deleteStudentSubjects(this.studentSubjectForm.value).pipe(finalize(() => this.toggleLoading())).subscribe({
+      next: (response) => {
+        if(response.success){
+          SimpleAlerts.showSuccessWithOptions('Do you want to cancel selected items?').then((result) => {
+            if (result) {
+              this.reset();
+              this.dismissModal();
+              this.getStudentEnrollments();
+            }else{
+              this.studentSubjectForm.reset();
+              this.modalService.dismissAll();
+              return;
+            }
+          });
+        }else{
+          SimpleAlerts.showError(response.message);
+        }
+      },
+      error: (error) => {
+        SimpleAlerts.showError(getErrorMessage(error));
+      }
+    });
+  }
+ 
+  onCreateStudentCourse(){
+    this.studentCourseForm.patchValue({studentIds: this.selectedEnrollments.map((item: any) => item.studentId)});
+    this.submitted = true;
+    if (this.studentCourseForm.invalid) {
+      return;
+    }
+    this.toggleLoading();
+    this.studentService.addStudentCourses(this.studentCourseForm.value).pipe(finalize(() => this.toggleLoading())).subscribe({
+      next: (response) => {
+        if(response.success){
+          SimpleAlerts.showSuccessWithOptions('Do you want to cancel selected items?').then((result) => {
+            if
+            (result) {
+              this.reset();
+              this.dismissModal();
+              this.getStudentEnrollments();
+            }else{
+              this.studentCourseForm.reset();
+              this.modalService.dismissAll();
+              return;
+            }
+          });
+        }else{
+          SimpleAlerts.showError(response.message);
+        }
+      },
+      error: (error) => {
+        SimpleAlerts.showError(getErrorMessage(error));
+      }
+    });
+  }
+
+  onDeleteStudentCourse(){
+    this.studentCourseForm.patchValue({studentIds: this.selectedEnrollments.map((item: any) => item.studentId)});
+    this.submitted = true;
+    if (this.studentCourseForm.invalid) {
+      return;
+    }
+    this.toggleLoading();
+    this.studentService.deleteStudentCourses(this.studentCourseForm.value).pipe(finalize(() => this.toggleLoading())).subscribe({
+      next: (response) => {
+        if(response.success){
+          SimpleAlerts.showSuccessWithOptions('Do you want to cancel selected items?').then((result) => {
+            if (result) {
+              this.reset();
+              this.dismissModal();
+              this.getStudentEnrollments();
+            }else{
+              this.studentCourseForm.reset();
+              this.modalService.dismissAll();
+              return;
+            }
+          });
+        }else{
+          SimpleAlerts.showError(response.message);
+        }
+      },
+      error: (error) => {
+       SimpleAlerts.showError(getErrorMessage(error));
+      }
+    }
+  )};
 
   onDeleteSubmit(){
     SimpleAlerts.confirmDeleteDialog().then((result) => {
@@ -124,7 +275,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
         this.studentService.deleteStudentEnrollment(enrollmentIds).pipe(
           finalize(() => {this.toggleLoading(); this.reset();})).subscribe({
           next: (response) => {
-            if(response.success){SimpleAlerts.showSuccess();
+            if(response.success){SimpleAlerts.showSuccess(); this.getStudentEnrollments();
             }else{SimpleAlerts.showError(response.message);}
           },
           error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
@@ -210,7 +361,14 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
 
   dismissModal() {
     this.modalService.dismissAll();
-    this.reset();
+    SimpleAlerts.confirmCloseDialog('Do you want to cancel selected items?').then((result) => {
+      if (result) {
+        this.reset();
+        this.getStudentEnrollments();
+      }else{
+        return;
+      }
+    });
   }
 
   setStudentEnrollmentsToDisplay(enrollments: StudentEnrollment[]): void {
@@ -223,9 +381,24 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
         sex: enrollment.student?.sex || '#',
         admissionNumber: enrollment.student?.admissionNumber || '#',
         class: enrollment.class?.name || '#',
-        studentId: enrollment.student?.id || '#'
+        studentId: enrollment.student?.id || '#',
+        year: enrollment.academicYear?.name || '#',
+        section: enrollment.classSection?.name || '#',
       };
     });
   }
 
+  getSubjects() {
+    this.subjectService.getSubjects().subscribe({
+        next: (response) => {this.subjects = response.data;},
+        error: (error) => {}
+      });
+  }
+
+  getCourses() {
+    this.courseService.getCourses().subscribe({
+        next: (response) => {this.courses = response.data;},
+        error: (error) => {}
+      });
+  }
 }
