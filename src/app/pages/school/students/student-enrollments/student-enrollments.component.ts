@@ -154,7 +154,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     this.studentService.addStudentSubjects(this.studentSubjectForm.value).pipe(finalize(() => this.toggleLoading())).subscribe({
       next: (response) => {
         if(response.success){
-          SimpleAlerts.showSuccessWithOptions('Do you want to cancel selected items?').then((result) => {
+          SimpleAlerts.showSuccessWithOptions('Would you like to unselect selected students?').then((result) => {
             if (result) {
               this.reset();
               this.dismissModal();
@@ -183,7 +183,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     this.studentService.deleteStudentSubjects(this.studentSubjectForm.value).pipe(finalize(() => this.toggleLoading())).subscribe({
       next: (response) => {
         if(response.success){
-          SimpleAlerts.showSuccessWithOptions('Do you want to cancel selected items?').then((result) => {
+          SimpleAlerts.showSuccessWithOptions('Would you like to unselect selected students?').then((result) => {
             if (result) {
               this.reset();
               this.dismissModal();
@@ -214,7 +214,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     this.studentService.addStudentCourses(this.studentCourseForm.value).pipe(finalize(() => this.toggleLoading())).subscribe({
       next: (response) => {
         if(response.success){
-          SimpleAlerts.showSuccessWithOptions('Do you want to cancel selected items?').then((result) => {
+          SimpleAlerts.showSuccessWithOptions('Would you like to unselect selected students?').then((result) => {
             if
             (result) {
               this.reset();
@@ -246,7 +246,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     this.studentService.deleteStudentCourses(this.studentCourseForm.value).pipe(finalize(() => this.toggleLoading())).subscribe({
       next: (response) => {
         if(response.success){
-          SimpleAlerts.showSuccessWithOptions('Do you want to cancel selected items?').then((result) => {
+          SimpleAlerts.showSuccessWithOptions('Would you like to unselect selected students?').then((result) => {
             if (result) {
               this.reset();
               this.dismissModal2();
