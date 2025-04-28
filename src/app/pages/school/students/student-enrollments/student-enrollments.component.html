@@ -10,7 +10,7 @@
                     </div>
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
-                            <div class="btn-group" ngbDropdown >
+                            <!-- <div class="btn-group" ngbDropdown >
                                 <button [disabled]="selectedEnrollments.length < 1" 
                                         class="btn btn-primary dropdown-toggle" 
                                         type="button" id="defaultDropdown" 
@@ -24,23 +24,10 @@
                                     <li (click)="addModal(content)"><a class="dropdown-item" href="javascript:void(0);">Enroll Students</a></li>
                                     <li (click)="onDeleteSubmit()"><a class="dropdown-item" href="javascript:void(0);">Delete Enrollments</a></li>
                                 </ul>
-                            </div>
-                            <div class="btn-group" ngbDropdown >
-                                <button [disabled]="selectedEnrollments.length < 1" 
-                                        class="btn btn-info dropdown-toggle" 
-                                        type="button" id="defaultDropdown" 
-                                        data-bs-toggle="dropdown" 
-                                        data-bs-auto-close="true" 
-                                        aria-expanded="false" 
-                                        ngbDropdownToggle>
-                                    Subjects
-                                </button>
-                                <ul class="dropdown-menu dropdownmenu-primary" ngbDropdownMenu aria-labelledby="defaultDropdown">
-                                    <li (click)="addModal(subjectsContent)"><a class="dropdown-item" href="javascript:void(0);">Manage Subjects</a></li>
-                                    <li (click)="addModal(subjectsContent)"><a class="dropdown-item" href="javascript:void(0);">Download</a></li>
-                                </ul>
-                            </div>
-                            <!-- <button (click)="addModal(subjectsContent)" [disabled]="selectedEnrollments.length < 1"  class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-book-line align-bottom me-1"></i> Subjects</button> -->
+                            </div> -->
+                            <button (click)="addModal(content)" [disabled]="selectedEnrollments.length < 1"  class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-swap-box-line align-bottom me-1"></i> Enroll</button>
+                            <button (click)="onDeleteSubmit()" [disabled]="selectedEnrollments.length < 1"  class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-delete-bin-line align-bottom me-1"></i> Delete</button>
+                            <button (click)="addModal(subjectsContent)" [disabled]="selectedEnrollments.length < 1"  class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-book-line align-bottom me-1"></i> Subjects</button>
                             <button (click)="addModal(coursesContent)" [disabled]="selectedEnrollments.length < 1"  class="btn btn-secondary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-stack-line align-bottom me-1"></i> Courses</button>
                         </div>
                     </div>
@@ -143,21 +130,39 @@
             <h5 class="modal-title" id="modalLabel">Manage Subjects</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
         </div>
-        <form  class="tablelist-form" autocomplete="off" [formGroup]="studentSubjectForm">
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label class="form-label">Subjects <span class="text-danger"> *</span></label>
-                    <ng-select [items]="subjects" bindLabel="name" multiple="true"  bindValue="id" formControlName="subjectIds" placeholder="Select Subjects" [ngClass]="{ 'is-invalid': submitted && fStudentSubjectForm['subjectIds'].invalid }"></ng-select>
-                    <div class="invalid-feedback">Please select subject(s)</div>
-                </div>
+        <div class="col-xxl-12">
+            <ul ngbNav #Justify="ngbNav" [activeId]="1" class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
+                <li [ngbNavItem]="1"><a ngbNavLink><span class="d-sm-block">General</span></a>
+                    <ng-template ngbNavContent>
+                        <form class="tablelist-form" autocomplete="off" [formGroup]="studentSubjectForm">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Subjects <span class="text-danger"> *</span></label>
+                                    <ng-select [items]="subjects" bindLabel="name" multiple="true" bindValue="id"
+                                        formControlName="subjectIds" placeholder="Select Subjects"
+                                        [ngClass]="{ 'is-invalid': submitted && fStudentSubjectForm['subjectIds'].invalid }"></ng-select>
+                                    <div class="invalid-feedback">Please select subject(s)</div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button (click)="onCreateStudentSubjects()" class="btn btn-primary" id="add-btn">Add Subjects</button>
+                                    <button (click)=" onDeleteStudentSubjects()" class="btn btn-danger" id="add-btn">Delete Subjects</button>
+                                </div>
+                            </div>
+                        </form>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2"><a ngbNavLink><span class="d-sm-block">Export</span></a>
+                    <ng-template ngbNavContent>
+        
+                    </ng-template>
+                </li>
+            </ul>
+            <div class="tab-content  text-muted">
+                <div [ngbNavOutlet]="Justify"></div>
             </div>
-            <div class="modal-footer">
-                <div class="hstack gap-2 justify-content-end">
-                    <button (click)="onCreateStudentSubjects()" class="btn btn-primary" id="add-btn">Add Subjects</button>
-                    <button (click)=" onDeleteStudentSubjects()" class="btn btn-danger" id="add-btn">Delete Subjects</button>
-                </div>
-            </div>
-        </form>
+        </div>
     </ng-template>
 
     <ng-template #coursesContent role="document" let-modal>
