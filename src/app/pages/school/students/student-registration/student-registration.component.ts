@@ -133,7 +133,7 @@ constructor(
     this.enrollmentForm.get('classId')?.disable();
     this.enrollmentForm.get('classSectionId')?.disable();
     this.enrollmentForm.get('academicYearId')?.disable();
-    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
+    this.modalService.open(content, {...this.mdModalConfig, backdrop: 'static'});
   }
 
   addBatchModal(content: any) {
@@ -143,7 +143,7 @@ constructor(
     this.enrollmentForm.get('classId')?.disable();
     this.enrollmentForm.get('classSectionId')?.disable();
     this.enrollmentForm.get('academicYearId')?.disable();
-    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
+    this.modalService.open(content, {...this.mdModalConfig, backdrop: 'static'});
   }
   
   editModal(content: any, student: Student) {
@@ -151,7 +151,7 @@ constructor(
     this.submitted = false;
     this.setStudentValues(student);
     this.setAddressValues(student.address);
-    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
+    this.modalService.open(content, {...this.mdModalConfig, backdrop: 'static'});
   }
 
   onSubmitStudent() {
