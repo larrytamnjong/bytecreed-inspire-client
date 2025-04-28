@@ -218,7 +218,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
             if
             (result) {
               this.reset();
-              this.dismissModal();
+              this.dismissModal2();
               this.getStudentEnrollments();
             }else{
               this.studentCourseForm.reset();
@@ -249,7 +249,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
           SimpleAlerts.showSuccessWithOptions('Do you want to cancel selected items?').then((result) => {
             if (result) {
               this.reset();
-              this.dismissModal();
+              this.dismissModal2();
               this.getStudentEnrollments();
             }else{
               this.studentCourseForm.reset();
@@ -361,7 +361,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
 
   dismissModal() {
     this.modalService.dismissAll();
-    SimpleAlerts.confirmCloseDialog('Do you want to cancel selected items?').then((result) => {
+    SimpleAlerts.confirmCloseDialog('Would you like to unselect selected students?').then((result) => {
       if (result) {
         this.reset();
         this.getStudentEnrollments();
@@ -371,6 +371,13 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     });
   }
 
+  dismissModal2() {
+    this.modalService.dismissAll();
+    this.reset();
+    this.getStudentEnrollments();
+  }
+
+  
   setStudentEnrollmentsToDisplay(enrollments: StudentEnrollment[]): void {
     this.studentEnrollmentsToDisplay = enrollments.map((enrollment) => {
       return {
