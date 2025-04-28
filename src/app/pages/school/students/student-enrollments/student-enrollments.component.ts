@@ -20,6 +20,8 @@ import { formatDateToLocalISOString } from 'src/app/core/helpers/date-utility';
 import { StudentEnrollment } from 'src/app/core/Models/api/student';
 import { SubjectService } from 'src/app/core/services/api/subject.service';
 import { CourseService } from 'src/app/core/services/api/course.service';
+import { StudentInfoComponent } from '../student-info/student-info.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-student-enrollments',
@@ -75,6 +77,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
         private studentCourseFormBuilder: UntypedFormBuilder,
         private classSectionService: ClassSectionService,
         private classService: ClassService,
+        private router: Router,
         private academicService: AcademicService,
         private subjectService: SubjectService,
         private courseService: CourseService,
@@ -289,6 +292,11 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
   onDeleteClick(enrollment: any) {
     this.selectedEnrollments.push(enrollment);
     this.onDeleteSubmit();
+  }
+
+  onEditClick(enrollment: any){
+    //this.router.navigate(['/student-info'], { queryParams: { id: enrollment.studentId } });
+    
   }
 
   reset() {

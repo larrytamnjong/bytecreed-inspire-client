@@ -85,6 +85,7 @@
                 (selectedRowsChange)="onSelectedRowsChange($event)"
                 [showRowSelect]="true"
                 (deleteClicked)="onDeleteClick($event)"
+                (editClicked)="onEditClick($event)"
                 [customTemplates]="{ 'sex': sexTemplate, 'dateOfBirth': dateOfBirthTemplate}">
                 <ng-template #sexTemplate let-value>{{getSexLabel(value)}}</ng-template>
                 <ng-template #dateOfBirthTemplate let-value>{{value | date: 'longDate'}}</ng-template>

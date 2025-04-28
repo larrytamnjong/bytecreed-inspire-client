@@ -19,11 +19,13 @@ import { CdkStepperModule } from '@angular/cdk/stepper';
 import { NgStepperModule } from 'angular-ng-stepper';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { StudentInfoComponent } from './student-info/student-info.component';
 
 @NgModule({
   declarations: [
     StudentEnrollmentsComponent,
-    StudentRegistrationComponent
+    StudentRegistrationComponent,
+    StudentInfoComponent
   ],
   imports: [
     CommonModule,
