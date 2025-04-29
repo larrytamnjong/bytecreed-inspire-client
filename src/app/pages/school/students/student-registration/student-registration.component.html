@@ -172,11 +172,10 @@
         </div> -->
 
         <div class="col-xxl-12">
-            <div class="card">
-                <div class="card-body modal-body">
+                <div class="modal-body">
                     <ul ngbNav #Justify="ngbNav" [activeId]="1" class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
                         <li [ngbNavItem]="1" *ngIf="!isBatchCreateMode">
-                            <a ngbNavLink class="mb-2"><span class="d-sm-block">General</span></a>
+                            <a ngbNavLink><span class="d-sm-block">General</span></a>
                             <ng-template ngbNavContent>
                               <div class="mb-0">
                                   <form  class="tablelist-form" autocomplete="off" [formGroup]="studentForm">
@@ -212,7 +211,7 @@
                             </ng-template>
                         </li>
                         <li [ngbNavItem]="1" [destroyOnHide]="false" *ngIf="isBatchCreateMode">
-                            <a ngbNavLink class="mb-2"><span class="d-sm-block">Batch Upload</span></a>
+                            <a ngbNavLink><span class="d-sm-block">Batch Upload</span></a>
                             <ng-template ngbNavContent>
                                 <div class="col-sm-12">
                                     <ul class="list-inline user-chat-nav text-end mb-0">
@@ -232,7 +231,7 @@
                             </ng-template>
                         </li>   
                         <li [ngbNavItem]="2" *ngIf="!isBatchCreateMode">
-                            <a ngbNavLink class="mb-2"><span class="d-sm-block">Address</span></a>
+                            <a ngbNavLink><span class="d-sm-block">Address</span></a>
                             <ng-template ngbNavContent>
                                 <form autocomplete="off" class="tablelist-form" [formGroup]="addressForm">
                                     <div class="mb-3">
@@ -256,7 +255,7 @@
                             </ng-template>
                         </li>
                         <li [ngbNavItem]="isBatchCreateMode ? 2 : 3" *ngIf="isCreateMode">
-                            <a ngbNavLink class="mb-2"><span class="d-sm-block">Enrollment</span></a>
+                            <a ngbNavLink><span class="d-sm-block">Enrollment</span></a>
                             <ng-template ngbNavContent>
                                 <form autocomplete="off" class="tablelist-form" [formGroup]="enrollmentForm">
                                     <div class="mb-0">
@@ -292,7 +291,6 @@
                         <div [ngbNavOutlet]="Justify"></div>
                     </div>
                 </div>
-            </div>
         </div>
         <div class="modal-footer">
             <div class="hstack gap-2 justify-content-end">
