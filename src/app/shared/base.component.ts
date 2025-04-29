@@ -36,6 +36,10 @@ export class BaseComponent  {
     });
   }
 
+  public stopAllLoading(){
+    this.loading = false;
+  }
+
   public toggleLoading() {
     this.loading = !this.loading;
   }
