@@ -87,7 +87,6 @@ export class SubjectsComponent extends BaseComponent implements OnInit {
     onSubmit() {
       this.submitted = true;
       if (this.subjectForm.invalid) {
-        this.toggleLoading();
         return;
       }
       
