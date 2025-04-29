@@ -296,7 +296,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
 
   onEditClick(enrollment: any){
     //this.router.navigate(['/student-info'], { queryParams: { id: enrollment.studentId } });
-    
+
   }
 
   reset() {
@@ -330,37 +330,6 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
           SimpleAlerts.showError(getErrorMessage(error));
         }
       });
-  }
-
-  getClasses() {
-    this.classService.getClasses().subscribe({
-      next: (response) => {
-        if(response.success){ this.classes = response.data;}
-      },
-      error: () => {},
-    });
-  }
-
-  getAcademicYears() {
-    this.academicService.getAcademicYears().subscribe({
-        next: (response) => {
-          this.academicYears = response.data;
-        },
-        error: (error) => {
-          SimpleAlerts.showError(getErrorMessage(error));
-        }
-      });
-  }
-
-  getClassSections() {
-    this.classSectionService.getClassSections().subscribe({
-      next: (response) => {
-        if(response.success){
-        this.classSections = response.data;
-        }
-      },
-      error: (error) => {},
-    });
   }
 
   onSelectedRowsChange(selectedRows: any) {
@@ -400,6 +369,35 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
         year: enrollment.academicYear?.name || '#',
         section: enrollment.classSection?.name || '#',
       };
+    });
+  }
+
+  getClasses() {
+    this.classService.getClasses().subscribe({
+      next: (response) => {
+        if(response.success){ this.classes = response.data;}
+      },
+      error: () => {},
+    });
+  }
+
+  getAcademicYears() {
+    this.academicService.getAcademicYears().subscribe({
+        next: (response) => {
+          this.academicYears = response.data;
+        },
+        error: (error) => {}
+      });
+  }
+
+  getClassSections() {
+    this.classSectionService.getClassSections().subscribe({
+      next: (response) => {
+        if(response.success){
+        this.classSections = response.data;
+        }
+      },
+      error: (error) => {},
     });
   }
 
