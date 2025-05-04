@@ -22,6 +22,7 @@ import { SubjectService } from 'src/app/core/services/api/subject.service';
 import { CourseService } from 'src/app/core/services/api/course.service';
 import { StudentInfoComponent } from '../student-info/student-info.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'src/app/core/Models/api/subject';
 
 @Component({
   selector: 'app-student-enrollments',
@@ -47,6 +48,24 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
 
   subjects: any = [];
   courses: any = [];
+  classes: any = [];
+  classSections: any = [];
+  academicYears: any = [];
+
+  selectedStudentEnrollment: any = null;
+  selectedStudentSelectedSubjects: any = null;
+  selectedStudentSubjects: any = [];
+  selectedStudentCourses: any = [];
+  selectedStudentSubjectHeaders: any = [
+    { key: 'name', displayName: 'Name' },
+    { key: 'description', displayName: 'Description' },
+    { key: 'coefficient', displayName: 'Coefficient' },
+    { key: 'code', displayName: 'Code' },
+  ];
+
+  selectedStudentCourseHeaders: any = [
+    { key: 'name', displayName: 'Name' },
+  ]
   
   headers: any = [
     { key: 'familyName', displayName: 'Family Name' },
@@ -63,10 +82,6 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
   get fStudentEnrollmentGetForm() {return this.studentEnrollmentGetForm.controls;}
   get fStudentSubjectForm() {return this.studentSubjectForm.controls;}
   get fStudentCourseForm() {return this.studentCourseForm.controls;}
-
-  classes: any = [];
-  classSections: any = [];
-  academicYears: any = [];
 
   constructor( 
         private modalService: NgbModal,
@@ -221,7 +236,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
             if
             (result) {
               this.reset();
-              this.dismissModal2();
+              this.dismissModalWithConfirmDialog();
               this.getStudentEnrollments();
             }else{
               this.studentCourseForm.reset();
@@ -252,7 +267,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
           SimpleAlerts.showSuccessWithOptions('Would you like to unselect selected students?').then((result) => {
             if (result) {
               this.reset();
-              this.dismissModal2();
+              this.dismissModalWithConfirmDialog();
               this.getStudentEnrollments();
             }else{
               this.studentCourseForm.reset();
@@ -294,9 +309,29 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     this.onDeleteSubmit();
   }
 
-  onEditClick(enrollment: any){
+  onEditClick(enrollment: any, content: any){
     //this.router.navigate(['/student-info'], { queryParams: { id: enrollment.studentId } });
+    this.selectedStudentEnrollment = enrollment;
+    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
 
+    this.toggleLoading();
+    this.studentService.getStudentSubjects([enrollment.id]).pipe(finalize(() => {this.toggleLoading();})).subscribe({
+      next: (response) => {
+        if (response.data && response.data[0].subjects) {
+          this.selectedStudentSubjects = response.data[0].subjects.map((subject: Subject) => ({...subject}));
+        } else {
+          this.selectedStudentSubjects = [];
+        }
+      },
+      error: (error) => {}
+    });
+  }
+
+  onSelectedStudentSaveClick(){
+   
+  }
+
+  onSelectedStudentDeleteClick(subject: any){
   }
 
   reset() {
@@ -348,12 +383,17 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     });
   }
 
-  dismissModal2() {
+  dismissModalWithConfirmDialog() {
     this.modalService.dismissAll();
     this.reset();
     this.getStudentEnrollments();
   }
 
+  dismissStudentInfoModal(){
+    this.modalService.dismissAll();
+    this.selectedStudentEnrollment = null;
+    this.selectedStudentSubjects = [];
+  }
   
   setStudentEnrollmentsToDisplay(enrollments: StudentEnrollment[]): void {
     this.studentEnrollmentsToDisplay = enrollments.map((enrollment) => {

@@ -1,10 +1,30 @@
-<footer class="footer">
+<!-- <footer class="footer">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
                {{year}} © INSPIRE (v1.0.0)
             </div>
             <div class="col-sm-6">
+                <div class="text-sm-end d-none d-sm-block" style="color: #364574;">
+                    {{institution.name}}({{institution.code}})
+                </div>
+            </div>
+        </div>
+    </div>
+</footer> -->
+
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row text-center text-sm-start">
+            <div class="col-sm-4">
+                {{year}} © INSPIRE (v1.0.0)
+            </div>
+            <div class="col-sm-4">
+                <div class="text-center" style="color: #364574;">
+                    {{institution.name}}
+                </div>
+            </div>
+            <div class="col-sm-4">
                 <div class="text-sm-end d-none d-sm-block" style="color: #364574;">
                     {{institution.code}}
                 </div>

@@ -19,6 +19,7 @@ export class BaseComponent  {
 
   mdModalConfig = { size: 'md', centered: true };
   lgModalConfig = { size: 'lg', centered: true };
+  xlModalConfig = { size: 'xl', centered: true };
   
   constructor(protected store: Store<{ data: RootReducerState }>) {}
 

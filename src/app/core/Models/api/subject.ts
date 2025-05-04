@@ -3,6 +3,6 @@ export class Subject{
     name!: string;
     description!: string;
     isActive!: boolean;
-    Coefficient!: number;
+    coefficient!: number;
     code?: string;
 }

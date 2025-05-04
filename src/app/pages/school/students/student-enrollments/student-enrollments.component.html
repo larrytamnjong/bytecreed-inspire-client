@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <div class="card" id="examTypes">
+        <div class="card">
             <div class="card-header border-bottom-dashed">
                 <div class="row g-4 align-items-center">
                     <div class="col-sm">
@@ -85,7 +85,7 @@
                 (selectedRowsChange)="onSelectedRowsChange($event)"
                 [showRowSelect]="true"
                 (deleteClicked)="onDeleteClick($event)"
-                (editClicked)="onEditClick($event)"
+                (editClicked)="onEditClick($event, studentInfo)"
                 [customTemplates]="{ 'sex': sexTemplate, 'dateOfBirth': dateOfBirthTemplate}">
                 <ng-template #sexTemplate let-value>{{getSexLabel(value)}}</ng-template>
                 <ng-template #dateOfBirthTemplate let-value>{{value | date: 'longDate'}}</ng-template>
@@ -187,4 +187,50 @@
             </div>
         </form>
     </ng-template>
+
+    <ng-template #studentInfo role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title" id="modalLabel">{{selectedStudentEnrollment?.familyName}} {{selectedStudentEnrollment?.givenNames }} [{{selectedStudentEnrollment?.class}}-{{selectedStudentEnrollment?.year}}]</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissStudentInfoModal()"></button>
+        </div>
+        <div class="col-xxl-12">
+        <div class="modal-body">
+            <ul ngbNav #Justify="ngbNav" [activeId]="1" class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
+                <li [ngbNavItem]="1"><a ngbNavLink><span class="d-sm-block">Subjects</span></a>
+                    <ng-template ngbNavContent>
+                            <div class="mb-3">
+                                <ng-select [items]="subjects" bindLabel="name" multiple="true" [(ngModel)]="selectedStudentSelectedSubjects" bindValue="id" placeholder="Select Subjects"></ng-select>
+                            </div>
+                            <div class="card">
+                                <generic-app-table 
+                                [headers]="selectedStudentSubjectHeaders" 
+                                [data]="selectedStudentSubjects" 
+                                [showActions]="true"  
+                                [showDelete]="true"
+                                [showEdit]="false"
+                                [showRowSelect]="false"
+                                (deleteClicked)="onSelectedStudentDeleteClick($event)">
+                            </generic-app-table>
+                            </div>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2"><a ngbNavLink><span class="d-sm-block">Course</span></a>
+                    <ng-template ngbNavContent>
+                    </ng-template>
+                </li>
+            </ul>
+            <div class="tab-content  text-muted">
+                <div [ngbNavOutlet]="Justify"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+                <button (click)="onSelectedStudentSaveClick()" class="btn btn-primary px-3" id="add-btn"><i class=" ri-save-2-line align-bottom me-1"></i> Save</button>
+                <button [disabled]="selectedStudentSubjects.length < 1" (click)="onCreateStudentSubjects()" class="btn btn-info px-3" id="add-btn"><i class="ri-printer-line align-bottom me-1"></i> Print</button>
+                <!-- <button  class="btn btn-danger px-3" id="delete-btn"><i class="ri-delete-bin-line align-bottom me-1"></i> Delete</button> -->
+            </div>
+        </div>
+    </div>
+    </ng-template>
+
 </div>

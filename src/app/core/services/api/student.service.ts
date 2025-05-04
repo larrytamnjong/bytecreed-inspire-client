@@ -56,8 +56,8 @@ export class StudentService {
         return this.apiService.delete(`${this.student_subject_controller}`, RequestHelper.createServiceRequest(data));
     }
 
-    getStudentSubjects(data: any): Observable<ServiceResponse<StudentSubject>> {
-        return this.apiService.post(`${this.student_subject_controller}`, RequestHelper.createServiceRequest(data));
+    getStudentSubjects(data: any): Observable<ServiceResponse<StudentSubject[]>> {
+        return this.apiService.post(`${this.student_subject_controller}/subjects`, RequestHelper.createServiceRequest(data));
     }
 
     addStudentCourses(data: any): Observable<ServiceResponse<StudentCourse[]>> {

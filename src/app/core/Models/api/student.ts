@@ -38,5 +38,5 @@ export class StudentCourse{
 
 export class StudentSubject{
      student!: Student;
-     subject!: Subject[];
+     subjects!: Subject[];
 }
