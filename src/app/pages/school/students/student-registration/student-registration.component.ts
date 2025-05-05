@@ -250,7 +250,7 @@ constructor(
   }
 
   enrollSelectedStudents() {
-    if(this.selectedStudentIds.length < 1) {
+    if(this.selectedStudentIds.length < 1 || this.enrollmentForm.invalid) {
       return;
     }
     this.modalService.dismissAll();
@@ -264,6 +264,8 @@ constructor(
         next: (response) => {
           if(response.success){
             SimpleAlerts.showSuccess();
+          }else{
+            SimpleAlerts.showError(response.message);
           }
         },
         error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
@@ -309,6 +311,7 @@ constructor(
     this.enrollmentForm.reset();
     this.enrollmentForm.patchValue({autoEnroll: false});
     this.selectedStudentIds = [];
+    this.toggleReloadTable();
   }
 
   getClasses() {
