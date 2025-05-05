@@ -53,7 +53,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
   academicYears: any = [];
 
   selectedStudentEnrollment: any = null;
-  selectedStudentSelectedSubjects: any = null;
+  selectedStudentSelectedSubjects:  [] = [];
   selectedStudentSubjects: any = [];
   selectedStudentCourses: any = [];
   selectedStudentSubjectHeaders: any = [
@@ -313,9 +313,12 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     //this.router.navigate(['/student-info'], { queryParams: { id: enrollment.studentId } });
     this.selectedStudentEnrollment = enrollment;
     this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
+    this.loadSelectedStudentSubjects();
+  }
 
+  loadSelectedStudentSubjects(){
     this.toggleLoading();
-    this.studentService.getStudentSubjects([enrollment.id]).pipe(finalize(() => {this.toggleLoading();})).subscribe({
+    this.studentService.getStudentSubjects([this.selectedStudentEnrollment.id]).pipe(finalize(() => {this.toggleLoading();})).subscribe({
       next: (response) => {
         if (response.data && response.data[0].subjects) {
           this.selectedStudentSubjects = response.data[0].subjects.map((subject: Subject) => ({...subject}));
@@ -328,10 +331,53 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
   }
 
   onSelectedStudentSaveClick(){
-   
+    if (this.selectedStudentSelectedSubjects.length === 0) {
+      return;
+    }
+
+    this.toggleLoading();
+    var data = {
+      subjectIds: this.selectedStudentSelectedSubjects, 
+      enrollmentIds: [this.selectedStudentEnrollment.id]
+    }
+
+    this.studentService.addStudentSubjects(data).pipe(finalize(() => this.toggleLoading())).subscribe({
+      next: (response) => {
+        if(response.success){
+          this.selectedStudentSelectedSubjects = [];
+          this.loadSelectedStudentSubjects();
+          SimpleAlerts.showSuccess();
+        }else{SimpleAlerts.showError(response.message);}
+      },
+      error: (error) => {
+        SimpleAlerts.showError(getErrorMessage(error));
+      }
+    });
   }
 
   onSelectedStudentDeleteClick(subject: any){
+    SimpleAlerts.confirmDeleteDialog().then((result) => {
+      if (result) {
+        this.toggleLoading();
+        var data = {
+          subjectIds: [subject.id], 
+          enrollmentIds: [this.selectedStudentEnrollment.id]
+        }
+        this.studentService.deleteStudentSubjects(data).pipe(finalize(() => this.toggleLoading())).subscribe({
+          next: (response) => {
+            if(response.success){
+              this.loadSelectedStudentSubjects();
+              SimpleAlerts.showSuccess();
+            }else{SimpleAlerts.showError(response.message);}
+          },
+          error: (error) => {
+            SimpleAlerts.showError(getErrorMessage(error));
+          }
+        });
+      }else{
+        return;
+      }
+    });
   }
 
   reset() {

@@ -10,36 +10,12 @@
                     </div>
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
-                            <!-- <div class="btn-group" ngbDropdown >
-                                <button [disabled]="selectedEnrollments.length < 1" 
-                                        class="btn btn-primary dropdown-toggle" 
-                                        type="button" id="defaultDropdown" 
-                                        data-bs-toggle="dropdown" 
-                                        data-bs-auto-close="true" 
-                                        aria-expanded="false" 
-                                        ngbDropdownToggle>
-                                    Enrollment
-                                </button>
-                                <ul class="dropdown-menu dropdownmenu-primary" ngbDropdownMenu aria-labelledby="defaultDropdown">
-                                    <li (click)="addModal(content)"><a class="dropdown-item" href="javascript:void(0);">Enroll Students</a></li>
-                                    <li (click)="onDeleteSubmit()"><a class="dropdown-item" href="javascript:void(0);">Delete Enrollments</a></li>
-                                </ul>
-                            </div> -->
                             <button (click)="addModal(content)" [disabled]="selectedEnrollments.length < 1" title="Enroll selected students" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-swap-box-line align-bottom me-1"></i> Enroll</button>
                             <button (click)="onDeleteSubmit()" [disabled]="selectedEnrollments.length < 1" title="Deleted selected enrollments"  class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-delete-bin-line align-bottom me-1"></i> Delete</button>
                             <button (click)="addModal(subjectsContent)" [disabled]="selectedEnrollments.length < 1"  class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-book-line align-bottom me-1"></i> Subjects</button>
                             <button (click)="addModal(coursesContent)" [disabled]="selectedEnrollments.length < 1"  class="btn btn-secondary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-stack-line align-bottom me-1"></i> Courses</button>
                         </div>
                     </div>
-                    <!-- <div class="col-xl-12" *ngIf="studentEnrollmentsToDisplay.length > 0">
-                        <div class="hstack gap-3 flex-wrap">
-                            <div class="text-muted">Class : <span class="text-body fw-medium">{{class}}</span></div>
-                            <div class="vr"></div>
-                            <div class="text-muted">Year : <span class="text-body fw-medium">{{academicYear}}</span></div>
-                            <div class="vr"></div>
-                            <div class="text-muted">Section : <span class="text-body fw-medium">{{section ?? '#'}}</span></div>
-                        </div>
-                    </div> -->
                     <div class="col-xl-12">
                         <div ngbAccordion activeIds="static-1" [closeOthers]="true">
                             <div ngbAccordionItem class="material-shadow" id="static-1">
@@ -120,7 +96,7 @@
             <div class="modal-footer">
                 <div class="hstack gap-2 justify-content-end">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()">Close</button>
-                    <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </form>
@@ -147,8 +123,8 @@
                             </div>
                             <div class="modal-footer">
                                 <div class="hstack gap-2 justify-content-end">
-                                    <button (click)="onCreateStudentSubjects()" class="btn btn-primary" id="add-btn">Add Subjects</button>
-                                    <button (click)=" onDeleteStudentSubjects()" class="btn btn-danger" id="add-btn">Delete Subjects</button>
+                                    <button (click)="onCreateStudentSubjects()" class="btn btn-primary">Add Subjects</button>
+                                    <button (click)=" onDeleteStudentSubjects()" class="btn btn-danger">Delete Subjects</button>
                                 </div>
                             </div>
                         </form>
@@ -181,8 +157,8 @@
             </div>
             <div class="modal-footer">
                 <div class="hstack gap-2 justify-content-end">
-                    <button (click)="onCreateStudentCourse()" class="btn btn-primary" id="add-btn">Add Course</button>
-                    <button (click)="onDeleteStudentCourse()" class="btn btn-danger" id="add-btn">Delete Course</button>
+                    <button (click)="onCreateStudentCourse()" class="btn btn-primary">Add Course</button>
+                    <button (click)="onDeleteStudentCourse()" class="btn btn-danger">Delete Course</button>
                 </div>
             </div>
         </form>
@@ -190,47 +166,48 @@
 
     <ng-template #studentInfo role="document" let-modal>
         <div class="modal-header p-3 bg-light">
-            <h5 class="modal-title" id="modalLabel">{{selectedStudentEnrollment?.familyName}} {{selectedStudentEnrollment?.givenNames }} [{{selectedStudentEnrollment?.class}}-{{selectedStudentEnrollment?.year}}]</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissStudentInfoModal()"></button>
+            <h5 class="modal-title">{{selectedStudentEnrollment?.familyName}} {{selectedStudentEnrollment?.givenNames }} [{{selectedStudentEnrollment?.class}}-{{selectedStudentEnrollment?.year}}]</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="dismissStudentInfoModal()"></button>
         </div>
         <div class="col-xxl-12">
-        <div class="modal-body">
-            <ul ngbNav #Justify="ngbNav" [activeId]="1" class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
-                <li [ngbNavItem]="1"><a ngbNavLink><span class="d-sm-block">Subjects</span></a>
-                    <ng-template ngbNavContent>
-                            <div class="mb-3">
-                                <ng-select [items]="subjects" bindLabel="name" multiple="true" [(ngModel)]="selectedStudentSelectedSubjects" bindValue="id" placeholder="Select Subjects"></ng-select>
-                            </div>
-                            <div class="card">
-                                <generic-app-table 
-                                [headers]="selectedStudentSubjectHeaders" 
-                                [data]="selectedStudentSubjects" 
-                                [showActions]="true"  
-                                [showDelete]="true"
-                                [showEdit]="false"
-                                [showRowSelect]="false"
-                                (deleteClicked)="onSelectedStudentDeleteClick($event)">
-                            </generic-app-table>
-                            </div>
-                    </ng-template>
-                </li>
-                <li [ngbNavItem]="2"><a ngbNavLink><span class="d-sm-block">Course</span></a>
-                    <ng-template ngbNavContent>
-                    </ng-template>
-                </li>
-            </ul>
-            <div class="tab-content  text-muted">
-                <div [ngbNavOutlet]="Justify"></div>
-            </div>
-        </div>
+            <form>
+                <div class="modal-body">
+                    <ul ngbNav #Justify="ngbNav" [activeId]="1" class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
+                        <li [ngbNavItem]="1"><a ngbNavLink><span class="d-sm-block">Subjects</span></a>
+                            <ng-template ngbNavContent>
+                                    <div class="mb-3">
+                                        <ng-select [ngModelOptions]="{standalone: true}" [items]="subjects" bindLabel="name" multiple="true" [(ngModel)]="selectedStudentSelectedSubjects" bindValue="id" placeholder="Select Subjects"></ng-select>
+                                    </div>
+                                    <div class="card">
+                                        <generic-app-table 
+                                        [headers]="selectedStudentSubjectHeaders" 
+                                        [data]="selectedStudentSubjects" 
+                                        [showActions]="true"  
+                                        [showDelete]="true"
+                                        [showEdit]="false"
+                                        [showRowSelect]="false"
+                                        (deleteClicked)="onSelectedStudentDeleteClick($event)">
+                                    </generic-app-table>
+                                    </div>
+                            </ng-template>
+                        </li>
+                        <li [ngbNavItem]="2"><a ngbNavLink><span class="d-sm-block">Course</span></a>
+                            <ng-template ngbNavContent>
+                            </ng-template>
+                        </li>
+                    </ul>
+                    <div class="tab-content  text-muted">
+                        <div [ngbNavOutlet]="Justify"></div>
+                    </div>
+                </div>
+            </form>
         <div class="modal-footer">
             <div class="hstack gap-2 justify-content-end">
-                <button (click)="onSelectedStudentSaveClick()" class="btn btn-primary px-3" id="add-btn"><i class=" ri-save-2-line align-bottom me-1"></i> Save</button>
-                <button [disabled]="selectedStudentSubjects.length < 1" (click)="onCreateStudentSubjects()" class="btn btn-info px-3" id="add-btn"><i class="ri-printer-line align-bottom me-1"></i> Print</button>
-                <!-- <button  class="btn btn-danger px-3" id="delete-btn"><i class="ri-delete-bin-line align-bottom me-1"></i> Delete</button> -->
+                <button [disabled]="selectedStudentSelectedSubjects.length < 1" (click)="onSelectedStudentSaveClick()" class="btn btn-primary px-3"><i class=" ri-save-2-line align-bottom me-1"></i> Save</button>
+                <button [disabled]="selectedStudentSubjects.length < 1" (click)="onCreateStudentSubjects()" class="btn btn-info px-3"><i class="ri-printer-line align-bottom me-1"></i> Print</button>
             </div>
         </div>
-    </div>
+     </div>
     </ng-template>
 
 </div>
