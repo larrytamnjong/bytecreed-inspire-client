@@ -7,6 +7,7 @@ import { getLookUpsAction } from 'src/app/store/common/look-up/look-up.action';
 import { selectLookUpsView } from 'src/app/store/common/look-up/look-up.selector';
 import { LookUpTableEnum } from 'src/app/core/enums/look-up-table';
 import { Country } from 'src/app/core/Models/common/country';
+import { generatePDF } from '../core/helpers/pdf-utility';
 
 export class BaseComponent  {
   loading: boolean = false;
@@ -65,6 +66,10 @@ export class BaseComponent  {
   public getStudentStatusLabel(status: number): string { 
     const statusItem = this.studentStatus.find(item => item.dataCode === status);
     return statusItem?.text ?? '#';
+  }
+
+  public generatePDF(html: string, fileName: string) {
+    generatePDF(html, fileName);
   }
 
 }

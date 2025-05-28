@@ -24,6 +24,7 @@ import { StudentInfoComponent } from '../student-info/student-info.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'src/app/core/Models/api/subject';
 
+
 @Component({
   selector: 'app-student-enrollments',
   templateUrl: './student-enrollments.component.html',
@@ -500,4 +501,9 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
         error: (error) => {}
       });
   }
+
+  onPrint() {
+    this.generatePDF("student-subjects", "student-subjects.pdf");
+  }
+
 }
