@@ -502,8 +502,10 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
       });
   }
 
-  onPrint() {
-    this.generatePDF("student-subjects", "student-subjects.pdf");
+  async onPrint() {
+    this.toggleLoading();
+    await this.generatePDF("student-subjects", "student-subjects.pdf");
+    this.toggleLoading();
   }
 
 }
