@@ -68,10 +68,6 @@ export class BaseComponent  {
     return statusItem?.text ?? '#';
   }
 
-  // public generatePDF(html: string, fileName: string) {
-  //   generatePDF(html, fileName);
-  // }
-
   public async generatePDF(html: string, fileName: string) {
     await generatePDF(html, fileName);
   }
