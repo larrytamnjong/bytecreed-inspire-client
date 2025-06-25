@@ -23,6 +23,8 @@ import { GenericPaginatedAppTableComponent } from './generic-paginated-app-table
 import { StudentStatusBadgeComponent } from './student-status-badge/student-status-badge.component';
 import { ExcelImportComponent } from './excel-import/excel-import.component';
 import { ExcelExportComponent } from './excel-export/excel-export.component';
+import { PersonnelService } from '../core/services/api/personnel.service';
+import { TeacherService } from '../core/services/api/teacher.service';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { ExcelExportComponent } from './excel-export/excel-export.component';
     AcademicService,
     ClassService,
     SubjectService,
-    CourseService
+    CourseService,
+    PersonnelService,
+    TeacherService
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   exports: [

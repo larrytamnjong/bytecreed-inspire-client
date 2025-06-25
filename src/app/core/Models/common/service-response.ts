@@ -3,7 +3,6 @@ export class ServiceResponseBase {
     code!: number;
     message?: string;
 }
-
 export class ServiceResponse<T> extends ServiceResponseBase {
     data?: T;
 }
