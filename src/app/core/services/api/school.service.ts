@@ -8,16 +8,16 @@ import { Address } from "../../Models/common/address";
 
 @Injectable({ providedIn: 'root'})
 export class SchoolService {
-    private readonly school_controller: string = "v1/schools";
+    private readonly SCHOOL_CONTROLLER: string = "v1/schools";
 
   constructor(private apiService: ApiHttpService) {}
 
   getCurrentSchool(): Observable<ServiceResponse<{school: School, address?: Address}>> {
-    return this.apiService.get(`${this.school_controller}/school`);
+    return this.apiService.get(`${this.SCHOOL_CONTROLLER}/school`);
   }
 
   updateCurrentSchool(school: {school: School, address?: Address}): Observable<ServiceResponse<{school: School, address?: Address}>> {
-    return this.apiService.put(`${this.school_controller}`, RequestHelper.createServiceRequest(school));
+    return this.apiService.put(`${this.SCHOOL_CONTROLLER}`, RequestHelper.createServiceRequest(school));
   }
 
 }

@@ -7,19 +7,19 @@ import { RequestHelper } from "../common/service-request-helper";
 
 @Injectable({ providedIn: 'root'})
 export class SubjectService {
-  private readonly subject_controller: string = "v1/subjects";
+  private readonly SUBJECT_CONTROLLER: string = "v1/subjects";
   constructor(private apiService: ApiHttpService) {}
 
   public getSubjects(): Observable<ServiceResponse<Subject[]>> {
-    return this.apiService.get(`${this.subject_controller}`);
+    return this.apiService.get(`${this.SUBJECT_CONTROLLER}`);
   }
 
   public addSubject(data: Subject): Observable<ServiceResponse<Subject[]>> {
-    return this.apiService.post(`${this.subject_controller}`, RequestHelper.createServiceRequest([data]));
+    return this.apiService.post(`${this.SUBJECT_CONTROLLER}`, RequestHelper.createServiceRequest([data]));
   }
 
   public updateSubject(data: Subject): Observable<ServiceResponse<Subject[]>> {
-    return this.apiService.put(`${this.subject_controller}`, RequestHelper.createServiceRequest([data]));
+    return this.apiService.put(`${this.SUBJECT_CONTROLLER}`, RequestHelper.createServiceRequest([data]));
   }
 
 }

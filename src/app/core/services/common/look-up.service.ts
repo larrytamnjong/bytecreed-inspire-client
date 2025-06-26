@@ -6,22 +6,22 @@ import { forkJoin, map } from "rxjs";
 
 @Injectable({ providedIn: 'root'})
 export class LookUpService {
-  private readonly look_up_controller: string = "v1/look-ups";
-  private readonly look_up_data_controller: string = "v1/look-up-data";
-  private readonly countries_controller: string = "v1/countries";
+  private readonly LOOK_UP_CONTROLLER: string = "v1/look-ups";
+  private readonly LOOK_UP_DATA_CONTROLLER: string = "v1/look-up-data";
+  private readonly COUNTRIES_CONTROLLER: string = "v1/countries";
 
   constructor(private api: ApiHttpService) {}
 
   private getLookUps(): Observable<any> {
-    return this.api.get(`${this.look_up_controller}`);
+    return this.api.get(`${this.LOOK_UP_CONTROLLER}`);
   }
 
   private getLookUpData(): Observable<any> {
-    return this.api.get(`${this.look_up_data_controller}`);
+    return this.api.get(`${this.LOOK_UP_DATA_CONTROLLER}`);
   }
 
   private getCountries(): Observable<any> {
-    return this.api.get(`${this.countries_controller}`);
+    return this.api.get(`${this.COUNTRIES_CONTROLLER}`);
   }
 
   getAll(): Observable<LookUpView> {

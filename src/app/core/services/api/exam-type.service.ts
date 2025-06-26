@@ -8,18 +8,18 @@ import { ServiceResponse } from "../../Models/common/service-response";
 
 @Injectable({ providedIn: 'root'})
 export class ExamTypeService {
-  private readonly exam_type_controller: string = "v1/exam-types"; 
+  private readonly EXAM_TYPE_CONTROLLER: string = "v1/exam-types"; 
   constructor(private apiService: ApiHttpService) {}
 
     getExamTypes(): Observable<ServiceResponse<ExamType[]>> {
-        return this.apiService.get(`${this.exam_type_controller}`);
+        return this.apiService.get(`${this.EXAM_TYPE_CONTROLLER}`);
     }
 
     createExamType(examType: ExamType): Observable<ServiceResponse<ExamType[]>> {
-        return this.apiService.post(`${this.exam_type_controller}`, RequestHelper.createServiceRequest([examType]));
+        return this.apiService.post(`${this.EXAM_TYPE_CONTROLLER}`, RequestHelper.createServiceRequest([examType]));
     }
 
     updateExamType(examType: ExamType): Observable<ServiceResponse<ExamType[]>> {
-        return this.apiService.put(`${this.exam_type_controller}`, RequestHelper.createServiceRequest([examType]));
+        return this.apiService.put(`${this.EXAM_TYPE_CONTROLLER}`, RequestHelper.createServiceRequest([examType]));
     }
 }

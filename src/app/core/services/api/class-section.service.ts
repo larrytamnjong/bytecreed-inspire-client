@@ -7,18 +7,18 @@ import { RequestHelper } from "../common/service-request-helper";
 
 @Injectable({ providedIn: 'root'})
 export class ClassSectionService {
-    private readonly class_section_controller: string = "v1/class-sections";
+    private readonly CLASS_SECTION_CONTROLLER: string = "v1/class-sections";
   constructor(private apiService: ApiHttpService) {}
 
   getClassSections(): Observable<ServiceResponse<ClassSection[]>> {
-    return this.apiService.get(`${this.class_section_controller}`);
+    return this.apiService.get(`${this.CLASS_SECTION_CONTROLLER}`);
   }
 
   addClassSection(data: ClassSection): Observable<ServiceResponse<ClassSection>> {
-    return this.apiService.post(`${this.class_section_controller}/class-section`, RequestHelper.createServiceRequest(data));
+    return this.apiService.post(`${this.CLASS_SECTION_CONTROLLER}/class-section`, RequestHelper.createServiceRequest(data));
   }
 
   updateClassSection(data: ClassSection): Observable<ServiceResponse<ClassSection>> {
-    return this.apiService.put(`${this.class_section_controller}/class-section`, RequestHelper.createServiceRequest(data));
+    return this.apiService.put(`${this.CLASS_SECTION_CONTROLLER}/class-section`, RequestHelper.createServiceRequest(data));
   }
 }

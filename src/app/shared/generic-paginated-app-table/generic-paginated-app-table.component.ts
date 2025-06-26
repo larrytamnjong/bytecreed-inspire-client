@@ -62,7 +62,7 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
       pageSize: this.pageSize
     };
 
-    this.http.post<any>(`${this.isIdentityApi ? environment.identityServerUrl : environment.apiServerUrl}/${this.apiUrl}`, requestBody, { params: queryParams }).subscribe({
+    this.http.post<any>(`${this.isIdentityApi ? environment.IDENTITY_SERVER_URL : environment.API_SERVER_URL}/${this.apiUrl}`, requestBody, { params: queryParams }).subscribe({
       next: (response) => {
         if (response.success) {
           this.data = response.data;

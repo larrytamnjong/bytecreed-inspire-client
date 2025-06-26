@@ -7,23 +7,23 @@ import { RequestHelper } from "../common/service-request-helper";
 
 @Injectable({ providedIn: "root" })
 export class PersonnelService {
-  private readonly personnel_controller: string = "v1/personnel";
+  private readonly PERSONNEL_CONTROLLER: string = "v1/personnel";
 
   constructor(private apiService: ApiHttpService) {}
 
   public createPersonnel(data: any): Observable<ServiceResponse<Personnel[]>> {
-    return this.apiService.post(this.personnel_controller,RequestHelper.createServiceRequest([data]));
+    return this.apiService.post(this.PERSONNEL_CONTROLLER,RequestHelper.createServiceRequest([data]));
   }
 
   public updatePersonnel(data: any): Observable<ServiceResponse<Personnel[]>> {
-    return this.apiService.put(this.personnel_controller,RequestHelper.createServiceRequest([data]));
+    return this.apiService.put(this.PERSONNEL_CONTROLLER,RequestHelper.createServiceRequest([data]));
   }
 
   public deletePersonnel(id: any): Observable<ServiceResponse<any>> {
-    return this.apiService.delete(`${this.personnel_controller}/${id}`);
+    return this.apiService.delete(`${this.PERSONNEL_CONTROLLER}/${id}`);
   }
 
   getEmployees(): Observable<ServiceResponse<any[]>> {
-    return this.apiService.get(`${this.personnel_controller}`);
+    return this.apiService.get(`${this.PERSONNEL_CONTROLLER}`);
   }
 }

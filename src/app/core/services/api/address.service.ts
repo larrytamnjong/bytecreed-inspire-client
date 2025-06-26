@@ -9,19 +9,19 @@ import { ServiceResponse } from "../../Models/common/service-response";
 @Injectable({ providedIn: 'root'})
 export class AddressService {
 
-    private readonly address_controller: string = "v1/addresses";
+    private readonly ADDRESS_CONTROLLER: string = "v1/addresses";
   constructor(private apiService: ApiHttpService) {}
 
   getAddress(addressId: string): Observable<ServiceResponse<Address>> {
-    return this.apiService.get(`${this.address_controller}/${addressId}/address`);
+    return this.apiService.get(`${this.ADDRESS_CONTROLLER}/${addressId}/address`);
   }
 
   updateAddresses(addresses: Address[]): Observable<ServiceResponse<Address[]>> {
-    return this.apiService.put(`${this.address_controller}`, RequestHelper.createServiceRequest(addresses));
+    return this.apiService.put(`${this.ADDRESS_CONTROLLER}`, RequestHelper.createServiceRequest(addresses));
   }
 
   addAddresses(addresses: Address[]): Observable<ServiceResponse<Address[]>> {
-    return this.apiService.post(`${this.address_controller}`, RequestHelper.createServiceRequest(addresses));
+    return this.apiService.post(`${this.ADDRESS_CONTROLLER}`, RequestHelper.createServiceRequest(addresses));
   }
 
 }

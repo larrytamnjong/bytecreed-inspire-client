@@ -14,25 +14,25 @@ import { environment } from 'src/environments/environment';
     }
   
     get(endpoint: string, options?: { headers?: HttpHeaders; params?: HttpParams }): Observable<any> {
-      return this.http.get(`${environment.identityServerUrl}/${endpoint}`, {
+      return this.http.get(`${environment.IDENTITY_SERVER_URL}/${endpoint}`, {
         ...options, headers: this.getHeaders(),
       });
     }
   
     post(endpoint: string, data: any, options?: { headers?: HttpHeaders; params?: HttpParams }): Observable<any> {
-      return this.http.post(`${environment.identityServerUrl}/${endpoint}`, data, {
+      return this.http.post(`${environment.IDENTITY_SERVER_URL}/${endpoint}`, data, {
         ...options, headers: this.getHeaders(),
       });
     }
   
     put(endpoint: string, data: any, options?: { headers?: HttpHeaders; params?: HttpParams }): Observable<any> {
-      return this.http.put(`${environment.identityServerUrl}/${endpoint}`, data, {
+      return this.http.put(`${environment.IDENTITY_SERVER_URL}/${endpoint}`, data, {
         ...options, headers: this.getHeaders(),
       });
     }
   
     delete(endpoint: string, options?: { headers?: HttpHeaders; params?: HttpParams }): Observable<any> {
-      return this.http.delete(`${environment.identityServerUrl}/${endpoint}`, {
+      return this.http.delete(`${environment.IDENTITY_SERVER_URL}/${endpoint}`, {
         ...options, headers: this.getHeaders(),
       });
     }

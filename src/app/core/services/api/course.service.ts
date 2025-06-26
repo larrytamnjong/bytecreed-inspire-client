@@ -8,19 +8,19 @@ import { ApiHttpService } from "../common/base-api-http.service";
 
 @Injectable({ providedIn: 'root'})
 export class CourseService {
-    private readonly course_controller: string = "v1/courses";
+    private readonly COURSE_CONTROLLER: string = "v1/courses";
     constructor(private apiService: ApiHttpService) {}
   
   public getCourses(): Observable<ServiceResponse<Course[]>> {
-    return this.apiService.get(`${this.course_controller}`);
+    return this.apiService.get(`${this.COURSE_CONTROLLER}`);
   }
   public addCourse(data: Course): Observable<ServiceResponse<Course[]>> {
-    return this.apiService.post(`${this.course_controller}`, RequestHelper.createServiceRequest([data]));
+    return this.apiService.post(`${this.COURSE_CONTROLLER}`, RequestHelper.createServiceRequest([data]));
   }
   public updateCourse(data: Course): Observable<ServiceResponse<Course[]>> {
-    return this.apiService.put(`${this.course_controller}`, RequestHelper.createServiceRequest([data]));
+    return this.apiService.put(`${this.COURSE_CONTROLLER}`, RequestHelper.createServiceRequest([data]));
   }
   public deleteCourse(id: string): Observable<ServiceResponse<any>> {
-    return this.apiService.delete(`${this.course_controller}/${id}/course`);
+    return this.apiService.delete(`${this.COURSE_CONTROLLER}/${id}/course`);
   }
 }

@@ -8,35 +8,35 @@ import { RequestHelper } from "../common/service-request-helper";
 
 @Injectable({ providedIn: 'root'})
 export class GradingService {    
-    private readonly grading_system_controller = 'v1/grading-systems';
-    private readonly grade_setup_controller = 'v1/grade-setups';   
+    private readonly GRADING_SYSTEM_CONTROLLER = 'v1/grading-systems';
+    private readonly GRADE_SETUP_CONTROLLER = 'v1/grade-setups';   
   constructor(private apiService: ApiHttpService) {}
 
   public getGradingSystems(): Observable<ServiceResponse<GradingSystem[]>> {
-    return this.apiService.get(this.grading_system_controller);
+    return this.apiService.get(this.GRADING_SYSTEM_CONTROLLER);
   }
 
   public addGradingSystem(data: GradingSystem): Observable<ServiceResponse<GradingSystem[]>> {
-    return this.apiService.post(this.grading_system_controller, RequestHelper.createServiceRequest(data));
+    return this.apiService.post(this.GRADING_SYSTEM_CONTROLLER, RequestHelper.createServiceRequest(data));
   }
 
   public updateGradingSystem(data: GradingSystem): Observable<ServiceResponse<GradingSystem[]>> {
-    return this.apiService.put(this.grading_system_controller, RequestHelper.createServiceRequest(data));
+    return this.apiService.put(this.GRADING_SYSTEM_CONTROLLER, RequestHelper.createServiceRequest(data));
   }
 
   public getGradeSetups() : Observable<ServiceResponse<GradeSetup[]>> {
-    return this.apiService.get(this.grade_setup_controller);
+    return this.apiService.get(this.GRADE_SETUP_CONTROLLER);
   }
 
   public addGradeSetup(gradeSetup: GradeSetup) :  Observable<ServiceResponse<GradeSetup[]>> {
-    return this.apiService.post(this.grade_setup_controller, RequestHelper.createServiceRequest([gradeSetup]));
+    return this.apiService.post(this.GRADE_SETUP_CONTROLLER, RequestHelper.createServiceRequest([gradeSetup]));
   }
   
   public updateGradeSetup(gradeSetup: GradeSetup) :  Observable<ServiceResponse<GradeSetup[]>> {
-    return this.apiService.put(this.grade_setup_controller, RequestHelper.createServiceRequest([gradeSetup]));
+    return this.apiService.put(this.GRADE_SETUP_CONTROLLER, RequestHelper.createServiceRequest([gradeSetup]));
   }
 
   public deleteGradeSetup(gradeSetupId: string) :  Observable<ServiceResponse<any>> {
-    return this.apiService.delete(`${this.grade_setup_controller}/${gradeSetupId}`);
+    return this.apiService.delete(`${this.GRADE_SETUP_CONTROLLER}/${gradeSetupId}`);
   }
 }

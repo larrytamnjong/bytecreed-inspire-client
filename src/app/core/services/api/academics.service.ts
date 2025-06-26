@@ -8,45 +8,45 @@ import { AcademicTerm, AcademicYear, AcademicPeriod } from "../../Models/api/aca
 
 @Injectable({ providedIn: 'root'})
 export class AcademicService {
-    private readonly academic_year_controller: string = "v1/academic-years";
-    private readonly academic_term_controller: string = "v1/academic-terms";
-    private readonly academic_period_controller: string = "v1/academic-periods";
+    private readonly ACADEMIC_YEAR_CONTROLLER: string = "v1/academic-years";
+    private readonly ACADEMIC_TERM_CONTROLLER: string = "v1/academic-terms";
+    private readonly ACADEMIC_PERIOD_CONTROLLER: string = "v1/academic-periods";
 
     constructor(private apiService: ApiHttpService) {}
 
     getAcademicTerms(): Observable<ServiceResponse<AcademicTerm[]>> {
-        return this.apiService.get(`${this.academic_term_controller}`);
+        return this.apiService.get(`${this.ACADEMIC_TERM_CONTROLLER}`);
     }
 
     createAcademicTerm(academicTerm: AcademicTerm): Observable<ServiceResponse<AcademicTerm[]>> {
-        return this.apiService.post(`${this.academic_term_controller}`, RequestHelper.createServiceRequest([academicTerm]));
+        return this.apiService.post(`${this.ACADEMIC_TERM_CONTROLLER}`, RequestHelper.createServiceRequest([academicTerm]));
     }
 
     updateAcademicTerm(academicTerm: AcademicTerm): Observable<ServiceResponse<AcademicTerm[]>> {
-        return this.apiService.put(`${this.academic_term_controller}`, RequestHelper.createServiceRequest([academicTerm]));
+        return this.apiService.put(`${this.ACADEMIC_TERM_CONTROLLER}`, RequestHelper.createServiceRequest([academicTerm]));
     }
 
     getAcademicYears(): Observable<ServiceResponse<AcademicYear[]>> {
-        return this.apiService.get(`${this.academic_year_controller}`);
+        return this.apiService.get(`${this.ACADEMIC_YEAR_CONTROLLER}`);
     }
 
     createAcademicYear(academicYear: AcademicYear): Observable<ServiceResponse<AcademicYear>> {
-        return this.apiService.post(`${this.academic_year_controller}`, RequestHelper.createServiceRequest(academicYear));
+        return this.apiService.post(`${this.ACADEMIC_YEAR_CONTROLLER}`, RequestHelper.createServiceRequest(academicYear));
     }
 
     updateAcademicYear(academicYear: AcademicYear): Observable<ServiceResponse<AcademicYear>> {
-        return this.apiService.put(`${this.academic_year_controller}`, RequestHelper.createServiceRequest(academicYear));
+        return this.apiService.put(`${this.ACADEMIC_YEAR_CONTROLLER}`, RequestHelper.createServiceRequest(academicYear));
     }
 
     getAcademicPeriods(): Observable<ServiceResponse<AcademicPeriod[]>> {
-        return this.apiService.get(`${this.academic_period_controller}`);
+        return this.apiService.get(`${this.ACADEMIC_PERIOD_CONTROLLER}`);
     }
 
     createAcademicPeriod(academicPeriod: AcademicPeriod): Observable<ServiceResponse<AcademicPeriod>> {
-        return this.apiService.post(`${this.academic_period_controller}`, RequestHelper.createServiceRequest(academicPeriod));
+        return this.apiService.post(`${this.ACADEMIC_PERIOD_CONTROLLER}`, RequestHelper.createServiceRequest(academicPeriod));
     }
 
     updateAcademicPeriod(academicPeriod: AcademicPeriod): Observable<ServiceResponse<AcademicPeriod>> {
-        return this.apiService.put(`${this.academic_period_controller}`, RequestHelper.createServiceRequest(academicPeriod));
+        return this.apiService.put(`${this.ACADEMIC_PERIOD_CONTROLLER}`, RequestHelper.createServiceRequest(academicPeriod));
     }
 }
