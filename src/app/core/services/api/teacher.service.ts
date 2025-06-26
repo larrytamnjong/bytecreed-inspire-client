@@ -14,7 +14,7 @@ export class TeacherService {
       return this.apiService.post(this.teacher_controller,RequestHelper.createServiceRequest([data]));
     }
   
-    public deleteTeacher(data: any): Observable<ServiceResponse<any>> {
+  public deleteTeacher(data: any): Observable<ServiceResponse<any>> {
       return this.apiService.put(this.teacher_controller,RequestHelper.createServiceRequest([data]));
     }
 }
