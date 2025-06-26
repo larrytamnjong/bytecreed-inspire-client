@@ -16,7 +16,7 @@ import { ClassService } from 'src/app/core/services/api/class.service';
 import { AcademicService } from 'src/app/core/services/api/academics.service';
 import { exportJsonToExcel } from 'src/app/core/helpers/excel-utility';
 import { studentSampleTemplate } from 'src/app/core/samples/student-sample';
-import { formatDateToLocalISOString } from 'src/app/core/helpers/date-utility';
+
 @Component({
   selector: 'app-student-registration',
   templateUrl: './student-registration.component.html',
@@ -171,7 +171,7 @@ constructor(
       this.studentBatch = this.studentBatch.map(student => {
         return {
           ...student,
-          dateOfBirth: formatDateToLocalISOString(new Date(student.dateOfBirth))
+          dateOfBirth: this.formatDateToLocalISOString(new Date(student.dateOfBirth))
         };
       });
 
@@ -196,7 +196,7 @@ constructor(
     const address = this.addressForm.value;
     student.address = address;
     student.sex =  Number(this.fStudent["sex"].value);
-    student.dateOfBirth = formatDateToLocalISOString(new Date(this.studentForm.get('dateOfBirth')?.value));
+    student.dateOfBirth = this.formatDateToLocalISOString(new Date(this.studentForm.get('dateOfBirth')?.value));
 
     if(this.isCreateMode){
       this.toggleLoading();

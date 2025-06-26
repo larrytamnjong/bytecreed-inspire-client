@@ -1,1 +1,91 @@
 <app-breadcrumbs title="PERSONNEL" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header border-bottom-dashed">
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm">
+                        <div>
+                            <h5 class="card-title mb-0"><i class="ri-admin-line text-muted fs-18 align-middle me-1"> </i>Employees</h5>
+                        </div>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="d-flex flex-wrap align-items-start gap-2">
+                            <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-user-add-line align-bottom me-1"></i> Register Employee</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <generic-app-table 
+                [headers]="headers" 
+                [data]="employees" 
+                [showActions]="true" 
+                [showDelete]="false"
+                (editClicked)="editModal(content, $event)"
+                tableId="employeesTable"
+                [customTemplates]="{ 'sex': sexTemplate, 'dateOfBirth': dateOfBirthTemplate, 'dateOfEmployment' :dateOfEmploymentTemplate }">
+                <ng-template #sexTemplate let-value>{{getSexLabel(value)}}</ng-template>
+                <ng-template #dateOfBirthTemplate let-value>{{value | date: 'longDate'}}</ng-template>
+                <ng-template #dateOfEmploymentTemplate let-value>{{value | date: 'longDate'}}</ng-template>
+            </generic-app-table>
+        </div>
+    </div>
+
+    <app-loading [loading]="loading"></app-loading>
+    <ng-template #content role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title">{{isCreateMode ? "Register" : "Update"}} Employee</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
+        </div>
+        <form class="tablelist-form" autocomplete="off" [formGroup]="personnelForm">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="familyName" class="form-label">Family Name <span class="text-danger">*</span></label>
+                    <input type="text" id="familyName" class="form-control" placeholder="Enter Family Name" formControlName="familyName" required
+                        [ngClass]="{ 'is-invalid': submitted && fPersonnel['familyName'].invalid }">
+                    <div class="invalid-feedback">Family name is required</div>
+                </div>
+                <div class="mb-3">
+                    <label for="givenNames" class="form-label">Given Names <span class="text-danger">*</span></label>
+                    <input type="text" id="givenNames" class="form-control" placeholder="Enter Given Names" formControlName="givenNames" required
+                        [ngClass]="{ 'is-invalid': submitted && fPersonnel['givenNames'].invalid }">
+                    <div class="invalid-feedback">Given name(s) is(are) required</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label mb-0">Date Of Birth <span class="text-danger">*</span></label>
+                    <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="F j, Y" dateFormat="Y-m-d" required
+                        formControlName="dateOfBirth"
+                        [ngClass]="{ 'is-invalid': submitted && fPersonnel['dateOfBirth'].invalid }"
+                        placeholder="Select Date of Birth" />
+                    <div class="invalid-feedback">Date of birth is required</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label mb-0">Date Of Employment</label>
+                    <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="F j, Y" dateFormat="Y-m-d" formControlName="dateOfEmployment"
+                    required
+                    [ngClass]="{ 'is-invalid': submitted && fPersonnel['dateOfEmployment'].invalid }"
+                    placeholder="Select Date of Employment" />
+                    <div class="invalid-feedback">Date of employment is required</div>
+                </div>
+                <div class="mb-3">
+                    <label for="sex" class="form-label">Gender <span class="text-danger">*</span></label>
+                    <select id="sex" class="form-select" formControlName="sex" [ngClass]="{ 'is-invalid': submitted && fPersonnel['sex'].errors }">
+                        <option [ngValue]="null" disabled selected>Select Gender </option>
+                        <option *ngFor="let sex of sexOptions" [value]="sex.dataCode">{{ sex.text }}</option>
+                    </select>
+                    <div class="invalid-feedback">Sex is required</div>
+                </div>
+            </div>
+        </form>
+
+        <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()"><i class="ri-close-line align-bottom me-1"></i> Close</button>
+                <button type="submit" class="btn btn-primary" (click)="onSubmit()" id="add-btn"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
+            </div>
+        </div>
+    </ng-template>
+
+</div>

@@ -11,16 +11,16 @@
     </div>
 </div>
 
-<div class="customizer-setting d-none d-md-block">
+<!-- <div class="customizer-setting d-none d-md-block">
     <div class="btn-info rounded-pill shadow-lg btn btn-icon btn-lg p-2" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas" (click)="openEnd(filtetcontent)">
         <i class='mdi mdi-spin mdi-cog-outline fs-22'></i>
     </div>
-</div>
+</div> -->
 
 <!-- Theme Settings -->
 <ng-template #filtetcontent let-offcanvas>
     <div class="d-flex align-items-center bg-primary bg-gradient p-3 offcanvas-header">
-        <h5 class="m-0 me-2 text-white">Theme Customizer</h5>
+        <h5 class="m-0 me-2 text-white">Customize Dashboard</h5>
         <button type="button" class="btn-close btn-close-white ms-auto " data-bs-dismiss="offcanvas" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
     </div>
     <div class="offcanvas-body p-0 right-sidebar">
@@ -647,7 +647,7 @@
                 <ng-template [ngIf]="attribute === 'vertical' || attribute === 'twocolumn' || attribute === 'semibox'">
                     <div id="sidebar-color">
                         <h6 class="mt-4 mb-0 fw-semibold text-uppercase">Sidebar Color</h6>
-                        <p class="text-muted">Choose Ligth or Dark Sidebar Color.</p>
+                        <p class="text-muted">Choose Light or Dark Sidebar Color.</p>
 
                         <div class="row">
                             <div class="col-4">

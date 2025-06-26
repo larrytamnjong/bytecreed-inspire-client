@@ -8,6 +8,7 @@ import { selectLookUpsView } from 'src/app/store/common/look-up/look-up.selector
 import { LookUpTableEnum } from 'src/app/core/enums/look-up-table';
 import { Country } from 'src/app/core/Models/common/country';
 import { generatePDF } from '../core/helpers/pdf-utility';
+import { formatDateToLocalISOString } from 'src/app/core/helpers/date-utility';
 
 export class BaseComponent  {
   loading: boolean = false;
@@ -71,4 +72,13 @@ export class BaseComponent  {
   public async generatePDF(html: string, fileName: string) {
     await generatePDF(html, fileName);
   }
+
+  public formatDateToLocalISOString(date: Date): string {
+     return formatDateToLocalISOString(date);
+  }
+
+  public parseToNumber(value : any){
+    return Number(value);
+  }
+
 }

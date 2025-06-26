@@ -22,4 +22,8 @@ export class PersonnelService {
   public deletePersonnel(id: any): Observable<ServiceResponse<any>> {
     return this.apiService.delete(`${this.personnel_controller}/${id}`);
   }
+
+  getEmployees(): Observable<ServiceResponse<any[]>> {
+    return this.apiService.get(`${this.personnel_controller}`);
+  }
 }

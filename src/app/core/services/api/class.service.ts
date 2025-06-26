@@ -16,7 +16,7 @@ export class ClassService {
 
   constructor(private apiService: ApiHttpService) {}
 
-    getClasses(): Observable<ServiceResponse<Class>> {
+    getClasses(): Observable<ServiceResponse<Class[]>> {
       return this.apiService.get(`${this.class_controller}`);
     }
 

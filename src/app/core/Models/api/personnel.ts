@@ -7,4 +7,5 @@ export class Personnel{
     sex!: SexEnum;
     dateOfEmployment!: string;
     addressId?: string;
+    userId? : string;
 }

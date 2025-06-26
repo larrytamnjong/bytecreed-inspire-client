@@ -19,7 +19,7 @@ export interface LayoutState {
     BACKGROUND_IMAGE: string
 }
 
-// IntialState
+// InitialState
 export const initialState: LayoutState = {
     LAYOUT: LAYOUT_TYPES.VERTICAL,
     LAYOUT_THEME: LAYOUT_THEME.DEFAULT,
