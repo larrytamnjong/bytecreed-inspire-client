@@ -89,7 +89,6 @@ export class EmployeesComponent extends BaseComponent implements OnInit{
    onSubmit() {
         this.submitted = true;
         if (this.personnelForm.invalid) {
-          this.toggleLoading();
           return;
         }
           
