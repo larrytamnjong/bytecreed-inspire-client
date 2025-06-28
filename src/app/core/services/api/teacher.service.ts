@@ -14,11 +14,11 @@ export class TeacherService {
   constructor(private apiService: ApiHttpService) {}
 
     public addTeachers(data: any): Observable<ServiceResponse<any[]>> {
-        return this.apiService.post(this.TEACHER_CONTROLLER,RequestHelper.createServiceRequest([data]));
+        return this.apiService.post(this.TEACHER_CONTROLLER,RequestHelper.createServiceRequest(data));
     }
 
     public deleteTeacher(data: any): Observable<ServiceResponse<any>> {
-        return this.apiService.put(this.TEACHER_CONTROLLER,RequestHelper.createServiceRequest([data]));
+        return this.apiService.delete(this.TEACHER_CONTROLLER,RequestHelper.createServiceRequest(data));
     }
 
     getTeachers(): Observable<ServiceResponse<any[]>> {

@@ -18,7 +18,6 @@ import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 })
 export class EmployeesComponent extends BaseComponent implements OnInit{
  breadCrumbItems!: Array<{}>;
- reloadTable: number = 1;
  isCreateMode: boolean = true; 
  submitted = false;  
  personnelForm!: UntypedFormGroup;
@@ -82,10 +81,6 @@ export class EmployeesComponent extends BaseComponent implements OnInit{
     this.resetForm();
   }
      
-  toggleReloadTable(){
-      this.reloadTable++;
-  }
-
    onSubmit() {
         this.submitted = true;
         if (this.personnelForm.invalid) {
