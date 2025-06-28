@@ -21,6 +21,7 @@ export class TeachersComponent extends BaseComponent implements OnInit{
  submitted: boolean = false;
  employees: any = [];
  teachers: any = [];
+ teachersToDisplay: any = [];
 
   addTeacherForm!: UntypedFormGroup;
   removeTeacherForm!: UntypedFormGroup;
@@ -123,11 +124,25 @@ export class TeachersComponent extends BaseComponent implements OnInit{
       this.teacherService.getTeachers().pipe(
         finalize(() => {this.loading = false;})).subscribe({
         next: (response) => {
-          if(response.success){ this.teachers = response.data;}
+          if(response.success)
+            { 
+              this.teachers = response.data;
+              this.setTeachersToDisplay(this.teachers);
+            }
         },
         error: () => {},
       });
     }
+
+    setTeachersToDisplay(teachers: any[]): void {
+        this.teachersToDisplay = teachers.map((teacher) => {
+          return {
+            id: teacher.id,
+            familyName: teacher.personnel?.familyName || '#',
+            givenNames: teacher.personnel?.givenNames || '#',
+          };
+        });
+      }
 
   dismissModal() {
       this.modalService.dismissAll();
