@@ -137,7 +137,9 @@ export class TeachersComponent extends BaseComponent implements OnInit{
                 SimpleAlerts.showSuccess();
               }
             },
-            error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
+            error: (error) => {
+              SimpleAlerts.showError(getErrorMessage(error));
+            },
         });
       }
     }
@@ -159,7 +161,9 @@ export class TeachersComponent extends BaseComponent implements OnInit{
                 SimpleAlerts.showSuccess();
               }
             },
-            error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
+            error: (error) => {
+              SimpleAlerts.showError(getErrorMessage(error));
+            },
         });
       }else{
         this.teacherService.addTeacherSubjects(this.teacherSubjectForm.value).pipe(
@@ -171,7 +175,9 @@ export class TeachersComponent extends BaseComponent implements OnInit{
                 SimpleAlerts.showSuccess();
               }
             },
-            error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
+            error: (error) => {
+              SimpleAlerts.showError(getErrorMessage(error));
+            },
         });
       }
     }
@@ -198,26 +204,26 @@ export class TeachersComponent extends BaseComponent implements OnInit{
   }
 
   deleteTeacher(teacher: any) {
-  SimpleAlerts.confirmDeleteDialog().then((result) => {
-    if (result) {
-      this.toggleLoading();
-      this.teacherService.deleteTeacher({ ids: [teacher.id] })
-      .pipe(finalize(() => { this.toggleLoading();})).subscribe({
-          next: (response) => {
-            if (response.success) {
-              this.getTeachers();
-              this.dismissModal();
-              SimpleAlerts.showSuccess();
-            }
-          },
-          error: (error) => {
-            SimpleAlerts.showError(getErrorMessage(error));
-          },
-        });
-    } else {
-    }
-  });
-}
+    SimpleAlerts.confirmDeleteDialog().then((result) => {
+      if (result) {
+        this.toggleLoading();
+        this.teacherService.deleteTeacher({ ids: [teacher.id] })
+        .pipe(finalize(() => { this.toggleLoading();})).subscribe({
+            next: (response) => {
+              if (response.success) {
+                this.getTeachers();
+                this.dismissModal();
+                SimpleAlerts.showSuccess();
+              }
+            },
+            error: (error) => {
+              SimpleAlerts.showError(getErrorMessage(error));
+            },
+          });
+      } else {
+      }
+    });
+  }
 
   resetForm() {
     this.addTeacherForm.reset();
@@ -226,12 +232,13 @@ export class TeachersComponent extends BaseComponent implements OnInit{
   }
 
   selectedRowsChanged(event: any) {
-    this.selectedTeachers = event;
+     setTimeout(() => {
+        this.selectedTeachers = event;
+    });
   }
 
   getEmployees() {
-      this.personnelService.getEmployees().pipe(
-        finalize(() => {})).subscribe({
+      this.personnelService.getEmployees().subscribe({
         next: (response) => {
           if(response.success){ this.employees = response.data;}
         },
@@ -283,8 +290,7 @@ export class TeachersComponent extends BaseComponent implements OnInit{
   }
 
    getClasses() {
-      this.classService.getClasses().pipe(
-        finalize(() => {})).subscribe({
+      this.classService.getClasses().subscribe({
         next: (response) => {
           if(response.success){ this.classes = response.data;}
         },
@@ -293,8 +299,7 @@ export class TeachersComponent extends BaseComponent implements OnInit{
     }
 
     getSections() {
-      this.sectionService.getClassSections().pipe(
-        finalize(() => {})).subscribe({
+      this.sectionService.getClassSections().subscribe({
         next: (response) => {
           if(response.success){ this.sections = response.data;}
         },

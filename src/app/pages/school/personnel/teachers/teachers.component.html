@@ -12,7 +12,7 @@
                     </div>
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
-                            <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-user-add-line align-bottom me-1"></i> Add Teachers</button>
+                            <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" [disabled]="selectedTeachers.length > 0"  (click)="addModal(content)"><i class="ri-user-add-line align-bottom me-1"></i> Add Teachers</button>
                             <button (click)="teacherSubjectModal(manageSubjects)" [disabled]="selectedTeachers.length < 1"  class="btn btn-secondary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-stack-line align-bottom me-1"></i> Subjects</button>
                             <button (click)="teacherClassModal(manageClasses)" [disabled]="selectedTeachers.length < 1"  class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-book-line align-bottom me-1"></i> Classes</button>
                         </div>
@@ -23,7 +23,8 @@
            <generic-app-table 
                 [headers]="headers" 
                 [data]="teachersToDisplay" 
-                [showActions]="false" 
+                [showActions]="true" 
+                [showDelete]="false"
                 [showRowSelect]="true"
                 (selectedRowsChange)="selectedRowsChanged($event)"
                 (deleteClicked)="deleteTeacher($event)"
