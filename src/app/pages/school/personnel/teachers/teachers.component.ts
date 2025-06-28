@@ -78,7 +78,6 @@ export class TeachersComponent extends BaseComponent implements OnInit{
          teacherIds: [null, [Validators.required]],
       });
       
-      this.getLookUps();
       this.getEmployees();
       this.getTeachers();
       this.getClasses();
