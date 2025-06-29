@@ -11,18 +11,17 @@ import { SimplebarAngularModule } from 'simplebar-angular';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { FlatpickrModule } from 'angularx-flatpickr';
-import { SchoolRoutingModule } from './school-routing.module';
-import { SharedModule } from '../../shared/shared.module';
-import { ConfigurationModule } from './configuration/configuration.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { AnalyticsComponent } from './analytics/analytics.component';
-import { StudentsModule } from './students/students.module';
-import { PersonnelModule } from './personnel/personnel.module';
-import { ResultsModule } from './results/results.module';
+import { ResultsRoutingModule } from './results-routing.module';
+import { ResultHistoryComponent } from './result-history/result-history.component';
+import { RegisterResultsComponent } from './register-results/register-results.component';
+
 
 @NgModule({
   declarations: [
-    AnalyticsComponent
+    ResultHistoryComponent,
+    RegisterResultsComponent
   ],
   imports: [
     CommonModule,
@@ -36,21 +35,17 @@ import { ResultsModule } from './results/results.module';
     NgApexchartsModule,
     SlickCarouselModule,
     FlatpickrModule.forRoot(),
-    SchoolRoutingModule,
+    ResultsRoutingModule,
     SharedModule,
     NgbPaginationModule,
     NgbTypeaheadModule,
     FormsModule,
     ReactiveFormsModule,
     NgbTooltipModule,
-    ConfigurationModule,
-    StudentsModule,
-    PersonnelModule,
-    ResultsModule,
     NgSelectModule,
     NgbAccordionModule
     
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
-export class SchoolModule { }
+export class ResultsModule { }

@@ -9,6 +9,7 @@ const routes: Routes = [
   {path: 'analytics', component: AnalyticsComponent, pathMatch: 'full'},
   {path: 'personnel', loadChildren: () => import('./personnel/personnel.module').then(m => m.PersonnelModule),},
   {path: 'students', loadChildren: () => import('./students/students.module').then(m => m.StudentsModule),},
+  {path: 'results', loadChildren: () => import('./results/results.module').then(m => m.ResultsModule),},
 ];
 
 @NgModule({
