@@ -11,19 +11,19 @@ import { SimplebarAngularModule } from 'simplebar-angular';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { FlatpickrModule } from 'angularx-flatpickr';
-import { SchoolRoutingModule } from './school-routing.module';
-import { SharedModule } from '../../shared/shared.module';
-import { ConfigurationModule } from './configuration/configuration.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { AnalyticsComponent } from './analytics/analytics.component';
-import { StudentsModule } from './students/students.module';
-import { PersonnelModule } from './personnel/personnel.module';
-import { ResultsModule } from './results/results.module';
-import { ReportingModule } from './reporting/reporting.module';
+import { ReportingRoutingModule } from './reporting-routing.module';
+import { TranscriptsComponent } from './transcripts/transcripts.component';
+import { ReportCardsComponent } from './report-cards/report-cards.component';
+import { MasterSheetsComponent } from './master-sheets/master-sheets.component';
+
 
 @NgModule({
   declarations: [
-    AnalyticsComponent
+    TranscriptsComponent,
+    ReportCardsComponent,
+    MasterSheetsComponent   
   ],
   imports: [
     CommonModule,
@@ -37,22 +37,17 @@ import { ReportingModule } from './reporting/reporting.module';
     NgApexchartsModule,
     SlickCarouselModule,
     FlatpickrModule.forRoot(),
-    SchoolRoutingModule,
+    ReportingRoutingModule,
     SharedModule,
     NgbPaginationModule,
     NgbTypeaheadModule,
     FormsModule,
     ReactiveFormsModule,
     NgbTooltipModule,
-    ConfigurationModule,
-    StudentsModule,
-    PersonnelModule,
-    ResultsModule,
-    ReportingModule,
     NgSelectModule,
     NgbAccordionModule
     
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
-export class SchoolModule { }
+export class ReportingModule { }
