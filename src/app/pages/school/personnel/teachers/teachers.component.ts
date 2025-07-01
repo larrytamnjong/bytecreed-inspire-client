@@ -97,6 +97,7 @@ export class TeachersComponent extends BaseComponent implements OnInit{
             next: (response) => {
               if(response.success){
                 this.getTeachers();
+                this.getEmployees();
                 this.dismissModal();
                 SimpleAlerts.showSuccess();
               }
@@ -212,6 +213,7 @@ export class TeachersComponent extends BaseComponent implements OnInit{
               if (response.success) {
                 this.getTeachers();
                 this.dismissModal();
+                this.getEmployees();
                 SimpleAlerts.showSuccess();
               }
             },
@@ -237,7 +239,7 @@ export class TeachersComponent extends BaseComponent implements OnInit{
   }
 
   getEmployees() {
-      this.personnelService.getEmployees().subscribe({
+      this.personnelService.getEmployeesNoneTeachers().subscribe({
         next: (response) => {
           if(response.success){ this.employees = response.data;}
         },

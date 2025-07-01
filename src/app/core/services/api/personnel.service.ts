@@ -23,7 +23,12 @@ export class PersonnelService {
     return this.apiService.delete(`${this.PERSONNEL_CONTROLLER}/${id}`);
   }
 
-  getEmployees(): Observable<ServiceResponse<any[]>> {
+ public getEmployees(): Observable<ServiceResponse<any[]>> {
     return this.apiService.get(`${this.PERSONNEL_CONTROLLER}`);
   }
+
+  public getEmployeesNoneTeachers(): Observable<ServiceResponse<any[]>> {
+    return this.apiService.get(`${this.PERSONNEL_CONTROLLER}/none-teachers`);
+  }
+
 }
