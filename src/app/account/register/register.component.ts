@@ -15,6 +15,7 @@ import { selectUserLoading, selectUserMessage, selectUserSuccess } from "src/app
 import { selectLookUpsView } from "src/app/store/common/look-up/look-up.selector";
 import { getLookUpsAction } from "src/app/store/common/look-up/look-up.action";
 import { Subscription } from "rxjs";
+import { countriesData } from "src/app/core/data/countries";
 
 @Component({
   selector: "app-register",
@@ -23,6 +24,8 @@ import { Subscription } from "rxjs";
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
+ 
+   public countriesData = countriesData;
 
   loading$: Observable<boolean> = this.store.select(selectUserLoading);
   success$: Observable<boolean> = this.store.select(selectUserSuccess);

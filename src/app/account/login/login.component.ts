@@ -11,6 +11,7 @@ import { InstitutionService } from "src/app/core/services/identity/institution.s
 import { UserService } from "src/app/core/services/identity/user.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { getErrorMessage } from "src/app/core/helpers/error-filter";
+import { countriesData } from "src/app/core/data/countries";
 
 
 @Component({
@@ -24,6 +25,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   selectApplicationModalRef!: NgbModalRef;
   selectInstitutionModalRef!: NgbModalRef;
+
+  public countriesData = countriesData;
 
   @ViewChild('selectInstitutionContent') selectInstitutionContent!: TemplateRef<any>;
   @ViewChild('selectAppContent') selectAppContent!: TemplateRef<any>;
