@@ -61,6 +61,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
       this.getSubjects();
       this.getClasses();
       this.getSections();
+      this.getLookUps();
   }
 
   getStudents(){
