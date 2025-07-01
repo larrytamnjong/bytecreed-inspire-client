@@ -38,9 +38,41 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
         subjectId: [null, [Validators.required]],
         classSectionId: [null],
       });
+
+      this.getSubjects();
+      this.getClasses();
+      this.getSections();
   }
 
   getStudents(){
+  }
+
+  getSubjects(){
+    this.teacherService.getMySubjects().subscribe({
+        next: (response) => {
+          if(response.success){ this.teacherSubjects = response.data;}
+        },
+        error: () => {},
+      });
+    }
+  
+
+  getClasses(){
+    this.teacherService.getMyClasses().subscribe({
+        next: (response) => {
+          if(response.success){ this.teacherClasses = response.data;}
+        },
+        error: () => {},
+      });
+  }
+
+  getSections(){
+    this.teacherService.getMyClassSections().subscribe({
+        next: (response) => {
+          if(response.success){ this.teacherSections = response.data;}
+        },
+        error: () => {},
+      });
   }
 
 }
