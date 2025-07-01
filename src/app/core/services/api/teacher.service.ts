@@ -21,7 +21,7 @@ export class TeacherService {
         return this.apiService.delete(this.TEACHER_CONTROLLER,RequestHelper.createServiceRequest(data));
     }
 
-    getTeachers(): Observable<ServiceResponse<any[]>> {
+    public getTeachers(): Observable<ServiceResponse<any[]>> {
          return this.apiService.get(`${this.TEACHER_CONTROLLER}`);
     }
  
@@ -49,7 +49,15 @@ export class TeacherService {
         return this.apiService.delete(this.TEACHER_SUBJECT_CONTROLLER, RequestHelper.createServiceRequest(data));
     }
 
-     public getTeacherSubjects(data: any): Observable<ServiceResponse<any[]>> {
+    public getTeacherSubjects(data: any): Observable<ServiceResponse<any[]>> {
         return this.apiService.post(this.TEACHER_SUBJECT_CONTROLLER, RequestHelper.createServiceRequest(data));
+    }
+
+    public getMyClasses(): Observable<ServiceResponse<any[]>> {
+        return this.apiService.get(`${this.TEACHER_CLASS_CONTROLLER}/my-classes`);
+    }
+
+    public getMySubjects(): Observable<ServiceResponse<any[]>> {
+        return this.apiService.get(`${this.TEACHER_SUBJECT_CONTROLLER}/my-subjects`);
     }
 }
