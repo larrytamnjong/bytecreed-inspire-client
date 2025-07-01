@@ -5,6 +5,11 @@ import { RootReducerState } from 'src/app/store';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TeacherService } from 'src/app/core/services/api/teacher.service';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { StudentService } from 'src/app/core/services/api/student.service';
+import { finalize } from 'rxjs/operators';
+import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
+import { getErrorMessage } from 'src/app/core/helpers/error-filter';
+import { StudentEnrollment } from 'src/app/core/Models/api/student';
 
 @Component({
   selector: 'app-register-results',
@@ -17,14 +22,28 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
  teacherSubjects: any = [];
  teacherClasses: any = [];
  teacherSections: any = [];
+ studentEnrollments: any = [];
+ studentEnrollmentsToDisplay: any = [];
 
  getStudentForm!: UntypedFormGroup;
 
  get fGetStudentForm() { return this.getStudentForm.controls; }
 
+ headers: any = [
+    { key: 'familyName', displayName: 'Family Name' },
+    { key: 'givenNames', displayName: 'Given Names'}, 
+    { key: 'dateOfBirth', displayName: 'Date Of Birth' },
+    { key: 'sex', displayName: 'Sex' },
+    { key: 'admissionNumber', displayName: 'Admission Number' },
+    { key: 'class', displayName: 'Class' },
+    { key: 'section', displayName: 'Section' },
+    { key: 'year', displayName: 'Year' },
+  ]
+
   constructor(
     private modalService: NgbModal,
     private teacherService: TeacherService,
+    private studentService: StudentService,
     private getStudentFormBuilder: UntypedFormBuilder,
     protected override store: Store<{ data: RootReducerState }>) {
         super(store);
@@ -45,6 +64,38 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
   }
 
   getStudents(){
+      var classId = this.getStudentForm.get('classId')?.value;
+      var classSectionId = this.getStudentForm.get('classSectionId')?.value;
+      var academicYearId =  this.getStudentForm.get('academicYearId')?.value;
+      this.toggleLoading();
+      this.studentService.getStudentEnrollments(academicYearId, classId, classSectionId).pipe(finalize(() => this.toggleLoading())).subscribe({
+          next: (response) => {
+            this.studentEnrollments = response.data;
+            if(this.studentEnrollments.length > 0){
+            this.setStudentEnrollmentsToDisplay(this.studentEnrollments);
+          }
+        },
+          error: (error) => {
+            SimpleAlerts.showError(getErrorMessage(error));
+          }
+      });
+    }
+
+  setStudentEnrollmentsToDisplay(enrollments: StudentEnrollment[]): void {
+    this.studentEnrollmentsToDisplay = enrollments.map((enrollment) => {
+      return {
+        id: enrollment.id,
+        familyName: enrollment.student?.familyName || '#',
+        givenNames: enrollment.student?.givenNames || '#',
+        dateOfBirth: enrollment.student?.dateOfBirth || '#',
+        sex: enrollment.student?.sex || '#',
+        admissionNumber: enrollment.student?.admissionNumber || '#',
+        class: enrollment.class?.name || '#',
+        studentId: enrollment.student?.id || '#',
+        year: enrollment.academicYear?.name || '#',
+        section: enrollment.classSection?.name || '#',
+      };
+    });
   }
 
   getSubjects(){
@@ -75,4 +126,11 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
       });
   }
 
+  onSelectedRowsChange(event: any) {
+   
+  }
+
+  onEditClick(event: any) {
+   
+  }
 }

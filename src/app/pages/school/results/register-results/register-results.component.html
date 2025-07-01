@@ -51,18 +51,19 @@
                     </div>
                 </div>
             </div>
-<!-- 
-           <generic-app-table 
+            <generic-app-table 
                 [headers]="headers" 
-                [data]="teachersToDisplay" 
-                [showActions]="true" 
-                [showDelete]="true"
-                [showEdit]="false"
+                [data]="studentEnrollmentsToDisplay" 
+                [showActions]="true"  
+                [showDelete]="false"
+                [showEdit]="true"
+                (selectedRowsChange)="onSelectedRowsChange($event)"
                 [showRowSelect]="true"
-                (selectedRowsChange)="selectedRowsChanged($event)"
-                (deleteClicked)="deleteTeacher($event)"
-                tableId="teachersTable">
-            </generic-app-table> -->
+                (editClicked)="onEditClick($event)"
+                [customTemplates]="{ 'sex': sexTemplate, 'dateOfBirth': dateOfBirthTemplate}">
+                <ng-template #sexTemplate let-value>{{getSexLabel(value)}}</ng-template>
+                <ng-template #dateOfBirthTemplate let-value>{{value | date: 'longDate'}}</ng-template>
+            </generic-app-table>
         </div>
     </div>
 
