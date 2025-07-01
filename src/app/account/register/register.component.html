@@ -58,7 +58,7 @@
                                         <label class="form-label">Country</label>
                                         <ng-select appearance="outline" [searchable]="true" [clearable]="false" placeholder="Select Country">
                                             @for ( data of countriesData; track $index) {
-                                            <ng-option value="batman">
+                                            <ng-option value="null">
                                                 <img src="{{data.flagImg}}" alt="country flag" class="options-flagimg" height="20">{{data.countryName}}
                                                 <span class="countrylist-codeno text-muted">{{data.countryCode}}</span>
                                             </ng-option>
