@@ -1,1 +1,157 @@
 <app-breadcrumbs title="RESULTS" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header border-bottom-dashed">
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm">
+                        <div>
+                            <h5 class="card-title mb-0"><i class="ri-pencil-ruler-line text-muted fs-18 align-middle me-1"> </i>Register Results</h5>
+                        </div>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="d-flex flex-wrap align-items-start gap-2">
+                            <!-- <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" [disabled]="selectedTeachers.length > 0"  (click)="addModal(content)"><i class="ri-user-add-line align-bottom me-1"></i> Add Teachers</button>
+                            <button (click)="teacherSubjectModal(manageSubjects)" [disabled]="selectedTeachers.length < 1"  class="btn btn-secondary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-book-line align-bottom me-1"></i> Subjects</button>
+                            <button (click)="teacherClassModal(manageClasses)" [disabled]="selectedTeachers.length < 1"  class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-artboard-line align-bottom me-1"></i> Classes</button> -->
+                        </div>
+                    </div>
+                     <div class="col-xl-12">
+                        <div ngbAccordion activeIds="static-1" [closeOthers]="true">
+                            <div ngbAccordionItem class="material-shadow" id="static-1">
+                                <div ngbAccordionHeader class="accordion-header border-0 bg-transparent">
+                                    <button ngbAccordionButton>Filters</button>
+                                </div>
+                                <div ngbAccordionCollapse>
+                                    <div ngbAccordionBody>
+                                        <form class="tablelist-form" autocomplete="off" [formGroup]="getStudentForm" (ngSubmit)="getStudents()" >
+                                            <div class="row g-3">
+                                                <div class="col-sm-3">
+                                                    <label class="form-label">Select Class</label>
+                                                    <ng-select [items]="teacherClasses" formControlName="classId" bindLabel="name" bindValue="id" placeholder="Select Class"></ng-select>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label class="form-label">Select Section</label>
+                                                    <ng-select [items]="teacherSections" formControlName="classSectionId" bindLabel="name" bindValue="id" placeholder="Select Section"></ng-select>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label class="form-label">Select Subject</label>
+                                                    <ng-select [items]="teacherSubjects" formControlName="subjectId" bindLabel="name" bindValue="id" placeholder="Select subject"></ng-select>
+                                                </div>
+                                                 <div class="col-sm-3">
+                                                    <label class="form-label">&nbsp;</label>
+                                                    <button type="button" class="btn btn-primary w-100" type="submit"><i class="ri-equalizer-fill mx-2 align-bottom"></i>Filter</button>
+                                                 </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!-- 
+           <generic-app-table 
+                [headers]="headers" 
+                [data]="teachersToDisplay" 
+                [showActions]="true" 
+                [showDelete]="true"
+                [showEdit]="false"
+                [showRowSelect]="true"
+                (selectedRowsChange)="selectedRowsChanged($event)"
+                (deleteClicked)="deleteTeacher($event)"
+                tableId="teachersTable">
+            </generic-app-table> -->
+        </div>
+    </div>
+
+    <app-loading [loading]="loading"></app-loading>
+    <!-- <ng-template #content role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title">Add Teacher</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
+        </div>
+    <form class="tablelist-form" autocomplete="off" autocomplete="off" [formGroup]="addTeacherForm" >
+        <div class="modal-body">
+            <div class="mb-3">
+                <label class="form-label">Select Employees <span class="text-danger">*</span></label>
+                <ng-select [items]="employees" formControlName="ids" bindLabel="givenNames" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submitted && fAddTeachersForm['ids'].invalid }" placeholder="Select Employees">
+                </ng-select>
+                <div class="invalid-feedback">You have to select at least one person</div>
+            </div>
+        </div>
+    </form>
+
+    <div class="modal-footer">
+        <div class="hstack gap-2 justify-content-end">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()"><i class="ri-close-line align-bottom me-1"></i> Close</button>
+            <button type="submit" class="btn btn-primary" (click)="onSubmitAddTeacher()" id="add-btn"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
+        </div>
+    </div>
+    </ng-template> -->
+<!-- 
+    <ng-template #manageSubjects role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title">Manage Teacher Subjects</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
+        </div>
+        <form class="tablelist-form" autocomplete="off" autocomplete="off" [formGroup]="teacherSubjectForm" >
+           <div class="modal-body">
+            <div class="mb-3">
+                <label class="form-label">Select Teachers <span class="text-danger">*</span></label>
+                <ng-select [items]="selectedTeachers" formControlName="teacherIds" bindLabel="givenNames" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submitted && fTeacherSubjectForm['teacherIds'].invalid }" placeholder="Select Teachers">
+                </ng-select>
+                <div class="invalid-feedback">You have to select at least one teacher</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Select Subjects <span class="text-danger">*</span></label>
+                <ng-select [items]="subjects" formControlName="subjectIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submitted && fTeacherSubjectForm['subjectIds'].invalid }" placeholder="Select Subjects">
+                </ng-select>
+                <div class="invalid-feedback">You have to select at least one subject</div>
+            </div>
+        </div>
+        </form>
+
+        <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onSubmitTeacherSubjects()"><i class="ri-add-line align-bottom me-1"></i> Add Subjects</button>
+                <button type="button" class="btn btn-danger" (click)="onSubmitTeacherSubjects(true)" id="add-btn"><i class="ri-delete-bin-line align-bottom me-1"></i> Remove Subjects</button>
+            </div>
+        </div>
+    </ng-template> -->
+
+    <!-- <ng-template #manageClasses role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title">Manage Teacher Classes</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
+        </div>
+        <form class="tablelist-form" autocomplete="off" autocomplete="off" [formGroup]="teacherClassForm" >
+           <div class="modal-body">
+            <div class="mb-3">
+                <label class="form-label">Select Teachers <span class="text-danger">*</span></label>
+                <ng-select [items]="selectedTeachers" formControlName="teacherIds" bindLabel="givenNames" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submitted && fTeacherClassForm['teacherIds'].invalid }" placeholder="Select Teachers">
+                </ng-select>
+                <div class="invalid-feedback">You have to select at least one teacher</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Select Classes <span class="text-danger">*</span></label>
+                <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submitted && fTeacherClassForm['classIds'].invalid }" placeholder="Select Classes">
+                </ng-select>
+            <div class="invalid-feedback">You have to select at least one class</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Select Class Section</label>
+                <ng-select [items]="sections" formControlName="classSectionIds" bindLabel="name" bindValue="id" [multiple]="true"  placeholder="Select Class Sections"></ng-select>
+            </div>
+            </div>
+        </form>
+
+        <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onSubmitTeacherClasses(false)"><i class="ri-add-line align-bottom me-1"></i> Add Classes</button>
+                <button type="button" class="btn btn-danger" (click)="onSubmitTeacherClasses(true)" id="add-btn"><i class="ri-delete-bin-line align-bottom me-1"></i> Remove Classes</button>
+            </div>
+        </div>
+    </ng-template> -->
+</div>

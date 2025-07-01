@@ -60,4 +60,8 @@ export class TeacherService {
     public getMySubjects(): Observable<ServiceResponse<any[]>> {
         return this.apiService.get(`${this.TEACHER_SUBJECT_CONTROLLER}/my-subjects`);
     }
+
+    public getMyClassSections(): Observable<ServiceResponse<any[]>> {
+        return this.apiService.get(`${this.TEACHER_SUBJECT_CONTROLLER}/my-class-sections`);
+    }
 }
