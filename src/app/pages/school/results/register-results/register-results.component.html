@@ -11,12 +11,18 @@
                     </div>
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
-                            <button type="button" class="btn btn-success" (click)="importResults(importResultsContent)"><i class="ri-file-excel-2-line align-bottom me-1"></i> Import</button>
-                            <button type="button" class="btn btn-secondary" (click)="importResults(importResultsContent)"><i class="ri-scales-line align-bottom me-1"></i> Grading Scale</button>
-                            <button type="button" class="btn btn-primary" (click)="importResults(importResultsContent)"><i class="ri-save-2-line align-bottom me-1"></i> Save Results</button>
+                            <button type="button" class="btn btn-success"
+                                (click)="openModal(importResultsContent)"><i
+                                    class="ri-file-excel-2-line align-bottom me-1"></i> Import</button>
+                            <button type="button" class="btn btn-secondary"
+                                (click)="openModal(scaleContent)"><i
+                                    class="ri-scales-line align-bottom me-1"></i> Grading Scale</button>
+                            <button type="button" class="btn btn-primary"
+                                (click)="openModal(importResultsContent)"><i
+                                    class="ri-save-2-line align-bottom me-1"></i> Save Results</button>
                         </div>
                     </div>
-                     <div class="col-xl-12">
+                    <div class="col-xl-12">
                         <div ngbAccordion activeIds="static-1" [closeOthers]="true">
                             <div ngbAccordionItem class="material-shadow" id="static-1">
                                 <div ngbAccordionHeader class="accordion-header border-0 bg-transparent">
@@ -24,64 +30,94 @@
                                 </div>
                                 <div ngbAccordionCollapse>
                                     <div ngbAccordionBody>
-                                        <form class="tablelist-form" autocomplete="off" [formGroup]="getStudentForm" (ngSubmit)="getStudents()" >
+                                        <form class="tablelist-form" autocomplete="off" [formGroup]="getStudentForm"
+                                            (ngSubmit)="getStudents()">
                                             <div class="row g-3">
                                                 <div class="col-sm-3">
                                                     <label class="form-label">Select Class</label>
-                                                    <ng-select [items]="teacherClasses" formControlName="classId" bindLabel="name" bindValue="id" placeholder="Select Class"></ng-select>
+                                                    <ng-select [items]="teacherClasses" formControlName="classId"
+                                                        bindLabel="name" bindValue="id"
+                                                        placeholder="Select Class"></ng-select>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <label class="form-label">Select Section</label>
-                                                    <ng-select [items]="teacherSections" formControlName="classSectionId" bindLabel="name" bindValue="id" placeholder="Select Section"></ng-select>
+                                                    <ng-select [items]="teacherSections"
+                                                        formControlName="classSectionId" bindLabel="name" bindValue="id"
+                                                        placeholder="Select Section"></ng-select>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <label class="form-label">Select Subject</label>
-                                                    <ng-select [items]="teacherSubjects" formControlName="subjectId" bindLabel="name" bindValue="id" placeholder="Select subject"></ng-select>
+                                                    <ng-select [items]="teacherSubjects" formControlName="subjectId"
+                                                        bindLabel="name" bindValue="id"
+                                                        placeholder="Select subject"></ng-select>
                                                 </div>
-                                                 <div class="col-sm-3">
+                                                <div class="col-sm-3">
                                                     <label class="form-label">&nbsp;</label>
-                                                    <button type="button" class="btn btn-primary w-100" type="submit"><i class="ri-equalizer-fill mx-2 align-bottom"></i>Filter</button>
-                                                 </div>
+                                                    <button type="button" class="btn btn-primary w-100" type="submit"><i
+                                                            class="ri-equalizer-fill mx-2 align-bottom"></i>Filter</button>
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <generic-app-smart-table [headers]="headers" [data]="studentEnrollmentsToDisplay" [showActions]="true"
+                    [showDelete]="false" [editableFields]="editableConfig" [showEdit]="true" [showRowSelect]="false"
+                    (saveClicked)="resultEntered($event)"
+                    [customTemplates]="{ 'sex': sexTemplate, 'dateOfBirth': dateOfBirthTemplate}">
+                    <ng-template #sexTemplate let-value>{{getSexLabel(value)}}</ng-template>
+                    <ng-template #dateOfBirthTemplate let-value>{{value | date: 'longDate'}}</ng-template>
+                </generic-app-smart-table>
+            </div>
+        </div>
+
+        <app-loading [loading]="loading"></app-loading>
+
+
+        <ng-template #importResultsContent role="document" let-modal>
+            <div class="modal-header p-3 bg-light">
+                <h5 class="modal-title">Import Results</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+                    (click)="dismissModal()"></button>
+            </div>
+            <form class="tablelist-form" autocomplete="off" autocomplete="off">
+            <div class="modal-body">
+                
+            </div>
+            </form>
+
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i
+                            class="ri-file-excel-2-line align-bottom me-1"></i> Import</button>
                 </div>
             </div>
-            <generic-app-smart-table 
-                [headers]="headers" 
-                [data]="studentEnrollmentsToDisplay" 
-                [showActions]="true"  
-                [showDelete]="false"
-                [editableFields]="editableConfig"
-                [showEdit]="true"
-                [showRowSelect]="false"
-                (saveClicked)="resultEntered($event)"
-                [customTemplates]="{ 'sex': sexTemplate, 'dateOfBirth': dateOfBirthTemplate}">
-                <ng-template #sexTemplate let-value>{{getSexLabel(value)}}</ng-template>
-                <ng-template #dateOfBirthTemplate let-value>{{value | date: 'longDate'}}</ng-template>
-            </generic-app-smart-table>
-        </div>
-    </div>
-
-    <app-loading [loading]="loading"></app-loading>
-
-
-    <ng-template #importResultsContent role="document" let-modal>
-        <div class="modal-header p-3 bg-light">
-            <h5 class="modal-title">Import Results</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
-        </div>
-        <form class="tablelist-form" autocomplete="off" autocomplete="off" >
-          
-        </form>
-
-        <div class="modal-footer">
-            <div class="hstack gap-2 justify-content-end">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ><i class="ri-add-line align-bottom me-1"></i> Import</button>
+        </ng-template>
+        <ng-template #scaleContent role="document" let-modal>
+            <div class="modal-header p-3 bg-light">
+                <h5 class="modal-title">Grading Scale</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+                    (click)="dismissModal()"></button>
             </div>
-        </div>
-    </ng-template>
-</div>
+            <form class="tablelist-form" autocomplete="off" autocomplete="off">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="scale" class="form-label">Scale</label>
+                        <input type="text" class="form-control" id="scale" placeholder="Scale" >
+                    </div>
+                </div>
+            </form>
+
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i
+                            class="ri-save-2-line align-bottom me-1"></i> Save</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i
+                            class="ri-arrow-go-back-line align-bottom me-1"></i> Cancel</button>
+                </div>
+            </div>
+        </ng-template>
+    </div>

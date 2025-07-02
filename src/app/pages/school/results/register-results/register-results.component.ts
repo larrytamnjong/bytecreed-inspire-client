@@ -111,7 +111,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
       });
     }
   
-  importResults(content: any){
+  openModal(content: any){
     this.modalService.open(content, this.mdModalConfig);
   }
 
