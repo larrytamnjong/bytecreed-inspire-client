@@ -111,9 +111,15 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
       });
     }
   
-  importResults(){}
+  importResults(content: any){
+    this.modalService.open(content, this.mdModalConfig);
+  }
 
   resultEntered(event: any){}
+
+  dismissModal() {
+      this.modalService.dismissAll();
+    }
 
   getClasses(){
     this.teacherService.getMyClasses().subscribe({
