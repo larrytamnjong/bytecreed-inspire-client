@@ -10,6 +10,7 @@ import { finalize } from 'rxjs/operators';
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 import { StudentEnrollment } from 'src/app/core/Models/api/student';
+import { Key } from 'angular-feather/icons';
 
 @Component({
   selector: 'app-register-results',
@@ -25,19 +26,25 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
  studentEnrollments: any = [];
  studentEnrollmentsToDisplay: any = [];
 
+ editableConfig: {[Key: string]: any} = {
+  result: {
+    editable: true,
+    type: 'number',
+    min: 0,
+    max: 20
+  },
+};
+
  getStudentForm!: UntypedFormGroup;
 
  get fGetStudentForm() { return this.getStudentForm.controls; }
 
  headers: any = [
+    { key: 'admissionNumber', displayName: 'Admission Number' },
     { key: 'familyName', displayName: 'Family Name' },
     { key: 'givenNames', displayName: 'Given Names'}, 
-    { key: 'dateOfBirth', displayName: 'Date Of Birth' },
     { key: 'sex', displayName: 'Sex' },
-    { key: 'admissionNumber', displayName: 'Admission Number' },
-    { key: 'class', displayName: 'Class' },
-    { key: 'section', displayName: 'Section' },
-    { key: 'year', displayName: 'Year' },
+    { key: 'result', displayName: 'Result' },
   ]
 
   constructor(
@@ -88,13 +95,10 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
         id: enrollment.id,
         familyName: enrollment.student?.familyName || '#',
         givenNames: enrollment.student?.givenNames || '#',
-        dateOfBirth: enrollment.student?.dateOfBirth || '#',
         sex: enrollment.student?.sex || '#',
         admissionNumber: enrollment.student?.admissionNumber || '#',
-        class: enrollment.class?.name || '#',
         studentId: enrollment.student?.id || '#',
-        year: enrollment.academicYear?.name || '#',
-        section: enrollment.classSection?.name || '#',
+        result: 0
       };
     });
   }
@@ -108,6 +112,9 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
       });
     }
   
+  importResults(){}
+
+  resultEntered(event: any){}
 
   getClasses(){
     this.teacherService.getMyClasses().subscribe({
@@ -125,13 +132,5 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
         },
         error: () => {},
       });
-  }
-
-  onSelectedRowsChange(event: any) {
-   
-  }
-
-  onEditClick(event: any) {
-   
   }
 }

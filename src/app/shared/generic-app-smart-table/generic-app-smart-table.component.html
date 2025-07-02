@@ -1,0 +1,105 @@
+<div class="card-body border-bottom-dashed border-bottom">
+    <div class="row g-3">
+        <div class="col-xxl-12 col-sm-12">
+            <div class="search-box">
+                <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" placeholder="Search..." class="form-control search bg-light border-light"/>
+                <i class="ri-search-line search-icon"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-hover table-striped table-gridjs table-sm table-xs">
+            <thead>
+                <tr>
+                    <th *ngIf="showRowSelect">
+                        <input class="form-check-input" [checked]="isAllVisibleRowsSelected()" type="checkbox" (change)="toggleSelectAllRows($event)" />
+                    </th>
+                    <th>SN</th>
+                    <th *ngFor="let header of headers" (click)="onSort(header.key)" style="cursor: pointer;">
+                        {{ header.displayName }}
+                        <span *ngIf="sortColumn === header.key">{{ sortDirection ? '▲' : '▼' }}</span>
+                    </th>
+                    <th *ngIf="showActions"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of paginatedData; let i = index" (click)="onRowClick(item, $event)">
+                    <td *ngIf="showRowSelect">
+                        <input class="form-check-input" type="checkbox" [checked]="isRowSelected(item)" (click)="$event.stopPropagation(); toggleRowSelection(item)" />
+                    </td>
+                    <td>{{ i + 1 }}</td>
+                    <td *ngFor="let header of headers" 
+                        [ngClass]="clickableColumns.includes(header.key) ? 'text-primary text-decoration-underline cursor-pointer' : ''">
+                        <ng-container *ngIf="customTemplates[header.key]; else defaultTemplate">
+                            <ng-container *ngTemplateOutlet="customTemplates[header.key]; context: { $implicit: item[header.key], row: item }"></ng-container>
+                        </ng-container>
+                        <ng-template #defaultTemplate>
+                            <span *ngIf="!isEditableField(header.key) || !isEditing(item)">
+                                {{ item[header.key] }}
+                            </span>
+                            <span *ngIf="isEditableField(header.key) && isEditing(item)">
+                                <input *ngIf="getFieldType(header.key) === 'text' || !getFieldType(header.key)"
+                                       type="text"
+                                       [(ngModel)]="item[header.key]"
+                                       (blur)="onFieldBlur(item, header.key)"
+                                       class="form-control form-control-sm"
+                                       (click)="$event.stopPropagation()">
+                                <input *ngIf="getFieldType(header.key) === 'number'"
+                                       type="number"
+                                       [(ngModel)]="item[header.key]"
+                                       (blur)="onFieldBlur(item, header.key)"
+                                       class="form-control form-control-sm"
+                                       (click)="$event.stopPropagation()"
+                                       (change)="validateNumber(item, header.key)">
+                                <select *ngIf="getFieldType(header.key) === 'select'"
+                                        [(ngModel)]="item[header.key]"
+                                        (blur)="onFieldBlur(item, header.key)"
+                                        class="form-control form-control-sm"
+                                        (click)="$event.stopPropagation()">
+                                    <option *ngFor="let option of getSelectOptions(header.key)" [value]="option.value">
+                                        {{ option.label }}
+                                    </option>
+                                </select>
+                            </span>
+                        </ng-template>
+                    </td>
+                     <td *ngIf="showActions">
+                        <div class="d-flex gap-2">
+                            <a *ngIf="showEdit && !isEditing(item)" href="javascript:void(0);" class="link-primary" (click)="toggleEditMode(item, $event)">
+                                <i class="ri-pencil-fill fs-16"></i>
+                            </a>
+                            <a *ngIf="showDelete" href="javascript:void(0);" class="link-danger" (click)="deleteClicked.emit(item)">
+                                <i class="ri-delete-bin-line fs-16"></i>
+                            </a>
+                            <a *ngIf="isEditing(item)" href="javascript:void(0);" class="link-success" (click)="saveRow(item, $event)">
+                                <i class=" ri-check-line fs-20"></i>
+                            </a>
+                            <a *ngIf="isEditing(item)" href="javascript:void(0);" class="link-danger" (click)="cancelEdit(item, $event)">
+                                <i class="ri-close-line fs-20"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="data.length === 0">
+                    <td [attr.colspan]="headers.length + (showRowSelect ? 2 : 1) + (showActions ? 1 : 0)" class="text-center py-3">No records to display</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex flex-wrap justify-content-between align-items-center mt-2"> 
+        <div class="d-flex align-items-center mb-2 mb-md-0">
+            <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 0" class="btn btn-light mx-2">&lt;</button>
+            <span class="mx-2">Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+            <button (click)="onPageChange(currentPage + 1)" [disabled]="(currentPage + 1) * pageSize >= filteredData.length" class="btn btn-light mx-2">&gt;</button>
+        </div>
+        <div class="d-flex align-items-center mb-2 mb-md-0">
+            <label [for]="'pageSize-' + tableId" class="my-auto me-2">Rows</label> 
+            <select [id]="'pageSize-' + tableId"  [(ngModel)]="pageSize" (change)="onPageSizeChange($event)" class="form-select" style="width: auto;">
+                <option *ngFor="let size of [5, 10, 20, 50, 100]" [value]="size">{{ size }}</option>
+            </select>
+        </div>
+    </div>
+</div>

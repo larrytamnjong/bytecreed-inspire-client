@@ -25,6 +25,7 @@ import { ExcelImportComponent } from './excel-import/excel-import.component';
 import { ExcelExportComponent } from './excel-export/excel-export.component';
 import { PersonnelService } from '../core/services/api/personnel.service';
 import { TeacherService } from '../core/services/api/teacher.service';
+import { GenericAppSmartTableComponent } from './generic-app-smart-table/generic-app-smart-table.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { TeacherService } from '../core/services/api/teacher.service';
     AppLoadingComponent,
     StatusBadgeComponent,
     GenericPaginatedAppTableComponent,
+    GenericAppSmartTableComponent,
     StudentStatusBadgeComponent,
     ExcelImportComponent,
     ExcelExportComponent
@@ -64,6 +66,7 @@ import { TeacherService } from '../core/services/api/teacher.service';
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   exports: [
     GenericAppTableComponent, 
+    GenericAppSmartTableComponent,
     GenericPaginatedAppTableComponent, 
     AppLoadingComponent, 
     StatusBadgeComponent, 

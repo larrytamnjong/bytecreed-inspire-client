@@ -11,9 +11,7 @@
                     </div>
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
-                            <!-- <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" [disabled]="selectedTeachers.length > 0"  (click)="addModal(content)"><i class="ri-user-add-line align-bottom me-1"></i> Add Teachers</button>
-                            <button (click)="teacherSubjectModal(manageSubjects)" [disabled]="selectedTeachers.length < 1"  class="btn btn-secondary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-book-line align-bottom me-1"></i> Subjects</button>
-                            <button (click)="teacherClassModal(manageClasses)" [disabled]="selectedTeachers.length < 1"  class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-artboard-line align-bottom me-1"></i> Classes</button> -->
+                            <button type="button" class="btn btn-success" (click)="importResults()"><i class="ri-file-excel-2-line align-bottom me-1"></i> Import Results</button>
                         </div>
                     </div>
                      <div class="col-xl-12">
@@ -51,19 +49,19 @@
                     </div>
                 </div>
             </div>
-            <generic-app-table 
+            <generic-app-smart-table 
                 [headers]="headers" 
                 [data]="studentEnrollmentsToDisplay" 
                 [showActions]="true"  
                 [showDelete]="false"
+                [editableFields]="editableConfig"
                 [showEdit]="true"
-                (selectedRowsChange)="onSelectedRowsChange($event)"
-                [showRowSelect]="true"
-                (editClicked)="onEditClick($event)"
+                [showRowSelect]="false"
+                (saveClicked)="resultEntered($event)"
                 [customTemplates]="{ 'sex': sexTemplate, 'dateOfBirth': dateOfBirthTemplate}">
                 <ng-template #sexTemplate let-value>{{getSexLabel(value)}}</ng-template>
                 <ng-template #dateOfBirthTemplate let-value>{{value | date: 'longDate'}}</ng-template>
-            </generic-app-table>
+            </generic-app-smart-table>
         </div>
     </div>
 
