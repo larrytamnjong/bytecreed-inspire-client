@@ -106,17 +106,15 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="scale" class="form-label">Scale</label>
-                        <input type="text" class="form-control" id="scale" placeholder="Scale" >
+                        <input disabled="true" type="text" class="form-control" id="scale" placeholder="Scale" [(ngModel)]="scale"name="scale" required>
                     </div>
                 </div>
             </form>
 
             <div class="modal-footer">
                 <div class="hstack gap-2 justify-content-end">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i
-                            class="ri-save-2-line align-bottom me-1"></i> Save</button>
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i
-                            class="ri-arrow-go-back-line align-bottom me-1"></i> Cancel</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" disabled="true"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()"><i class="ri-arrow-go-back-line align-bottom me-1"></i> Cancel</button>
                 </div>
             </div>
         </ng-template>

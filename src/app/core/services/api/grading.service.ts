@@ -16,6 +16,10 @@ export class GradingService {
     return this.apiService.get(this.GRADING_SYSTEM_CONTROLLER);
   }
 
+  public getActiveGradingSystem(): Observable<ServiceResponse<GradingSystem>> {
+    return this.apiService.get(`${this.GRADING_SYSTEM_CONTROLLER}/active`);
+  }
+
   public addGradingSystem(data: GradingSystem): Observable<ServiceResponse<GradingSystem[]>> {
     return this.apiService.post(this.GRADING_SYSTEM_CONTROLLER, RequestHelper.createServiceRequest(data));
   }

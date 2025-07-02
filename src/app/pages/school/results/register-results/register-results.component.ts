@@ -10,6 +10,7 @@ import { finalize } from 'rxjs/operators';
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 import { StudentEnrollment } from 'src/app/core/Models/api/student';
+import { GradingService } from 'src/app/core/services/api/grading.service';
 
 @Component({
   selector: 'app-register-results',
@@ -23,6 +24,8 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
  teacherClasses: any = [];
  teacherSections: any = [];
  studentEnrollments: any = [];
+ scale: any = null;
+
  studentEnrollmentsToDisplay: any = [];
 
  editableConfig: {[Key: string]: any} = {
@@ -50,6 +53,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
     private modalService: NgbModal,
     private teacherService: TeacherService,
     private studentService: StudentService,
+    private gradeService: GradingService,
     private getStudentFormBuilder: UntypedFormBuilder,
     protected override store: Store<{ data: RootReducerState }>) {
         super(store);
@@ -66,6 +70,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
 
       this.getSubjects();
       this.getClasses();
+      this.getGradingScale();
       this.getSections();
       this.getLookUps();
   }
@@ -120,6 +125,17 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
   dismissModal() {
       this.modalService.dismissAll();
     }
+
+  getGradingScale(){
+    this.gradeService.getActiveGradingSystem().subscribe({
+      next: (response) => {
+        if(response.success){
+          this.scale = response.data?.scale;
+        }
+      },
+      error: () => {},
+    });
+  }
 
   getClasses(){
     this.teacherService.getMyClasses().subscribe({
