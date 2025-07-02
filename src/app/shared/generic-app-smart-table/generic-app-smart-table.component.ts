@@ -89,6 +89,10 @@ export class GenericAppSmartTableComponent implements OnChanges {
     if (max !== undefined && value > max) {
       item[field] = max;
     }
+
+    if(!item[field]) {
+      item[field] = 0;
+    }
   }
 
   getSelectOptions(field: string): { value: any, label: string }[] {
