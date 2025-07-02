@@ -10,7 +10,6 @@ import { finalize } from 'rxjs/operators';
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 import { StudentEnrollment } from 'src/app/core/Models/api/student';
-import { Key } from 'angular-feather/icons';
 
 @Component({
   selector: 'app-register-results',
