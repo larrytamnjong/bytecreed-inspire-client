@@ -67,13 +67,13 @@
         <form class="tablelist-form" autocomplete="off" autocomplete="off" [formGroup]="teacherSubjectForm" >
            <div class="modal-body">
             <div class="mb-3">
-                <label class="form-label">Select Teachers <span class="text-danger">*</span></label>
+                <label class="form-label">Teachers <span class="text-danger">*</span></label>
                 <ng-select [items]="selectedTeachers" formControlName="teacherIds" bindLabel="givenNames" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submitted && fTeacherSubjectForm['teacherIds'].invalid }" placeholder="Select Teachers">
                 </ng-select>
                 <div class="invalid-feedback">You have to select at least one teacher</div>
             </div>
             <div class="mb-3">
-                <label class="form-label">Select Subjects <span class="text-danger">*</span></label>
+                <label class="form-label">Subjects <span class="text-danger">*</span></label>
                 <ng-select [items]="subjects" formControlName="subjectIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submitted && fTeacherSubjectForm['subjectIds'].invalid }" placeholder="Select Subjects">
                 </ng-select>
                 <div class="invalid-feedback">You have to select at least one subject</div>
@@ -97,19 +97,19 @@
         <form class="tablelist-form" autocomplete="off" autocomplete="off" [formGroup]="teacherClassForm" >
            <div class="modal-body">
             <div class="mb-3">
-                <label class="form-label">Select Teachers <span class="text-danger">*</span></label>
+                <label class="form-label">Teachers <span class="text-danger">*</span></label>
                 <ng-select [items]="selectedTeachers" formControlName="teacherIds" bindLabel="givenNames" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submitted && fTeacherClassForm['teacherIds'].invalid }" placeholder="Select Teachers">
                 </ng-select>
                 <div class="invalid-feedback">You have to select at least one teacher</div>
             </div>
             <div class="mb-3">
-                <label class="form-label">Select Classes <span class="text-danger">*</span></label>
+                <label class="form-label">Classes <span class="text-danger">*</span></label>
                 <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submitted && fTeacherClassForm['classIds'].invalid }" placeholder="Select Classes">
                 </ng-select>
             <div class="invalid-feedback">You have to select at least one class</div>
             </div>
             <div class="mb-3">
-                <label class="form-label">Select Class Section</label>
+                <label class="form-label">Class Section</label>
                 <ng-select [items]="sections" formControlName="classSectionIds" bindLabel="name" bindValue="id" [multiple]="true"  placeholder="Select Class Sections"></ng-select>
             </div>
             </div>
