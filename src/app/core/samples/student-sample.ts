@@ -24,6 +24,14 @@ export const studentSampleTemplate: any  = [
     sex: 1,
     admissionNumber: null,
     status: 1,
+  },
+  {
+    familyName: 'Njimu',
+    givenNames: 'Brian',
+    dateOfBirth: new Date('2000-11-30'),
+    sex: 1,
+    admissionNumber: null,
+    status: 1,
   }
 ];
     

@@ -14,6 +14,7 @@ import { GradingService } from 'src/app/core/services/api/grading.service';
 import { ResultService } from 'src/app/core/services/api/result.service';
 import { ClassService } from 'src/app/core/services/api/class.service';
 import { AcademicService } from 'src/app/core/services/api/academics.service';
+import { exportJsonToExcel } from 'src/app/core/helpers/excel-utility';
 
 @Component({
   selector: 'app-register-results',
@@ -323,4 +324,44 @@ deleteResults(toDelete?: any) {
       error: () => {},
     });
   }
+
+  handleBatchUpload(data: any[]) {
+    console.log(data);
+     const resultsMap = new Map<string, number>();
+
+     if (data?.length > 0) {
+        data.forEach((r: any) => {
+          resultsMap.set(r.admissionNumber, r.result);
+        });
+
+        this.studentEnrollmentsToDisplay = this.studentEnrollmentsToDisplay.map((student: any) => {
+            return {...student, result: resultsMap.has(student.admissionNumber) ? resultsMap.get(student.admissionNumber) : 0,
+          };
+      });
+    }
+  }
+
+  downloadTemplate(): void {
+      if (!this.studentEnrollmentsToDisplay || this.studentEnrollmentsToDisplay.length === 0) {
+      SimpleAlerts.showWarning('Please load students first before downloading template');
+      return;
+      } 
+
+      const templateData = this.studentEnrollmentsToDisplay.map((student: any) => ({
+        admissionNumber: student.admissionNumber,
+        familyName: student.familyName,
+        givenNames: student.givenNames,
+        result: student.result
+      }));
+
+    const className = this.teacherClasses.find((c : any)=> c.id === this.getStudentForm.value.classId)?.name || 'Class';
+    const subjectName = this.teacherSubjects.find((s : any)=> s.id === this.getStudentForm.value.subjectId)?.name || 'Subject';
+    const examTypeName = this.examTypes.find((e : any) => e.examTypeId === this.getStudentForm.value.examTypeId)?.name || 'Exam';
+    
+    const fileName = `${className}_${subjectName}_${examTypeName}_Template.xlsx`;
+    
+    exportJsonToExcel(templateData, fileName);
+  }
+
+
 }

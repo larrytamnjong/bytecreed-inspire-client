@@ -13,14 +13,16 @@
                     </div>
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
+                             <!-- <button type="button" class="btn btn-success" (click)="openModal(importResultsContent)"><i
+                                    class="ri-file-excel-2-line align-bottom me-1"></i> Download</button> -->
                             <button type="button" class="btn btn-success" (click)="openModal(importResultsContent)"><i
                                     class="ri-file-excel-2-line align-bottom me-1"></i> Import</button>
                             <button type="button" class="btn btn-secondary" (click)="openModal(scaleContent)"><i
                                     class="ri-scales-line align-bottom me-1"></i> Grading Scale</button>
                             <button type="button" class="btn btn-danger" (click)="deleteResults()"><i
-                                    class="ri-delete-bin-line align-bottom me-1"></i> Delete Results</button>
+                                    class="ri-delete-bin-line align-bottom me-1"></i> Delete</button>
                             <button type="button" class="btn btn-info" (click)="saveResults()"><i
-                                    class="ri-save-2-line align-bottom me-1"></i> Save Results</button>
+                                    class="ri-save-2-line align-bottom me-1"></i> Save</button>
                         </div>
                     </div>
                     <div class="col-xl-12 ">
@@ -75,14 +77,29 @@
             </div>
             <form class="tablelist-form" autocomplete="off" autocomplete="off">
                 <div class="modal-body">
-
-                </div>
+                    <div class="col-sm-12">
+                        <ul class="list-inline user-chat-nav text-end mb-0">
+                            <li class="list-inline-item m-0">
+                                <div class="dropdown" ngbDropdown>
+                                    <button class="btn btn-ghost-secondary btn-icon material-shadow-none arrow-none d-block" type="button"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+                                        <i-feather name="info" class="icon-sm"></i-feather>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                                        <a class="dropdown-item" href="javascript:void(0);" (click)="downloadTemplate()"><i
+                                                class="ri-file-excel-2-line align-bottom text-muted me-2 float-start"></i>Template </a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <app-excel-import (data)="handleBatchUpload($event)"></app-excel-import>
+                    </div>
             </form>
 
             <div class="modal-footer">
                 <div class="hstack gap-2 justify-content-end">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i
-                            class="ri-file-excel-2-line align-bottom me-1"></i> Import</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="dismissModal()"><i class="ri-check-line align-bottom me-1"></i> Done</button>
                 </div>
             </div>
         </ng-template>

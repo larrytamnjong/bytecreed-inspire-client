@@ -12,7 +12,8 @@ export class ExcelImportComponent {
 
   excelConfig: ExcelImportConfig = {
     sex: 'number', 
-    status: 'number' 
+    status: 'number',
+    result: 'number' 
   };
 
   excelData?: any[];
