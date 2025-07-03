@@ -10,10 +10,11 @@ export class SimpleAlerts {
         });
     }
 
-     static showWarning(message?: string, timer?: number) {
+     static showWarning(message?: string, timer?: number, details?: string) {
         Swal.fire({
             icon: 'warning',
-            title: message ?? 'Your request parameter are invalid',
+            title: message ?? 'Something went wrong',
+            text: details,
             showConfirmButton: false,
             timer: timer ?? 2000
         });

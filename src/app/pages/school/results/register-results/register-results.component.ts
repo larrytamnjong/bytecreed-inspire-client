@@ -326,7 +326,17 @@ deleteResults(toDelete?: any) {
   }
 
   handleBatchUpload(data: any[]) {
-    console.log(data);
+     if (!this.studentEnrollmentsToDisplay || this.studentEnrollmentsToDisplay.length === 0) {
+       SimpleAlerts.showWarning('Please load students first');
+      return;
+      } 
+    const validation = this.validateResults(data);
+      if (!validation.isValid) {
+        const invalidDetails = validation.invalidEntries.map(entry => `${entry.result}`).join(',');
+        SimpleAlerts.showWarning('Invalid results', 30000, `${invalidDetails}`);
+        return;
+      }
+
      const resultsMap = new Map<string, number>();
 
      if (data?.length > 0) {
@@ -343,7 +353,7 @@ deleteResults(toDelete?: any) {
 
   downloadTemplate(): void {
       if (!this.studentEnrollmentsToDisplay || this.studentEnrollmentsToDisplay.length === 0) {
-      SimpleAlerts.showWarning('Please load students first before downloading template');
+      SimpleAlerts.showWarning('Please load students first');
       return;
       } 
 
@@ -363,5 +373,24 @@ deleteResults(toDelete?: any) {
     exportJsonToExcel(templateData, fileName);
   }
 
+
+  private validateResults(results: any[]): { isValid: boolean, invalidEntries: any[] } {
+    if (!this.scale) {
+      return { isValid: false, invalidEntries: [] };
+    }
+
+    const maxScore = this.scale!; 
+    const minScore =  0;  
+
+    const invalidEntries = results.filter(item => {
+      const resultValue = Number(item.result);
+      return isNaN(resultValue) || resultValue < minScore || resultValue > maxScore;
+    });
+
+    return {
+      isValid: invalidEntries.length === 0,
+      invalidEntries: invalidEntries
+    };
+  }
 
 }
