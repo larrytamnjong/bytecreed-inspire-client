@@ -10,6 +10,15 @@ export class SimpleAlerts {
         });
     }
 
+     static showWarning(message?: string, timer?: number) {
+        Swal.fire({
+            icon: 'warning',
+            title: message ?? 'Your request parameter are invalid',
+            showConfirmButton: false,
+            timer: timer ?? 2000
+        });
+    }
+
     static async showSuccessWithOptions(message: string = 'Do you want to continue?'): Promise<boolean> {
         const result = await Swal.fire({
             icon: 'success',

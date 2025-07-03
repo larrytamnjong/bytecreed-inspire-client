@@ -42,6 +42,10 @@ export class AcademicService {
         return this.apiService.get(`${this.ACADEMIC_PERIOD_CONTROLLER}`);
     }
 
+    getActiveAcademicPeriods(): Observable<ServiceResponse<AcademicPeriod[]>> {
+        return this.apiService.get(`${this.ACADEMIC_PERIOD_CONTROLLER}/active`);
+    }
+
     createAcademicPeriod(academicPeriod: AcademicPeriod): Observable<ServiceResponse<AcademicPeriod>> {
         return this.apiService.post(`${this.ACADEMIC_PERIOD_CONTROLLER}`, RequestHelper.createServiceRequest(academicPeriod));
     }
