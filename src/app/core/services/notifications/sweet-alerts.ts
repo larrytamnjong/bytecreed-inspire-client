@@ -13,7 +13,7 @@ export class SimpleAlerts {
      static showWarning(message?: string, timer?: number, details?: string) {
         Swal.fire({
             icon: 'warning',
-            title: message ?? 'Something went wrong',
+            title: message ?? 'Please check the information provided',
             text: details,
             showConfirmButton: false,
             timer: timer ?? 2000

@@ -34,7 +34,7 @@ export class StudentService {
         return this.apiService.delete(`${this.STUDENT_ENROLLMENT_CONTROLLER}`, RequestHelper.createServiceRequest(data));
     }
 
-    getStudentEnrollments(academicYearId: string | null, classId: string | null, sectionId: string | null): Observable<ServiceResponse<StudentEnrollment>> {
+    getStudentEnrollments(academicYearId: string | null, classId: string | null, sectionId: string | null, subjectId: string | null): Observable<ServiceResponse<StudentEnrollment>> {
         let queryParams = new HttpParams();
         if (academicYearId) {
             queryParams = queryParams.set('academicYearId', academicYearId);
@@ -45,6 +45,11 @@ export class StudentService {
         if (sectionId) {
             queryParams = queryParams.set('classSectionId', sectionId);
         }
+
+        if (subjectId) {
+            queryParams = queryParams.set('subjectId', subjectId);
+        }
+        
         return this.apiService.get(`${this.STUDENT_ENROLLMENT_CONTROLLER}`, {params: queryParams});
     }
 

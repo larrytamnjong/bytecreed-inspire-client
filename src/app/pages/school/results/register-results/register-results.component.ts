@@ -98,8 +98,9 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
       var classId = this.getStudentForm.get('classId')?.value;
       var classSectionId = this.getStudentForm.get('classSectionId')?.value;
       var academicYearId =  this.getStudentForm.get('academicYearId')?.value;
+      var subjectId = this.getStudentForm.get('subjectId')?.value;
       this.toggleLoading();
-      this.studentService.getStudentEnrollments(academicYearId, classId, classSectionId).pipe(finalize(() => this.toggleLoading())).subscribe({
+      this.studentService.getStudentEnrollments(academicYearId, classId, classSectionId, subjectId).pipe(finalize(() => this.toggleLoading())).subscribe({
           next: (response) => {
             this.studentEnrollments = response.data;
             if(this.studentEnrollments.length > 0){

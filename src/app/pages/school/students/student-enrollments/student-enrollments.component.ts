@@ -394,7 +394,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     var classSectionId = this.studentEnrollmentGetForm.get('classSectionId')?.value;
     var academicYearId =  this.studentEnrollmentGetForm.get('academicYearId')?.value;
     this.toggleLoading();
-    this.studentService.getStudentEnrollments(academicYearId, classId, classSectionId).pipe(finalize(() => this.toggleLoading())).subscribe({
+    this.studentService.getStudentEnrollments(academicYearId, classId, classSectionId, null).pipe(finalize(() => this.toggleLoading())).subscribe({
         next: (response) => {
           this.studentEnrollments = response.data;
           if(this.studentEnrollments.length > 0){
