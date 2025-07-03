@@ -328,7 +328,8 @@ deleteResults(toDelete?: any) {
   handleBatchUpload(data: any[]) {
      if (!this.studentEnrollmentsToDisplay || this.studentEnrollmentsToDisplay.length === 0) {
        SimpleAlerts.showWarning('Please load students first');
-      return;
+       this.dismissModal();
+       return;
       } 
     const validation = this.validateResults(data);
       if (!validation.isValid) {
