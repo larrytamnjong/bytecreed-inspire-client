@@ -12,7 +12,7 @@ export class ResultService {
   constructor(private apiService: ApiHttpService) {}
 
     public saveResults(data: any): Observable<ServiceResponse<any[]>> {
-        return this.apiService.post(this.RESULT_CONTROLLER,RequestHelper.createServiceRequest(data));
+        return this.apiService.put(this.RESULT_CONTROLLER,RequestHelper.createServiceRequest(data));
     }
 
     public getResults(data: any): Observable<ServiceResponse<any>> {

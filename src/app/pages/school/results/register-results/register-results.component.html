@@ -17,6 +17,8 @@
                                     class="ri-file-excel-2-line align-bottom me-1"></i> Import</button>
                             <button type="button" class="btn btn-secondary" (click)="openModal(scaleContent)"><i
                                     class="ri-scales-line align-bottom me-1"></i> Grading Scale</button>
+                            <button type="button" class="btn btn-danger" (click)="deleteResults()"><i
+                                    class="ri-delete-bin-line align-bottom me-1"></i> Delete Results</button>
                             <button type="button" class="btn btn-info" (click)="saveResults()"><i
                                     class="ri-save-2-line align-bottom me-1"></i> Save Results</button>
                         </div>
@@ -52,7 +54,7 @@
                     </div>
                 </div>
                 <generic-app-smart-table [headers]="headers" [data]="studentEnrollmentsToDisplay" [showActions]="true"
-                    [showDelete]="false" [editableFields]="editableConfig" [showEdit]="true" [showRowSelect]="false"
+                    [showDelete]="true" [editableFields]="editableConfig" [showEdit]="true" [showRowSelect]="true"
                     (saveClicked)="resultEntered($event)"
                     [customTemplates]="{ 'sex': sexTemplate, 'dateOfBirth': dateOfBirthTemplate}">
                     <ng-template #sexTemplate let-value>{{getSexLabel(value)}}</ng-template>

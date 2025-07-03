@@ -71,7 +71,7 @@
                             <a *ngIf="showEdit && !isEditing(item)" href="javascript:void(0);" class="link-primary" (click)="toggleEditMode(item, $event)">
                                 <i class="ri-pencil-fill fs-16"></i>
                             </a>
-                            <a *ngIf="showDelete" href="javascript:void(0);" class="link-danger" (click)="deleteClicked.emit(item)">
+                            <a *ngIf="showDelete && !isEditing(item)" href="javascript:void(0);" class="link-danger" (click)="deleteClicked.emit(item)">
                                 <i class="ri-delete-bin-line fs-16"></i>
                             </a>
                             <a *ngIf="isEditing(item)" href="javascript:void(0);" class="link-success" (click)="saveRow(item, $event)">

@@ -103,6 +103,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
             this.studentEnrollments = response.data;
             if(this.studentEnrollments.length > 0){
             this.setStudentEnrollmentsToDisplay(this.studentEnrollments);
+            this.getResults();
           }
         },
           error: (error) => {
@@ -158,6 +159,52 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
   dismissModal() {
       this.modalService.dismissAll();
     }
+
+
+getResults() {
+  if (this.getStudentForm.invalid || this.studentEnrollmentsToDisplay.length === 0) {
+        SimpleAlerts.showWarning();
+        return;
+    }
+
+    const payload = {
+      examTypeId: this.getStudentForm.get('examTypeId')?.value,
+      academicPeriodId: this.academicPeriods[0]!.id!,
+      subjectId: this.getStudentForm.get('subjectId')?.value,
+      classId: this.getStudentForm.get('classId')?.value,
+      classSectionId: this.getStudentForm.get('classSectionId')?.value,
+    };
+    
+    this.toggleLoading();
+    this.resultService.getResults(payload).pipe(finalize(() => this.toggleLoading())).subscribe({
+        next: (response) => {
+            if (response.success) {
+              const resultsMap = new Map<string, number>();
+          
+          if (response.data?.studentResults?.length > 0) {
+            response.data.studentResults.forEach((result: any) => {
+              resultsMap.set(result.admissionNumber, result.requestScore);
+            });
+
+                  this.studentEnrollmentsToDisplay =
+            this.studentEnrollmentsToDisplay.map((student: any) => {
+              return {
+                ...student,
+                result: resultsMap.has(student.admissionNumber)
+                  ? resultsMap.get(student.admissionNumber)
+                  : 0,
+              };
+            });
+          }
+          }
+        },
+        error: () => {},
+    });
+}
+
+deleteResults(){
+  
+}
 
  saveResults() {
     if (this.getStudentForm.invalid || this.studentEnrollmentsToDisplay.length === 0) {
