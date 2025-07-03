@@ -202,8 +202,39 @@ getResults() {
     });
 }
 
-deleteResults(){
-  
+deleteResults(toDelete?: any) {
+    SimpleAlerts.confirmDeleteDialog().then((result) => {
+        if (result) {
+            this.toggleLoading();
+            
+            const payload = {
+                examTypeId: this.getStudentForm.get('examTypeId')?.value,
+                academicPeriodId: this.academicPeriods[0]?.id,
+                subjectId: this.getStudentForm.get('subjectId')?.value,
+                classId: this.getStudentForm.get('classId')?.value,
+                classSectionId: this.getStudentForm.get('classSectionId')?.value,
+                requestGradingScale: this.scale?.id,
+                deleteForEntireClass: !toDelete, 
+                admissionNumbers: toDelete ? [toDelete.admissionNumber] : [] 
+            };
+
+            this.resultService.deleteResults(payload)
+                .pipe(finalize(() => this.toggleLoading()))
+                .subscribe({
+                    next: (response) => {
+                        if (response.success) {
+                            SimpleAlerts.showSuccess();
+                            this.getStudents(); 
+                        } else {
+                            SimpleAlerts.showError(response.message);
+                        }
+                    },
+                    error: (error) => {
+                        SimpleAlerts.showError(getErrorMessage(error));
+                    }
+                });
+        }
+    });
 }
 
  saveResults() {
