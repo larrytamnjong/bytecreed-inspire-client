@@ -26,7 +26,7 @@ export class SimpleAlerts {
             title: message,
             showCancelButton: true,
             confirmButtonColor: '#364574',
-            cancelButtonColor: '#D29C40',
+            cancelButtonColor: '#CED4DA',
             confirmButtonText: 'Yes',
             cancelButtonText: 'No',
             allowOutsideClick: false
@@ -49,7 +49,7 @@ export class SimpleAlerts {
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#364574',
-            cancelButtonColor: '#D29C40',
+            cancelButtonColor: '#CED4DA',
             confirmButtonText: 'Yes',
             cancelButtonText: 'No',
             allowOutsideClick: false
@@ -63,7 +63,7 @@ export class SimpleAlerts {
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#364574',
-            cancelButtonColor: '#D29C40',
+            cancelButtonColor: '#CED4DA',
             confirmButtonText: 'Yes',
             cancelButtonText: 'No',
             allowOutsideClick: false
@@ -75,11 +75,11 @@ export class SimpleAlerts {
         const result = await Swal.fire({
             title,
             text,
-            icon: 'warning',
+            icon: 'question',
             iconColor: '#FF0000',
             showCancelButton: true,
-            confirmButtonColor: '#364574',
-            cancelButtonColor: '#D29C40',
+            confirmButtonColor: '#FF0000',
+            cancelButtonColor: '#CED4DA',
             confirmButtonText: 'Yes',
             cancelButtonText: 'No',
             allowOutsideClick: false
