@@ -72,6 +72,10 @@
                     <input type="number" id="weight" class="form-control" placeholder="Enter Weight" formControlName="weight" [ngClass]="{ 'is-invalid': submitted && examTypeForm.controls['weight'].invalid }">
                     <div class="invalid-feedback" *ngIf="submitted && examTypeForm.controls['weight'].invalid">Weight is required when 'Use Weight' is set to Yes</div>
                 </div> 
+                <div class="mb-3">
+                    <label  class="form-label">Sort Order</label>
+                    <input type="number" class="form-control" placeholder="Enter Sort Order" formControlName="sortOrder" >
+                </div> 
             </div>
             <div class="modal-footer">
                 <div class="hstack gap-2 justify-content-end">

@@ -42,6 +42,7 @@ export class ExamTypesComponent implements OnInit {
     { key: 'academicTermId', displayName: 'Academic Term' },
     { key: 'useWeight', displayName: 'Use Weight' },
     { key: 'weight', displayName: 'Weight' },
+    { key: 'sortOrder', displayName: 'Sort Order' },
   ]
 
   constructor(
@@ -64,6 +65,7 @@ export class ExamTypesComponent implements OnInit {
         useWeight: [null, [Validators.required]],
         weight: [null],
         academicTermId: [null, [Validators.required]],
+        sortOrder: [null],
       });
 
       this.examTypeForm.get('useWeight')?.valueChanges.subscribe((useWeight: boolean) => {

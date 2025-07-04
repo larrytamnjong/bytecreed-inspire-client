@@ -4,4 +4,5 @@ export class ExamType{
     academicTermId!: string;
     useWeight: boolean = false;
     weight?: number;
+    sortOrder?: number;
 }
