@@ -103,6 +103,11 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
     this.getLookUps();
   }
 
+  isActionButtonDisabled(): boolean {
+    return this.studentEnrollmentsToDisplay.length === 0;
+  }
+
+
   getStudents() {
     if (this.getStudentForm.valid) {
       var classId = this.getStudentForm.get("classId")?.value;
