@@ -54,21 +54,27 @@
                                         <div class="invalid-feedback"> Please Enter Given Names </div>
                                     </div>
 
-                                    <div class="mb-3">
+                                     <div class="mb-3">
                                         <label class="form-label">Country</label>
-                                        <ng-select appearance="outline" [searchable]="true" [clearable]="false" placeholder="Select Country">
+                                        <ng-select appearance="outline" [searchable]="true" [clearable]="false" placeholder="Country" (change)="onCountrySelected($event)"
+                                            [ngClass]="{ 'is-invalid': submitted && f['countryCode'].errors }">
                                             @for ( data of countriesData; track $index) {
-                                            <ng-option value="null">
-                                                <img src="{{data.flagImg}}" alt="country flag" class="options-flagimg" height="20">{{data.countryName}}
+                                            <ng-option [value]="data">
+                                                <img src="{{data.flagImg}}" alt="country flag" class="options-flagimg" height="20"  style="margin-right: 8px;">{{data.countryName}}
                                                 <span class="countrylist-codeno text-muted">{{data.countryCode}}</span>
                                             </ng-option>
                                             }
                                         </ng-select>
+                                        @if (submitted && f['countryCode'].errors) {
+                                        <div class="invalid-feedback">
+                                            <div>Country is required</div>
+                                        </div>
+                                        }
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="phone" placeholder="Enter Phone Number" required formControlName="phone"
+                                        <input type="number" class="form-control" id="phone" placeholder="Enter Phone Number" required formControlName="phone"
                                             [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }">
                                         <div class="invalid-feedback"> Please Enter phone </div>
                                     </div>

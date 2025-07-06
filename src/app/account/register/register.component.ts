@@ -32,6 +32,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   message$: Observable<any> = this.store.select(selectUserMessage);
   message: any;
 
+  selectedCountry: any; 
   signupForm!: UntypedFormGroup;
   submitted = false;
 
@@ -56,6 +57,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
         password: ["", Validators.required],
         confirmPassword: ["", Validators.required],
         sex: ["", Validators.required],
+        countryCode: [null, Validators.required]
+
       },
       { validators: [passwordMatchValidator() ]} 
     );
@@ -76,11 +79,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     const user = {
-      phone: this.f["phone"].value,
+      phone: String(this.f["phone"].value),
       familyName: this.f["familyName"].value,
       givenNames: this.f["givenNames"].value,
       password: this.f["password"].value,
       sex: Number(this.f["sex"].value),
+      countryCode: this.f["countryCode"].value,
     };
 
     this.registerUser(user);
@@ -103,6 +107,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.push(loadingSubscription);
   }
+
+  onCountrySelected(event: any) {
+  if (event) {
+    this.signupForm.get('countryCode')?.setValue(event.countryCode);
+    this.selectedCountry = event;
+  }
+}
 
   getLookUps() {
     this.store.dispatch(getLookUpsAction());

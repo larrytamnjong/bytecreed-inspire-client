@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   options : any;
   fieldTextType = false;
   year: number = new Date().getFullYear();
+  selectedCountry: any; 
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -53,6 +54,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm = this.formBuilder.group({
       phone: ["", [Validators.required]],
       password: ["", [Validators.required]],
+      countryCode: [null, [Validators.required]],
     });
   }
 
@@ -75,8 +77,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     } 
 
     const login = {
-      phone: this.f["phone"].value,
+      phone: String(this.f["phone"].value),
       password: this.f["password"].value,
+      countryCode: this.f["countryCode"].value,
     };
 
   this.userService.loginUser(login).subscribe({
@@ -97,6 +100,14 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
   });
   }
+
+  onCountrySelected(event: any) {
+  if (event) {
+    this.loginForm.get('countryCode')?.setValue(event.countryCode);
+    this.selectedCountry = event;
+  }
+}
+
 
   handleInstitutionSelection() {
     if(!this.institutions.length){

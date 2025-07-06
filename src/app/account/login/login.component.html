@@ -39,21 +39,26 @@
                             </div>
                             <div class="p-2 mt-4">
                                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-
                                     <div class="mb-3">
                                         <label class="form-label">Country</label>
-                                        <ng-select appearance="outline" [searchable]="true" [clearable]="false" placeholder="Select Country">
+                                        <ng-select appearance="outline" [searchable]="true" [clearable]="false" placeholder="Country" (change)="onCountrySelected($event)"
+                                            [ngClass]="{ 'is-invalid': submitted && f['countryCode'].errors }">
                                             @for ( data of countriesData; track $index) {
-                                            <ng-option value="null">
-                                                <img src="{{data.flagImg}}" alt="country flag" class="options-flagimg" height="20">{{data.countryName}}
+                                            <ng-option [value]="data">
+                                                <img src="{{data.flagImg}}" alt="country flag" class="options-flagimg" height="20"  style="margin-right: 8px;">{{data.countryName}}
                                                 <span class="countrylist-codeno text-muted">{{data.countryCode}}</span>
                                             </ng-option>
                                             }
                                         </ng-select>
+                                        @if (submitted && f['countryCode'].errors) {
+                                        <div class="invalid-feedback">
+                                            <div>Country is required</div>
+                                        </div>
+                                        }
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="phone">Phone</label>
-                                        <input type="text" class="form-control" id="phone" formControlName="phone"
+                                        <input type="number" class="form-control" id="phone" formControlName="phone"
                                             [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }"
                                             placeholder="Enter Phone Number">
                                         @if (submitted && f['phone'].errors) {
