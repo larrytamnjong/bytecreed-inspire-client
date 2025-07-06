@@ -42,7 +42,7 @@ export class SimpleAlerts {
         });
     }
 
-    static async confirmDialog(title?: string, text: string = 'Are you sure you want to proceed with this action?'): Promise<boolean> {
+    static async confirmDialog(title?: string, text: string = 'Are you sure you want to continue?'): Promise<boolean> {
         const result = await Swal.fire({
             title,
             text,
@@ -71,7 +71,7 @@ export class SimpleAlerts {
         return result.isConfirmed;
     }
 
-    static async confirmDeleteDialog(title?: string, text: string = 'Are you sure you want to proceed with this delete?'): Promise<boolean> {
+    static async confirmDeleteDialog(title?: string, text: string = 'Are you sure you want to continue?'): Promise<boolean> {
         const result = await Swal.fire({
             title,
             text,
