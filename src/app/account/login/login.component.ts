@@ -68,6 +68,13 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.router.navigate(["/"]);
       return;
     }
+
+    const defaultCountry = this.countriesData.find(country => country.countryCode === "+237");
+  
+    if (defaultCountry) {
+      this.selectedCountry = defaultCountry;
+      this.loginForm.get("countryCode")?.setValue(defaultCountry.countryCode);
+    }
   }
 
   get f() {

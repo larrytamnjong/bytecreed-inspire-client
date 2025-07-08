@@ -38,8 +38,14 @@
                                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="!isWhatsAppLoginMode">
                                     <div class="mb-3">
                                         <label class="form-label">Country</label>
-                                        <ng-select appearance="outline" [searchable]="true" [clearable]="false" placeholder="Country" (change)="onCountrySelected($event)"
-                                            [ngClass]="{ 'is-invalid': submitted && f['countryCode'].errors }">
+                                        <ng-select appearance="outline" 
+                                                   [searchable]="true" 
+                                                   [clearable]="false" 
+                                                   placeholder="Country" 
+                                                   [(ngModel)]="selectedCountry" 
+                                                   [ngModelOptions]="{standalone: true}" 
+                                                   (change)="onCountrySelected($event)"
+                                                   [ngClass]="{ 'is-invalid': submitted && f['countryCode'].errors }">
                                             @for ( data of countriesData; track $index) {
                                             <ng-option [value]="data">
                                                 <img src="{{data.flagImg}}" alt="country flag" class="options-flagimg" height="20"  style="margin-right: 8px;">{{data.countryName}}
