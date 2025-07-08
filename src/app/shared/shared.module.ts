@@ -26,6 +26,7 @@ import { ExcelExportComponent } from './excel-export/excel-export.component';
 import { PersonnelService } from '../core/services/api/personnel.service';
 import { TeacherService } from '../core/services/api/teacher.service';
 import { GenericAppSmartTableComponent } from './generic-app-smart-table/generic-app-smart-table.component';
+import { ResultReportService } from '../core/services/api/result-report.service';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { GenericAppSmartTableComponent } from './generic-app-smart-table/generic
     SubjectService,
     CourseService,
     PersonnelService,
-    TeacherService
+    TeacherService,
+    ResultReportService
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   exports: [

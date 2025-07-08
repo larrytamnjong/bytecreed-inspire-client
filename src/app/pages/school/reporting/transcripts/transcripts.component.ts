@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Store } from '@ngrx/store';
 import { RootReducerState } from 'src/app/store';
+import { ResultReportService } from 'src/app/core/services/api/result-report.service';
 
 @Component({
   selector: 'app-transcripts',
@@ -11,7 +12,9 @@ import { RootReducerState } from 'src/app/store';
 export class TranscriptsComponent extends BaseComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
 
-  constructor( protected override store: Store<{ data: RootReducerState }>) {
+  constructor( 
+    private reportService: ResultReportService,
+    protected override store: Store<{ data: RootReducerState }>) {
          super(store);
    }
 
