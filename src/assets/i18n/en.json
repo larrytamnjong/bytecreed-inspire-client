@@ -77,8 +77,8 @@
     "RESULTS": {
       "TEXT": "Results",
       "LIST": {
-        "REGISTERRESULTS": "Register Results",
-        "RESULTHISTORY": "Result History"
+        "REGISTERRESULTS": "Record Results",
+        "RESULTHISTORY": "Results Archive"
       }
     },
     "REPORTS": {

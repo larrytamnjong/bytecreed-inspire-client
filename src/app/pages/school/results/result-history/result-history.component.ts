@@ -16,7 +16,7 @@ export class ResultHistoryComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.breadCrumbItems = [{ label: 'Results' }, { label: 'History', active: true }];
+    this.breadCrumbItems = [{ label: 'Results' }, { label: 'Achieve', active: true }];
   }
 
 }

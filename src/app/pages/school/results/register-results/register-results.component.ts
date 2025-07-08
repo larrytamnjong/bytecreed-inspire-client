@@ -79,7 +79,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.breadCrumbItems = [
       { label: "Results" },
-      { label: "Register", active: true },
+      { label: "Record", active: true },
     ];
 
     this.getStudentForm = this.getStudentFormBuilder.group({
