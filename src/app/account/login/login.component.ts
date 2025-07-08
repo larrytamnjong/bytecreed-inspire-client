@@ -12,6 +12,7 @@ import { UserService } from "src/app/core/services/identity/user.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { getErrorMessage } from "src/app/core/helpers/error-filter";
 import { countriesData } from "src/app/core/data/countries";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-login",
@@ -263,7 +264,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     const script = document.createElement("script");
     script.id = "otpless-sdk";
     script.src = "https://otpless.com/v4/auth.js";
-    script.setAttribute("data-appid", "Q2KO71NQOZN7YOF99KM7");
+    script.setAttribute("data-appid", environment.OTPLESS_APP_ID);
     document.body.appendChild(script);
   }
 
