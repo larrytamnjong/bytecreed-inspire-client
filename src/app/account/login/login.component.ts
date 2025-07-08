@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   selectInstitutionContent!: TemplateRef<any>;
   @ViewChild("selectAppContent") selectAppContent!: TemplateRef<any>;
 
+  isWhatsAppLoginMode: boolean = false;
   loading = false;
   institutions: Institution[] = [];
   selectedInstitution?: Institution;
@@ -251,11 +252,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {}
 
-  whatsAppLogin(content: any) {
-    this.modalService.open(content,  { size: "md", backdrop: "static", centered: true });
-    setTimeout(() => {
+  toggleWhatsAppLogin() {
+   this.isWhatsAppLoginMode = !this.isWhatsAppLoginMode;
+    if (this.isWhatsAppLoginMode) {
       this.initializeOtpless();
-    }, 300);
+    }
   }
 
   private initializeOtpless() {
@@ -264,10 +265,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     script.src = "https://otpless.com/v4/auth.js";
     script.setAttribute("data-appid", "Q2KO71NQOZN7YOF99KM7");
     document.body.appendChild(script);
-  }
-
-  dismissModal() {
-    this.modalService.dismissAll();
   }
 
 }
