@@ -1,5 +1,4 @@
 <div class="auth-page-wrapper pt-5">
-    <!-- auth page bg -->
     <div class="auth-one-bg-position auth-one-bg" id="auth-particles">
         <div class="bg-overlay"></div>
 
@@ -11,7 +10,6 @@
         </div>
     </div>
 
-    <!-- auth page content -->
     <div class="auth-page-content">
         <div class="container">
             <div class="row">
@@ -26,7 +24,6 @@
                     </div>
                 </div>
             </div>
-            <!-- end row -->
 
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-6 col-xl-5">
@@ -109,7 +106,7 @@
                                             <h5 class="fs-13 mb-4 title">Sign In with</h5>
                                         </div>
                                         <div class="d-flex gap-2 justify-content-center">
-                                            <button type="button" class="btn btn-success  btn-icon waves-effect waves-light" title="WhatsApp">
+                                            <button type="button" class="btn btn-success  btn-icon waves-effect waves-light" title="WhatsApp" (click)="whatsAppLogin(whatsAppLoginContent)">
                                                 <i class="ri-whatsapp-fill fs-16" ></i>
                                             </button>
                                         </div>
@@ -122,9 +119,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- end card body -->
                     </div>
-                    <!-- end card -->
 
                     <div class="mt-4 text-center">
                         <p class="mb-0">Don't have an account ? <a routerLink="/auth/register"
@@ -133,13 +128,9 @@
 
                 </div>
             </div>
-            <!-- end row -->
         </div>
-        <!-- end container -->
     </div>
-    <!-- end auth page content -->
 
-    <!-- footer -->
     <footer class="footer">
         <div class="container">
             <div class="row">
@@ -151,9 +142,8 @@
             </div>
         </div>
     </footer>
-    <!-- end Footer -->
 </div>
-<!-- end auth-page-wrapper -->
+
 
 <ng-template #selectInstitutionContent role="document" let-modal>
     <div class="modal-header p-3 bg-primary-subtle">
@@ -178,6 +168,7 @@
         </div>
     </div>
 </ng-template>
+
 
 <ng-template #selectAppContent role="document" let-modal>
     <div class="modal-header p-3 bg-primary-subtle">
@@ -225,4 +216,12 @@
             </div>
         </div>
     </div>
+</ng-template>
+
+
+<ng-template #whatsAppLoginContent role="document" let-modal>
+    <div class="modal-header p-3">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
+    </div>
+    <div id="otpless-login-page" style="border-style: none !important;"></div>
 </ng-template>

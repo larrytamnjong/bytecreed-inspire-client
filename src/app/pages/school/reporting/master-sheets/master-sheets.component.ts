@@ -3,6 +3,7 @@ import { BaseComponent } from 'src/app/shared/base.component';
 import { Store } from '@ngrx/store';
 import { RootReducerState } from 'src/app/store';
 import { ResultReportService } from 'src/app/core/services/api/result-report.service';
+import { jsPDF } from "jspdf";
 
 @Component({
   selector: 'app-master-sheets',

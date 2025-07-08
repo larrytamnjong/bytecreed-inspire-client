@@ -13,14 +13,12 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { getErrorMessage } from "src/app/core/helpers/error-filter";
 import { countriesData } from "src/app/core/data/countries";
 
-
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-
   public ApplicationTypeEnum = ApplicationTypeEnum;
 
   selectApplicationModalRef!: NgbModalRef;
@@ -28,8 +26,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public countriesData = countriesData;
 
-  @ViewChild('selectInstitutionContent') selectInstitutionContent!: TemplateRef<any>;
-  @ViewChild('selectAppContent') selectAppContent!: TemplateRef<any>;
+  @ViewChild("selectInstitutionContent")
+  selectInstitutionContent!: TemplateRef<any>;
+  @ViewChild("selectAppContent") selectAppContent!: TemplateRef<any>;
 
   loading = false;
   institutions: Institution[] = [];
@@ -38,10 +37,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   selectedApplicationType?: ApplicationTypeEnum;
   loginForm!: UntypedFormGroup;
   submitted = false;
-  options : any;
+  options: any;
   fieldTextType = false;
   year: number = new Date().getFullYear();
-  selectedCountry: any; 
+  selectedCountry: any;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -49,13 +48,17 @@ export class LoginComponent implements OnInit, OnDestroy {
     private tokenService: TokenService,
     private modalService: NgbModal,
     private institutionService: InstitutionService,
-    private userService: UserService,
+    private userService: UserService
   ) {
     this.loginForm = this.formBuilder.group({
       phone: ["", [Validators.required]],
       password: ["", [Validators.required]],
       countryCode: [null, [Validators.required]],
     });
+
+    (window as any).otpless = (otplessUser: any) => {
+      alert(JSON.stringify(otplessUser));
+    };
   }
 
   ngOnInit(): void {
@@ -65,16 +68,18 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  get f() {return this.loginForm.controls;}
+  get f() {
+    return this.loginForm.controls;
+  }
 
   onSubmit() {
     this.submitted = true;
     this.toggleLoading();
 
-    if (this.loginForm.invalid){
+    if (this.loginForm.invalid) {
       this.toggleLoading();
       return;
-    } 
+    }
 
     const login = {
       phone: String(this.f["phone"].value),
@@ -82,35 +87,37 @@ export class LoginComponent implements OnInit, OnDestroy {
       countryCode: this.f["countryCode"].value,
     };
 
-  this.userService.loginUser(login).subscribe({
-    next: (response) => {
-      if(response.data){
-      this.tokenService.saveToken(response.data.jwtToken.value);
-      this.tokenService.saveUser(response.data.user);
-      this.options = response.data.options;
-      this.institutions = response.data.options.map((option: any) => option.institution);
-      this.handleInstitutionSelection();
-      }else{SimpleAlerts.showError();}
-      this.toggleLoading();
-    },
-    error: (error) => 
-      {
+    this.userService.loginUser(login).subscribe({
+      next: (response) => {
+        if (response.data) {
+          this.tokenService.saveToken(response.data.jwtToken.value);
+          this.tokenService.saveUser(response.data.user);
+          this.options = response.data.options;
+          this.institutions = response.data.options.map(
+            (option: any) => option.institution
+          );
+          this.handleInstitutionSelection();
+        } else {
+          SimpleAlerts.showError();
+        }
+        this.toggleLoading();
+      },
+      error: (error) => {
         SimpleAlerts.showError(getErrorMessage(error));
         this.toggleLoading();
-      }
-  });
+      },
+    });
   }
 
   onCountrySelected(event: any) {
-  if (event) {
-    this.loginForm.get('countryCode')?.setValue(event.countryCode);
-    this.selectedCountry = event;
+    if (event) {
+      this.loginForm.get("countryCode")?.setValue(event.countryCode);
+      this.selectedCountry = event;
+    }
   }
-}
-
 
   handleInstitutionSelection() {
-    if(!this.institutions.length){
+    if (!this.institutions.length) {
       this.handleInstitutionLogin();
     }
     if (this.institutions.length === 1) {
@@ -119,7 +126,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.handleApplicationSelection();
     } else if (this.institutions.length > 1) {
       this.openSelectInstitutionModal();
-    }else{
+    } else {
       this.handleInstitutionLogin();
     }
   }
@@ -132,48 +139,60 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.handleInstitutionLogin(this.selectedApplicationType);
     } else if (this.applicationTypes.length > 1) {
       this.openSelectApplicationModal();
-    }else{
+    } else {
       this.handleInstitutionLogin();
     }
   }
 
   handleInstitutionLogin(applicationType?: ApplicationTypeEnum) {
     this.toggleLoading();
-    if (!this.selectedInstitution){
+    if (!this.selectedInstitution) {
       this.toggleLoading();
       this.router.navigate(["/"]);
       return;
     }
 
-    this.institutionService.logInToInstitution(this.selectedInstitution!.id!, applicationType).subscribe({
-     next: (response) => {
-        if(response.data){
-          this.tokenService.saveToken(response.data.jwtToken.value);
-          this.tokenService.saveRefreshToken(response.data.refreshToken.value);
-          this.tokenService.saveInstitution(this.selectedInstitution ?? {});
-          this.router.navigate(["/"]);
-        }else{this.handleLoginToInstitutionError();}
-        this.toggleLoading();
-     },
-     error: (error) =>
-      {
-        this.handleLoginToInstitutionError(error);
-        this.toggleLoading();
-      },
-    });
+    this.institutionService
+      .logInToInstitution(this.selectedInstitution!.id!, applicationType)
+      .subscribe({
+        next: (response) => {
+          if (response.data) {
+            this.tokenService.saveToken(response.data.jwtToken.value);
+            this.tokenService.saveRefreshToken(
+              response.data.refreshToken.value
+            );
+            this.tokenService.saveInstitution(this.selectedInstitution ?? {});
+            this.router.navigate(["/"]);
+          } else {
+            this.handleLoginToInstitutionError();
+          }
+          this.toggleLoading();
+        },
+        error: (error) => {
+          this.handleLoginToInstitutionError(error);
+          this.toggleLoading();
+        },
+      });
   }
 
   setApplicationTypes() {
-    if (!this.selectedInstitution){
+    if (!this.selectedInstitution) {
       this.router.navigate(["/"]);
       return;
     }
-    const selectedOption = this.options.find((option: any) => option.institution.id === this.selectedInstitution!.id);
-    this.applicationTypes = selectedOption ? selectedOption.applicationTypes : [];
+    const selectedOption = this.options.find(
+      (option: any) => option.institution.id === this.selectedInstitution!.id
+    );
+    this.applicationTypes = selectedOption
+      ? selectedOption.applicationTypes
+      : [];
   }
 
   openSelectInstitutionModal() {
-    this.selectInstitutionModalRef = this.modalService.open(this.selectInstitutionContent, { size: 'lg', centered: true, backdrop: 'static', keyboard: false });
+    this.selectInstitutionModalRef = this.modalService.open(
+      this.selectInstitutionContent,
+      { size: "lg", centered: true, backdrop: "static", keyboard: false }
+    );
   }
 
   closeSelectInstitutionModal() {
@@ -184,7 +203,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   openSelectApplicationModal() {
     this.modalService.dismissAll();
-    this.selectApplicationModalRef = this.modalService.open(this.selectAppContent, { size: 'lg', centered: true, backdrop: 'static', keyboard: false });
+    this.selectApplicationModalRef = this.modalService.open(
+      this.selectAppContent,
+      { size: "lg", centered: true, backdrop: "static", keyboard: false }
+    );
   }
 
   closeSelectApplicationModal() {
@@ -194,7 +216,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSelectInstitutionContinue() {
-    if(!this.selectedInstitution)return;
+    if (!this.selectedInstitution) return;
     this.selectInstitutionModalRef.close();
     this.setApplicationTypes();
     this.handleApplicationSelection();
@@ -212,18 +234,40 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.fieldTextType = !this.fieldTextType;
   }
 
-  handleLoginToInstitutionError(error?: HttpErrorResponse){
+  handleLoginToInstitutionError(error?: HttpErrorResponse) {
     SimpleAlerts.showError(getErrorMessage(error));
     this.tokenService.clearSessionData();
     this.reloadLocation();
   }
 
-  reloadLocation(){
-    setTimeout(() => {location.reload();}, 100); 
+  reloadLocation() {
+    setTimeout(() => {
+      location.reload();
+    }, 100);
   }
 
   toggleLoading() {
     this.loading = !this.loading;
   }
   ngOnDestroy(): void {}
+
+  whatsAppLogin(content: any) {
+    this.modalService.open(content,  { size: "md", backdrop: "static", centered: true });
+    setTimeout(() => {
+      this.initializeOtpless();
+    }, 300);
+  }
+
+  private initializeOtpless() {
+    const script = document.createElement("script");
+    script.id = "otpless-sdk";
+    script.src = "https://otpless.com/v4/auth.js";
+    script.setAttribute("data-appid", "Q2KO71NQOZN7YOF99KM7");
+    document.body.appendChild(script);
+  }
+
+  dismissModal() {
+    this.modalService.dismissAll();
+  }
+
 }
