@@ -21,6 +21,10 @@ export class UserService {
     return this.apiService.post(`${this.controller}/auth/login`, RequestHelper.createServiceRequest(data));
   }
 
+  whatsAppLogin(data: any): Observable<any> {
+    return this.apiService.post(`${this.controller}/auth/whatsapp/login`, RequestHelper.createServiceRequest(data));
+  }
+
   getUserApplicationTypes(userId: string, institutionId: string): Observable<any> {
     return this.apiService.get(`${this.user_role_controller}/user-application-types?userId=${userId}&institutionId=${institutionId}`);
   }

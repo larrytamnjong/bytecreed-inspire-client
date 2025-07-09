@@ -153,8 +153,6 @@
         </div>
     </footer>
 </div>
-
-
 <ng-template #selectInstitutionContent role="document" let-modal>
     <div class="modal-header p-3 bg-primary-subtle">
         <h5 class="modal-title" id="modalLabel1">Select Institution</h5>
@@ -164,8 +162,7 @@
     <div style="background-color: #F3F3F9; padding: 1rem;">
         <div class="col-12">
             <div class="mb-4">
-                <p class="text-muted"><code>Multiple institutions found.</code> Please select a default institution. You
-                    can always change it later.</p>
+                <p class="text-muted"><code>Multiple institutions found.</code> Please select a default institution. You can always change it later.</p>
                 <ng-select class="w-100" [(ngModel)]="selectedInstitution" placeholder="Search or select institution">
                     <ng-option *ngFor="let institution of institutions"
                         [value]="institution">{{institution.name}}({{institution.code}})</ng-option>
@@ -227,4 +224,6 @@
         </div>
     </div>
 </ng-template>
+
+
 

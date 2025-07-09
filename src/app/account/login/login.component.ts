@@ -13,6 +13,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { getErrorMessage } from "src/app/core/helpers/error-filter";
 import { countriesData } from "src/app/core/data/countries";
 import { environment } from "src/environments/environment";
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: "app-login",
@@ -50,7 +51,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private tokenService: TokenService,
     private modalService: NgbModal,
     private institutionService: InstitutionService,
-    private userService: UserService
+    private userService: UserService,
+     private cdr: ChangeDetectorRef,
   ) {
     this.loginForm = this.formBuilder.group({
       phone: ["", [Validators.required]],
@@ -58,9 +60,35 @@ export class LoginComponent implements OnInit, OnDestroy {
       countryCode: [null, [Validators.required]],
     });
 
-    (window as any).otpless = (otplessUser: any) => {
-      alert(JSON.stringify(otplessUser));
+    (window as any).otpless = (response: any) => {
+      if(response.status == "SUCCESS") {
+         this.whatsAppLogin(response.token, response.idToken);
+      }
     };
+  }
+
+  whatsAppLogin(token: string, jwtToken: string) {
+    this.toggleLoading();
+    this.userService.whatsAppLogin({token: token, jwtToken : jwtToken}).subscribe({
+      next: (response) => {
+        if (response.data) {
+          this.tokenService.saveToken(response.data.jwtToken.value);
+          this.tokenService.saveUser(response.data.user);
+          this.options = response.data.options;
+          this.institutions = response.data.options.map(
+            (option: any) => option.institution
+          );
+          this.handleInstitutionSelection();
+        } else {
+          SimpleAlerts.showError();
+        }
+        this.toggleLoading();
+      },
+      error: (error) => {
+        SimpleAlerts.showError(getErrorMessage(error));
+        this.toggleLoading();
+      },
+    });
   }
 
   ngOnInit(): void {
@@ -83,12 +111,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.submitted = true;
-    this.toggleLoading();
 
     if (this.loginForm.invalid) {
-      this.toggleLoading();
       return;
     }
+
+    this.toggleLoading();
 
     const login = {
       phone: String(this.f["phone"].value),
