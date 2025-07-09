@@ -13,7 +13,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { getErrorMessage } from "src/app/core/helpers/error-filter";
 import { countriesData } from "src/app/core/data/countries";
 import { environment } from "src/environments/environment";
-import { ChangeDetectorRef } from '@angular/core';
+import { NgZone } from '@angular/core';
 
 @Component({
   selector: "app-login",
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
     private institutionService: InstitutionService,
     private userService: UserService,
-     private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
   ) {
     this.loginForm = this.formBuilder.group({
       phone: ["", [Validators.required]],
@@ -61,9 +61,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
 
     (window as any).otpless = (response: any) => {
-      if(response.status == "SUCCESS") {
-         this.whatsAppLogin(response.token, response.idToken);
-      }
+      // if(response.status == "SUCCESS") {
+      //    this.whatsAppLogin(response.token, response.idToken);
+      // }
+       this.ngZone.run(() => {
+        this.whatsAppLogin(response.token, response.idToken);
+      });
     };
   }
 
@@ -225,11 +228,13 @@ export class LoginComponent implements OnInit, OnDestroy {
       : [];
   }
 
-  openSelectInstitutionModal() {
+  openSelectInstitutionModal() { 
+    setTimeout(() => {
     this.selectInstitutionModalRef = this.modalService.open(
       this.selectInstitutionContent,
       { size: "lg", centered: true, backdrop: "static", keyboard: false }
     );
+  });
   }
 
   closeSelectInstitutionModal() {
