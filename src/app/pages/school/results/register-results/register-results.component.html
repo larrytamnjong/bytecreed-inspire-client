@@ -7,14 +7,12 @@
                     <div class="col-sm">
                         <div>
                             <h5 class="card-title mb-0"><i
-                                    class="ri-pencil-ruler-line text-muted fs-18 align-middle me-1"> </i>Record
+                                    class="ri-edit-2-fill text-muted fs-18 align-middle me-1"> </i>Record
                                 Results</h5>
                         </div>
                     </div>
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
-                             <!-- <button type="button" class="btn btn-success" (click)="openModal(importResultsContent)"><i
-                                    class="ri-file-excel-2-line align-bottom me-1"></i> Download</button> -->
                             <button type="button" class="btn btn-success" (click)="openModal(importResultsContent)" [disabled]="isActionButtonDisabled()"><i
                                     class="ri-file-excel-2-line align-bottom me-1"></i> Import</button>
                             <button type="button" class="btn btn-secondary" (click)="openModal(scaleContent)"><i
