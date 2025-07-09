@@ -26,7 +26,7 @@
                                             bindLabel="name" bindValue="id" placeholder="Academic Periods"></ng-select>
                                     </div>
                                     <div class="col-xxl-2 col-lg-12">
-                                        <button type="button" class="btn btn-primary w-100" type="submit"><i
+                                        <button [disabled]="selectedStudentIds.length < 1" type="button" class="btn btn-primary w-100" type="submit"><i
                                                 class="ri-file-pdf-line mx-2"></i> Generate</button>
                                     </div>
                                 </div>

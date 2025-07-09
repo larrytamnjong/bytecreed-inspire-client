@@ -33,7 +33,7 @@
                                             bindLabel="name" bindValue="id" placeholder="Academic Period"></ng-select>
                                     </div>
                                     <div class="col-xxl-3 col-lg-6">
-                                        <button type="button" class="btn btn-primary w-100" type="submit"><i
+                                        <button [disabled]="!isFormValid" type="button" class="btn btn-primary w-100" type="submit"><i
                                                 class="ri-file-pdf-line mx-2"></i> Generate</button>
                                     </div>
                                 </div>

@@ -23,6 +23,7 @@ export class ReportCardsComponent extends BaseComponent {
 
   getReportCardForm!: UntypedFormGroup;
 
+  isFormValid: boolean = false;
   constructor(
     private resultReportService: ResultReportService,
     private classSectionService: ClassSectionService,
@@ -40,6 +41,10 @@ export class ReportCardsComponent extends BaseComponent {
       classId: [null, [Validators.required]],
       classSectionId: [null ],
       academicPeriodId: [null, [Validators.required]]
+    });
+
+    this.getReportCardForm.statusChanges.subscribe(status => {
+      this.isFormValid = status === 'VALID';
     });
 
     this.getClasses();

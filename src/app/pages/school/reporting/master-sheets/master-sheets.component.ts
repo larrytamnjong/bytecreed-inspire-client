@@ -24,6 +24,8 @@ export class MasterSheetsComponent extends BaseComponent {
 
   getMasterSheetForm!: UntypedFormGroup;
 
+  isFormValid: boolean = false;
+
   constructor(
     private reportService: ResultReportService,
     private classSectionService: ClassSectionService,
@@ -44,6 +46,10 @@ export class MasterSheetsComponent extends BaseComponent {
       academicPeriodId: [null, [Validators.required]]
     });
 
+    this.getMasterSheetForm.statusChanges.subscribe(status => {
+      this.isFormValid = status === 'VALID';
+    });
+    
     this.getClasses();
     this.getAcademicPeriods();
     this.getClassSections();
