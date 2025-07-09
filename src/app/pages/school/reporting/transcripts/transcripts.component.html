@@ -21,11 +21,11 @@
                             <form class="tablelist-form" autocomplete="off" [formGroup]="getTranscriptsForm"
                                 (ngSubmit)="getTranscripts()">
                                 <div class="row g-3">
-                                    <div class="col-xxl-8 col-lg-12">
+                                    <div class="col-xxl-10 col-lg-12">
                                         <ng-select [items]="academicYears" formControlName="academicYearIds" multiple="true"
                                             bindLabel="name" bindValue="id" placeholder="Academic Periods"></ng-select>
                                     </div>
-                                    <div class="col-xxl-4 col-lg-12">
+                                    <div class="col-xxl-2 col-lg-12">
                                         <button type="button" class="btn btn-primary w-100" type="submit"><i
                                                 class="ri-file-pdf-line mx-2"></i> Generate</button>
                                     </div>
