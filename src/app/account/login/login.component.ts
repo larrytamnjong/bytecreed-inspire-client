@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   whatsAppLogin(token: string, jwtToken: string) {
     this.toggleLoading();
-    this.userService.whatsAppLogin({token: token, jwtToken : jwtToken}).subscribe({
+    this.userService.otpLessLogin({token: token, jwtToken : jwtToken}).subscribe({
       next: (response) => {
         if (response.data) {
           this.tokenService.saveToken(response.data.jwtToken.value);

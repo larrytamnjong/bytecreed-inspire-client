@@ -21,7 +21,7 @@ export class UserService {
     return this.apiService.post(`${this.controller}/auth/login`, RequestHelper.createServiceRequest(data));
   }
 
-  whatsAppLogin(data: any): Observable<any> {
+  otpLessLogin(data: any): Observable<any> {
     return this.apiService.post(`${this.controller}/auth/otpless/login`, RequestHelper.createServiceRequest(data));
   }
 
