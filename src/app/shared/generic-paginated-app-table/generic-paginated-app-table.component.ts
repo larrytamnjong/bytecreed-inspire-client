@@ -1,6 +1,8 @@
 import { Component, Input, Output, EventEmitter, TemplateRef, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 @Component({
   selector: 'generic-paginated-app-table',
   templateUrl: './generic-paginated-app-table.component.html',
@@ -36,6 +38,7 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
   totalPages: number = 0;
   loading: boolean = false;
 
+  private searchSubject = new Subject<string>();
 
   constructor(private http: HttpClient) {}
 
@@ -45,6 +48,19 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
       this.selectedRows.clear();
       this.emitSelectedRows();
     }
+  }
+
+  ngOnInit() {
+  this.searchSubject.pipe(
+    debounceTime(300), 
+    distinctUntilChanged()
+  ).subscribe(() => {
+    this.onSearchChange();
+  });
+}
+
+  onSearchInputChange() {
+    this.searchSubject.next(this.searchTerm);
   }
 
   loadData() {

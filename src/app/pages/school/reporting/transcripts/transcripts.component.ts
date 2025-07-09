@@ -20,6 +20,18 @@ export class TranscriptsComponent extends BaseComponent implements OnInit {
   students: any = [];
   academicYears: any = [];
   classes: any  = [];
+  selectedStudentIds: any[] = [];
+  reloadTable: boolean = false;
+
+   headers: any = [
+    { key: 'familyName', displayName: 'Family Name' },
+    { key: 'givenNames', displayName: 'Given Names'}, 
+    { key: 'dateOfBirth', displayName: 'Date Of Birth' },
+    { key: 'sex', displayName: 'Sex' },
+    { key: 'admissionNumber', displayName: 'Admission Number' },
+    { key: 'status', displayName: 'Status' },
+  ]
+
 
   getTranscriptsForm!: UntypedFormGroup;
   constructor( 
@@ -42,20 +54,22 @@ export class TranscriptsComponent extends BaseComponent implements OnInit {
 
     this.getAcademicYears();
     this.getClasses();
+    this.getLookUps();
   }
 
   getTranscripts(){
+
+    this.getTranscriptsForm.patchValue({studentIds: this.selectedStudentIds});
+
    if(this.getTranscriptsForm.invalid){
     return;
    }
-
-   this.reportService.getTranscripts(this.getTranscriptsForm.value).pipe(finalize(() => {
-      this.getTranscriptsForm.reset();
-    })).subscribe({
+   this.toggleLoading();
+   this.reportService.getTranscripts(this.getTranscriptsForm.value).pipe(finalize(() => { this.toggleLoading()})).subscribe({
       next: (response) => {
         if(response.success)
           {
-            this.students = response.data;
+          console.log(response.data);
           }
       },
       error: () => {},
@@ -84,6 +98,10 @@ export class TranscriptsComponent extends BaseComponent implements OnInit {
       },
       error: () => {},
     });
+  }
+
+  onSelectedRowsChange(event: any){
+   this.selectedStudentIds = event;
   }
 
 }
