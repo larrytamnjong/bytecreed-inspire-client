@@ -47,6 +47,7 @@ export enum SchoolMenuEnum {
   Admission = 46,
   Analytics = 47,
   Reporting = 48,
+  RollOver = 49,
 }
 
 export enum StudentMenuEnum{

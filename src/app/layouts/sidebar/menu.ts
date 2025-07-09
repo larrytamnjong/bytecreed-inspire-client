@@ -131,6 +131,13 @@ export const MENU: MenuItem[] = [
           },
         ],
       },
+      {
+        id: SchoolMenuEnum.RollOver,
+        label: "MENUITEMS.CONFIGURATION.LIST.ROLLOVER",
+        parentId: SchoolMenuEnum.Configuration,
+        link: "/school/configuration/roll-over",
+        permission: PermissionActionEnum.School_ManageConfiguration,
+      },
     ],
   },
   {
