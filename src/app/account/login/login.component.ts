@@ -61,9 +61,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
 
     (window as any).otpless = (response: any) => {
-      // if(response.status == "SUCCESS") {
-      //    this.whatsAppLogin(response.token, response.idToken);
-      // }
        this.ngZone.run(() => {
         this.whatsAppLogin(response.token, response.idToken);
       });
