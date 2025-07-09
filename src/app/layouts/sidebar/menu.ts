@@ -151,7 +151,7 @@ export const MENU: MenuItem[] = [
     label: "MENUITEMS.REPORTS.LIST.TRANSCRIPTS",
     parentId: SchoolMenuEnum.Reports,
     link: "/school/reporting/transcripts",
-    icon: " ri-file-list-3-line",
+    icon: "ri-file-list-3-line",
     permission: PermissionActionEnum.School_ManageReports,
   },
   {

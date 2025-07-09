@@ -1,1 +1,46 @@
 <app-breadcrumbs title="REPORTING" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header border-bottom-dashed">
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm">
+                        <div>
+                            <h5 class="card-title mb-0"><i class="ri-file-list-3-line text-muted fs-18 align-middle me-1"> </i>Transcripts</h5>
+                        </div>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="d-flex flex-wrap align-items-start gap-2">
+                            <!-- <button type="button" class="btn btn-success"  ><i
+                                    class="ri-file-excel-2-line align-bottom me-1"></i> Excel</button> -->
+                  
+                        </div>
+                    </div>
+                    <div class="col-xl-12 ">
+                        <div class="card-body">
+                            <form class="tablelist-form" autocomplete="off" [formGroup]="getTranscriptsForm"
+                                (ngSubmit)="getTranscripts()">
+                                <div class="row g-3">
+                                    <div class="col-xxl-5 col-lg-6">
+                                        <ng-select [items]="students" formControlName="studentId" bindLabel="name"
+                                            bindValue="id" placeholder="Students"></ng-select>
+                                    </div>
+                                    <div class="col-xxl-5 col-lg-6">
+                                        <ng-select [items]="academicYears" formControlName="academicYearIds"
+                                            bindLabel="name" bindValue="id" placeholder="Academic Periods"></ng-select>
+                                    </div>
+                                    <div class="col-xxl-2 col-lg-6">
+                                        <button type="button" class="btn btn-primary w-100" type="submit"><i
+                                                class="ri-equalizer-fill mx-2"></i>Load</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <app-loading [loading]="loading"></app-loading>
+
+    </div>
