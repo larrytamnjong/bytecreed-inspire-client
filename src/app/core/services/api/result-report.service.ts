@@ -23,7 +23,7 @@ export class ResultReportService {
         if (academicPeriodId) {
             queryParams = queryParams.set('academicPeriodId', academicPeriodId);
         }
-        return this.apiService.post(`${this.RESULT_REPORT_CONTROLLER}/report-cards`, {params: queryParams});
+        return this.apiService.get(`${this.RESULT_REPORT_CONTROLLER}/report-cards`, {params: queryParams});
     }
 
     public getTranscripts(data: any): Observable<ServiceResponse<any>> {

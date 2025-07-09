@@ -23,10 +23,10 @@
                                 <div class="row g-3">
                                     <div class="col-xxl-5 col-lg-6">
                                         <ng-select [items]="students" formControlName="studentId" bindLabel="name"
-                                            bindValue="id" placeholder="Students"></ng-select>
+                                            bindValue="id" placeholder="Students" multiple="true"></ng-select>
                                     </div>
                                     <div class="col-xxl-5 col-lg-6">
-                                        <ng-select [items]="academicYears" formControlName="academicYearIds"
+                                        <ng-select [items]="academicYears" formControlName="academicYearIds" multiple="true"
                                             bindLabel="name" bindValue="id" placeholder="Academic Periods"></ng-select>
                                     </div>
                                     <div class="col-xxl-2 col-lg-6">
