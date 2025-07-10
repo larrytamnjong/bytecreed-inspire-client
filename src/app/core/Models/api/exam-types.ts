@@ -1,4 +1,6 @@
-export class ExamType{
+import { AcademicYearScopeTracker } from "../entity-trackers/academic-year-scope-tracker";
+
+export class ExamType extends AcademicYearScopeTracker{
     id?: string;
     name!: string;
     academicTermId!: string;

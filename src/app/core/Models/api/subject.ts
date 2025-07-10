@@ -1,4 +1,6 @@
-export class Subject{
+import { AcademicYearScopeTracker } from "../entity-trackers/academic-year-scope-tracker";
+
+export class Subject extends AcademicYearScopeTracker{
     id?: string;
     name!: string;
     description!: string;

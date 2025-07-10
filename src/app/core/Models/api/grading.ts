@@ -1,4 +1,6 @@
-export class GradingSystem{
+import { AcademicYearScopeTracker } from "../entity-trackers/academic-year-scope-tracker";
+
+export class GradingSystem extends AcademicYearScopeTracker{
     id?: string;
     name!: string;
     scale!: number;
@@ -6,7 +8,7 @@ export class GradingSystem{
     gradingScale?: number;
 }
 
-export class GradeSetup{
+export class GradeSetup extends AcademicYearScopeTracker{
     id?: string;
     grade!: string;
     remark!: string;

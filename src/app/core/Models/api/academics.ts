@@ -1,4 +1,6 @@
-export class AcademicTerm {
+import { AcademicYearScopeTracker } from "../entity-trackers/academic-year-scope-tracker";
+
+export class AcademicTerm extends AcademicYearScopeTracker {
     id?: string;
     name?: string;
 }
@@ -11,10 +13,9 @@ export class AcademicYear {
     endDate?: Date; 
 }
 
-export class AcademicPeriod {
+export class AcademicPeriod extends AcademicYearScopeTracker {
     id?: string;
     name?: string; 
-    academicYearId?: string;
     academicTermId?: string;
     academicYearName?: string;
     academicTermName?: string;
