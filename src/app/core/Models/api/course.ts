@@ -1,5 +1,5 @@
-import { AcademicYearScopeTracker } from "../entity-trackers/academic-year-scope-tracker";
-export class Course extends AcademicYearScopeTracker {
+import { YearEntityTracker } from "../entity-trackers/year-entity-tracker";
+export class Course extends YearEntityTracker {
     id?: string;
     name!: string;
 }

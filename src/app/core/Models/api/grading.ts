@@ -1,6 +1,6 @@
-import { AcademicYearScopeTracker } from "../entity-trackers/academic-year-scope-tracker";
+import { YearEntityTracker } from "../entity-trackers/year-entity-tracker";
 
-export class GradingSystem extends AcademicYearScopeTracker{
+export class GradingSystem extends YearEntityTracker{
     id?: string;
     name!: string;
     scale!: number;
@@ -8,7 +8,7 @@ export class GradingSystem extends AcademicYearScopeTracker{
     gradingScale?: number;
 }
 
-export class GradeSetup extends AcademicYearScopeTracker{
+export class GradeSetup extends YearEntityTracker{
     id?: string;
     grade!: string;
     remark!: string;

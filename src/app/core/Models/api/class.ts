@@ -1,6 +1,6 @@
-import { AcademicYearScopeTracker } from "../entity-trackers/academic-year-scope-tracker";
+import { YearEntityTracker } from "../entity-trackers/year-entity-tracker";
 
-export class Class extends AcademicYearScopeTracker{
+export class Class extends YearEntityTracker{
     id?: string;
     name!: string;
     nextClassId?: string;
@@ -12,7 +12,7 @@ export class Class extends AcademicYearScopeTracker{
     previousClassName?: string;
   }
 
-  export class ClassExamType extends AcademicYearScopeTracker {
+  export class ClassExamType extends YearEntityTracker {
     id?: string;
     examTypeId!: string;
     overrideDefaultWeight!: boolean;
@@ -21,12 +21,12 @@ export class Class extends AcademicYearScopeTracker{
     classId?: string; 
   }
 
-  export class ClassGroup extends AcademicYearScopeTracker {
+  export class ClassGroup extends YearEntityTracker {
     id?: string;
     name!: string;
   }
   
-  export class ClassSubject extends AcademicYearScopeTracker {
+  export class ClassSubject extends YearEntityTracker {
     id?: string;
     subjectId!: string;
     isRequired: boolean = false;
