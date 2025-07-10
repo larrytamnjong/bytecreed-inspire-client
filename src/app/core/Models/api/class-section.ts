@@ -1,6 +1,6 @@
-import { YearEntityTracker } from "../entity-trackers/year-entity-tracker";
+import { AcademicCycleTracker } from "../entity-trackers/academic-cycle-tracker";
 
-export class ClassSection extends YearEntityTracker{
+export class ClassSection extends AcademicCycleTracker{
  id?: string;
  name?: string;
 }

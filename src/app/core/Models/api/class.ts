@@ -1,6 +1,6 @@
-import { YearEntityTracker } from "../entity-trackers/year-entity-tracker";
+import { AcademicCycleTracker } from "../entity-trackers/academic-cycle-tracker";
 
-export class Class extends YearEntityTracker{
+export class Class extends AcademicCycleTracker{
     id?: string;
     name!: string;
     nextClassId?: string;
@@ -12,7 +12,7 @@ export class Class extends YearEntityTracker{
     previousClassName?: string;
   }
 
-  export class ClassExamType extends YearEntityTracker {
+  export class ClassExamType extends AcademicCycleTracker {
     id?: string;
     examTypeId!: string;
     overrideDefaultWeight!: boolean;
@@ -21,12 +21,12 @@ export class Class extends YearEntityTracker{
     classId?: string; 
   }
 
-  export class ClassGroup extends YearEntityTracker {
+  export class ClassGroup extends AcademicCycleTracker {
     id?: string;
     name!: string;
   }
   
-  export class ClassSubject extends YearEntityTracker {
+  export class ClassSubject extends AcademicCycleTracker {
     id?: string;
     subjectId!: string;
     isRequired: boolean = false;

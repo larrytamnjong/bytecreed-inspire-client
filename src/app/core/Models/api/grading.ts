@@ -1,6 +1,6 @@
-import { YearEntityTracker } from "../entity-trackers/year-entity-tracker";
+import { AcademicCycleTracker } from "../entity-trackers/academic-cycle-tracker";
 
-export class GradingSystem extends YearEntityTracker{
+export class GradingSystem extends AcademicCycleTracker{
     id?: string;
     name!: string;
     scale!: number;
@@ -8,7 +8,7 @@ export class GradingSystem extends YearEntityTracker{
     gradingScale?: number;
 }
 
-export class GradeSetup extends YearEntityTracker{
+export class GradeSetup extends AcademicCycleTracker{
     id?: string;
     grade!: string;
     remark!: string;
