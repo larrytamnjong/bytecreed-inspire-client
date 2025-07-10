@@ -64,6 +64,22 @@ export class RolloverComponent extends BaseComponent implements OnInit {
       SimpleAlerts.showWarning('Academic year from and to cannot be the same');
       return;
     }
+
+    this.toggleLoading();
+
+    this.academicService.rollover(this.form.value).pipe(finalize(() => this.toggleLoading())).subscribe({
+      next: (response) => {
+        if(response.success){
+          SimpleAlerts.showSuccess();
+          this.dismissModal();
+        }else{
+          SimpleAlerts.showError(response.message);
+        }
+      },
+      error: (error) => {
+        SimpleAlerts.showError(getErrorMessage(error));
+      }
+    });
   }
 
   getAcademicYears() {
