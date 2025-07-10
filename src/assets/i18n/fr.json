@@ -25,7 +25,8 @@
         "COURSES": "Courses",
         "SCHOOL": "School",
         "ACADEMICS": "Academics",
-        "EXAMTYPES": "Exam Types"
+        "EXAMTYPES": "Exam Types",
+        "ROLLOVER": "System Rollover"
       }
     },
     "GRADING": {
