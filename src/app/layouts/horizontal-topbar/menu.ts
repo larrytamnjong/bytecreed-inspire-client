@@ -63,8 +63,8 @@ export const MENU: MenuItem[] = [
           {
             id: SchoolMenuEnum.RollOver,
             label: "MENUITEMS.ACADEMICS.LIST.ROLLOVER",
-            parentId: SchoolMenuEnum.Academics,
-            link: "/school/configuration/roll-over",
+            parentId: SchoolMenuEnum.Academics,            
+            link: "/school/configuration/academics/rollover",
             permission: PermissionActionEnum.School_ManageConfiguration,
           }
         ],

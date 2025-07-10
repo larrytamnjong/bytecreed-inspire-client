@@ -1,0 +1,48 @@
+<app-breadcrumbs title="Rollover" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header border-bottom-dashed">
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm">
+                        <div><h5 class="card-title mb-0"><i class="ri-calendar-event-line text-muted fs-18 align-middle me-1">     </i>Year Rollover</h5></div>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="d-flex flex-wrap align-items-start gap-2">
+                            <button type="button" class="btn btn-warning add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-alert-line align-bottom me-1"></i> Execute</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-loading [loading]="loading"></app-loading>
+
+    <ng-template #content role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title" id="modalLabel">Rollover Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
+        </div>
+        <form  class="tablelist-form" autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Academic Year From<span class="text-danger">*</span></label>
+                    <ng-select [items]="academicYears" bindLabel="name" id="academicYear" bindValue="id" required formControlName="academicYearIdFrom" placeholder="Select Academic Year From" [ngClass]="{ 'is-invalid': submitted && form.controls['academicYearIdFrom'].invalid }"></ng-select>
+                    <div class="invalid-feedback">Please select an academic year from</div>
+                </div>
+                 <div class="mb-3">
+                    <label class="form-label">Academic Year To<span class="text-danger">*</span></label>
+                    <ng-select [items]="academicYears" bindLabel="name" id="academicYear" bindValue="id" required formControlName="academicYearIdTo" placeholder="Select Academic Year To" [ngClass]="{ 'is-invalid': submitted && form.controls['academicYearIdTo'].invalid }"></ng-select>
+                    <div class="invalid-feedback">Please select an academic year to</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()">Close</button>
+                    <button type="submit" class="btn btn-danger" id="add-btn"><i class="ri-alert-line align-bottom me-1"></i> Rollover</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+</div>
