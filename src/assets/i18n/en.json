@@ -25,8 +25,7 @@
         "COURSES": "Courses",
         "SCHOOL": "School",
         "ACADEMICS": "Academics",
-        "EXAMTYPES": "Exam Types",
-        "ROLLOVER": "System Rollover"
+        "EXAMTYPES": "Exam Types"
       }
     },
     "GRADING": {
@@ -62,7 +61,9 @@
       "LIST": {
         "ACADEMICYEARS": "Years",
         "ACADEMICTERMS": "Terms",
-        "ACADEMICPERIODS": "Periods"
+        "ACADEMICPERIODS": "Periods",
+        "ROLLOVER": "Rollover"
+
       }
     },
     "ATTENDANCE": {
