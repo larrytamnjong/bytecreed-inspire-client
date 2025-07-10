@@ -93,6 +93,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
       isActive: [true, [Validators.required]],
       classGroupId: [null],
       sortOrder: [null],
+      academicYearId: [null],  
     });
 
 
@@ -103,6 +104,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
       overrideDefaultWeight: [false, [Validators.required]],
       isActive: [true, [Validators.required]],
       classIds: [null, [Validators.required]],
+      academicYearId: [null],  
     });
 
     this.classExamTypeDeleteForm = this.classExamTypeFormBuilderDelete.group({
@@ -133,7 +135,8 @@ export class ClassesComponent extends BaseComponent implements OnInit {
         overrideDefaultCoefficient: [false, [Validators.required]],
         isActive: [true, [Validators.required]],
         classIds: [null, [Validators.required]],
-        isRequired: [null, [Validators.required] ]
+        isRequired: [null, [Validators.required] ],
+        academicYearId: [null],  
       });
 
       this.classSubjectDeleteForm = this.classFormBuilder.group({

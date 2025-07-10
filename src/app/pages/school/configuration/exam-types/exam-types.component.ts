@@ -61,6 +61,7 @@ export class ExamTypesComponent extends BaseComponent implements OnInit {
         weight: [null],
         academicTermId: [null, [Validators.required]],
         sortOrder: [null],
+        academicYearId: [null],
       });
 
       this.examTypeForm.get('useWeight')?.valueChanges.subscribe((useWeight: boolean) => {

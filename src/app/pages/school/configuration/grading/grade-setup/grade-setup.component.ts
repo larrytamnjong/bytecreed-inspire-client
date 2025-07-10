@@ -51,6 +51,7 @@ export class GradeSetupComponent extends BaseComponent implements OnInit {
       maxMark: [0, [Validators.required]],
       gradingSystemId: [this.gradingSystems[0]?.id ?? null, [Validators.required]],
       sortOrder: [null],
+      academicYearId: [null],
     });
 
     this.getGradingSystems();
