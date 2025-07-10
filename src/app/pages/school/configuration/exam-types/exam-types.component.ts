@@ -9,27 +9,20 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { RootReducerState } from 'src/app/store';
-import { LookUpView } from 'src/app/core/Models/common/look-up-view';
-import { LookUpData } from 'src/app/core/Models/common/look-up-data';
-import { getLookUpsAction } from 'src/app/store/common/look-up/look-up.action';
-import { selectLookUpsView } from 'src/app/store/common/look-up/look-up.selector';
-import { LookUpTableEnum } from 'src/app/core/enums/look-up-table';
 import { ExamTypeService } from 'src/app/core/services/api/exam-type.service';
 import { ExamType } from 'src/app/core/Models/api/exam-types';
+import { BaseComponent } from 'src/app/shared/base.component';
 
 @Component({
   selector: 'app-exam-types',
   templateUrl: './exam-types.component.html',
   styleUrl: './exam-types.component.scss'
 })
-export class ExamTypesComponent implements OnInit {
+export class ExamTypesComponent extends BaseComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
-
-  loading: boolean = false;
+ 
   submitted: boolean = false;
 
-  lookUps?: LookUpView;
-  yesOrNoResponse: LookUpData[] = [];
   academicTerms: AcademicTerm[] | undefined = [];
   examTypes: ExamType[] | undefined | any = [];
 
@@ -50,8 +43,10 @@ export class ExamTypesComponent implements OnInit {
     private examTypeFormBuilder: UntypedFormBuilder,
     private examTypeService: ExamTypeService,
     private academicService: AcademicService,
-    private store: Store<{ data: RootReducerState }>
-  ){}
+    protected override store: Store<{ data: RootReducerState }>
+  ){
+    super(store);
+  }
 
   ngOnInit(): void {
     this.getExamtypes();
@@ -163,31 +158,12 @@ export class ExamTypesComponent implements OnInit {
     this.isCreateMode = true;
     this.examTypeForm.reset();
   }
-
-  toggleLoading() {
-    this.loading = !this.loading;
-  }
-
-  getUseWeightLabel(res: boolean): string {
-    const response = res ? 1 : 0;
-    const responseItem = this.yesOrNoResponse.find(item => item.dataCode === response);
-    return responseItem?.text ?? '';
-  }
   
   getAcademicTermName(academicTermId: string): string {
     const name = this.academicTerms?.find(item => item.id === academicTermId)?.name;
     return name?? '';
   }
 
-  getLookUps() {
-    this.store.dispatch(getLookUpsAction());
-    this.store.select(selectLookUpsView).subscribe((lookUps) => {
-      if(lookUps){
-        this.lookUps = lookUps;
-        this.yesOrNoResponse = this.lookUps?.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTableEnum.YesOrNoResponse) || [];
-      }
-    });
-  }
   
   getAcademicTerms() {
     this.academicService.getAcademicTerms().subscribe({

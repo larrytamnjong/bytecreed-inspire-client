@@ -11,6 +11,9 @@ import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 import { finalize } from 'rxjs';
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 import { File } from 'src/app/core/Models/api/file';
+import { BaseComponent } from 'src/app/shared/base.component';
+import { Store } from '@ngrx/store';
+import { RootReducerState } from 'src/app/store';
 
 
 @Component({
@@ -18,13 +21,12 @@ import { File } from 'src/app/core/Models/api/file';
   templateUrl: './school.component.html',
   styleUrl: './school.component.scss'
 })
-export class SchoolComponent implements OnInit {
+export class SchoolComponent extends BaseComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
 
-  loading: boolean = false;
   schoolForm!: UntypedFormGroup;
   addressForm!: UntypedFormGroup;
-  countries: Country[] = [];
+
   logoFile: File | undefined = undefined;
   logoFileId: null | undefined = null;
   submitted = false;
@@ -37,8 +39,11 @@ export class SchoolComponent implements OnInit {
     private schoolFormBuilder: UntypedFormBuilder,
     private lookUpService: LookUpService,
     private schoolService: SchoolService,
-    private fileService: FileService
-  ) { }
+    private fileService: FileService,
+    protected override store: Store<{ data: RootReducerState }>
+  ) { 
+    super(store);
+  }
 
   ngOnInit(): void {
      this.breadCrumbItems = [
@@ -190,7 +195,5 @@ getSchool() {
    error: (error) => {SimpleAlerts.showError(getErrorMessage(error))}
   });
 }
-
-toggleLoading() {this.loading = !this.loading;}
 
 }

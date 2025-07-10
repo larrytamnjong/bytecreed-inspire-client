@@ -4,20 +4,28 @@ import { finalize } from 'rxjs';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 import { AdmissionNumberConfigurationService } from 'src/app/core/services/api/admission-number-configuration.service';
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
+import { BaseComponent } from 'src/app/shared/base.component';
+import { Store } from '@ngrx/store';
+import { RootReducerState } from 'src/app/store';
 @Component({
   selector: 'app-admission',
   templateUrl: './admission.component.html',
   styleUrl: './admission.component.scss'
 })
-export class AdmissionComponent implements OnInit {
+export class AdmissionComponent extends BaseComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
   submittedAdmissionNumberConfigurationForm: boolean = false;
-  loading: boolean = false; 
 
   admissionNumberConfigurationForm!: UntypedFormGroup;
   get fAdmissionNumberConfiguration() {return this.admissionNumberConfigurationForm.controls;}
 
-  constructor(private admissionNumberConfigurationFormBuilder: UntypedFormBuilder, private admissionNumberConfigurationService: AdmissionNumberConfigurationService) { }
+  constructor(
+    private admissionNumberConfigurationFormBuilder: UntypedFormBuilder, 
+    private admissionNumberConfigurationService: AdmissionNumberConfigurationService,
+    protected override store: Store<{ data: RootReducerState }>) 
+    { 
+      super(store);
+    }
   ngOnInit(): void {
     this.toggleLoading();
     this.breadCrumbItems = [{ label: 'Configuration' },{ label: 'Admission', active: true }];
@@ -74,7 +82,4 @@ export class AdmissionComponent implements OnInit {
     this.submittedAdmissionNumberConfigurationForm = false;
   }
 
-  toggleLoading() {
-    this.loading = !this.loading;
-  }
-}
+ }

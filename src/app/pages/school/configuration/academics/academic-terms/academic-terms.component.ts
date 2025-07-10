@@ -7,16 +7,18 @@ import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 import { AcademicService } from 'src/app/core/services/api/academics.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Validators } from '@angular/forms';
+import { BaseComponent } from 'src/app/shared/base.component';
+import { Store } from '@ngrx/store';
+import { RootReducerState } from 'src/app/store';
 
 @Component({
   selector: 'app-academic-terms',
   templateUrl: './academic-terms.component.html',
   styleUrl: './academic-terms.component.scss'
 })
-export class AcademicTermsComponent implements OnInit {
+export class AcademicTermsComponent extends BaseComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
 
-  loading: boolean = false;
   submitted: boolean = false;
 
   academicTerms: AcademicTerm[] | undefined | any = [];
@@ -31,8 +33,12 @@ export class AcademicTermsComponent implements OnInit {
 constructor(
   private modalService: NgbModal, 
   private academicFormBuilder: UntypedFormBuilder, 
-  private academicService: AcademicService
-) { }
+  private academicService: AcademicService,
+  protected override store: Store<{ data: RootReducerState }>
+  
+) {
+  super(store);
+ }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Configuration' },{ label: 'Academics'}, { label: 'Academic Terms', active: true }];
@@ -125,8 +131,5 @@ constructor(
     this.academicTermForm.reset();
   }
 
-  toggleLoading() {
-    this.loading = !this.loading;
-  }
 
 }

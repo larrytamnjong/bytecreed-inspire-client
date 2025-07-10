@@ -14,21 +14,18 @@ import { LookUpData } from 'src/app/core/Models/common/look-up-data';
 import { getLookUpsAction } from 'src/app/store/common/look-up/look-up.action';
 import { selectLookUpsView } from 'src/app/store/common/look-up/look-up.selector';
 import { LookUpTableEnum } from 'src/app/core/enums/look-up-table';
+import { BaseComponent } from 'src/app/shared/base.component';
 
 @Component({
   selector: 'app-academic-years',
   templateUrl: './academic-years.component.html',
   styleUrl: './academic-years.component.scss'
 })
-export class AcademicYearsComponent implements OnInit {
+export class AcademicYearsComponent extends BaseComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
 
-    loading: boolean = false;
     submitted: boolean = false;
-
-    lookUps?: LookUpView;
-    activeAndInactiveStatus: LookUpData[] = [];
-  
+ 
     academicYears: AcademicYear[] | undefined | any = [];
     academicYearForm!: UntypedFormGroup;
     isCreateMode: boolean = true;
@@ -45,8 +42,10 @@ export class AcademicYearsComponent implements OnInit {
       private modalService: NgbModal,
       private academicFormBuilder: UntypedFormBuilder,
       private academicService: AcademicService,
-      private store: Store<{ data: RootReducerState }>
-    ) {}
+      protected override store: Store<{ data: RootReducerState }>
+    ) {
+      super(store);
+    }
 
 
   ngOnInit(): void {
@@ -144,24 +143,5 @@ export class AcademicYearsComponent implements OnInit {
     this.academicYearForm.reset();
   }
 
-  toggleLoading() {
-    this.loading = !this.loading;
-  }
-
-  getStatusLabel(status: boolean): string {
-    const statusCode = status ? 1 : 0;
-    const statusItem = this.activeAndInactiveStatus.find(item => item.dataCode === statusCode);
-    return statusItem?.text ?? '';
-  }
-
-  getLookUps() {
-    this.store.dispatch(getLookUpsAction());
-    this.store.select(selectLookUpsView).subscribe((lookUps) => {
-      if(lookUps){
-       this.lookUps = lookUps;
-       this.activeAndInactiveStatus = this.lookUps?.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTableEnum.ActiveAndInactiveStatus) || [];
-      }
-    });
-  }
 
 }

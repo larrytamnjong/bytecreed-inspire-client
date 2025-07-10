@@ -27,7 +27,7 @@
 
                 <ng-template #statusTemplate let-status let-row="row">
                     <div class="status">
-                        <span class="badge text-uppercase" [ngClass]="{ 'bg-success-subtle text-success': status === true, 'bg-danger-subtle text-danger': status !== true }">{{ getStatusLabel(status) }}</span>
+                        <span class="badge text-uppercase" [ngClass]="{ 'bg-success-subtle text-success': status === true, 'bg-danger-subtle text-danger': status !== true }">{{ getActiveOrInactiveLabel(status) }}</span>
                     </div>
                 </ng-template>
                 <ng-template #dateTemplate let-date let-row="row">{{ date | date: 'longDate' }}</ng-template>

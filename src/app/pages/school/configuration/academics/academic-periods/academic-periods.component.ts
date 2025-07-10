@@ -9,11 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { RootReducerState } from 'src/app/store';
-import { LookUpView } from 'src/app/core/Models/common/look-up-view';
-import { LookUpData } from 'src/app/core/Models/common/look-up-data';
-import { getLookUpsAction } from 'src/app/store/common/look-up/look-up.action';
-import { selectLookUpsView } from 'src/app/store/common/look-up/look-up.selector';
-import { LookUpTableEnum } from 'src/app/core/enums/look-up-table';
+import { BaseComponent } from 'src/app/shared/base.component';
 
 
 @Component({
@@ -21,14 +17,11 @@ import { LookUpTableEnum } from 'src/app/core/enums/look-up-table';
   templateUrl: './academic-periods.component.html',
   styleUrl: './academic-periods.component.scss'
 })
-export class AcademicPeriodsComponent implements OnInit {
+export class AcademicPeriodsComponent  extends BaseComponent implements OnInit {
     breadCrumbItems!: Array<{}>;
 
-    loading: boolean = false;
     submitted: boolean = false;
 
-    lookUps?: LookUpView;
-    activeAndInactiveStatus: LookUpData[] = [];
     academicTerms: AcademicTerm[] | undefined = [];
     academicYears: AcademicYear[] | undefined = [];
   
@@ -48,8 +41,10 @@ export class AcademicPeriodsComponent implements OnInit {
       private modalService: NgbModal,
       private academicFormBuilder: UntypedFormBuilder,
       private academicService: AcademicService,
-      private store: Store<{ data: RootReducerState }>
-    ) {}
+      protected override store: Store<{ data: RootReducerState }>
+    ) {
+      super(store);
+    }
 
 
   ngOnInit(): void {
@@ -165,25 +160,6 @@ export class AcademicPeriodsComponent implements OnInit {
     this.academicPeriodForm.reset();
   }
 
-  toggleLoading() {
-    this.loading = !this.loading;
-  }
-
-  getStatusLabel(status: boolean): string {
-    const statusCode = status ? 1 : 0;
-    const statusItem = this.activeAndInactiveStatus.find(item => item.dataCode === statusCode);
-    return statusItem?.text ?? '';
-  }
-
-  getLookUps() {
-    this.store.dispatch(getLookUpsAction());
-    this.store.select(selectLookUpsView).subscribe((lookUps) => {
-      if(lookUps){
-       this.lookUps = lookUps;
-       this.activeAndInactiveStatus = this.lookUps?.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTableEnum.ActiveAndInactiveStatus) || [];
-      }
-    });
-  }
 
   getAcademicTerms() {
     this.academicService.getAcademicTerms().subscribe({
