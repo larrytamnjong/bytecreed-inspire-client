@@ -37,8 +37,8 @@ export class RolloverComponent extends BaseComponent implements OnInit {
     this.breadCrumbItems = [{ label: 'Configuration' },{ label: 'Academics'}, { label: 'Rollover', active: true }];
       
     this.form = this.formBuilder.group({
-      academicYearIdFrom: [null, [Validators.required]],
-      academicYearIdTo: [null, [Validators.required]],
+      sourceAcademicYearId: [null, [Validators.required]],
+      destinationAcademicYearId: [null, [Validators.required]],
     });
 
     this.getAcademicYears();
@@ -60,7 +60,7 @@ export class RolloverComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    if(this.form.value.academicYearIdFrom == this.form.value.academicYearIdTo){
+    if(this.form.value.sourceAcademicYearId == this.form.value.destinationAcademicYearId){
       SimpleAlerts.showWarning('Academic year from and to cannot be the same');
       return;
     }
