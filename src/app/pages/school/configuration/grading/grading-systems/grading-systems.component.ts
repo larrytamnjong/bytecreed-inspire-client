@@ -48,6 +48,7 @@ export class GradingSystemsComponent extends BaseComponent implements OnInit {
       gradingScale: [0, [Validators.required]],
       isActive: [true, [Validators.required]],
       academicYearId: [null],
+      staticId: [null]
     });
     this.getLookUps();
     this.getGradingSystems();

@@ -93,7 +93,8 @@ export class ClassesComponent extends BaseComponent implements OnInit {
       isActive: [true, [Validators.required]],
       classGroupId: [null],
       sortOrder: [null],
-      academicYearId: [null],  
+      academicYearId: [null],
+      staticId: [null]
     });
 
 
@@ -104,7 +105,8 @@ export class ClassesComponent extends BaseComponent implements OnInit {
       overrideDefaultWeight: [false, [Validators.required]],
       isActive: [true, [Validators.required]],
       classIds: [null, [Validators.required]],
-      academicYearId: [null],  
+      academicYearId: [null],
+      staticId: [null]
     });
 
     this.classExamTypeDeleteForm = this.classExamTypeFormBuilderDelete.group({
@@ -136,7 +138,8 @@ export class ClassesComponent extends BaseComponent implements OnInit {
         isActive: [true, [Validators.required]],
         classIds: [null, [Validators.required]],
         isRequired: [null, [Validators.required] ],
-        academicYearId: [null],  
+        academicYearId: [null],
+        staticId: [null]  
       });
 
       this.classSubjectDeleteForm = this.classFormBuilder.group({
@@ -178,7 +181,9 @@ export class ClassesComponent extends BaseComponent implements OnInit {
                  previousClassId: _class.previousClassId, 
                  isActive: _class.isActive, 
                  classGroupId: _class.classGroupId, 
-                 sortOrder: _class.sortOrder
+                 sortOrder: _class.sortOrder,
+                academicYearId: _class.academicYearId,
+                staticId: _class.staticId
                 }
       this.classForm.setValue(data);
       this.modalService.open(content, this.mdModalConfig);
@@ -384,7 +389,9 @@ export class ClassesComponent extends BaseComponent implements OnInit {
       overrideDefaultCoefficient: classSubject.overrideDefaultCoefficient,
       isActive: classSubject.isActive,
       classIds: [classSubject.classId],
-      isRequired: classSubject.isRequired
+      isRequired: classSubject.isRequired,
+      academicYearId: classSubject.academicYearId,
+      staticId: classSubject.staticId
     };
     this.classSubjectForm.setValue(data);
     this.modalService.open(content, this.mdModalConfig);

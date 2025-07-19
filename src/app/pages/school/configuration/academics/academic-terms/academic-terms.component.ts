@@ -46,7 +46,8 @@ constructor(
     this.academicTermForm = this.academicFormBuilder.group({
       id: [null],
       name: ['',[Validators.required]],
-      academicYearId: [null],  
+      academicYearId: [null],
+      staticId: [null]  
     });
 
     this.getAcademicTerms();

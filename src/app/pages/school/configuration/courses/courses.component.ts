@@ -41,7 +41,8 @@ export class CoursesComponent extends BaseComponent implements OnInit {
     this.courseForm = this.courseFormBuilder.group({
       id: [null],
       name: [null,[Validators.required]],
-      academicYearId: [null],  
+      academicYearId: [null],
+      staticId: [null]  
     });
 
     this.getCourses();

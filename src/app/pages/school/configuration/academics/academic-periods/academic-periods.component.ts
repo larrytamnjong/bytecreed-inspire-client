@@ -59,6 +59,7 @@ export class AcademicPeriodsComponent  extends BaseComponent implements OnInit {
       isActive: [null, [Validators.required]],
       academicYearId: [null, [Validators.required]],
       academicTermId: [null, [Validators.required]],
+      staticId: [null]
     });
 
     this.getAcademicPeriods();
@@ -87,7 +88,8 @@ export class AcademicPeriodsComponent  extends BaseComponent implements OnInit {
       name: academicPeriod.name,
       isActive: academicPeriod.isActive,
       academicYearId: academicPeriod.academicYearId,
-      academicTermId: academicPeriod.academicTermId
+      academicTermId: academicPeriod.academicTermId,
+      staticId: academicPeriod.staticId
     };
     this.academicPeriodForm.setValue(data);
     this.modalService.open(content, { size: 'md', centered: true });

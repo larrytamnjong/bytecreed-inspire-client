@@ -53,7 +53,8 @@ export class SubjectsComponent extends BaseComponent implements OnInit {
         description: [null],
         coefficient: [0, [Validators.required]],
         code: [null],
-        academicYearId: [null]
+        academicYearId: [null],
+        staticId: [null]
     });
 
     this.getLookUps();
