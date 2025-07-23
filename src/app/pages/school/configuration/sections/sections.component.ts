@@ -41,6 +41,8 @@ export class SectionsComponent extends BaseComponent implements OnInit {
       this.classSectionForm = this.classSectionFormBuilder.group({
         id: [null],
         name: ['',[Validators.required]],
+        staticId: [null],
+        academicYearId: [null]
       });
 
       this.getClassSections();
