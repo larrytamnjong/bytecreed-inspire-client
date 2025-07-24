@@ -20,10 +20,25 @@ import { StudentsModule } from './students/students.module';
 import { PersonnelModule } from './personnel/personnel.module';
 import { ResultsModule } from './results/results.module';
 import { ReportingModule } from './reporting/reporting.module';
+import { ParentsComponent } from './parents/parents.component';
+import { AttendanceModule } from './attendance/attendance.module';
+import { ExamComponent } from './exam/exam.component';
+import { LibraryComponent } from './library/library.component';
+import { InventoryComponent } from './inventory/inventory.component';
+import { BoardingComponent } from './boarding/boarding.component';
+import { TransportationComponent } from './transportation/transportation.component';
+import { FinanceModule } from './finance/finance.module';
+import { UsersModule } from './users/users.module';
 
 @NgModule({
   declarations: [
-    AnalyticsComponent
+    AnalyticsComponent,
+    ParentsComponent,
+    ExamComponent,
+    LibraryComponent,
+    InventoryComponent,
+    BoardingComponent,
+    TransportationComponent
   ],
   imports: [
     CommonModule,
@@ -50,8 +65,10 @@ import { ReportingModule } from './reporting/reporting.module';
     ResultsModule,
     ReportingModule,
     NgSelectModule,
-    NgbAccordionModule
-    
+    NgbAccordionModule,
+    AttendanceModule,
+    FinanceModule,
+    UsersModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
