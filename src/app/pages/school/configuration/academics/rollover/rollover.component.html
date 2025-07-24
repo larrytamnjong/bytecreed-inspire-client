@@ -9,7 +9,12 @@
                     </div>
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
-                            <button type="button" class="btn btn-warning add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-alert-line align-bottom me-1"></i> Academic Year Rollover</button>
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal" (click)="openModal(content)"><i class="ri-alert-line align-bottom me-1"></i> Academic Year Rollover</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="d-flex flex-wrap align-items-start gap-2">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal" (click)="openModal(deleteContent)"><i class="ri-delete-bin-line align-bottom me-1"></i> Delete Rollover</button>
                         </div>
                     </div>
                 </div>
@@ -21,7 +26,7 @@
 
     <ng-template #content role="document" let-modal>
         <div class="modal-header p-3 bg-light">
-            <h5 class="modal-title" id="modalLabel">Rollover</h5>
+            <h5 class="modal-title" id="modalLabel">Add Rollover</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
         </div>
         <form  class="tablelist-form" autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -41,6 +46,29 @@
                 <div class="hstack gap-2 justify-content-end">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()"><i class="ri-close-circle-line align-bottom me-1"></i> Close</button>
                     <button type="submit" class="btn btn-danger" id="add-btn"><i class="ri-alert-line align-bottom me-1"></i> Rollover</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+
+    <ng-template #deleteContent role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title" id="modalLabel">Delete Rollover</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
+        </div>
+        <form  class="tablelist-form" autocomplete="off" [formGroup]="deleteForm" (ngSubmit)="deleteRollover()">
+            <div class="modal-body">
+                 <div class="mb-3">
+                    <label class="form-label">Destination Academic Year<span class="text-danger">*</span></label>
+                    <ng-select [items]="rollOVerDestinationAcademicYears" bindLabel="name" id="academicYear" bindValue="id" required formControlName="destinationAcademicYearId" placeholder="Select Destination Academic Year" [ngClass]="{ 'is-invalid': submitted && deleteForm.controls['destinationAcademicYearId'].invalid }"></ng-select>
+                    <div class="invalid-feedback">Please select an academic year</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()"><i class="ri-close-circle-line align-bottom me-1"></i> Close</button>
+                    <button type="submit" class="btn btn-danger" id="add-btn"><i class="ri-delete-bin-line align-bottom me-1"></i> Delete Rollover</button>
                 </div>
             </div>
         </form>

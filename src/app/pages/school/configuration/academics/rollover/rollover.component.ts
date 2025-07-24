@@ -9,6 +9,8 @@ import { AcademicService } from 'src/app/core/services/api/academics.service';
 import { finalize } from 'rxjs';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
+import { StringToNumber } from 'lodash';
+import { StringMap } from 'quill';
 
 @Component({
   selector: 'app-rollover',
@@ -20,14 +22,19 @@ export class RolloverComponent extends BaseComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
   
   academicYears: AcademicYear[] | undefined | any = [];
+  rollOvers: any[] | undefined | any = [];
+  rollOVerDestinationAcademicYears: any[] | undefined | any = [];
+
 
   form!: UntypedFormGroup;
+  deleteForm!: UntypedFormGroup;
   submitted: boolean = false;
 
   constructor(  
     protected override store: Store<{ data: RootReducerState }>,
     private modalService: NgbModal,
     private formBuilder: UntypedFormBuilder,
+    private deleteFormBuilder: UntypedFormBuilder,
     private academicService: AcademicService
   ) {
     super(store);
@@ -41,7 +48,12 @@ export class RolloverComponent extends BaseComponent implements OnInit {
       destinationAcademicYearId: [null, [Validators.required]],
     });
 
+    this.deleteForm = this.deleteFormBuilder.group({
+      destinationAcademicYearId: [null, [Validators.required]],
+    });
+
     this.getAcademicYears();
+    this.getRollOvers();
   }
 
   dismissModal(){
@@ -50,9 +62,10 @@ export class RolloverComponent extends BaseComponent implements OnInit {
    this.submitted = false;
   }
 
-  addModal(content: any){
+  openModal(content: any){
     this.modalService.open(content, { size: 'md', centered: true, backdrop: 'static' });
   }
+
 
   onSubmit(){
     this.submitted = true;
@@ -70,6 +83,7 @@ export class RolloverComponent extends BaseComponent implements OnInit {
     this.academicService.rollover(this.form.value).pipe(finalize(() => this.toggleLoading())).subscribe({
       next: (response) => {
         if(response.success){
+          this.getRollOvers();
           SimpleAlerts.showSuccess();
           this.dismissModal();
         }else{
@@ -81,6 +95,40 @@ export class RolloverComponent extends BaseComponent implements OnInit {
       }
     });
   }
+
+  getRollOvers(){
+    this.academicService.getRollOvers().subscribe({
+      next: (response) => {
+        this.rollOvers = response.data;
+        this.rollOVerDestinationAcademicYears = response.data?.map(r => r.destinationAcademicYear);
+      },
+      error: (error) => {
+      }
+    });
+  }
+
+  deleteRollover() {
+    SimpleAlerts.confirmDialog().then((result) => {
+          if (result) {
+            this.toggleLoading();
+            this.academicService.deleteRollover(this.deleteForm.value.destinationAcademicYearId).pipe(
+              finalize(() => {this.toggleLoading();})).subscribe({
+              next: (response) => {
+                if(response.success){
+                  this.getRollOvers();
+                  this.dismissModal();
+                  SimpleAlerts.showSuccess();
+                }
+              },
+              error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
+            })
+          }else{
+            this.toggleLoading();
+          }
+        });
+    }
+  
+  
 
   getAcademicYears() {
       this.toggleLoading();

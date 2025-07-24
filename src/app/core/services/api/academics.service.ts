@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { ApiHttpService } from "../common/base-api-http.service";
 import { ServiceResponse } from "../../Models/common/service-response";
 import { AcademicTerm, AcademicYear, AcademicPeriod } from "../../Models/api/academics";
+import { Rollover } from "../../Models/api/rollover";
 
 
 @Injectable({ providedIn: 'root'})
@@ -11,7 +12,7 @@ export class AcademicService {
     private readonly ACADEMIC_YEAR_CONTROLLER: string = "v1/academic-years";
     private readonly ACADEMIC_TERM_CONTROLLER: string = "v1/academic-terms";
     private readonly ACADEMIC_PERIOD_CONTROLLER: string = "v1/academic-periods";
-    private readonly ROLLOVER_CONTROLLER: string = "v1/roll-over";
+    private readonly ROLLOVER_CONTROLLER: string = "v1/roll-overs";
 
     constructor(private apiService: ApiHttpService) {}
 
@@ -25,6 +26,14 @@ export class AcademicService {
 
     rollover(data: any): Observable<ServiceResponse<any>> {
         return this.apiService.post(`${this.ROLLOVER_CONTROLLER}`, RequestHelper.createServiceRequest(data));
+    }
+
+    getRollOvers(): Observable<ServiceResponse<Rollover[]>> {
+        return this.apiService.get(`${this.ROLLOVER_CONTROLLER}`);
+    }
+
+    deleteRollover(id: string): Observable<ServiceResponse<any>> {
+        return this.apiService.delete(`${this.ROLLOVER_CONTROLLER}/${id}`);
     }
 
     updateAcademicTerm(academicTerm: AcademicTerm): Observable<ServiceResponse<AcademicTerm[]>> {
