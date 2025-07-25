@@ -55,7 +55,7 @@ export class AcademicPeriodsComponent  extends BaseComponent implements OnInit {
 
     this.academicPeriodForm = this.academicFormBuilder.group({
       id: [null],
-      name: [null,[Validators.required]],
+      name: [null],
       isActive: [null, [Validators.required]],
       academicYearId: [null, [Validators.required]],
       academicTermId: [null, [Validators.required]],
@@ -64,13 +64,6 @@ export class AcademicPeriodsComponent  extends BaseComponent implements OnInit {
 
     this.getAcademicPeriods();
 
-    this.academicPeriodForm.get('academicYearId')?.valueChanges.subscribe(() => {
-      this.updatePeriodName();
-    });
-    
-    this.academicPeriodForm.get('academicTermId')?.valueChanges.subscribe(() => {
-      this.updatePeriodName();
-    });
  }
 
  addModal(content: any) {
@@ -85,7 +78,6 @@ export class AcademicPeriodsComponent  extends BaseComponent implements OnInit {
 
     var data = {
       id: academicPeriod.id,
-      name: academicPeriod.name,
       isActive: academicPeriod.isActive,
       academicYearId: academicPeriod.academicYearId,
       academicTermId: academicPeriod.academicTermId,
@@ -179,19 +171,6 @@ export class AcademicPeriodsComponent  extends BaseComponent implements OnInit {
         },
         error: (error) => { }
       });
-  }
-
-  updatePeriodName() {
-    const academicYearId = this.academicPeriodForm.get('academicYearId')?.value;
-    const academicTermId = this.academicPeriodForm.get('academicTermId')?.value;
-  
-    const academicYear = this.academicYears?.find(y => y.id === academicYearId);
-    const academicTerm = this.academicTerms?.find(t => t.id === academicTermId);
-  
-    if (academicYear && academicTerm) {
-      const name = `${academicTerm.name} - ${academicYear.name}`;
-      this.academicPeriodForm.patchValue({ name });
-    }
   }
 
 }
