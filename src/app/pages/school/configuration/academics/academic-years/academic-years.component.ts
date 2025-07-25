@@ -9,11 +9,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { RootReducerState } from 'src/app/store';
-import { LookUpView } from 'src/app/core/Models/common/look-up-view';
-import { LookUpData } from 'src/app/core/Models/common/look-up-data';
-import { getLookUpsAction } from 'src/app/store/common/look-up/look-up.action';
-import { selectLookUpsView } from 'src/app/store/common/look-up/look-up.selector';
-import { LookUpTableEnum } from 'src/app/core/enums/look-up-table';
 import { BaseComponent } from 'src/app/shared/base.component';
 
 @Component({
