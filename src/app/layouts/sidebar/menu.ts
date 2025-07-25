@@ -137,6 +137,13 @@ export const MENU: MenuItem[] = [
             permission: PermissionActionEnum.School_ManageConfiguration,
           },
         ],
+      },
+      {
+        id: SchoolMenuEnum.SystemSettings,
+        label: "MENUITEMS.CONFIGURATION.LIST.SYSTEMSETTINGS",
+        parentId: SchoolMenuEnum.Configuration,
+        link: "/school/configuration/system",
+        permission: PermissionActionEnum.School_ManageConfiguration,
       }
     ],
   },

@@ -27,6 +27,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ClassesComponent } from './classes/classes.component';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { CoursesComponent } from './courses/courses.component';
+import { SystemComponent } from './system/system.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { CoursesComponent } from './courses/courses.component';
     ExamTypesComponent,
     ClassesComponent,
     SubjectsComponent,
-    CoursesComponent
+    CoursesComponent,
+    SystemComponent
   ],
   imports: [
     CommonModule,

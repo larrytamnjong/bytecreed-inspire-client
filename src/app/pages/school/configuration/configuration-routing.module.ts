@@ -7,9 +7,11 @@ import { ExamTypesComponent } from './exam-types/exam-types.component';
 import { ClassesComponent } from './classes/classes.component';
 import { CoursesComponent } from './courses/courses.component';
 import { SubjectsComponent } from './subjects/subjects.component';
+import { SystemComponent } from './system/system.component';
 
 
 const routes: Routes = [
+  {path: "system", component: SystemComponent, pathMatch: 'full'},
   {path: "school", component: SchoolComponent, pathMatch: 'full'},
   {path: "admission", component: AdmissionComponent, pathMatch: 'full'},
   {path: "sections", component: SectionsComponent, pathMatch: 'full'},

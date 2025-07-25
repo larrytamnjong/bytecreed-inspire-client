@@ -25,6 +25,14 @@ export const MENU: MenuItem[] = [
     icon: " ri-settings-3-line",
     permission: PermissionActionEnum.School_ViewConfiguration,
     subItems: [
+        {
+        id: SchoolMenuEnum.SystemSettings,
+        label: "MENUITEMS.CONFIGURATION.LIST.SYSTEMSETTINGS",
+        icon: "ri-settings-3-line",
+        parentId: SchoolMenuEnum.Configuration,
+        link: "/school/configuration/admission",
+        permission: PermissionActionEnum.School_ManageConfiguration,
+      },
       {
         id: SchoolMenuEnum.School,
         label: "MENUITEMS.CONFIGURATION.LIST.SCHOOL",
