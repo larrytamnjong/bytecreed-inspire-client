@@ -9,6 +9,8 @@ import { ClassSectionService } from 'src/app/core/services/api/class-section.ser
 import { ClassService } from 'src/app/core/services/api/class.service';
 import { AcademicService } from 'src/app/core/services/api/academics.service';
 import  { finalize } from 'rxjs';
+import { jsPDF } from 'jspdf';
+
 @Component({
   selector: 'app-report-cards',
   templateUrl: './report-cards.component.html',
@@ -109,5 +111,12 @@ export class ReportCardsComponent extends BaseComponent {
       error: (error) => {
       }
     })
+  }
+
+  generatePdf() {
+    const doc = new jsPDF();
+
+    doc.text('Hello world!', 10, 10);
+    doc.save('sample.pdf');
   }
 }

@@ -12,7 +12,7 @@ export class SchoolService {
 
   constructor(private apiService: ApiHttpService) {}
 
-  getCurrentSchool(): Observable<ServiceResponse<{school: School, address?: Address}>> {
+  getCurrentSchool(): Observable<ServiceResponse<{school: School, address?: Address, logoFile?: File}>> {
     return this.apiService.get(`${this.SCHOOL_CONTROLLER}/school`);
   }
 
