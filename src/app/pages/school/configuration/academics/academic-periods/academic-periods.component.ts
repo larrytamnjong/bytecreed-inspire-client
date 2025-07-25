@@ -79,6 +79,7 @@ export class AcademicPeriodsComponent  extends BaseComponent implements OnInit {
     var data = {
       id: academicPeriod.id,
       isActive: academicPeriod.isActive,
+      name: null,
       academicYearId: academicPeriod.academicYearId,
       academicTermId: academicPeriod.academicTermId,
       staticId: academicPeriod.staticId
