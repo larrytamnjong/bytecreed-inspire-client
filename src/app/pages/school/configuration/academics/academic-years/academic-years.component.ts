@@ -96,6 +96,18 @@ export class AcademicYearsComponent extends BaseComponent implements OnInit {
     }
     
     this.modalService.dismissAll();
+      var startDate = this.academicYearForm.value.startDate;
+      this.academicYearForm.patchValue({
+        startDate:  this.formatDateToLocalISOString(new Date(startDate))
+      });
+      
+
+      if (this.academicYearForm.value.endDate) {
+       var endDate = this.academicYearForm.value.endDate;
+      this.academicYearForm.patchValue({
+        endDate:  this.formatDateToLocalISOString(new Date(endDate))
+      });
+    }
 
     if(this.isCreateMode){
       this.toggleLoading();
