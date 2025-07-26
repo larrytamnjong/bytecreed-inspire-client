@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, Validators, UntypedFormGroup} from '@angular/forms';
 import { finalize } from 'rxjs';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
-import { AdmissionNumberConfigurationService } from 'src/app/core/services/api/admission-number-configuration.service';
+import { SettingsService } from 'src/app/core/services/api/settings.service';
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Store } from '@ngrx/store';
@@ -21,7 +21,7 @@ export class AdmissionComponent extends BaseComponent implements OnInit {
 
   constructor(
     private admissionNumberConfigurationFormBuilder: UntypedFormBuilder, 
-    private admissionNumberConfigurationService: AdmissionNumberConfigurationService,
+    private settingsService: SettingsService,
     protected override store: Store<{ data: RootReducerState }>) 
     { 
       super(store);
@@ -49,7 +49,7 @@ export class AdmissionComponent extends BaseComponent implements OnInit {
     SimpleAlerts.confirmDialog().then((result) => {
       if (result) {
         this.toggleLoading();
-        this.admissionNumberConfigurationService.addOrUpdateAdmissionNumberConfiguration(this.admissionNumberConfigurationForm.value).pipe(
+        this.settingsService.addOrUpdateAdmissionNumberSettings(this.admissionNumberConfigurationForm.value).pipe(
           finalize(() => this.toggleLoading())).subscribe({
           next: (response) => {
             if(response.success){
@@ -66,7 +66,7 @@ export class AdmissionComponent extends BaseComponent implements OnInit {
   }
 
   getAdmissionNumberConfiguration() {
-    this.admissionNumberConfigurationService.getAdmissionNumberConfiguration().subscribe({
+    this.settingsService.getAdmissionNumberSettings().subscribe({
       next: (response) => {
         if(response.success){
         this.admissionNumberConfigurationForm.setValue({...response.data!});

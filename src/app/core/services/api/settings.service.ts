@@ -7,15 +7,15 @@ import { AdmissionNumberConfiguration } from "../../Models/api/admission-number-
 
 
 @Injectable({ providedIn: 'root'})
-export class AdmissionNumberConfigurationService {
-    private readonly ADMISSION_NUMBER_CONFIGURATION_CONTROLLER: string = "v1/admission-number-configurations";
+export class SettingsService {
+    private readonly ADMISSION_NUMBER_CONFIGURATION_CONTROLLER: string = "v1/admission-number-settings";
   constructor(private apiService: ApiHttpService) {}
 
-   getAdmissionNumberConfiguration(): Observable<ServiceResponse<AdmissionNumberConfiguration>> {
+   getAdmissionNumberSettings(): Observable<ServiceResponse<AdmissionNumberConfiguration>> {
       return this.apiService.get(`${this.ADMISSION_NUMBER_CONFIGURATION_CONTROLLER}`);
     }
   
-    addOrUpdateAdmissionNumberConfiguration(data: AdmissionNumberConfiguration): Observable<ServiceResponse<AdmissionNumberConfiguration>> {
+    addOrUpdateAdmissionNumberSettings(data: AdmissionNumberConfiguration): Observable<ServiceResponse<AdmissionNumberConfiguration>> {
       return this.apiService.put(`${this.ADMISSION_NUMBER_CONFIGURATION_CONTROLLER}`, RequestHelper.createServiceRequest(data));
     }
 }

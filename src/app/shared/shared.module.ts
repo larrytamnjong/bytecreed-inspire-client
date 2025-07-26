@@ -9,7 +9,7 @@ import { FileService } from '../core/services/api/file.service';
 import { SchoolService } from '../core/services/api/school.service';
 import { AddressService } from '../core/services/api/address.service';
 import { LookUpService } from '../core/services/common/look-up.service';
-import { AdmissionNumberConfigurationService } from '../core/services/api/admission-number-configuration.service';
+import { SettingsService } from '../core/services/api/settings.service';
 import { ClassSectionService } from '../core/services/api/class-section.service';
 import { FormsModule } from '@angular/forms';
 import { GenericAppTableComponent } from './generic-app-table/generic-app-table.component';
@@ -55,7 +55,7 @@ import { ResultReportService } from '../core/services/api/result-report.service'
     SchoolService,
     AddressService,
     LookUpService,
-    AdmissionNumberConfigurationService,
+    SettingsService,
     ClassSectionService,
     AcademicService,
     ClassService,
