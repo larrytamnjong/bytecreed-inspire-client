@@ -371,7 +371,7 @@ export const MENU: MenuItem[] = [
             id: SchoolMenuEnum.ManageUsers,
             label: "MENUITEMS.USERS.LIST.AUDITLOGS",
             parentId: SchoolMenuEnum.AuditLogs,
-            link: "/school/users/manage-users",
+            link: "/school/users/logs",
             permission: PermissionActionEnum.School_ManageUsers,
           },
         ],

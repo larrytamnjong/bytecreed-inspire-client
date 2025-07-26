@@ -16,12 +16,14 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './users/users.component';
 import { RolesComponent } from './roles/roles.component';
+import { AuditLogsComponent } from './audit-logs/audit-logs.component';
 
 
 @NgModule({
   declarations: [
    UsersComponent,
-   RolesComponent
+   RolesComponent,
+   AuditLogsComponent
   ],
   imports: [
     CommonModule,
