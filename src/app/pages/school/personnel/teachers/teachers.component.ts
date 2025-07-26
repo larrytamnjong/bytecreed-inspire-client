@@ -255,7 +255,6 @@ export class TeachersComponent extends BaseComponent implements OnInit{
           if(response.success)
             { 
               this.teachers = response.data;
-              console.log(this.teachers);
               this.setTeachersToDisplay(this.teachers);
             }
         },

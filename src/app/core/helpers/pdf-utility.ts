@@ -1,10 +1,7 @@
 import { jsPDF } from 'jspdf';
 import html2canvas from "html2canvas";
 
-export async function generatePDF(
-  elementId: string,
-  fileName: string = "Report.pdf"
-): Promise<void> {
+export async function generatePDF(elementId: string,fileName: string = "Report.pdf"): Promise<void> {
   const DATA = document.getElementById(elementId);
   
   if (!DATA) {

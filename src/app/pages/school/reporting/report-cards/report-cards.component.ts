@@ -10,6 +10,8 @@ import { ClassService } from 'src/app/core/services/api/class.service';
 import { AcademicService } from 'src/app/core/services/api/academics.service';
 import  { finalize } from 'rxjs';
 import { jsPDF } from 'jspdf';
+import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
+import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 
 @Component({
   selector: 'app-report-cards',
@@ -55,7 +57,6 @@ export class ReportCardsComponent extends BaseComponent {
   }
 
   getReportCards(){
-    console.log(this.getReportCardForm.value);
     if(this.getReportCardForm.invalid){
       console.log(this.getReportCardForm.errors);
       return;
@@ -69,10 +70,16 @@ export class ReportCardsComponent extends BaseComponent {
       })).subscribe({
       next: (response) => {
         if(response.success){
+          const doc = new jsPDF();
+          doc.text('Hello world!', 10, 10);
+          const pdfBlob = doc.output('blob');
+          const pdfUrl = URL.createObjectURL(pdfBlob);
+          window.open(pdfUrl, '_blank');
           console.log(response.data);
         }
       },
       error: (error) => {
+        SimpleAlerts.showError(getErrorMessage(error));
       }
     })
   }
@@ -113,10 +120,4 @@ export class ReportCardsComponent extends BaseComponent {
     })
   }
 
-  generatePdf() {
-    const doc = new jsPDF();
-
-    doc.text('Hello world!', 10, 10);
-    doc.save('sample.pdf');
-  }
 }

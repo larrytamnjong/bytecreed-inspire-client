@@ -348,7 +348,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
     this.teacherService.getMyClassSections().subscribe({
       next: (response) => {
         if (response.success) {
-          this.teacherSections = response.data;
+          this.teacherSections = response.data?.filter(section => section != null);
         }
       },
       error: () => {},

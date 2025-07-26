@@ -62,7 +62,7 @@
                     <div class="invalid-feedback">Date of birth is required</div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label mb-0">Date Of Employment</label>
+                    <label class="form-label mb-0">Date Of Employment <span class="text-danger">*</span></label>
                     <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="F j, Y" dateFormat="Y-m-d" formControlName="dateOfEmployment"
                     required
                     [ngClass]="{ 'is-invalid': submitted && fPersonnel['dateOfEmployment'].invalid }"
