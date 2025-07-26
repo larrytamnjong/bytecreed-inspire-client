@@ -52,7 +52,7 @@
                                             </div>
                                             <div class="col-sm-auto">
                                                 <div class="d-flex flex-wrap align-items-start gap-2">
-                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassExamTypeModal(addClassExamTypeContent)"><i class=" ri-pencil-fill align-bottom me-1"></i> Manage</button>
+                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassExamTypeModal(addClassExamTypeContent)"><i class="ri-add-line align-bottom me-1"></i> Add</button>
                                                     <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="deleteClassExamTypeModal(removeClassExamTypeContent)"><i class="ri-delete-bin-line align-bottom me-1"></i> Remove</button>
                                                 </div>
                                             </div>
@@ -120,7 +120,7 @@
                                             </div>
                                             <div class="col-sm-auto">
                                                 <div class="d-flex flex-wrap align-items-start gap-2">
-                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassSubjectModal(updateOrAddClassSubjectContent)"><i class=" ri-pencil-fill align-bottom me-1"></i> Manage</button>
+                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassSubjectModal(updateOrAddClassSubjectContent)"><i class="ri-add-line align-bottom me-1"></i> Add</button>
                                                     <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="deleteClassSubjectModal(removeClassSubjectContent)"><i class="ri-delete-bin-line align-bottom me-1"></i> Remove</button>
                                                 </div>
                                             </div>
@@ -228,8 +228,8 @@
             </div>
             <div class="modal-footer">
                 <div class="hstack gap-2 justify-content-end">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissClassModal()">Close</button>
-                    <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissClassModal()"><i class="ri-close-line align-bottom me-1"></i> Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
                 </div>
             </div>
         </form>
@@ -238,17 +238,18 @@
     <!--Class Exam Type Modals-->
     <ng-template #addClassExamTypeContent role="document" let-modal>
         <div class="modal-header p-3 bg-light">
-            <h5 class="modal-title">Add or Update Exam Types</h5>
+            <h5 class="modal-title">Add Class Exam Types</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissClassExamTypeModal()"></button>
         </div>
         <form  class="tablelist-form" autocomplete="off" [formGroup]="classExamTypeForm" (ngSubmit)="onSubmitAddClassExamType()">
             <div class="modal-body">
-                <div class="mb-3">
+                <div class="row g-3">
+                <div class="col-lg-6">
                     <label class="form-label">Exam Type <span class="text-danger">*</span></label>
                     <ng-select [items]="examTypes" bindLabel="name"  bindValue="id" formControlName="examTypeId" placeholder="Select ExamType"  [ngClass]="{ 'is-invalid': submittedClassExamType && classExamTypeF['examTypeId'].invalid }"></ng-select>
                     <div class="invalid-feedback">Select Exam Type</div>
                 </div>
-                <div class="mb-3">
+                <div class="col-lg-6">
                     <label class="form-label">Select classes <span class="text-danger">*</span></label>
                     <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submittedClassExamType && classExamTypeF['classIds'].invalid }" placeholder="Select Classes">
                         <ng-template ng-header-tmp>
@@ -259,8 +260,8 @@
                     </ng-select>
                     <div class="invalid-feedback">Select Classes</div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label mb-0">Override Default Weight <span class="text-danger">*</span></label>
+                <div class="col-lg-6">
+                    <label class="form-label">Override Default Weight <span class="text-danger">*</span></label>
                     <select class="form-select" aria-label=".form-select-sm" formControlName="overrideDefaultWeight" [ngClass]="{ 'is-invalid': submittedClassExamType && classExamTypeF['overrideDefaultWeight'].invalid }">
                         <option selected [ngValue]="null">Select</option>
                         <option [ngValue]="true">Yes</option>
@@ -268,13 +269,13 @@
                     </select>
                     <div class="invalid-feedback" *ngIf="submittedClassExamType && classExamTypeF['overrideDefaultWeight'].invalid">Please select an option</div>
                 </div>
-                <div class="mb-3">
+                <div class="col-lg-6">
                     <label for="weight" class="form-label">Weight</label>
                     <input type="number" id="weight" class="form-control" placeholder="Enter Weight" formControlName="weight" [ngClass]="{ 'is-invalid': submittedClassExamType && classExamTypeF['weight'].invalid }">
                     <div class="invalid-feedback" *ngIf="submittedClassExamType && classExamTypeF['weight'].invalid">Weight is required when 'Override Default Weight' is set to Yes</div>
                 </div> 
-                <div class="mb-3">
-                    <label class="form-label mb-0">Is Active <span class="text-danger">*</span></label>
+                <div class="col-lg-12">
+                    <label class="form-label">Is Active <span class="text-danger">*</span></label>
                     <select class="form-select" aria-label=".form-select-sm" formControlName="isActive" [ngClass]="{ 'is-invalid': submittedClassExamType && classExamTypeF['isActive'].invalid }">
                         <option selected [ngValue]="null">Select status</option>
                         <option [ngValue]="true">Yes</option>
@@ -282,18 +283,19 @@
                     </select>
                     <div class="invalid-feedback" *ngIf="submittedClassExamType && classExamTypeF['isActive'].invalid">Please select an option</div>
                 </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <div class="hstack gap-2 justify-content-end">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissClassExamTypeModal()">Close</button>
-                    <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissClassExamTypeModal()"><i class="ri-close-line align-bottom me-1"></i> Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
                 </div>
             </div>
         </form>
     </ng-template>
     <ng-template #removeClassExamTypeContent role="document" let-modal>
         <div class="modal-header p-3 bg-light">
-            <h5 class="modal-title">Remove Exam Types</h5>
+            <h5 class="modal-title">Remove Class Exam Types</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissClassExamTypeModal()"></button>
         </div>
         <form  class="tablelist-form" autocomplete="off" [formGroup]="classExamTypeDeleteForm" (ngSubmit)="onSubmitDeleteClassExamType()">
@@ -317,8 +319,8 @@
             </div>
             <div class="modal-footer">
                 <div class="hstack gap-2 justify-content-end">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissClassExamTypeModal()">Close</button>
-                    <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissClassExamTypeModal()"><i class="ri-close-line align-bottom me-1"></i> Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
                 </div>
             </div>
         </form>
@@ -327,17 +329,18 @@
     <!--Class Subject Modals -->
     <ng-template #updateOrAddClassSubjectContent role="document" let-modal>
         <div class="modal-header p-3 bg-light">
-            <h5 class="modal-title">Add or Update Class Subject</h5>
+            <h5 class="modal-title">Add Class Subject</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissClassSubjectModal()"></button>
         </div>
         <form  class="tablelist-form" autocomplete="off" [formGroup]="classSubjectForm" (ngSubmit)="onSubmitAddClassSubject()">
             <div class="modal-body">
-                <div class="mb-3">
+                <div class="row g-3">
+                <div class="col-lg-6">
                     <label class="form-label">Subject <span class="text-danger">*</span></label>
                     <ng-select [items]="subjects" bindLabel="name"  bindValue="id" formControlName="subjectId" placeholder="Select Subject"  [ngClass]="{ 'is-invalid': submittedClassSubject && classSubjectF['subjectId'].invalid }"></ng-select>
                     <div class="invalid-feedback">Select Subject</div>
                 </div>
-                <div class="mb-3">
+                <div class="col-lg-6">
                     <label class="form-label">Select classes <span class="text-danger">*</span></label>
                     <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submittedClassSubject && classSubjectF['classIds'].invalid }" placeholder="Select Classes">
                         <ng-template ng-header-tmp>
@@ -348,8 +351,8 @@
                     </ng-select>
                     <div class="invalid-feedback">Select Classes</div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label mb-0">Override Default Coefficient<span class="text-danger">*</span></label>
+                <div class="col-lg-6">
+                    <label class="form-label">Override Default Coefficient<span class="text-danger">*</span></label>
                     <select class="form-select" aria-label=".form-select-sm" formControlName="overrideDefaultCoefficient" [ngClass]="{ 'is-invalid': submittedClassSubject && classSubjectF['overrideDefaultCoefficient'].invalid }">
                         <option selected [ngValue]="null">Select</option>
                         <option [ngValue]="true">Yes</option>
@@ -357,13 +360,13 @@
                     </select>
                     <div class="invalid-feedback" *ngIf="submittedClassSubject && classSubjectF['overrideDefaultCoefficient'].invalid">Please select an option</div>
                 </div>
-                <div class="mb-3">
+                <div class="col-lg-6">
                     <label for="coefficient" class="form-label">Coefficient</label>
                     <input type="number" id="coefficient" class="form-control" placeholder="Enter Coefficient" formControlName="coefficient" [ngClass]="{ 'is-invalid': submittedClassSubject && classSubjectF['coefficient'].invalid }">
                     <div class="invalid-feedback" *ngIf="submittedClassSubject && classSubjectF['coefficient'].invalid">Coefficient required when 'Override Default Coefficient' is set to Yes</div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label mb-0">Is Required <span class="text-danger">*</span></label>
+                <div class="col-lg-6">
+                    <label class="form-label">Is Required <span class="text-danger">*</span></label>
                     <select class="form-select" aria-label=".form-select-sm" formControlName="isRequired" [ngClass]="{ 'is-invalid': submittedClassSubject && classSubjectF['isRequired'].invalid }">
                         <option selected [ngValue]="null">Select</option>
                         <option [ngValue]="true">Yes</option>
@@ -371,8 +374,8 @@
                     </select>
                     <div class="invalid-feedback" *ngIf="submittedClassSubject && classSubjectF['isActive'].invalid">Please select an option</div>
                 </div> 
-                <div class="mb-3">
-                    <label class="form-label mb-0">Is Active <span class="text-danger">*</span></label>
+                <div class="col-lg-6">
+                    <label class="form-label">Is Active <span class="text-danger">*</span></label>
                     <select class="form-select" aria-label=".form-select-sm" formControlName="isActive" [ngClass]="{ 'is-invalid': submittedClassSubject && classSubjectF['isActive'].invalid }">
                         <option selected [ngValue]="null">Select status</option>
                         <option [ngValue]="true">Yes</option>
@@ -380,11 +383,12 @@
                     </select>
                     <div class="invalid-feedback" *ngIf="submittedClassSubject && classSubjectF['isActive'].invalid">Please select an option</div>
                 </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <div class="hstack gap-2 justify-content-end">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissClassSubjectModal()">Close</button>
-                    <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissClassSubjectModal()"><i class="ri-close-line align-bottom me-1"></i> Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
                 </div>
             </div>
         </form>
@@ -415,8 +419,8 @@
             </div>
             <div class="modal-footer">
                 <div class="hstack gap-2 justify-content-end">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissClassSubjectModal()">Close</button>
-                    <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissClassSubjectModal()"><i class="ri-close-line align-bottom me-1"></i> Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
                 </div>
             </div>
         </form>

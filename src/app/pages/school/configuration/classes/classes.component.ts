@@ -273,7 +273,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
   // Class Exam Type
   addClassExamTypeModal(content: any) {
     this.submittedClassExamType = false;
-    this.modalService.open(content, this.mdModalConfig);
+    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
   }
 
   deleteClassExamTypeModal(content: any) {
@@ -373,7 +373,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
   // Class Subject
   addClassSubjectModal(content: any) {
     this.submittedClassSubject = false;
-    this.modalService.open(content, this.mdModalConfig);
+    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
   }
 
   deleteClassSubjectModal(content: any) {

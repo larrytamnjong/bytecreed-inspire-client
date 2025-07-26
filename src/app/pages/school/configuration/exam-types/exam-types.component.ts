@@ -84,14 +84,14 @@ export class ExamTypesComponent extends BaseComponent implements OnInit {
   addModal(content: any) {
   this.isCreateMode = true;
   this.submitted = false;
-  this.modalService.open(content, { size: 'md', centered: true });
+  this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
   }
 
   editModal(content: any, examType: ExamType) {
     this.isCreateMode = false;
     this.submitted = false;
     this.examTypeForm.setValue({...examType});
-    this.modalService.open(content, { size: 'md', centered: true });
+    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
   }
 
   getExamtypes() {
