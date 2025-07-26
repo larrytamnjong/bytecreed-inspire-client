@@ -117,7 +117,8 @@
       "TEXT": "Users",
       "LIST": {
         "ROLES": "Roles",
-        "MANAGEUSERS": "Manage Users"
+        "MANAGEUSERS": "Manage Users",
+        "AUDITLOGS": "Logs"
       }
     }
   }

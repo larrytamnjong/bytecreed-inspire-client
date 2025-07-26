@@ -118,7 +118,8 @@
       "TEXT": "Users",
       "LIST": {
         "ROLES": "Roles",
-        "MANAGEUSERS": "Users"
+        "MANAGEUSERS": "Users",
+        "AUDITLOGS": "Logs"
       }
     }
   }
