@@ -8,6 +8,8 @@ import { ClassSectionService } from 'src/app/core/services/api/class-section.ser
 import { ClassService } from 'src/app/core/services/api/class.service';
 import { AcademicService } from 'src/app/core/services/api/academics.service';
 import { finalize } from 'rxjs';
+import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
+import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 
 @Component({
   selector: 'app-transcripts',
@@ -65,14 +67,19 @@ export class TranscriptsComponent extends BaseComponent implements OnInit {
     return;
    }
    this.toggleLoading();
-   this.reportService.getTranscripts(this.getTranscriptsForm.value).pipe(finalize(() => { this.toggleLoading()})).subscribe({
+   this.reportService.getTranscripts(this.getTranscriptsForm.value).pipe(
+    finalize(() =>{ 
+      this.toggleLoading()
+    })).subscribe({
       next: (response) => {
         if(response.success)
           {
           console.log(response.data);
           }
       },
-      error: () => {},
+      error: (error) => {
+        SimpleAlerts.showError(getErrorMessage(error));
+      },
     });
   }
 

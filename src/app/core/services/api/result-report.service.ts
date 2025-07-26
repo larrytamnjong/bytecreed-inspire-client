@@ -4,6 +4,7 @@ import { ApiHttpService } from "../common/base-api-http.service";
 import { ServiceResponse } from "../../Models/common/service-response";
 import { RequestHelper } from "../common/service-request-helper";
 import { HttpParams } from "@angular/common/http";
+import { ReportResponse } from "../../Models/api/report";
 
 @Injectable({ providedIn: 'root'})
 export class ResultReportService {
@@ -12,7 +13,7 @@ export class ResultReportService {
 
   constructor(private apiService: ApiHttpService) {}
 
-    public getReportCards(academicPeriodId: any, classId: any, classSectionId: any): Observable<ServiceResponse<any[]>> {
+    public getReportCards(academicPeriodId: any, classId: any, classSectionId: any): Observable<ServiceResponse<ReportResponse>> {
         let queryParams = new HttpParams();
         if (classSectionId) {
             queryParams = queryParams.set('classSectionId', classSectionId);
@@ -26,11 +27,11 @@ export class ResultReportService {
         return this.apiService.get(`${this.RESULT_REPORT_CONTROLLER}/report-cards`, {params: queryParams});
     }
 
-    public getTranscripts(data: any): Observable<ServiceResponse<any>> {
+    public getTranscripts(data: any): Observable<ServiceResponse<ReportResponse>> {
         return this.apiService.post(`${this.RESULT_REPORT_CONTROLLER}/transcripts`,RequestHelper.createServiceRequest(data));
     }
 
-    public getMasterSheets(data: any): Observable<ServiceResponse<any>> {
+    public getMasterSheets(data: any): Observable<ServiceResponse<ReportResponse>> {
         return this.apiService.post(`${this.RESULT_REPORT_CONTROLLER}/master-sheets`,RequestHelper.createServiceRequest(data));
     }
 

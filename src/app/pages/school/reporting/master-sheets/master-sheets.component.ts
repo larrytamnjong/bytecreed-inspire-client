@@ -9,6 +9,8 @@ import { ClassService } from 'src/app/core/services/api/class.service';
 import { AcademicService } from 'src/app/core/services/api/academics.service';
 import { jsPDF } from "jspdf";
 import { finalize } from 'rxjs';
+import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
+import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 
 @Component({
   selector: 'app-master-sheets',
@@ -69,7 +71,9 @@ export class MasterSheetsComponent extends BaseComponent {
             console.log(response);
           }
       },
-      error: () => {},
+      error: (error) => {
+        SimpleAlerts.showError(getErrorMessage(error));
+      },
     });
   }
 

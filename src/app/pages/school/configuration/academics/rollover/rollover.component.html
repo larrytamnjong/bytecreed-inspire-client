@@ -33,12 +33,12 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label class="form-label">Source Academic Year<span class="text-danger">*</span></label>
-                    <ng-select [items]="academicYears" bindLabel="name" id="academicYear" bindValue="id" required formControlName="sourceAcademicYearId" placeholder="Select Source Academic Year" [ngClass]="{ 'is-invalid': submitted && form.controls['sourceAcademicYearId'].invalid }"></ng-select>
+                    <ng-select [items]="activeAcademicYears" bindLabel="name" id="academicYear" bindValue="id" required formControlName="sourceAcademicYearId" placeholder="Select Source Academic Year" [ngClass]="{ 'is-invalid': submitted && form.controls['sourceAcademicYearId'].invalid }"></ng-select>
                     <div class="invalid-feedback">Please select an academic year from</div>
                 </div>
                  <div class="mb-3">
                     <label class="form-label">Destination Academic Year<span class="text-danger">*</span></label>
-                    <ng-select [items]="academicYears" bindLabel="name" id="academicYear" bindValue="id" required formControlName="destinationAcademicYearId" placeholder="Select Destination Academic Year" [ngClass]="{ 'is-invalid': submitted && form.controls['destinationAcademicYearId'].invalid }"></ng-select>
+                    <ng-select [items]="inActiveAcademicYears" bindLabel="name" id="academicYear" bindValue="id" required formControlName="destinationAcademicYearId" placeholder="Select Destination Academic Year" [ngClass]="{ 'is-invalid': submitted && form.controls['destinationAcademicYearId'].invalid }"></ng-select>
                     <div class="invalid-feedback">Please select an academic year to</div>
                 </div>
             </div>

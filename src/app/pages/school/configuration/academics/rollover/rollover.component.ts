@@ -22,6 +22,8 @@ export class RolloverComponent extends BaseComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
   
   academicYears: AcademicYear[] | undefined | any = [];
+  activeAcademicYears: any[] | undefined | any = [];
+  inActiveAcademicYears : any[] | undefined | any = [];
   rollOvers: any[] | undefined | any = [];
   rollOVerDestinationAcademicYears: any[] | undefined | any = [];
 
@@ -136,6 +138,8 @@ export class RolloverComponent extends BaseComponent implements OnInit {
         .subscribe({
           next: (response) => {
             this.academicYears = response.data;
+            this.activeAcademicYears = this.academicYears.filter((year: any) => year.isActive);
+            this.inActiveAcademicYears = this.academicYears.filter((year: any) => !year.isActive);
           },
           error: (error) => {
           }
