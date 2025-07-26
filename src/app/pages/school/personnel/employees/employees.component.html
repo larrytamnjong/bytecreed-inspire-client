@@ -41,35 +41,28 @@
         </div>
         <form class="tablelist-form" autocomplete="off" [formGroup]="personnelForm">
             <div class="modal-body">
-                <div class="mb-3">
+                <div class="row g-3">
+                <div class="col-lg-6">
                     <label for="familyName" class="form-label">Family Name <span class="text-danger">*</span></label>
                     <input type="text" id="familyName" class="form-control" placeholder="Enter Family Name" formControlName="familyName" required
                         [ngClass]="{ 'is-invalid': submitted && fPersonnel['familyName'].invalid }">
                     <div class="invalid-feedback">Family name is required</div>
                 </div>
-                <div class="mb-3">
+                <div class="col-lg-6">
                     <label for="givenNames" class="form-label">Given Names <span class="text-danger">*</span></label>
                     <input type="text" id="givenNames" class="form-control" placeholder="Enter Given Names" formControlName="givenNames" required
                         [ngClass]="{ 'is-invalid': submitted && fPersonnel['givenNames'].invalid }">
                     <div class="invalid-feedback">Given name(s) is(are) required</div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label mb-0">Date Of Birth <span class="text-danger">*</span></label>
+                <div class="col-lg-6">
+                    <label class="form-label">Date Of Birth <span class="text-danger">*</span></label>
                     <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="F j, Y" dateFormat="Y-m-d" required
                         formControlName="dateOfBirth"
                         [ngClass]="{ 'is-invalid': submitted && fPersonnel['dateOfBirth'].invalid }"
                         placeholder="Select Date of Birth" />
                     <div class="invalid-feedback">Date of birth is required</div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label mb-0">Date Of Employment <span class="text-danger">*</span></label>
-                    <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="F j, Y" dateFormat="Y-m-d" formControlName="dateOfEmployment"
-                    required
-                    [ngClass]="{ 'is-invalid': submitted && fPersonnel['dateOfEmployment'].invalid }"
-                    placeholder="Select Date of Employment" />
-                    <div class="invalid-feedback">Date of employment is required</div>
-                </div>
-                <div class="mb-3">
+                <div class="col-lg-6">
                     <label for="sex" class="form-label">Gender <span class="text-danger">*</span></label>
                     <select id="sex" class="form-select" formControlName="sex" [ngClass]="{ 'is-invalid': submitted && fPersonnel['sex'].errors }">
                         <option [ngValue]="null" disabled selected>Select Gender </option>
@@ -77,6 +70,15 @@
                     </select>
                     <div class="invalid-feedback">Sex is required</div>
                 </div>
+                <div class="col-lg-12">
+                    <label class="form-label mb-0">Date Of Employment <span class="text-danger">*</span></label>
+                    <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="F j, Y" dateFormat="Y-m-d" formControlName="dateOfEmployment"
+                    required
+                    [ngClass]="{ 'is-invalid': submitted && fPersonnel['dateOfEmployment'].invalid }"
+                    placeholder="Select Date of Employment" />
+                    <div class="invalid-feedback">Date of employment is required</div>
+                </div>
+            </div>
             </div>
         </form>
 

@@ -65,14 +65,14 @@ export class EmployeesComponent extends BaseComponent implements OnInit{
   addModal(content: any) {
     this.isCreateMode = true;
     this.submitted = false;
-    this.modalService.open(content, {...this.mdModalConfig, backdrop: 'static'});
+    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
   }
 
    editModal(content: any, personnel: Personnel) {
        this.isCreateMode = false;
        this.submitted = false;
        this.personnelForm.setValue(personnel);
-       this.modalService.open(content, {...this.mdModalConfig, backdrop: 'static'});
+       this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
     }
 
 

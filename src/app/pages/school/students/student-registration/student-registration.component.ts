@@ -29,7 +29,7 @@ export class StudentRegistrationComponent extends BaseComponent implements OnIni
   studentForm!: UntypedFormGroup;
   addressForm!: UntypedFormGroup;
   enrollmentForm!: UntypedFormGroup;
-  reloadTable: boolean = false;
+  reloadTable: number = 0;
   submitted = false;
   isCreateMode = true;
 
@@ -133,7 +133,7 @@ constructor(
     this.enrollmentForm.get('classId')?.disable();
     this.enrollmentForm.get('classSectionId')?.disable();
     this.enrollmentForm.get('academicYearId')?.disable();
-    this.modalService.open(content, {...this.mdModalConfig, backdrop: 'static'});
+    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
   }
 
   addBatchModal(content: any) {
@@ -143,7 +143,7 @@ constructor(
     this.enrollmentForm.get('classId')?.disable();
     this.enrollmentForm.get('classSectionId')?.disable();
     this.enrollmentForm.get('academicYearId')?.disable();
-    this.modalService.open(content, {...this.mdModalConfig, backdrop: 'static'});
+    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
   }
   
   editModal(content: any, student: Student) {
@@ -151,7 +151,7 @@ constructor(
     this.submitted = false;
     this.setStudentValues(student);
     this.setAddressValues(student.address);
-    this.modalService.open(content, {...this.mdModalConfig, backdrop: 'static'});
+    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
   }
 
   onSubmitStudent() {
@@ -346,7 +346,7 @@ constructor(
   }
 
   toggleReloadTable(){
-    this.reloadTable = !this.reloadTable;
+    this.reloadTable++;
   }
 
   handleBatchUpload(data: any[]) {
