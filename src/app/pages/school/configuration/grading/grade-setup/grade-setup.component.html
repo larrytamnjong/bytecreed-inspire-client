@@ -21,12 +21,16 @@
                 [showActions]="true" 
                 [showDelete]="true" 
                 (deleteClicked)="deleteGradeSetup($event)"
-                [customTemplates]="{ 'gradingSystemId': gradingSystemTemplate}"
+                [customTemplates]="{ 'gradingSystemId': gradingSystemTemplate, 'qualifiesAsPass': qualifiesAsPassTemplate }"
                 (editClicked)="editModal(content, $event)">
                 </generic-app-table>
 
                 <ng-template #gradingSystemTemplate let-subjectId let-row="row">
                     <span>{{ getGradingSystemName(subjectId) }}</span>
+                </ng-template>
+
+                  <ng-template #qualifiesAsPassTemplate let-status let-row="row">
+                        <span>{{ getYesOrNoLabel(status) }}</span>
                 </ng-template>
 
             </div>
@@ -39,35 +43,46 @@
         </div>
         <form  class="tablelist-form" autocomplete="off" [formGroup]="gradeSetupForm" (ngSubmit)="onSubmit()">
             <div class="modal-body">
-                <div class="mb-3">
-                    <label class="form-label">Grading System <span class="text-danger">*</span></label>
-                    <ng-select [items]="gradingSystems" bindLabel="name" bindValue="id" formControlName="gradingSystemId" placeholder="Select Grading System" [ngClass]="{ 'is-invalid': submitted && form['gradingSystemId'].errors }" ></ng-select>
-                    <div class="invalid-feedback">Please select Grading System</div>
-                </div>
-                <div class="mb-3">
-                    <label for="grade" class="form-label">Grade <span class="text-danger">*</span></label>
-                    <input type="text" id="grade" class="form-control" placeholder="Enter Grade" required formControlName="grade" [ngClass]="{ 'is-invalid': submitted && form['grade'].errors }" />
-                    <div class="invalid-feedback">Please enter grade</div>
-                </div>
-                <div class="mb-3">
-                    <label for="remark" class="form-label">Remark</label>
-                    <input type="text" id="remark" class="form-control" placeholder="Enter Remark" formControlName="remark"/>
-                </div>
-                <div class="mb-3">
-                    <label for="minMark" class="form-label">Minimum Mark <span class="text-danger">*</span></label>
-                    <input type="number" id="minMark" class="form-control" placeholder="Enter Minimum Mark" required formControlName="minMark" [ngClass]="{ 'is-invalid': submitted && form['minMark'].invalid }">
-                    <div class="invalid-feedback">Minimum mark is required</div>
-                </div>
-                <div class="mb-3">
-                    <label for="maxMark" class="form-label">Maximum Mark <span class="text-danger">*</span></label>
-                    <input type="number" id="maxMark" class="form-control" placeholder="Enter Maximum Mark" required formControlName="maxMark" [ngClass]="{ 'is-invalid': submitted && form['maxMark'].invalid }">
-                    <div class="invalid-feedback">Maximum mark is required</div>
+                <div class="row g-3">
+                    <div class="col-lg-6">
+                        <label class="form-label">Grading System <span class="text-danger">*</span></label>
+                        <ng-select [items]="gradingSystems" bindLabel="name" bindValue="id" formControlName="gradingSystemId" placeholder="Select Grading System" [ngClass]="{ 'is-invalid': submitted && form['gradingSystemId'].errors }" ></ng-select>
+                        <div class="invalid-feedback">Please select Grading System</div>
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="form-label">Qualifies As Pass <span class="text-danger">*</span></label>
+                        <select class="form-select" aria-label=".form-select-sm" formControlName="qualifiesAsPass" [ngClass]="{ 'is-invalid': submitted && form['qualifiesAsPass'].invalid }">
+                            <option selected [ngValue]="null">Select Option</option>
+                            <option [ngValue]="true">Yes</option>
+                            <option [ngValue]="false">No</option>
+                        </select>
+                        <div class="invalid-feedback" *ngIf="submitted && form['qualifiesAsPass'].invalid">Please select if range is a pass range or not</div>
+                    </div>
+                     <div class="col-lg-6">
+                        <label for="minMark" class="form-label">Range [Minimum Mark] <span class="text-danger">*</span></label>
+                        <input type="number" id="minMark" class="form-control" placeholder="Enter Minimum Mark" required formControlName="minMark" [ngClass]="{ 'is-invalid': submitted && form['minMark'].invalid }">
+                        <div class="invalid-feedback">Minimum mark is required</div>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="maxMark" class="form-label">Range [Maximum Mark] <span class="text-danger">*</span></label>
+                        <input type="number" id="maxMark" class="form-control" placeholder="Enter Maximum Mark" required formControlName="maxMark" [ngClass]="{ 'is-invalid': submitted && form['maxMark'].invalid }">
+                        <div class="invalid-feedback">Maximum mark is required</div>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="grade" class="form-label">Grade <span class="text-danger">*</span></label>
+                        <input type="text" id="grade" class="form-control" placeholder="Enter Grade" required formControlName="grade" [ngClass]="{ 'is-invalid': submitted && form['grade'].errors }" />
+                        <div class="invalid-feedback">Please enter grade</div>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="remark" class="form-label">Remark</label>
+                        <input type="text" id="remark" class="form-control" placeholder="Enter Remark" formControlName="remark"/>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <div class="hstack gap-2 justify-content-end">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()">Close</button>
-                    <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()"><i class="ri-close-line align-bottom me-1"></i> Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
                 </div>
             </div>
         </form>

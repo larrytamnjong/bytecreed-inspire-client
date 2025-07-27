@@ -30,7 +30,8 @@ export class GradeSetupComponent extends BaseComponent implements OnInit {
     { key: 'remark', displayName: 'Remark' },
     { key: 'minMark', displayName: 'Min Mark' },
     { key: 'maxMark', displayName: 'Max Mark' },
-     {key: 'gradingSystemId', displayName: 'Grading System'}
+    { key: 'qualifiesAsPass', displayName: 'Qualifies As Pass'},
+    { key: 'gradingSystemId', displayName: 'Grading System'}
   ];
 
   constructor(
@@ -49,12 +50,14 @@ export class GradeSetupComponent extends BaseComponent implements OnInit {
       remark: [null],
       minMark: [0, [Validators.required]],
       maxMark: [0, [Validators.required]],
+      qualifiesAsPass: [null, [Validators.required]],
       gradingSystemId: [this.gradingSystems[0]?.id ?? null, [Validators.required]],
       sortOrder: [null],
       academicYearId: [null],
       staticId: [null]
     });
 
+    this.getLookUps();
     this.getGradingSystems();
     this.getGradeSetups();
   }
@@ -63,14 +66,14 @@ export class GradeSetupComponent extends BaseComponent implements OnInit {
     this.isCreateMode = true;
     this.submitted = false;
     this.gradeSetupForm.patchValue({gradingSystemId: this.gradingSystems[0]?.id ?? null});
-    this.modalService.open(content, this.mdModalConfig);
+    this.modalService.open(content, this.lgModalConfig);
   }
 
   editModal(content: any, gradeSetup: GradeSetup) {
     this.isCreateMode = false; 
     this.submitted = false;
     this.gradeSetupForm.setValue({...gradeSetup});
-    this.modalService.open(content, this.mdModalConfig);
+    this.modalService.open(content, this.lgModalConfig);
   }
 
   getGradingSystems() {
