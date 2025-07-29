@@ -45,6 +45,9 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
   classes: any = [];
   classSections: any = [];
   academicYears: any = [];
+  
+  activeYearClasses: any = [];
+  activeYearClassSections: any = [];
 
   selectedStudentEnrollment: any = null;
   selectedStudentSelectedSubjects:  [] = [];
@@ -98,7 +101,6 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     this.studentEnrollmentCreateForm = this.studentEnrollmentCreateFormBuilder.group({
       classId: [null, [Validators.required]],
       classSectionId: [null],
-      academicYearId: [null, [Validators.required]],
       studentIds: [null,[Validators.required]],
     });
 
@@ -110,6 +112,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
 
     this.studentEnrollmentGetForm.get("academicYearId")?.valueChanges.subscribe((value) => {
       if (value) {
+        this.clearClassesAndClassSections();
         this.getClasses(value);
         this.getClassSections(value);
       } 
@@ -130,11 +133,13 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     this.getSubjects();
     this.getCourses();
     this.getStudentEnrollments();
+    this.getClassSections();
+    this.getClasses();
   }
 
   addModal(content: any) {
     this.submitted = false;
-    this.modalService.open(content, {...this.mdModalConfig, backdrop: 'static'});
+    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
   }
 
   onCreateSubmit() {
@@ -317,7 +322,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     this.toggleLoading();
     this.studentService.getStudentSubjects([this.selectedStudentEnrollment.id]).pipe(finalize(() => {this.toggleLoading();})).subscribe({
       next: (response) => {
-        if (response.data && response.data[0].subjects) {
+        if (response.data && response?.data[0]?.subjects) {
           this.selectedStudentSubjects = response.data[0].subjects.map((subject: Subject) => ({...subject}));
         } else {
           this.selectedStudentSubjects = [];
@@ -455,15 +460,6 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     });
   }
 
-  getClasses(academicYearId: any) {
-    this.classService.getClasses(academicYearId).subscribe({
-      next: (response) => {
-        if(response.success){ this.classes = response.data;}
-      },
-      error: () => {},
-    });
-  }
-
   getAcademicYears() {
     this.academicService.getAcademicYears().subscribe({
         next: (response) => {
@@ -473,15 +469,51 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
       });
   }
 
-  getClassSections(academicYearId: any) {
-    this.classSectionService.getClassSections(academicYearId).subscribe({
+   getClasses(academicYearId?: any) {
+    if(!academicYearId){
+       this.classService.getClasses().subscribe({
       next: (response) => {
-        if(response.success){
-        this.classSections = response.data;
-        }
+        if(response.success)
+          { this.activeYearClasses = response.data;}
       },
-      error: (error) => {},
+      error: () => {},
     });
+    }else{
+      this.classService.getClasses(academicYearId).subscribe({
+        next: (response) => {
+          if(response.success){ this.classes = response.data;}
+        },
+        error: () => {},
+      });
+    }
+  }
+
+  getClassSections(academicYearId?: any) {
+    if(!academicYearId){
+       this.classSectionService.getClassSections().subscribe({
+        next: (response) => {
+          if(response.success){
+          this.activeYearClassSections = response.data;
+          }
+        },
+        error: (error) => {},
+      });
+    }else{
+      this.classSectionService.getClassSections(academicYearId).subscribe({
+        next: (response) => {
+          if(response.success){
+          this.classSections = response.data;
+          }
+        },
+        error: (error) => {},
+      });
+    }
+  }
+
+  clearClassesAndClassSections() {
+    this.classes = [];
+    this.classSections = [];
+    this.studentEnrollmentGetForm.patchValue({classId: null, classSectionId: null});
   }
 
   getSubjects() {

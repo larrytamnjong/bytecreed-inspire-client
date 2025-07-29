@@ -92,29 +92,22 @@ constructor(
     this.enrollmentForm = this.enrollmentFormBuilder.group({
       autoEnroll: [false, [Validators.required]],
       classId: [null],
-      classSectionId: [null],
-      academicYearId: [null],
+      classSectionId: [null]
     });
 
 
     this.enrollmentForm.get('autoEnroll')?.valueChanges.subscribe((autoEnroll: boolean) => {
       const classId = this.enrollmentForm.get('classId');
       const classSectionId = this.enrollmentForm.get('classSectionId');
-      const academicYearId = this.enrollmentForm.get('academicYearId');
   
       if (autoEnroll === true) {
         classId?.setValidators([Validators.required]);
-        academicYearId?.setValidators([Validators.required]);
         classId?.enable();
-        academicYearId?.enable();
         classSectionId?.enable();
       } else {
         classId?.clearValidators();
-        academicYearId?.clearValidators();
         classId?.setValue(null); 
-        academicYearId?.setValue(null);
         classId?.disable();
-        academicYearId?.disable();
         classSectionId?.disable();
       }
   
@@ -142,7 +135,6 @@ constructor(
     this.submitted = false;
     this.enrollmentForm.get('classId')?.disable();
     this.enrollmentForm.get('classSectionId')?.disable();
-    this.enrollmentForm.get('academicYearId')?.disable();
     this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
   }
   
@@ -245,8 +237,7 @@ constructor(
     this.enrollmentForm.get('autoEnroll')?.setValue(true);
     this.enrollmentForm.get('classId')?.enable();
     this.enrollmentForm.get('classSectionId')?.enable();
-    this.enrollmentForm.get('academicYearId')?.enable();
-    this.modalService.open(content, {...this.mdModalConfig, backdrop: 'static'});
+    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
   }
 
   enrollSelectedStudents() {
