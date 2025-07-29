@@ -38,23 +38,24 @@
         </div>
         <form  class="tablelist-form" autocomplete="off" [formGroup]="gradingSystemForm" (ngSubmit)="onSubmit()">
             <div class="modal-body">
-                <div class="mb-3">
+                <div class="row g-3">
+                <div class="col-lg-6">
                     <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
                     <input type="text" id="name" class="form-control" placeholder="Enter Grading System Name" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
                     <div class="invalid-feedback">Please enter a name</div>
                 </div>
-                <div class="mb-3">
+                <div class="col-lg-6">
                     <label for="scale" class="form-label">Scale</label>
                     <input type="number" id="scale" class="form-control" placeholder="Enter Scale" formControlName="scale" [ngClass]="{ 'is-invalid': submitted && form['scale'].invalid }">
                     <div class="invalid-feedback">Scale is required</div>
                 </div>
-                <div class="mb-3">
+                <div class="col-lg-6">
                     <label for="gradingScale" class="form-label">Grading Scale</label>
                     <input type="number" id="gradingScale" class="form-control" placeholder="Enter Grading Scale" formControlName="gradingScale" [ngClass]="{ 'is-invalid': submitted && form['gradingScale'].invalid }">
                     <div class="invalid-feedback">Grading scale is required</div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label mb-0">Is Active <span class="text-danger">*</span></label>
+                <div class="col-lg-6">
+                    <label class="form-label">Is Active <span class="text-danger">*</span></label>
                     <select class="form-select" aria-label=".form-select-sm" formControlName="isActive" [ngClass]="{ 'is-invalid': submitted && form['isActive'].invalid }">
                         <option selected [ngValue]="null">Select status</option>
                         <option [ngValue]="true">Yes</option>
@@ -63,10 +64,11 @@
                     <div class="invalid-feedback">Please select an option</div>
                 </div>
             </div>
+            </div>
             <div class="modal-footer">
                 <div class="hstack gap-2 justify-content-end">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()">Close</button>
-                    <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()"><i class="ri-close-line align-bottom me-1"></i> Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
                 </div>
             </div>
         </form>

@@ -69,7 +69,7 @@ export class AcademicPeriodsComponent  extends BaseComponent implements OnInit {
  addModal(content: any) {
   this.isCreateMode = true;
   this.submitted = false;
-  this.modalService.open(content, { size: 'md', centered: true });
+  this.modalService.open(content, this.lgModalConfig);
 }
 
   editModal(content: any, academicPeriod: AcademicPeriod) {
@@ -85,7 +85,7 @@ export class AcademicPeriodsComponent  extends BaseComponent implements OnInit {
       staticId: academicPeriod.staticId
     };
     this.academicPeriodForm.setValue(data);
-    this.modalService.open(content, { size: 'md', centered: true });
+    this.modalService.open(content, this.lgModalConfig);
   }
 
   getAcademicPeriods() {

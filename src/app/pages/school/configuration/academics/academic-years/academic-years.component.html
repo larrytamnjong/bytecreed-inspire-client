@@ -47,22 +47,14 @@
         </div>
         <form  class="tablelist-form" autocomplete="off" [formGroup]="academicYearForm" (ngSubmit)="onSubmit()">
             <div class="modal-body">
-                <div class="mb-3">
+                <div class="row g-3">
+                <div class="col-lg-6">
                     <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
                     <input type="text" id="name" class="form-control" placeholder="Enter Academic Year Name" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
                     <div class="invalid-feedback">Please enter a name</div>
                 </div>
-                <div class="mb-3">
-                   <label class="form-label mb-0">Start Date <span class="text-danger">*</span></label>
-                   <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="F j, Y" dateFormat="Y-m-d" required formControlName="startDate" [ngClass]="{ 'is-invalid': submitted && form['startDate'].errors }" placeholder="Select Start Date" />
-                   <div class="invalid-feedback">Please select a start date</div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label mb-0">End Date</label>
-                    <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="F j, Y" dateFormat="Y-m-d"  formControlName="endDate"  placeholder="Select End Date" />
-                </div>
-                <div class="mb-3">
-                    <label class="form-label mb-0">Is Active <span class="text-danger">*</span></label>
+                <div class="col-lg-6">
+                    <label class="form-label">Is Active <span class="text-danger">*</span></label>
                     <select class="form-select" aria-label=".form-select-sm" formControlName="isActive" [ngClass]="{ 'is-invalid': submitted && academicYearForm.controls['isActive'].invalid }">
                         <option selected [ngValue]="null">Select status</option>
                         <option [ngValue]="true">Yes</option>
@@ -70,11 +62,21 @@
                     </select>
                     <div class="invalid-feedback" *ngIf="submitted && academicYearForm.controls['isActive'].invalid">Please select an option</div>
                 </div>
+                <div class="col-lg-6">
+                   <label class="form-label">Start Date <span class="text-danger">*</span></label>
+                   <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="F j, Y" dateFormat="Y-m-d" required formControlName="startDate" [ngClass]="{ 'is-invalid': submitted && form['startDate'].errors }" placeholder="Select Start Date" />
+                   <div class="invalid-feedback">Please select a start date</div>
+                </div>
+                <div class="col-lg-6">
+                    <label class="form-label">End Date</label>
+                    <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" altFormat="F j, Y" dateFormat="Y-m-d"  formControlName="endDate"  placeholder="Select End Date" />
+                </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <div class="hstack gap-2 justify-content-end">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()">Close</button>
-                    <button type="submit" class="btn btn-primary" id="add-btn">Save</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()"><i class="ri-close-line align-bottom me-1"></i> Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
                 </div>
             </div>
         </form>

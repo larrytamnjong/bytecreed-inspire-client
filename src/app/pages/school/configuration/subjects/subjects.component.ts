@@ -64,14 +64,14 @@ export class SubjectsComponent extends BaseComponent implements OnInit {
   addModal(content: any) {
     this.isCreateMode = true;
     this.submitted = false;
-    this.modalService.open(content, this.mdModalConfig);
+    this.modalService.open(content, this.lgModalConfig);
   }
 
   editModal(content: any, subject: Subject) {
       this.isCreateMode = false;
       this.submitted = false;
       this.subjectForm.setValue(subject);
-      this.modalService.open(content, this.mdModalConfig);
+      this.modalService.open(content, this.lgModalConfig);
     }
   
    getSubjects() {

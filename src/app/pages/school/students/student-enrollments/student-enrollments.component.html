@@ -27,16 +27,16 @@
                                         <form class="tablelist-form" autocomplete="off" [formGroup]="studentEnrollmentGetForm" (ngSubmit)="getStudentEnrollments()" >
                                             <div class="row g-3">
                                                 <div class="col-sm-3">
+                                                    <label class="form-label">Select Academic Year</label>
+                                                    <ng-select [items]="academicYears" formControlName="academicYearId" bindLabel="name" bindValue="id" placeholder="Select AcademicYear"></ng-select>
+                                                </div>
+                                                <div class="col-sm-3">
                                                     <label class="form-label">Select Class</label>
                                                     <ng-select [items]="classes" formControlName="classId" bindLabel="name" bindValue="id" placeholder="Select Class"></ng-select>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <label class="form-label">Select Class Section</label>
                                                     <ng-select [items]="classSections" formControlName="classSectionId" bindLabel="name" bindValue="id" placeholder="Select Class Section"></ng-select>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <label class="form-label">Select Academic Year</label>
-                                                    <ng-select [items]="academicYears" formControlName="academicYearId" bindLabel="name" bindValue="id" placeholder="Select AcademicYear"></ng-select>
                                                 </div>
                                                  <div class="col-sm-3">
                                                     <label class="form-label">&nbsp;</label>

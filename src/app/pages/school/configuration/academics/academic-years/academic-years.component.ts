@@ -61,14 +61,14 @@ export class AcademicYearsComponent extends BaseComponent implements OnInit {
  addModal(content: any) {
   this.isCreateMode = true;
   this.submitted = false;
-  this.modalService.open(content, { size: 'md', centered: true });
+  this.modalService.open(content, this.lgModalConfig);
 }
 
   editModal(content: any, academicYear: AcademicYear) {
     this.isCreateMode = false;
     this.submitted = false;
     this.academicYearForm.setValue({...academicYear});
-    this.modalService.open(content, { size: 'md', centered: true });
+    this.modalService.open(content, this.lgModalConfig);
   }
 
   getAcademicYears() {

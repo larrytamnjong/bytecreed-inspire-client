@@ -311,7 +311,6 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
   }
 
   onEditClick(enrollment: any, content: any){
-    //this.router.navigate(['/student-info'], { queryParams: { id: enrollment.studentId } });
     this.selectedStudentEnrollment = enrollment;
     this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
     this.loadSelectedStudentSubjects();

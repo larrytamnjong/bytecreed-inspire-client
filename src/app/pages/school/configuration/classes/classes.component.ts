@@ -168,7 +168,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
       this.classExamTypeForm.get('weight')?.disable();
       this.isClassCreateMode = true;
       this.submittedClass = false;
-      this.modalService.open(content, this.mdModalConfig);
+      this.modalService.open(content, this.lgModalConfig);
     }
   
     editClassModal(content: any, _class: Class) {
@@ -186,7 +186,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
                 staticId: _class.staticId
                 }
       this.classForm.setValue(data);
-      this.modalService.open(content, this.mdModalConfig);
+      this.modalService.open(content, this.lgModalConfig);
     }
 
     deleteClass(_class: Class) {

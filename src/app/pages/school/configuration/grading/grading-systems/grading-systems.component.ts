@@ -57,14 +57,14 @@ export class GradingSystemsComponent extends BaseComponent implements OnInit {
     addModal(content: any) {
       this.isCreateMode = true;
       this.submitted = false;
-      this.modalService.open(content, this.mdModalConfig);
+      this.modalService.open(content, this.lgModalConfig);
     }
   
     editModal(content: any, gradingSystem: GradingSystem) {
       this.isCreateMode = false; 
       this.submitted = false;
       this.gradingSystemForm.setValue({...gradingSystem});
-      this.modalService.open(content, this.mdModalConfig);
+      this.modalService.open(content, this.lgModalConfig);
     }
   
     getGradingSystems() {
