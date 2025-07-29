@@ -18,13 +18,12 @@
                             <form class="tablelist-form" autocomplete="off" [formGroup]="getTranscriptsForm"
                                 (ngSubmit)="getTranscripts()">
                                 <div class="row g-3">
-                                    <div class="col-xxl-10 col-lg-12">
+                                    <div class="col-xxl-8 col-lg-12">
                                         <ng-select [items]="academicYears" formControlName="academicYearIds" multiple="true"
                                             bindLabel="name" bindValue="id" placeholder="Academic Years"></ng-select>
                                     </div>
-                                    <div class="col-xxl-2 col-lg-12">
-                                        <button [disabled]="selectedStudentIds.length < 1" type="button" class="btn btn-primary w-100" type="submit"><i
-                                                class="ri-settings-4-fill mx-2"></i> Generate</button>
+                                    <div class="col-xxl-4 col-lg-12">
+                                        <button [disabled]="selectedStudentIds.length < 1" class="btn btn-primary w-100" type="submit"><i class="ri-settings-4-fill mx-2"></i> Generate</button>
                                     </div>
                                 </div>
                             </form>

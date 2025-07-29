@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { RootReducerState } from 'src/app/store';
 import { ResultReportService } from 'src/app/core/services/api/result-report.service';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ClassSectionService } from 'src/app/core/services/api/class-section.service';
 import { ClassService } from 'src/app/core/services/api/class.service';
 import { AcademicService } from 'src/app/core/services/api/academics.service';
 import { finalize } from 'rxjs';
@@ -39,7 +38,6 @@ export class TranscriptsComponent extends BaseComponent implements OnInit {
   constructor( 
     private reportService: ResultReportService,
     private getTranscriptsFormBuilder: UntypedFormBuilder,
-    private classSectionService: ClassSectionService,
     private classService: ClassService,
     private academicService: AcademicService,
     protected override store: Store<{ data: RootReducerState }>) {
@@ -64,6 +62,7 @@ export class TranscriptsComponent extends BaseComponent implements OnInit {
     this.getTranscriptsForm.patchValue({studentIds: this.selectedStudentIds});
 
    if(this.getTranscriptsForm.invalid){
+     SimpleAlerts.showWarning();
     return;
    }
    this.toggleLoading();
