@@ -38,6 +38,9 @@
     "REPORTING": {
       "TEXT": "REPORTING"
     },
+    "REPORTS": {
+      "TEXT": "Reports"
+    },
     "CORE": {
       "TEXT": "CORE"
     },
@@ -83,8 +86,8 @@
         "RESULTHISTORY": "Result History"
       }
     },
-    "REPORTS": {
-      "TEXT": "Reports",
+    "RESULTREPORTS": {
+      "TEXT": "Result Reports",
       "LIST": {
         "REPORTCARDS": "Report Cards",
         "TRANSCRIPTS": "Transcripts",

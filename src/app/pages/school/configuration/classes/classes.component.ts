@@ -32,7 +32,6 @@ export class ClassesComponent extends BaseComponent implements OnInit {
     { key: 'name', displayName: 'Name' },
     { key: 'isActive', displayName: 'Status' },
     { key: 'nextClassName', displayName: 'Next Class' },
-    { key: 'previousClassName', displayName: 'Previous Class' },
   ];
 
   //Class Exam Type
@@ -277,7 +276,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
   }
 
   deleteClassExamTypeModal(content: any) {
-    this.modalService.open(content, this.mdModalConfig);
+    this.modalService.open(content, this.lgModalConfig);
   }
 
   public classExamType_onSelectAllClasses() {
@@ -377,7 +376,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
   }
 
   deleteClassSubjectModal(content: any) {
-    this.modalService.open(content, this.mdModalConfig);
+    this.modalService.open(content, this.lgModalConfig);
   }
 
   editClassSubjectModal(content: any, classSubject: ClassSubject) {

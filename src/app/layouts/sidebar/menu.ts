@@ -152,29 +152,36 @@ export const MENU: MenuItem[] = [
     label: "MENUITEMS.REPORTING.TEXT",
     isTitle: true,
   },
+
   {
-    id: SchoolMenuEnum.ReportCards,
-    label: "MENUITEMS.REPORTS.LIST.REPORTCARDS",
-    parentId: SchoolMenuEnum.Reports,
-    link: "/school/reporting/report-cards",
-    icon: "ri-file-paper-2-line",
-    permission: PermissionActionEnum.School_ManageReports,
-  },
-  {
-    id: SchoolMenuEnum.Transcripts,
-    label: "MENUITEMS.REPORTS.LIST.TRANSCRIPTS",
-    parentId: SchoolMenuEnum.Reports,
-    link: "/school/reporting/transcripts",
+    id: SchoolMenuEnum.StudentReports,
+    label: "MENUITEMS.RESULTREPORTS.TEXT",
     icon: "ri-file-list-3-line",
+    isCollapsed: true,
     permission: PermissionActionEnum.School_ManageReports,
-  },
-  {
-    id: SchoolMenuEnum.MasterSheets,
-    label: "MENUITEMS.REPORTS.LIST.MASTERSHEETS",
-    parentId: SchoolMenuEnum.Reports,
-    link: "/school/reporting/master-sheets",
-    icon: "ri-survey-line",
-    permission: PermissionActionEnum.School_ManageReports,
+    subItems: [
+      {
+        id: SchoolMenuEnum.ReportCards,
+        label: "MENUITEMS.RESULTREPORTS.LIST.REPORTCARDS",
+        parentId: SchoolMenuEnum.StudentReports,
+        link: "/school/reporting/report-cards",
+        permission: PermissionActionEnum.School_ManageReports,
+      },
+      {
+        id: SchoolMenuEnum.Transcripts,
+        label: "MENUITEMS.RESULTREPORTS.LIST.TRANSCRIPTS",
+        parentId: SchoolMenuEnum.StudentReports,
+        link: "/school/reporting/transcripts",
+        permission: PermissionActionEnum.School_ManageReports,
+      },
+      {
+        id: SchoolMenuEnum.MasterSheets,
+        label: "MENUITEMS.RESULTREPORTS.LIST.MASTERSHEETS",
+        parentId: SchoolMenuEnum.StudentReports,
+        link: "/school/reporting/master-sheets",
+        permission: PermissionActionEnum.School_ManageReports,
+      },
+    ],
   },
 
   {

@@ -302,12 +302,13 @@
         </div>
         <form  class="tablelist-form" autocomplete="off" [formGroup]="classExamTypeDeleteForm" (ngSubmit)="onSubmitDeleteClassExamType()">
             <div class="modal-body">
-                <div class="mb-3">
+                <div class="row g-3">
+                <div class="col-lg-6">
                     <label class="form-label">Exam Type <span class="text-danger">*</span></label>
                     <ng-select [items]="examTypes" bindLabel="name"  bindValue="id" formControlName="examTypeId" placeholder="Select ExamType"  [ngClass]="{ 'is-invalid': submittedDeleteClassExamType && classExamTypeDeleteF['examTypeId'].invalid }"></ng-select>
                     <div class="invalid-feedback">Select Exam Type</div>
                 </div>
-                <div class="mb-3">
+                <div class="col-lg-6">
                     <label class="form-label">Select classes <span class="text-danger">*</span></label>
                     <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submittedDeleteClassExamType && classExamTypeDeleteF['classIds'].invalid }" placeholder="Select Classes">
                         <ng-template ng-header-tmp>
@@ -317,6 +318,7 @@
                           </ng-template>
                     </ng-select>
                     <div class="invalid-feedback">Select Classes</div>
+                </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -402,12 +404,13 @@
         </div>
         <form  class="tablelist-form" autocomplete="off" [formGroup]="classSubjectDeleteForm" (ngSubmit)="onSubmitDeleteClassSubject()">
             <div class="modal-body">
-                <div class="mb-3">
+                <div class="row g-3">
+                <div class="col-lg-6">
                     <label class="form-label">Class Subject <span class="text-danger">*</span></label>
                     <ng-select [items]="subjects" bindLabel="name"  bindValue="id" formControlName="subjectId" placeholder="Select Subject"  [ngClass]="{ 'is-invalid': submittedDeleteClassSubject && classSubjectDeleteF['subjectId'].invalid }"></ng-select>
                     <div class="invalid-feedback">Select Subject</div>
                 </div>
-                <div class="mb-3">
+                <div class="col-lg-6">
                     <label class="form-label">Select classes <span class="text-danger">*</span></label>
                     <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submittedDeleteClassSubject && classSubjectDeleteF['classIds'].invalid }" placeholder="Select Classes">
                         <ng-template ng-header-tmp>
@@ -417,6 +420,7 @@
                           </ng-template>
                     </ng-select>
                     <div class="invalid-feedback">Select Classes</div>
+                </div>
                 </div>
             </div>
             <div class="modal-footer">

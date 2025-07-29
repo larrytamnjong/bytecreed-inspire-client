@@ -320,7 +320,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
 
   loadSelectedStudentSubjects(){
     this.toggleLoading();
-    this.studentService.getStudentSubjects([this.selectedStudentEnrollment.id]).pipe(finalize(() => {this.toggleLoading();})).subscribe({
+    this.studentService.getStudentSubjects([this.selectedStudentEnrollment.id], this.selectedStudentEnrollment.academicYearId ).pipe(finalize(() => {this.toggleLoading();})).subscribe({
       next: (response) => {
         if (response.data && response?.data[0]?.subjects) {
           this.selectedStudentSubjects = response.data[0].subjects.map((subject: Subject) => ({...subject}));
@@ -456,6 +456,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
         studentId: enrollment.student?.id || '#',
         year: enrollment.academicYear?.name || '#',
         section: enrollment.classSection?.name || '#',
+        academicYearId: enrollment.academicYear?.id,
       };
     });
   }
