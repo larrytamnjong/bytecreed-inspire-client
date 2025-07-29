@@ -2,26 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Store } from '@ngrx/store';
 import { RootReducerState } from 'src/app/store';
-import { Address } from 'src/app/core/Models/common/address';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { UntypedFormGroup } from '@angular/forms';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 import { finalize } from 'rxjs';
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 import { StudentService } from 'src/app/core/services/api/student.service';
-import { Student } from 'src/app/core/Models/api/student';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClassSectionService } from 'src/app/core/services/api/class-section.service';
 import { ClassService } from 'src/app/core/services/api/class.service';
 import { AcademicService } from 'src/app/core/services/api/academics.service';
-import { exportJsonToExcel } from 'src/app/core/helpers/excel-utility';
-import { studentSampleTemplate } from 'src/app/core/samples/student-sample';
-import { formatDateToLocalISOString } from 'src/app/core/helpers/date-utility';
 import { StudentEnrollment } from 'src/app/core/Models/api/student';
 import { SubjectService } from 'src/app/core/services/api/subject.service';
 import { CourseService } from 'src/app/core/services/api/course.service';
-import { StudentInfoComponent } from '../student-info/student-info.component';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'src/app/core/Models/api/subject';
 
 
@@ -93,7 +86,6 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
         private studentCourseFormBuilder: UntypedFormBuilder,
         private classSectionService: ClassSectionService,
         private classService: ClassService,
-        private router: Router,
         private academicService: AcademicService,
         private subjectService: SubjectService,
         private courseService: CourseService,
@@ -116,6 +108,13 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
       academicYearId: [null],
     });
 
+    this.studentEnrollmentGetForm.get("academicYearId")?.valueChanges.subscribe((value) => {
+      if (value) {
+        this.getClasses(value);
+        this.getClassSections(value);
+      } 
+    });
+
     this.studentSubjectForm = this.studentSubjectFormBuilder.group({
       subjectIds: [null, [Validators.required]],
       enrollmentIds: [null, [Validators.required]],
@@ -127,8 +126,6 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     });
 
     this.getLookUps();
-    this.getClassSections();
-    this.getClasses();
     this.getAcademicYears();
     this.getSubjects();
     this.getCourses();
@@ -458,8 +455,8 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     });
   }
 
-  getClasses() {
-    this.classService.getClasses().subscribe({
+  getClasses(academicYearId: any) {
+    this.classService.getClasses(academicYearId).subscribe({
       next: (response) => {
         if(response.success){ this.classes = response.data;}
       },
@@ -476,8 +473,8 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
       });
   }
 
-  getClassSections() {
-    this.classSectionService.getClassSections().subscribe({
+  getClassSections(academicYearId: any) {
+    this.classSectionService.getClassSections(academicYearId).subscribe({
       next: (response) => {
         if(response.success){
         this.classSections = response.data;

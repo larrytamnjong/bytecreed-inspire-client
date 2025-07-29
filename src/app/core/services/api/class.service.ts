@@ -5,6 +5,7 @@ import { Class, ClassGroup, ClassSubject } from "../../Models/api/class";
 import { ServiceResponse } from "../../Models/common/service-response";
 import { RequestHelper } from "../common/service-request-helper";
 import { ClassExamType } from "../../Models/api/class";
+import { HttpParams } from "@angular/common/http";
 
 
 @Injectable({ providedIn: 'root'})
@@ -16,8 +17,12 @@ export class ClassService {
 
   constructor(private apiService: ApiHttpService) {}
 
-    getClasses(): Observable<ServiceResponse<Class[]>> {
-      return this.apiService.get(`${this.CLASS_CONTROLLER}`);
+    getClasses(academicYearId?: any): Observable<ServiceResponse<Class[]>> {
+       let queryParams = new HttpParams();
+        if (academicYearId) {
+            queryParams = queryParams.set('academicYearId', academicYearId);
+        }
+      return this.apiService.get(`${this.CLASS_CONTROLLER}`, {params: queryParams});
     }
 
     updateClass(data: Class): Observable<ServiceResponse<Class[]>> {
@@ -51,10 +56,6 @@ export class ClassService {
     updateClassGroup(data: any): Observable<ServiceResponse<ClassGroup[]>> {
         return this.apiService.put(`${this.CLASS_GROUP_CONTROLLER}`, RequestHelper.createServiceRequest([data]));
       }
-    
-    // addClassesSubject(data: any): Observable<ServiceResponse<ClassSubject[]>> {
-    //     return this.apiService.post(`${this.class_subject_controller}`, RequestHelper.createServiceRequest(data));
-    //   }
     
     updateOrAddClassesSubjects(data: any): Observable<ServiceResponse<ClassSubject[]>> {
         return this.apiService.put(`${this.CLASS_SUBJECT_CONTROLLER}`, RequestHelper.createServiceRequest(data));
