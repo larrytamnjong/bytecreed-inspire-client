@@ -50,7 +50,7 @@ export enum SchoolMenuEnum {
   RollOver = 49,
   SystemSettings = 50,
   AuditLogs = 51,
-  StudentReports = 52,
+  ResultReports = 52,
 }
 
 export enum StudentMenuEnum{

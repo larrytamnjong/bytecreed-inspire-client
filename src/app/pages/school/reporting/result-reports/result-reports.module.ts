@@ -13,13 +13,19 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { ReportingRoutingModule } from './reporting-routing.module';
-import { ResultReportsModule } from './result-reports/result-reports.module';
+import { TranscriptsComponent } from './transcripts/transcripts.component';
+import { ReportCardsComponent } from './report-cards/report-cards.component';
+import { MasterSheetsComponent } from './master-sheets/master-sheets.component';
+import { ResultReportsRoutingModule } from './result-reports-routing.module';
+
+
 
 
 @NgModule({
   declarations: [
- 
+    TranscriptsComponent,
+    ReportCardsComponent,
+    MasterSheetsComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +39,7 @@ import { ResultReportsModule } from './result-reports/result-reports.module';
     NgApexchartsModule,
     SlickCarouselModule,
     FlatpickrModule.forRoot(),
-    ReportingRoutingModule,
+    ResultReportsRoutingModule,
     SharedModule,
     NgbPaginationModule,
     NgbTypeaheadModule,
@@ -41,9 +47,9 @@ import { ResultReportsModule } from './result-reports/result-reports.module';
     ReactiveFormsModule,
     NgbTooltipModule,
     NgSelectModule,
-    NgbAccordionModule,
-    ResultReportsModule    
+    NgbAccordionModule
+    
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ReportingModule { }
+export class ResultReportsModule { }

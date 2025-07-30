@@ -158,7 +158,7 @@ export const MENU: MenuItem[] = [
     permission: PermissionActionEnum.School_ViewReports,
     subItems: [
       {
-        id: SchoolMenuEnum.StudentReports,
+        id: SchoolMenuEnum.ResultReports,
         label: "MENUITEMS.RESULTREPORTS.TEXT",
         icon: "ri-file-list-3-line",
         isCollapsed: true,
@@ -167,22 +167,22 @@ export const MENU: MenuItem[] = [
           {
             id: SchoolMenuEnum.ReportCards,
             label: "MENUITEMS.RESULTREPORTS.LIST.REPORTCARDS",
-            parentId: SchoolMenuEnum.StudentReports,
-            link: "/school/reporting/report-cards",
+            parentId: SchoolMenuEnum.ResultReports,
+            link: "/school/reporting/result-reports/report-cards",
             permission: PermissionActionEnum.School_ManageReports,
           },
           {
             id: SchoolMenuEnum.Transcripts,
             label: "MENUITEMS.RESULTREPORTS.LIST.TRANSCRIPTS",
-            parentId: SchoolMenuEnum.StudentReports,
-            link: "/school/reporting/transcripts",
+            parentId: SchoolMenuEnum.ResultReports,
+            link: "/school/reporting/result-reports/transcripts",
             permission: PermissionActionEnum.School_ManageReports,
           },
           {
             id: SchoolMenuEnum.MasterSheets,
             label: "MENUITEMS.RESULTREPORTS.LIST.MASTERSHEETS",
-            parentId: SchoolMenuEnum.StudentReports,
-            link: "/school/reporting/master-sheets",
+            parentId: SchoolMenuEnum.ResultReports,
+            link: "/school/reporting/result-reports/master-sheets",
             permission: PermissionActionEnum.School_ManageReports,
           }
         ],
