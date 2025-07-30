@@ -2,15 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Store } from '@ngrx/store';
 import { RootReducerState } from 'src/app/store';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { AcademicYear } from 'src/app/core/Models/api/academics';
 import { AcademicService } from 'src/app/core/services/api/academics.service';
 import { finalize } from 'rxjs';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
-import { StringToNumber } from 'lodash';
-import { StringMap } from 'quill';
 
 @Component({
   selector: 'app-rollover',
@@ -26,11 +24,17 @@ export class RolloverComponent extends BaseComponent implements OnInit {
   inActiveAcademicYears : any[] | undefined | any = [];
   rollOvers: any[] | undefined | any = [];
   rollOVerDestinationAcademicYears: any[] | undefined | any = [];
-
+  rollOversToDisplay: any[] | undefined | any = [];
 
   form!: UntypedFormGroup;
   deleteForm!: UntypedFormGroup;
   submitted: boolean = false;
+
+    headers: any = [
+    { key: 'sourceAcademicYear', displayName: 'Source Year' },
+    { key: 'destinationAcademicYear', displayName: 'Target Year' },
+    { key: 'rollOverDate', displayName: 'Rollover Date' },
+  ];
 
   constructor(  
     protected override store: Store<{ data: RootReducerState }>,
@@ -102,6 +106,16 @@ export class RolloverComponent extends BaseComponent implements OnInit {
       next: (response) => {
         this.rollOvers = response.data;
         this.rollOVerDestinationAcademicYears = response.data?.map(r => r.destinationAcademicYear);
+
+        this.rollOversToDisplay = this.rollOvers.map((rollOver: any) => {
+          return {
+            id: rollOver.id,
+            sourceAcademicYear: rollOver.sourceAcademicYear?.name || "#",
+            destinationAcademicYear:
+              rollOver.destinationAcademicYear?.name || "#",
+            rollOverDate: rollOver?.rollOverDate,
+          };
+        });
       },
       error: (error) => {
       }

@@ -19,6 +19,13 @@
                     </div>
                 </div>
             </div>
+            <generic-app-table 
+                [headers]="headers" 
+                [data]="rollOversToDisplay" 
+                [showActions]="false"  
+                [customTemplates]="{'rollOverDate': dateTemplate }">
+                <ng-template #dateTemplate let-date let-row="row">{{ date | date: 'longDate' }}</ng-template>
+         </generic-app-table>
         </div>
     </div>
 
