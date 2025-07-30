@@ -68,8 +68,12 @@ export class RolloverComponent extends BaseComponent implements OnInit {
    this.submitted = false;
   }
 
-  openModal(content: any){
-    this.modalService.open(content, { ...this.lgModalConfig, backdrop: 'static' });
+  openModal(content: any, large: boolean = true){
+    if(large){
+      this.modalService.open(content, { ...this.lgModalConfig, backdrop: 'static' });
+    }else{
+      this.modalService.open(content, { ...this.mdModalConfig, backdrop: 'static' });
+    }
   }
 
   onSubmit(){
