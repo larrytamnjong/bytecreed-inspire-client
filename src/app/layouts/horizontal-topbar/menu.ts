@@ -231,7 +231,7 @@ export const MENU: MenuItem[] = [
       {
         id: SchoolMenuEnum.StudentEnrollments,
         label: "MENUITEMS.STUDENTS.LIST.ENROLLMENTS",
-        icon: "ri-swap-box-line",
+        icon: "ri-refresh-line",
         parentId: SchoolMenuEnum.Students,
         link: "/school/students/student-enrollments",
         permission: PermissionActionEnum.School_ManageStudents,

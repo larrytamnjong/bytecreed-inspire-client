@@ -6,11 +6,11 @@
             <div class="card-header border-bottom-dashed">
                 <div class="row g-4 align-items-center">
                     <div class="col-sm">
-                        <div><h5 class="card-title mb-0"><i class="ri-swap-box-line text-muted fs-18 align-middle me-1">     </i>Student Enrollments</h5></div>
+                        <div><h5 class="card-title mb-0"><i class="ri-refresh-line text-muted fs-18 align-middle me-1">     </i>Student Enrollments</h5></div>
                     </div>
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
-                            <button (click)="addModal(content)" [disabled]="selectedEnrollments.length < 1" title="Enroll selected students" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-swap-box-line align-bottom me-1"></i> Enroll</button>
+                            <button (click)="addModal(content)" [disabled]="selectedEnrollments.length < 1" title="Enroll selected students" class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-refresh-line align-bottom me-1"></i> Enroll</button>
                             <button (click)="addModal(subjectsContent)" [disabled]="selectedEnrollments.length < 1"  class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-book-line align-bottom me-1"></i> Subjects</button>
                             <button (click)="onDeleteSubmit()" [disabled]="selectedEnrollments.length < 1" title="Deleted selected enrollments"  class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal" ><i class="ri-delete-bin-line align-bottom me-1"></i> Delete</button>
                         </div>
