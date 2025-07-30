@@ -102,19 +102,19 @@ export const MENU: MenuItem[] = [
         permission: PermissionActionEnum.School_ManageConfiguration,
       },
       {
-        id: SchoolMenuEnum.Classes,
-        label: "MENUITEMS.CONFIGURATION.LIST.CLASSES",
-        parentId: SchoolMenuEnum.Configuration,
-        icon: "ri-artboard-line",
-        link: "/school/configuration/classes",
-        permission: PermissionActionEnum.School_ManageConfiguration,
-      },
-      {
         id: SchoolMenuEnum.Subjects,
         label: "MENUITEMS.CONFIGURATION.LIST.SUBJECTS",
         parentId: SchoolMenuEnum.Configuration,
         icon: " ri-book-open-fill",
         link: "/school/configuration/subjects",
+        permission: PermissionActionEnum.School_ManageConfiguration,
+      },
+      {
+        id: SchoolMenuEnum.Classes,
+        label: "MENUITEMS.CONFIGURATION.LIST.CLASSES",
+        parentId: SchoolMenuEnum.Configuration,
+        icon: "ri-artboard-line",
+        link: "/school/configuration/classes",
         permission: PermissionActionEnum.School_ManageConfiguration,
       },
       {

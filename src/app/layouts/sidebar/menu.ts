@@ -30,6 +30,13 @@ export const MENU: MenuItem[] = [
     permission: PermissionActionEnum.School_ViewConfiguration,
     subItems: [
       {
+        id: SchoolMenuEnum.SystemSettings,
+        label: "MENUITEMS.CONFIGURATION.LIST.SYSTEMSETTINGS",
+        parentId: SchoolMenuEnum.Configuration,
+        link: "/school/configuration/system",
+        permission: PermissionActionEnum.School_ManageConfiguration,
+      },
+      {
         id: SchoolMenuEnum.School,
         label: "MENUITEMS.CONFIGURATION.LIST.SCHOOL",
         parentId: SchoolMenuEnum.Configuration,
@@ -95,17 +102,17 @@ export const MENU: MenuItem[] = [
         permission: PermissionActionEnum.School_ManageConfiguration,
       },
       {
-        id: SchoolMenuEnum.Classes,
-        label: "MENUITEMS.CONFIGURATION.LIST.CLASSES",
-        parentId: SchoolMenuEnum.Configuration,
-        link: "/school/configuration/classes",
-        permission: PermissionActionEnum.School_ManageConfiguration,
-      },
-      {
         id: SchoolMenuEnum.Subjects,
         label: "MENUITEMS.CONFIGURATION.LIST.SUBJECTS",
         parentId: SchoolMenuEnum.Configuration,
         link: "/school/configuration/subjects",
+        permission: PermissionActionEnum.School_ManageConfiguration,
+      },
+      {
+        id: SchoolMenuEnum.Classes,
+        label: "MENUITEMS.CONFIGURATION.LIST.CLASSES",
+        parentId: SchoolMenuEnum.Configuration,
+        link: "/school/configuration/classes",
         permission: PermissionActionEnum.School_ManageConfiguration,
       },
       {
@@ -138,13 +145,6 @@ export const MENU: MenuItem[] = [
           },
         ],
       },
-      {
-        id: SchoolMenuEnum.SystemSettings,
-        label: "MENUITEMS.CONFIGURATION.LIST.SYSTEMSETTINGS",
-        parentId: SchoolMenuEnum.Configuration,
-        link: "/school/configuration/system",
-        permission: PermissionActionEnum.School_ManageConfiguration,
-      }
     ],
   },
   {
