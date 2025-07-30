@@ -23,7 +23,7 @@ export class RolloverComponent extends BaseComponent implements OnInit {
   activeAcademicYears: any[] | undefined | any = [];
   inActiveAcademicYears : any[] | undefined | any = [];
   rollOvers: any[] | undefined | any = [];
-  rollOVerDestinationAcademicYears: any[] | undefined | any = [];
+  rollOVerTargetAcademicYears: any[] | undefined | any = [];
   rollOversToDisplay: any[] | undefined | any = [];
 
   form!: UntypedFormGroup;
@@ -32,7 +32,7 @@ export class RolloverComponent extends BaseComponent implements OnInit {
 
     headers: any = [
     { key: 'sourceAcademicYear', displayName: 'Source Year' },
-    { key: 'destinationAcademicYear', displayName: 'Target Year' },
+    { key: 'targetAcademicYear', displayName: 'Target Year' },
     { key: 'rollOverDate', displayName: 'Rollover Date' },
   ];
 
@@ -51,11 +51,11 @@ export class RolloverComponent extends BaseComponent implements OnInit {
       
     this.form = this.formBuilder.group({
       sourceAcademicYearId: [null, [Validators.required]],
-      destinationAcademicYearId: [null, [Validators.required]],
+      targetAcademicYearId: [null, [Validators.required]],
     });
 
     this.deleteForm = this.deleteFormBuilder.group({
-      destinationAcademicYearId: [null, [Validators.required]],
+      targetAcademicYearId: [null, [Validators.required]],
     });
 
     this.getAcademicYears();
@@ -78,7 +78,7 @@ export class RolloverComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    if(this.form.value.sourceAcademicYearId == this.form.value.destinationAcademicYearId){
+    if(this.form.value.sourceAcademicYearId == this.form.value.targetAcademicYearId){
       SimpleAlerts.showWarning('Academic year from and to cannot be the same');
       return;
     }
@@ -105,14 +105,14 @@ export class RolloverComponent extends BaseComponent implements OnInit {
     this.academicService.getRollOvers().subscribe({
       next: (response) => {
         this.rollOvers = response.data;
-        this.rollOVerDestinationAcademicYears = response.data?.map(r => r.destinationAcademicYear);
+        this.rollOVerTargetAcademicYears = response.data?.map(r => r.targetAcademicYear);
 
         this.rollOversToDisplay = this.rollOvers.map((rollOver: any) => {
           return {
             id: rollOver.id,
             sourceAcademicYear: rollOver.sourceAcademicYear?.name || "#",
-            destinationAcademicYear:
-              rollOver.destinationAcademicYear?.name || "#",
+            targetAcademicYear:
+              rollOver.targetAcademicYear?.name || "#",
             rollOverDate: rollOver?.rollOverDate,
           };
         });
@@ -126,7 +126,7 @@ export class RolloverComponent extends BaseComponent implements OnInit {
     SimpleAlerts.confirmDialog().then((result) => {
           if (result) {
             this.toggleLoading();
-            this.academicService.deleteRollover(this.deleteForm.value.destinationAcademicYearId).pipe(
+            this.academicService.deleteRollover(this.deleteForm.value.targetAcademicYearId).pipe(
               finalize(() => {this.toggleLoading();})).subscribe({
               next: (response) => {
                 if(response.success){

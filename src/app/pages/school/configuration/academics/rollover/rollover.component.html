@@ -42,12 +42,12 @@
                 <div class="col-lg-6">
                     <label class="form-label">Source Academic Year<span class="text-danger">*</span></label>
                     <ng-select [items]="inActiveAcademicYears" bindLabel="name" id="academicYear" bindValue="id" required formControlName="sourceAcademicYearId" placeholder="Select Source Academic Year" [ngClass]="{ 'is-invalid': submitted && form.controls['sourceAcademicYearId'].invalid }"></ng-select>
-                    <div class="invalid-feedback">Please select an academic year from</div>
+                    <div class="invalid-feedback">Please select source academic year</div>
                 </div>
                  <div class="col-lg-6">
-                    <label class="form-label">Destination Academic Year<span class="text-danger">*</span></label>
-                    <ng-select [items]="activeAcademicYears" bindLabel="name" id="academicYear" bindValue="id" required formControlName="destinationAcademicYearId" placeholder="Select Destination Academic Year" [ngClass]="{ 'is-invalid': submitted && form.controls['destinationAcademicYearId'].invalid }"></ng-select>
-                    <div class="invalid-feedback">Please select an academic year to</div>
+                    <label class="form-label">Target Academic Year<span class="text-danger">*</span></label>
+                    <ng-select [items]="activeAcademicYears" bindLabel="name" id="academicYear" bindValue="id" required formControlName="targetAcademicYearId" placeholder="Select Target Academic Year" [ngClass]="{ 'is-invalid': submitted && form.controls['targetAcademicYearId'].invalid }"></ng-select>
+                    <div class="invalid-feedback">Please select target academic year</div>
                 </div>
             </div>
             </div>
@@ -69,9 +69,9 @@
         <form  class="tablelist-form" autocomplete="off" [formGroup]="deleteForm" (ngSubmit)="deleteRollover()">
             <div class="modal-body">
                  <div class="mb-3">
-                    <label class="form-label">Destination Academic Year<span class="text-danger">*</span></label>
-                    <ng-select [items]="rollOVerDestinationAcademicYears" bindLabel="name" id="academicYear" bindValue="id" required formControlName="destinationAcademicYearId" placeholder="Select Destination Academic Year" [ngClass]="{ 'is-invalid': submitted && deleteForm.controls['destinationAcademicYearId'].invalid }"></ng-select>
-                    <div class="invalid-feedback">Please select an academic year</div>
+                    <label class="form-label">Target Academic Year<span class="text-danger">*</span></label>
+                    <ng-select [items]="rollOVerTargetAcademicYears" bindLabel="name" id="academicYear" bindValue="id" required formControlName="targetAcademicYearId" placeholder="Select Target Academic Year" [ngClass]="{ 'is-invalid': submitted && deleteForm.controls['targetAcademicYearId'].invalid }"></ng-select>
+                    <div class="invalid-feedback">Please select target academic year</div>
                 </div>
             </div>
             <div class="modal-footer">
