@@ -59,10 +59,6 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     { key: 'coefficient', displayName: 'Coefficient' },
     { key: 'code', displayName: 'Code' },
   ];
-
-  selectedStudentCourseHeaders: any = [
-    { key: 'name', displayName: 'Name' },
-  ]
   
   headers: any = [
     { key: 'familyName', displayName: 'Family Name' },
