@@ -393,7 +393,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
       staticId: classSubject.staticId
     };
     this.classSubjectForm.setValue(data);
-    this.modalService.open(content, this.mdModalConfig);
+    this.modalService.open(content, this.lgModalConfig);
   }
 
   public classSubject_onSelectAllClasses() {
