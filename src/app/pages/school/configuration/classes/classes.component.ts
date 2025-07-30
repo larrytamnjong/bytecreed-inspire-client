@@ -99,7 +99,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
 
     this.classExamTypeForm = this.classExamTypeFormBuilder.group({
       id: [null],
-      examTypeId: [null,[Validators.required]],
+      examTypeIds: [null,[Validators.required]],
       weight: [null],
       overrideDefaultWeight: [false, [Validators.required]],
       isActive: [true, [Validators.required]],
@@ -131,7 +131,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
 
      this.classSubjectForm = this.classFormBuilder.group({
         id: [null],
-        subjectId: [null,[Validators.required]],
+        subjectIds: [null,[Validators.required]],
         coefficient: [null],
         overrideDefaultCoefficient: [false, [Validators.required]],
         isActive: [true, [Validators.required]],

@@ -52,7 +52,7 @@
                                             </div>
                                             <div class="col-sm-auto">
                                                 <div class="d-flex flex-wrap align-items-start gap-2">
-                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassExamTypeModal(addClassExamTypeContent)"><i class="ri-add-line align-bottom me-1"></i> Add</button>
+                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassExamTypeModal(addClassExamTypeContent)"><i class="ri-add-line align-bottom me-1"></i> Add And Update</button>
                                                     <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="deleteClassExamTypeModal(removeClassExamTypeContent)"><i class="ri-delete-bin-line align-bottom me-1"></i> Delete</button>
                                                 </div>
                                             </div>
@@ -120,7 +120,7 @@
                                             </div>
                                             <div class="col-sm-auto">
                                                 <div class="d-flex flex-wrap align-items-start gap-2">
-                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassSubjectModal(updateOrAddClassSubjectContent)"><i class="ri-add-line align-bottom me-1"></i> Add</button>
+                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassSubjectModal(updateOrAddClassSubjectContent)"><i class="ri-add-line align-bottom me-1"></i> Add And Update</button>
                                                     <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="deleteClassSubjectModal(removeClassSubjectContent)"><i class="ri-delete-bin-line align-bottom me-1"></i> Delete</button>
                                                 </div>
                                             </div>
@@ -248,7 +248,7 @@
                 <div class="row g-3">
                 <div class="col-lg-6">
                     <label class="form-label">Exam Type <span class="text-danger">*</span></label>
-                    <ng-select [items]="examTypes" bindLabel="name"  bindValue="id" formControlName="examTypeId" placeholder="Select ExamType"  [ngClass]="{ 'is-invalid': submittedClassExamType && classExamTypeF['examTypeId'].invalid }"></ng-select>
+                    <ng-select [items]="examTypes" bindLabel="name" [multiple]="true"  bindValue="id" formControlName="examTypeIds" placeholder="Select ExamType"  [ngClass]="{ 'is-invalid': submittedClassExamType && classExamTypeF['examTypeIds'].invalid }"></ng-select>
                     <div class="invalid-feedback">Select Exam Type</div>
                 </div>
                 <div class="col-lg-6">
@@ -333,7 +333,7 @@
     <!--Class Subject Modals -->
     <ng-template #updateOrAddClassSubjectContent role="document" let-modal>
         <div class="modal-header p-3 bg-light">
-            <h5 class="modal-title">Add Class Subject</h5>
+            <h5 class="modal-title">Add Class Subjects</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissClassSubjectModal()"></button>
         </div>
         <form  class="tablelist-form" autocomplete="off" [formGroup]="classSubjectForm" (ngSubmit)="onSubmitAddClassSubject()">
@@ -341,7 +341,7 @@
                 <div class="row g-3">
                 <div class="col-lg-6">
                     <label class="form-label">Subject <span class="text-danger">*</span></label>
-                    <ng-select [items]="subjects" bindLabel="name"  bindValue="id" formControlName="subjectId" placeholder="Select Subject"  [ngClass]="{ 'is-invalid': submittedClassSubject && classSubjectF['subjectId'].invalid }"></ng-select>
+                    <ng-select [items]="subjects" bindLabel="name" [multiple]="true"  bindValue="id" formControlName="subjectIds" placeholder="Select Subject"  [ngClass]="{ 'is-invalid': submittedClassSubject && classSubjectF['subjectIds'].invalid }"></ng-select>
                     <div class="invalid-feedback">Select Subject</div>
                 </div>
                 <div class="col-lg-6">
