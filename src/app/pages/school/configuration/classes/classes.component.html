@@ -52,7 +52,7 @@
                                             </div>
                                             <div class="col-sm-auto">
                                                 <div class="d-flex flex-wrap align-items-start gap-2">
-                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassExamTypeModal(addClassExamTypeContent)"><i class="ri-pencil-line align-bottom me-1"></i> Assign</button>
+                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassExamTypeModal(addOrUpdateClassExamTypeContent)"><i class="ri-pencil-line align-bottom me-1"></i> Assign</button>
                                                     <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="deleteClassExamTypeModal(removeClassExamTypeContent)"><i class="ri-delete-bin-line align-bottom me-1"></i> Unassign</button>
                                                 </div>
                                             </div>
@@ -86,8 +86,10 @@
                                     <generic-app-table 
                                     [headers]="classExamTypeHeaders" 
                                     [data]="classExamTypes" 
-                                    [showActions]="false" 
+                                    [showActions]="true" 
                                     tableId="classExamTypeTable"
+                                    (editClicked)="editClassExamTypeModal(addOrUpdateClassExamTypeContent, $event)"
+                                    (deleteClicked)="deleteClassExamType($event)"
                                     [customTemplates]="{ 'isActive': classExamTypeStatusTemplate, 'examTypeId': examTypeTemplate, 'overrideDefaultWeight': overrideDefaultWeightTemplate }">
                                     </generic-app-table>
 
@@ -238,7 +240,7 @@
     </ng-template>
 
     <!--Class Exam Type Modals-->
-    <ng-template #addClassExamTypeContent role="document" let-modal>
+    <ng-template #addOrUpdateClassExamTypeContent role="document" let-modal>
         <div class="modal-header p-3 bg-light">
             <h5 class="modal-title">Class Exam Types</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissClassExamTypeModal()"></button>

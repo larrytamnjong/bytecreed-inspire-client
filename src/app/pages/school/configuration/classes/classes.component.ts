@@ -5,7 +5,7 @@ import { UntypedFormBuilder, Validators, UntypedFormGroup} from '@angular/forms'
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 import { ClassService } from 'src/app/core/services/api/class.service';
-import { Class, ClassSubject } from 'src/app/core/Models/api/class';
+import { Class, ClassExamType, ClassSubject } from 'src/app/core/Models/api/class';
 import { Store } from '@ngrx/store';
 import { RootReducerState } from 'src/app/store';
 import { ExamTypeService } from 'src/app/core/services/api/exam-type.service';
@@ -389,10 +389,26 @@ export class ClassesComponent extends BaseComponent implements OnInit {
       isActive: classSubject.isActive,
       classIds: [classSubject.classId],
       isRequired: classSubject.isRequired,
-      academicYearId: classSubject.academicYearId,
-      staticId: classSubject.staticId
+      academicYearId: null,
+      staticId: null
     };
     this.classSubjectForm.setValue(data);
+    this.modalService.open(content, this.lgModalConfig);
+  }
+
+  editClassExamTypeModal(content: any, classExamType: ClassExamType) {
+    this.submittedClassSubject = false;
+    var data = {
+      id: null,
+      examTypeIds: [classExamType.examTypeId],
+      weight: classExamType.weight,
+      overrideDefaultWeight: classExamType.overrideDefaultWeight,
+      isActive: classExamType.isActive,
+      classIds: [classExamType.classId],
+      academicYearId: null,
+      staticId:null
+    };
+    this.classExamTypeForm.setValue(data);
     this.modalService.open(content, this.lgModalConfig);
   }
 
@@ -440,7 +456,29 @@ export class ClassesComponent extends BaseComponent implements OnInit {
               SimpleAlerts.showSuccess();
             }
           },
-          error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
+          error: (error) => {
+            SimpleAlerts.showError(getErrorMessage(error));
+          },
+        });
+      }
+    });
+  }
+
+  deleteClassExamType(classExamType: ClassExamType){
+    SimpleAlerts.confirmDialog().then((result) => {
+      if (result) {
+        this.toggleLoading();
+        this.classService.deleteClassExamType({ examTypeIds:[ classExamType.examTypeId], classIds: [classExamType.classId]}).pipe(
+          finalize(() => {this.toggleLoading();})).subscribe({
+          next: (response) => {
+            if(response.success){
+              this.getClassExamTypes();
+              SimpleAlerts.showSuccess();
+            }
+          },
+          error: (error) => {
+            SimpleAlerts.showError(getErrorMessage(error));
+          },
         });
       }
     });
