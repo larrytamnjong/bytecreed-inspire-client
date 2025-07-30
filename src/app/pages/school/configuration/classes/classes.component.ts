@@ -109,7 +109,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
     });
 
     this.classExamTypeDeleteForm = this.classExamTypeFormBuilderDelete.group({
-      examTypeId: [null,[Validators.required]],
+      examTypeIds: [null,[Validators.required]],
       classIds: [null, [Validators.required]],
     });
 
@@ -142,7 +142,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
       });
 
       this.classSubjectDeleteForm = this.classFormBuilder.group({
-        subjectId: [null,[Validators.required]],
+        subjectIds: [null,[Validators.required]],
         classIds: [null, [Validators.required]],
       });
 
@@ -299,7 +299,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
 
     this.modalService.dismissAll();
 
-    this.classService.deleteClassExamType(this.classExamTypeDeleteForm.get('examTypeId')?.value, (this.classExamTypeDeleteForm.get('classIds')?.value)).pipe(
+    this.classService.deleteClassExamType(this.classExamTypeDeleteForm.value).pipe(
       finalize(() => {this.toggleLoading(); this.resetClassExamTypeForm();})).subscribe({
       next: (response) => {
         if(response.success){
@@ -383,7 +383,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
     this.submittedClassSubject = false;
     var data = {
       id: null,
-      subjectId: classSubject.subjectId,
+      subjectIds: [classSubject.subjectId],
       coefficient: classSubject.coefficient,
       overrideDefaultCoefficient: classSubject.overrideDefaultCoefficient,
       isActive: classSubject.isActive,
@@ -416,7 +416,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
 
     this.modalService.dismissAll();
 
-    this.classService.deleteClassSubject(this.classSubjectDeleteForm.get('subjectId')?.value, (this.classSubjectDeleteForm.get('classIds')?.value)).pipe(
+    this.classService.deleteClassSubject(this.classSubjectDeleteForm.value).pipe(
       finalize(() => {this.toggleLoading(); this.resetClassSubjectForm();})).subscribe({
       next: (response) => {
         if(response.success){
@@ -432,7 +432,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
     SimpleAlerts.confirmDialog().then((result) => {
       if (result) {
         this.toggleLoading();
-        this.classService.deleteClassSubject(classSubject.subjectId, [classSubject.classId]).pipe(
+        this.classService.deleteClassSubject({ subjectIds:[ classSubject.subjectId], classIds: [classSubject.classId]}).pipe(
           finalize(() => {this.toggleLoading();})).subscribe({
           next: (response) => {
             if(response.success){

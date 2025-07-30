@@ -45,8 +45,8 @@ export class ClassService {
         return this.apiService.get(`${this.CLASS_EXAM_TYPE_CONTROLLER}/${classId}/exam-types`);
       }
 
-    deleteClassExamType(examTypeId: string, classes: any): Observable<ServiceResponse<ClassExamType>> {
-        return this.apiService.delete(`${this.CLASS_EXAM_TYPE_CONTROLLER}/${examTypeId}/classes`, RequestHelper.createServiceRequest(classes));
+    deleteClassExamType(data: any): Observable<ServiceResponse<ClassExamType>> {
+        return this.apiService.delete(`${this.CLASS_EXAM_TYPE_CONTROLLER}`, RequestHelper.createServiceRequest(data));
       }
     
     addClassGroup(data: any): Observable<ServiceResponse<ClassGroup[]>> {
@@ -65,7 +65,7 @@ export class ClassService {
         return this.apiService.get(`${this.CLASS_SUBJECT_CONTROLLER}/${classId}/subjects`);
       }
 
-    deleteClassSubject(subjectId: string, data: any): Observable<ServiceResponse<ClassSubject>> {
-        return this.apiService.delete(`${this.CLASS_SUBJECT_CONTROLLER}/${subjectId}/classes`, RequestHelper.createServiceRequest(data));
+    deleteClassSubject(data: any): Observable<ServiceResponse<ClassSubject>> {
+        return this.apiService.delete(`${this.CLASS_SUBJECT_CONTROLLER}`, RequestHelper.createServiceRequest(data));
       }
 }

@@ -52,8 +52,8 @@
                                             </div>
                                             <div class="col-sm-auto">
                                                 <div class="d-flex flex-wrap align-items-start gap-2">
-                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassExamTypeModal(addClassExamTypeContent)"><i class="ri-pencil-line align-bottom me-1"></i> Add And Update</button>
-                                                    <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="deleteClassExamTypeModal(removeClassExamTypeContent)"><i class="ri-delete-bin-line align-bottom me-1"></i> Delete</button>
+                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassExamTypeModal(addClassExamTypeContent)"><i class="ri-pencil-line align-bottom me-1"></i> Assign</button>
+                                                    <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="deleteClassExamTypeModal(removeClassExamTypeContent)"><i class="ri-delete-bin-line align-bottom me-1"></i> Unassign</button>
                                                 </div>
                                             </div>
                                             <div class="col-xl-12">
@@ -120,8 +120,8 @@
                                             </div>
                                             <div class="col-sm-auto">
                                                 <div class="d-flex flex-wrap align-items-start gap-2">
-                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassSubjectModal(updateOrAddClassSubjectContent)"><i class="ri-pencil-line align-bottom me-1"></i> Add And Update</button>
-                                                    <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="deleteClassSubjectModal(removeClassSubjectContent)"><i class="ri-delete-bin-line align-bottom me-1"></i> Delete</button>
+                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassSubjectModal(updateOrAddClassSubjectContent)"><i class="ri-pencil-line align-bottom me-1"></i> Assign</button>
+                                                    <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="deleteClassSubjectModal(removeClassSubjectContent)"><i class="ri-delete-bin-line align-bottom me-1"></i> Unassign</button>
                                                 </div>
                                             </div>
                                             <div class="col-xl-12">
@@ -211,7 +211,7 @@
                 <div class="col-lg-6">
                     <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
                     <input type="text" id="name" class="form-control" placeholder="Enter class Name" required formControlName="name" [ngClass]="{ 'is-invalid': submittedClass && classF['name'].errors }" />
-                    <div class="invalid-feedback">Please enter a name</div>
+                    <div class="invalid-feedback">Please enter a class name</div>
                 </div>
                 <div class="col-lg-6">
                     <label class="form-label">Next Class <span class="text-danger"></span></label>
@@ -240,19 +240,19 @@
     <!--Class Exam Type Modals-->
     <ng-template #addClassExamTypeContent role="document" let-modal>
         <div class="modal-header p-3 bg-light">
-            <h5 class="modal-title">Add Class Exam Types</h5>
+            <h5 class="modal-title">Class Exam Types</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissClassExamTypeModal()"></button>
         </div>
         <form  class="tablelist-form" autocomplete="off" [formGroup]="classExamTypeForm" (ngSubmit)="onSubmitAddClassExamType()">
             <div class="modal-body">
                 <div class="row g-3">
                 <div class="col-lg-6">
-                    <label class="form-label">Exam Type <span class="text-danger">*</span></label>
+                    <label class="form-label">Exam Types <span class="text-danger">*</span></label>
                     <ng-select [items]="examTypes" bindLabel="name" [multiple]="true"  bindValue="id" formControlName="examTypeIds" placeholder="Select ExamType"  [ngClass]="{ 'is-invalid': submittedClassExamType && classExamTypeF['examTypeIds'].invalid }"></ng-select>
-                    <div class="invalid-feedback">Select Exam Type</div>
+                    <div class="invalid-feedback">Please select an exam type</div>
                 </div>
                 <div class="col-lg-6">
-                    <label class="form-label">Select classes <span class="text-danger">*</span></label>
+                    <label class="form-label">Classes <span class="text-danger">*</span></label>
                     <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submittedClassExamType && classExamTypeF['classIds'].invalid }" placeholder="Select Classes">
                         <ng-template ng-header-tmp>
                             <div style="padding-left: 1px;">
@@ -260,7 +260,7 @@
                             </div>
                           </ng-template>
                     </ng-select>
-                    <div class="invalid-feedback">Select Classes</div>
+                    <div class="invalid-feedback">Please select a class</div>
                 </div>
                 <div class="col-lg-6">
                     <label class="form-label">Override Default Weight <span class="text-danger">*</span></label>
@@ -304,12 +304,12 @@
             <div class="modal-body">
                 <div class="row g-3">
                 <div class="col-lg-6">
-                    <label class="form-label">Exam Type <span class="text-danger">*</span></label>
-                    <ng-select [items]="examTypes" bindLabel="name"  bindValue="id" formControlName="examTypeId" placeholder="Select ExamType"  [ngClass]="{ 'is-invalid': submittedDeleteClassExamType && classExamTypeDeleteF['examTypeId'].invalid }"></ng-select>
-                    <div class="invalid-feedback">Select Exam Type</div>
+                    <label class="form-label">Exam Types <span class="text-danger">*</span></label>
+                    <ng-select [items]="examTypes" [multiple]="true" bindLabel="name"  bindValue="id" formControlName="examTypeIds" placeholder="Select ExamType"  [ngClass]="{ 'is-invalid': submittedDeleteClassExamType && classExamTypeDeleteF['examTypeIds'].invalid }"></ng-select>
+                    <div class="invalid-feedback">Please select an exam type</div>
                 </div>
                 <div class="col-lg-6">
-                    <label class="form-label">Select classes <span class="text-danger">*</span></label>
+                    <label class="form-label">Classes <span class="text-danger">*</span></label>
                     <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submittedDeleteClassExamType && classExamTypeDeleteF['classIds'].invalid }" placeholder="Select Classes">
                         <ng-template ng-header-tmp>
                             <div style="padding-left: 1px;">
@@ -317,7 +317,7 @@
                             </div>
                           </ng-template>
                     </ng-select>
-                    <div class="invalid-feedback">Select Classes</div>
+                    <div class="invalid-feedback">Please select a class</div>
                 </div>
                 </div>
             </div>
@@ -333,19 +333,19 @@
     <!--Class Subject Modals -->
     <ng-template #updateOrAddClassSubjectContent role="document" let-modal>
         <div class="modal-header p-3 bg-light">
-            <h5 class="modal-title">Add Class Subjects</h5>
+            <h5 class="modal-title">Class Subjects</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissClassSubjectModal()"></button>
         </div>
         <form  class="tablelist-form" autocomplete="off" [formGroup]="classSubjectForm" (ngSubmit)="onSubmitAddClassSubject()">
             <div class="modal-body">
                 <div class="row g-3">
                 <div class="col-lg-6">
-                    <label class="form-label">Subject <span class="text-danger">*</span></label>
+                    <label class="form-label">Subjects <span class="text-danger">*</span></label>
                     <ng-select [items]="subjects" bindLabel="name" [multiple]="true"  bindValue="id" formControlName="subjectIds" placeholder="Select Subject"  [ngClass]="{ 'is-invalid': submittedClassSubject && classSubjectF['subjectIds'].invalid }"></ng-select>
-                    <div class="invalid-feedback">Select Subject</div>
+                    <div class="invalid-feedback">Please select a subject</div>
                 </div>
                 <div class="col-lg-6">
-                    <label class="form-label">Select classes <span class="text-danger">*</span></label>
+                    <label class="form-label">Classes <span class="text-danger">*</span></label>
                     <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submittedClassSubject && classSubjectF['classIds'].invalid }" placeholder="Select Classes">
                         <ng-template ng-header-tmp>
                             <div style="padding-left: 1px;">
@@ -353,7 +353,7 @@
                             </div>
                           </ng-template>
                     </ng-select>
-                    <div class="invalid-feedback">Select Classes</div>
+                    <div class="invalid-feedback">Please select a class</div>
                 </div>
                 <div class="col-lg-6">
                     <label class="form-label">Override Default Coefficient<span class="text-danger">*</span></label>
@@ -399,19 +399,19 @@
     </ng-template>
     <ng-template #removeClassSubjectContent role="document" let-modal>
         <div class="modal-header p-3 bg-light">
-            <h5 class="modal-title">Remove Class Subject</h5>
+            <h5 class="modal-title">Remove Class Subjects</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissClassSubjectModal()"></button>
         </div>
         <form  class="tablelist-form" autocomplete="off" [formGroup]="classSubjectDeleteForm" (ngSubmit)="onSubmitDeleteClassSubject()">
             <div class="modal-body">
                 <div class="row g-3">
                 <div class="col-lg-6">
-                    <label class="form-label">Class Subject <span class="text-danger">*</span></label>
-                    <ng-select [items]="subjects" bindLabel="name"  bindValue="id" formControlName="subjectId" placeholder="Select Subject"  [ngClass]="{ 'is-invalid': submittedDeleteClassSubject && classSubjectDeleteF['subjectId'].invalid }"></ng-select>
-                    <div class="invalid-feedback">Select Subject</div>
+                    <label class="form-label">Subjects <span class="text-danger">*</span></label>
+                    <ng-select [items]="subjects" [multiple]="true" bindLabel="name"  bindValue="id" formControlName="subjectIds" placeholder="Select Subject"  [ngClass]="{ 'is-invalid': submittedDeleteClassSubject && classSubjectDeleteF['subjectIds'].invalid }"></ng-select>
+                    <div class="invalid-feedback">Please select a subject</div>
                 </div>
                 <div class="col-lg-6">
-                    <label class="form-label">Select classes <span class="text-danger">*</span></label>
+                    <label class="form-label">Classes <span class="text-danger">*</span></label>
                     <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submittedDeleteClassSubject && classSubjectDeleteF['classIds'].invalid }" placeholder="Select Classes">
                         <ng-template ng-header-tmp>
                             <div style="padding-left: 1px;">
@@ -419,7 +419,7 @@
                             </div>
                           </ng-template>
                     </ng-select>
-                    <div class="invalid-feedback">Select Classes</div>
+                    <div class="invalid-feedback">Please select a class</div>
                 </div>
                 </div>
             </div>
