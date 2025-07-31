@@ -32,7 +32,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
   teacherClasses: any = [];
   teacherSections: any = [];
   studentEnrollments: any = [];
-  academicPeriods: any = [];
+  academicPeriod: any;
   examTypes: any = [];
   scale: any = null;
 
@@ -193,7 +193,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
 
     const payload = {
       examTypeId: this.getStudentForm.get("examTypeId")?.value,
-      academicPeriodId: this.academicPeriods[0]!.id!,
+      academicPeriodId: this.academicPeriod?.id,
       subjectId: this.getStudentForm.get("subjectId")?.value,
       classId: this.getStudentForm.get("classId")?.value,
       classSectionId: this.getStudentForm.get("classSectionId")?.value,
@@ -236,7 +236,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
 
         const payload = {
           examTypeId: this.getStudentForm.get("examTypeId")?.value,
-          academicPeriodId: this.academicPeriods[0]?.id,
+          academicPeriodId: this.academicPeriod?.id,
           subjectId: this.getStudentForm.get("subjectId")?.value,
           classId: this.getStudentForm.get("classId")?.value,
           classSectionId: this.getStudentForm.get("classSectionId")?.value,
@@ -282,7 +282,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
 
     const payload = {
       examTypeId: this.getStudentForm.get("examTypeId")?.value,
-      academicPeriodId: this.academicPeriods[0]!.id!,
+      academicPeriodId: this.academicPeriod?.id,
       subjectId: this.getStudentForm.get("subjectId")?.value,
       classId: this.getStudentForm.get("classId")?.value,
       classSectionId: this.getStudentForm.get("classSectionId")?.value,
@@ -352,10 +352,10 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
   }
 
   getActiveAcademicPeriod() {
-    this.academicService.getActiveAcademicPeriods().subscribe({
+    this.academicService.getActiveAcademicPeriod().subscribe({
       next: (response) => {
         if (response.success) {
-          this.academicPeriods = response.data;
+          this.academicPeriod = response.data;
         }
       },
       error: () => {},

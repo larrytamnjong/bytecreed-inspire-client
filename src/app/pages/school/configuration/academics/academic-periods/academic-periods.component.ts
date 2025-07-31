@@ -23,7 +23,7 @@ export class AcademicPeriodsComponent  extends BaseComponent implements OnInit {
     submitted: boolean = false;
 
     academicTerms: AcademicTerm[] | undefined = [];
-    academicYears: AcademicYear[] | undefined = [];
+    academicYears: AcademicYear[] | any = [];
   
     academicPeriods: AcademicPeriod[] | undefined | any = [];
     academicPeriodForm!: UntypedFormGroup;
@@ -49,7 +49,7 @@ export class AcademicPeriodsComponent  extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLookUps();
-    this.getAcademicYears();
+    this.getActiveAcademicYear();
     this.getAcademicTerms();
     this.breadCrumbItems = [{ label: 'Configuration' },{ label: 'Academics'}, { label: 'Academic Periods', active: true }];
 
@@ -165,13 +165,12 @@ export class AcademicPeriodsComponent  extends BaseComponent implements OnInit {
       });
   }
   
-  getAcademicYears() {
-    this.academicService.getAcademicYears().subscribe({
+  getActiveAcademicYear() {
+    this.academicService.getActiveAcademicYear().subscribe({
         next: (response) => {
-          this.academicYears = response.data;
+          this.academicYears = [response.data];
         },
         error: (error) => { }
       });
   }
-
 }
