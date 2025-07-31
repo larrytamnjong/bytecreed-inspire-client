@@ -53,12 +53,20 @@ export class StudentService {
         return this.apiService.get(`${this.STUDENT_ENROLLMENT_CONTROLLER}`, {params: queryParams});
     }
 
-    addStudentSubjects(data: any): Observable<ServiceResponse<StudentSubject[]>> {
-        return this.apiService.post(this.STUDENT_SUBJECT_CONTROLLER, RequestHelper.createServiceRequest(data));
+    assignStudentSubjects(data: any, academicYearId?: any): Observable<ServiceResponse<StudentSubject[]>> {
+        let queryParams = new HttpParams();
+        if (academicYearId) {
+            queryParams = queryParams.set('academicYearId', academicYearId);
+        }
+        return this.apiService.post(this.STUDENT_SUBJECT_CONTROLLER, RequestHelper.createServiceRequest(data), {params: queryParams});
     }
 
-    deleteStudentSubjects(data: any): Observable<ServiceResponse<any>> {
-        return this.apiService.delete(`${this.STUDENT_SUBJECT_CONTROLLER}`, RequestHelper.createServiceRequest(data));
+    deleteStudentSubjects(data: any, academicYearId?: any): Observable<ServiceResponse<any>> {
+        let queryParams = new HttpParams();
+        if (academicYearId) {
+            queryParams = queryParams.set('academicYearId', academicYearId);
+        }
+        return this.apiService.delete(`${this.STUDENT_SUBJECT_CONTROLLER}`, RequestHelper.createServiceRequest(data), {params: queryParams});
     }
 
     getStudentSubjects(data: any, academicYearId?: any): Observable<ServiceResponse<StudentSubject[]>> {

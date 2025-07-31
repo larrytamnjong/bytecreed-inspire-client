@@ -111,6 +111,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
         this.clearClassesAndClassSections();
         this.getClasses(value);
         this.getClassSections(value);
+        this.getSubjects(value);
       } 
     });
 
@@ -168,7 +169,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     }
 
     this.toggleLoading();
-    this.studentService.addStudentSubjects(this.studentSubjectForm.value).pipe(finalize(() => this.toggleLoading())).subscribe({
+    this.studentService.assignStudentSubjects(this.studentSubjectForm.value, this.studentEnrollmentGetForm.get("academicYearId")?.value).pipe(finalize(() => this.toggleLoading())).subscribe({
       next: (response) => {
         if(response.success){
           SimpleAlerts.showSuccessWithOptions('Would you like to unselect selected students?').then((result) => {
@@ -197,7 +198,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     }
 
     this.toggleLoading();
-    this.studentService.deleteStudentSubjects(this.studentSubjectForm.value).pipe(finalize(() => this.toggleLoading())).subscribe({
+    this.studentService.deleteStudentSubjects(this.studentSubjectForm.value, this.studentEnrollmentGetForm.get("academicYearId")?.value).pipe(finalize(() => this.toggleLoading())).subscribe({
       next: (response) => {
         if(response.success){
           SimpleAlerts.showSuccessWithOptions('Would you like to unselect selected students?').then((result) => {
@@ -339,7 +340,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
       enrollmentIds: [this.selectedStudentEnrollment.id]
     }
 
-    this.studentService.addStudentSubjects(data).pipe(finalize(() => this.toggleLoading())).subscribe({
+    this.studentService.assignStudentSubjects(data, this.studentEnrollmentGetForm.get("academicYearId")?.value).pipe(finalize(() => this.toggleLoading())).subscribe({
       next: (response) => {
         if(response.success){
           this.selectedStudentSelectedSubjects = [];
@@ -361,7 +362,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
           subjectIds: [subject.id], 
           enrollmentIds: [this.selectedStudentEnrollment.id]
         }
-        this.studentService.deleteStudentSubjects(data).pipe(finalize(() => this.toggleLoading())).subscribe({
+        this.studentService.deleteStudentSubjects(data, this.studentEnrollmentGetForm.get("academicYearId")?.value).pipe(finalize(() => this.toggleLoading())).subscribe({
           next: (response) => {
             if(response.success){
               this.loadSelectedStudentSubjects();
@@ -513,8 +514,8 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     this.studentEnrollmentGetForm.patchValue({classId: null, classSectionId: null});
   }
 
-  getSubjects() {
-    this.subjectService.getSubjects().subscribe({
+  getSubjects(academicYearId?: any) {
+    this.subjectService.getSubjects(academicYearId).subscribe({
         next: (response) => {this.subjects = response.data;},
         error: (error) => {}
       });

@@ -4,14 +4,19 @@ import { ApiHttpService } from "../common/base-api-http.service";
 import { ServiceResponse } from "../../Models/common/service-response";
 import { Subject } from "../../Models/api/subject";
 import { RequestHelper } from "../common/service-request-helper";
+import { HttpParams } from "@angular/common/http";
 
 @Injectable({ providedIn: 'root'})
 export class SubjectService {
   private readonly SUBJECT_CONTROLLER: string = "v1/subjects";
   constructor(private apiService: ApiHttpService) {}
 
-  public getSubjects(): Observable<ServiceResponse<Subject[]>> {
-    return this.apiService.get(`${this.SUBJECT_CONTROLLER}`);
+  public getSubjects(academicYearId?: any): Observable<ServiceResponse<Subject[]>> {
+     let queryParams = new HttpParams();
+            if (academicYearId) {
+                queryParams = queryParams.set('academicYearId', academicYearId);
+            }
+    return this.apiService.get(`${this.SUBJECT_CONTROLLER}`, {params: queryParams});
   }
 
   public addSubject(data: Subject): Observable<ServiceResponse<Subject[]>> {
