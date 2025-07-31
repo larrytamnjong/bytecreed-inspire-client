@@ -19,9 +19,11 @@
                 [headers]="headers" 
                 [data]="gradingSystems" 
                 [showActions]="true" 
-                [showDelete]="false" 
+                [showDelete]="true" 
                 [customTemplates]="{ 'isActive': gradingSystemStatusTemplate}"
-                (editClicked)="editModal(content, $event)">
+                (editClicked)="editModal(content, $event)"
+                (deleteClicked)="deleteGradingSystem($event)"
+                >
                 </generic-app-table>
 
                 <ng-template #gradingSystemStatusTemplate let-status let-row="row">

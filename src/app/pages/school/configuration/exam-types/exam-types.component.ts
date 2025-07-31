@@ -150,6 +150,25 @@ export class ExamTypesComponent extends BaseComponent implements OnInit {
     }
   }
 
+  deleteExamType(examType: ExamType){
+    SimpleAlerts.confirmDeleteDialog().then((result) => {
+      if (result) {
+        this.toggleLoading();
+        this.examTypeService.deleteExamType(examType.id!).pipe(finalize(() => {this.toggleLoading();})).subscribe({
+          next: (response) => {
+            if(response.success){
+              this.getExamtypes();
+              SimpleAlerts.showSuccess();
+            }
+          },
+          error : (error) => {
+              SimpleAlerts.showError(getErrorMessage(error));
+            }
+        });
+      }
+    });
+  }
+
   dismissModal() {
     this.modalService.dismissAll();
     this.reset();

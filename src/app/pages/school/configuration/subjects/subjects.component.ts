@@ -127,6 +127,25 @@ export class SubjectsComponent extends BaseComponent implements OnInit {
         });
       }
     }
+
+    deleteSubject(subject: Subject){
+      SimpleAlerts.confirmDeleteDialog().then((result) => {
+        if (result) {
+          this.toggleLoading();
+          this.subjectService.deleteSubject(subject.id!).pipe(finalize(() => {this.toggleLoading();})).subscribe({
+            next: (response) => {
+              if(response.success){
+                this.getSubjects();
+                SimpleAlerts.showSuccess();
+              }
+            },
+            error : (error) => {
+                SimpleAlerts.showError(getErrorMessage(error));
+              }
+          });
+        }
+      });
+    }
   
   dismissModal() {
     this.modalService.dismissAll();

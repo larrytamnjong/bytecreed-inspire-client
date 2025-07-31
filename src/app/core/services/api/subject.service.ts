@@ -22,4 +22,8 @@ export class SubjectService {
     return this.apiService.put(`${this.SUBJECT_CONTROLLER}`, RequestHelper.createServiceRequest([data]));
   }
 
+  deleteSubject(id: any): Observable<ServiceResponse<any>> {
+    return this.apiService.delete(`${this.SUBJECT_CONTROLLER}/${id}/subject`);
+  }
+
 }

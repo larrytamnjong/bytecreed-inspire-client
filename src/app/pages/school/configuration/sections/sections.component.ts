@@ -118,6 +118,25 @@ export class SectionsComponent extends BaseComponent implements OnInit {
     }
   }
 
+   deleteClassSection(classSection: ClassSection){
+      SimpleAlerts.confirmDeleteDialog().then((result) => {
+        if (result) {
+          this.toggleLoading();
+          this.classSectionService.deleteClassSection(classSection.id!).pipe(finalize(() => {this.toggleLoading();})).subscribe({
+            next: (response) => {
+              if(response.success){
+                this.getClassSections();
+                SimpleAlerts.showSuccess();
+              }
+            },
+            error : (error) => {
+                SimpleAlerts.showError(getErrorMessage(error));
+              }
+          });
+        }
+      });
+    }
+
   dismissModal() {
     this.modalService.dismissAll();
     this.reset();

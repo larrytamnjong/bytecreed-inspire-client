@@ -20,9 +20,11 @@
                 [headers]="headers" 
                 [data]="examTypes" 
                 [showActions]="true"  
-                [showDelete]="false"
+                [showDelete]="true"
                 [customTemplates]="{ 'useWeight': useWeightTemplate, 'academicTermId': academicTermTemplate }"
-                (editClicked)="editModal(content, $event)">
+                (editClicked)="editModal(content, $event)"
+                (deleteClicked)="deleteExamType($event)"
+                >
             </generic-app-table>
 
                 <ng-template #useWeightTemplate let-status let-row="row">

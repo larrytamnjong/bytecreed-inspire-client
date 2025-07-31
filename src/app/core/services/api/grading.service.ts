@@ -43,4 +43,9 @@ export class GradingService {
   public deleteGradeSetup(gradeSetupId: string) :  Observable<ServiceResponse<any>> {
     return this.apiService.delete(`${this.GRADE_SETUP_CONTROLLER}/${gradeSetupId}`);
   }
+
+  deleteGradingSystem(id: any): Observable<ServiceResponse<any>> {
+    return this.apiService.delete(`${this.GRADING_SYSTEM_CONTROLLER}/${id}/grading-system`);
+  }
+
 }

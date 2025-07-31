@@ -26,4 +26,8 @@ export class ClassSectionService {
   updateClassSection(data: ClassSection): Observable<ServiceResponse<ClassSection>> {
     return this.apiService.put(`${this.CLASS_SECTION_CONTROLLER}/class-section`, RequestHelper.createServiceRequest(data));
   }
+
+  deleteClassSection(id: any): Observable<ServiceResponse<any>> {
+      return this.apiService.delete(`${this.CLASS_SECTION_CONTROLLER}/${id}/class-section`);
+  }
 }

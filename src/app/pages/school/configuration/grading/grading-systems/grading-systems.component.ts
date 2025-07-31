@@ -121,6 +121,26 @@ export class GradingSystemsComponent extends BaseComponent implements OnInit {
         });
       }
     }
+
+  deleteGradingSystem(gradingSystem: GradingSystem){
+    SimpleAlerts.confirmDeleteDialog().then((result) => {
+      if (result) {
+        this.toggleLoading();
+        this.gradingSystemService.deleteGradingSystem(gradingSystem.id!).pipe(finalize(() => {this.toggleLoading();})).subscribe({
+          next: (response) => {
+            if(response.success){
+              this.getGradingSystems();
+              SimpleAlerts.showSuccess();
+            }
+          },
+          error : (error) => {
+              SimpleAlerts.showError(getErrorMessage(error));
+            }
+        });
+      }
+    });
+  }
+    
   
     dismissModal() {
       this.modalService.dismissAll();

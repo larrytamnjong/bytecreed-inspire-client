@@ -22,4 +22,8 @@ export class ExamTypeService {
     updateExamType(examType: ExamType): Observable<ServiceResponse<ExamType[]>> {
         return this.apiService.put(`${this.EXAM_TYPE_CONTROLLER}`, RequestHelper.createServiceRequest([examType]));
     }
+
+     deleteExamType(id: any): Observable<ServiceResponse<any>> {
+        return this.apiService.delete(`${this.EXAM_TYPE_CONTROLLER}/${id}/exam-type`);
+    }
 }
