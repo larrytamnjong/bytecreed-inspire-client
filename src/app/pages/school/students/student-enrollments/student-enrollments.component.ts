@@ -29,7 +29,6 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
   studentEnrollmentCreateForm!: UntypedFormGroup;
   studentEnrollmentGetForm!: UntypedFormGroup;
   studentSubjectForm!: UntypedFormGroup;
-  studentCourseForm!: UntypedFormGroup;
   studentEnrollments: any = [];
   academicYear: string | null = null;
   class: string | null = null;
@@ -41,7 +40,6 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
   selectedEnrollments: any[] = [];
 
   subjects: any = [];
-  courses: any = [];
   classes: any = [];
   classSections: any = [];
   academicYears: any = [];
@@ -52,7 +50,6 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
   selectedStudentEnrollment: any = null;
   selectedStudentSelectedSubjects:  [] = [];
   selectedStudentSubjects: any = [];
-  selectedStudentCourses: any = [];
   selectedStudentSubjectHeaders: any = [
     { key: 'name', displayName: 'Name' },
     { key: 'description', displayName: 'Description' },
@@ -74,7 +71,6 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
   get fStudentEnrollmentCreateForm() {return this.studentEnrollmentCreateForm.controls;}
   get fStudentEnrollmentGetForm() {return this.studentEnrollmentGetForm.controls;}
   get fStudentSubjectForm() {return this.studentSubjectForm.controls;}
-  get fStudentCourseForm() {return this.studentCourseForm.controls;}
 
   constructor( 
         private modalService: NgbModal,
@@ -82,12 +78,10 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
         private studentEnrollmentCreateFormBuilder: UntypedFormBuilder,
         private studentEnrollmentGetFormBuilder: UntypedFormBuilder,
         private studentSubjectFormBuilder: UntypedFormBuilder,
-        private studentCourseFormBuilder: UntypedFormBuilder,
         private classSectionService: ClassSectionService,
         private classService: ClassService,
         private academicService: AcademicService,
         private subjectService: SubjectService,
-        private courseService: CourseService,
         protected override store: Store<{ data: RootReducerState }>, ) {
         super(store);
       }
@@ -120,15 +114,9 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
       enrollmentIds: [null, [Validators.required]],
     });
 
-    this.studentCourseForm = this.studentCourseFormBuilder.group({
-      courseId: [null, [Validators.required]],
-      studentIds: [null, [Validators.required]],
-    });
-
     this.getLookUps();
     this.getAcademicYears();
     this.getSubjects();
-    this.getCourses();
     this.getStudentEnrollments();
     this.getClassSections();
     this.getClasses();
@@ -172,16 +160,8 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     this.studentService.assignStudentSubjects(this.studentSubjectForm.value, this.studentEnrollmentGetForm.get("academicYearId")?.value).pipe(finalize(() => this.toggleLoading())).subscribe({
       next: (response) => {
         if(response.success){
-          this.modalService.dismissAll();
-          SimpleAlerts.showSuccessWithOptions('Would you like to unselect selected students?').then((result) => {
-            if (result) {
-              this.reset();
-              this.dismissModal();
-              this.getStudentEnrollments();
-            }else{
-              return;
-            }
-          });
+          this.dismissModal();
+          SimpleAlerts.showSuccess();
         }else{SimpleAlerts.showError(response.message);}
       },
       error: (error) => {
@@ -201,17 +181,8 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     this.studentService.deleteStudentSubjects(this.studentSubjectForm.value, this.studentEnrollmentGetForm.get("academicYearId")?.value).pipe(finalize(() => this.toggleLoading())).subscribe({
       next: (response) => {
         if(response.success){
-          SimpleAlerts.showSuccessWithOptions('Would you like to unselect selected students?').then((result) => {
-            if (result) {
-              this.reset();
-              this.dismissModal();
-              this.getStudentEnrollments();
-            }else{
-              this.studentSubjectForm.reset();
-              this.modalService.dismissAll();
-              return;
-            }
-          });
+          this.dismissModal();
+          SimpleAlerts.showSuccess();
         }else{
           SimpleAlerts.showError(response.message);
         }
@@ -222,69 +193,6 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     });
   }
  
-  onCreateStudentCourse(){
-    this.studentCourseForm.patchValue({studentIds: this.selectedEnrollments.map((item: any) => item.studentId)});
-    this.submitted = true;
-    if (this.studentCourseForm.invalid) {
-      return;
-    }
-    this.toggleLoading();
-    this.studentService.addStudentCourses(this.studentCourseForm.value).pipe(finalize(() => this.toggleLoading())).subscribe({
-      next: (response) => {
-        if(response.success){
-          SimpleAlerts.showSuccessWithOptions('Would you like to unselect selected students?').then((result) => {
-            if
-            (result) {
-              this.reset();
-              this.dismissModalWithConfirmDialog();
-              this.getStudentEnrollments();
-            }else{
-              this.studentCourseForm.reset();
-              this.modalService.dismissAll();
-              return;
-            }
-          });
-        }else{
-          SimpleAlerts.showError(response.message);
-        }
-      },
-      error: (error) => {
-        SimpleAlerts.showError(getErrorMessage(error));
-      }
-    });
-  }
-
-  onDeleteStudentCourse(){
-    this.studentCourseForm.patchValue({studentIds: this.selectedEnrollments.map((item: any) => item.studentId)});
-    this.submitted = true;
-    if (this.studentCourseForm.invalid) {
-      return;
-    }
-    this.toggleLoading();
-    this.studentService.deleteStudentCourses(this.studentCourseForm.value).pipe(finalize(() => this.toggleLoading())).subscribe({
-      next: (response) => {
-        if(response.success){
-          SimpleAlerts.showSuccessWithOptions('Would you like to unselect selected students?').then((result) => {
-            if (result) {
-              this.reset();
-              this.dismissModalWithConfirmDialog();
-              this.getStudentEnrollments();
-            }else{
-              this.studentCourseForm.reset();
-              this.modalService.dismissAll();
-              return;
-            }
-          });
-        }else{
-          SimpleAlerts.showError(response.message);
-        }
-      },
-      error: (error) => {
-       SimpleAlerts.showError(getErrorMessage(error));
-      }
-    }
-  )};
-
   onDeleteSubmit(){
     SimpleAlerts.confirmDeleteDialog().then((result) => {
       if (result) {
@@ -381,6 +289,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
 
   reset() {
     this.submitted = false;
+    this.studentSubjectForm.reset();
     this.studentEnrollmentCreateForm.reset();
     this.studentEnrollments = [];
     this.studentEnrollmentsToDisplay = [];
@@ -388,6 +297,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
   }
 
   getStudentEnrollments() {
+    this.selectedEnrollments = [];
     var classId = this.studentEnrollmentGetForm.get('classId')?.value;
     var classSectionId = this.studentEnrollmentGetForm.get('classSectionId')?.value;
     var academicYearId =  this.studentEnrollmentGetForm.get('academicYearId')?.value;
@@ -417,18 +327,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
   }
 
   dismissModal() {
-    this.modalService.dismissAll();
-    SimpleAlerts.confirmCloseDialog('Would you like to unselect selected students?').then((result) => {
-      if (result) {
-        this.reset();
-        this.getStudentEnrollments();
-      }else{
-        return;
-      }
-    });
-  }
-
-  dismissModalWithConfirmDialog() {
+    this.submitted = false;
     this.modalService.dismissAll();
     this.reset();
     this.getStudentEnrollments();
@@ -521,12 +420,6 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
       });
   }
 
-  getCourses() {
-    this.courseService.getCourses().subscribe({
-        next: (response) => {this.courses = response.data;},
-        error: (error) => {}
-      });
-  }
 
   async onPrint() {
     this.toggleLoading();
