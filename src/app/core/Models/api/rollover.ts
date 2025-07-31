@@ -4,4 +4,6 @@ export class Rollover{
     id?: string;
     sourceAcademicYear?: AcademicYear;
     targetAcademicYear?: AcademicYear;
+    rolloverDate?: Date;
+
 }

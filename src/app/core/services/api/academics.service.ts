@@ -28,7 +28,7 @@ export class AcademicService {
         return this.apiService.post(`${this.ROLLOVER_CONTROLLER}`, RequestHelper.createServiceRequest(data));
     }
 
-    getRollOvers(): Observable<ServiceResponse<Rollover[]>> {
+    getRollovers(): Observable<ServiceResponse<Rollover[]>> {
         return this.apiService.get(`${this.ROLLOVER_CONTROLLER}`);
     }
 

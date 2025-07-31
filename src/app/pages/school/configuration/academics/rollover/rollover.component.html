@@ -21,9 +21,9 @@
             </div>
             <generic-app-table 
                 [headers]="headers" 
-                [data]="rollOversToDisplay" 
+                [data]="rolloversToDisplay" 
                 [showActions]="false"  
-                [customTemplates]="{'rollOverDate': dateTemplate }">
+                [customTemplates]="{'rolloverDate': dateTemplate }">
                 <ng-template #dateTemplate let-date let-row="row">{{ date | date: 'longDate' }}</ng-template>
          </generic-app-table>
         </div>
@@ -70,7 +70,7 @@
             <div class="modal-body">
                  <div class="mb-3">
                     <label class="form-label">Target Academic Year<span class="text-danger">*</span></label>
-                    <ng-select [items]="rollOVerTargetAcademicYears" bindLabel="name" id="academicYear" bindValue="id" required formControlName="targetAcademicYearId" placeholder="Select Target Academic Year" [ngClass]="{ 'is-invalid': submitted && deleteForm.controls['targetAcademicYearId'].invalid }"></ng-select>
+                    <ng-select [items]="rolloverTargetAcademicYears" bindLabel="name" id="academicYear" bindValue="id" required formControlName="targetAcademicYearId" placeholder="Select Target Academic Year" [ngClass]="{ 'is-invalid': submitted && deleteForm.controls['targetAcademicYearId'].invalid }"></ng-select>
                     <div class="invalid-feedback">Please select target academic year</div>
                 </div>
             </div>

@@ -22,9 +22,9 @@ export class RolloverComponent extends BaseComponent implements OnInit {
   academicYears: AcademicYear[] | undefined | any = [];
   activeAcademicYears: any[] | undefined | any = [];
   inActiveAcademicYears : any[] | undefined | any = [];
-  rollOvers: any[] | undefined | any = [];
-  rollOVerTargetAcademicYears: any[] | undefined | any = [];
-  rollOversToDisplay: any[] | undefined | any = [];
+  rollovers: any[] | undefined | any = [];
+  rolloverTargetAcademicYears: any[] | undefined | any = [];
+  rolloversToDisplay: any[] | undefined | any = [];
 
   form!: UntypedFormGroup;
   deleteForm!: UntypedFormGroup;
@@ -33,7 +33,7 @@ export class RolloverComponent extends BaseComponent implements OnInit {
     headers: any = [
     { key: 'sourceAcademicYear', displayName: 'Source Year' },
     { key: 'targetAcademicYear', displayName: 'Target Year' },
-    { key: 'rollOverDate', displayName: 'Rollover Date' },
+    { key: 'rolloverDate', displayName: 'Rollover Date' },
   ];
 
   constructor(  
@@ -106,18 +106,17 @@ export class RolloverComponent extends BaseComponent implements OnInit {
   }
 
   getRollOvers(){
-    this.academicService.getRollOvers().subscribe({
+    this.academicService.getRollovers().subscribe({
       next: (response) => {
-        this.rollOvers = response.data;
-        this.rollOVerTargetAcademicYears = response.data?.map(r => r.targetAcademicYear);
+        this.rollovers = response.data;
+        this.rolloverTargetAcademicYears = response.data?.map(r => r.targetAcademicYear);
 
-        this.rollOversToDisplay = this.rollOvers.map((rollOver: any) => {
+        this.rolloversToDisplay = this.rollovers.map((rollover: any) => {
           return {
-            id: rollOver.id,
-            sourceAcademicYear: rollOver.sourceAcademicYear?.name || "#",
-            targetAcademicYear:
-              rollOver.targetAcademicYear?.name || "#",
-            rollOverDate: rollOver?.rollOverDate,
+            id: rollover.id,
+            sourceAcademicYear: rollover.sourceAcademicYear?.name || "#",
+            targetAcademicYear: rollover.targetAcademicYear?.name || "#",
+            rolloverDate: rollover?.rolloverDate,
           };
         });
       },
@@ -127,7 +126,11 @@ export class RolloverComponent extends BaseComponent implements OnInit {
   }
 
   deleteRollover() {
-    SimpleAlerts.confirmDialog().then((result) => {
+    this.submitted = true;
+    if (this.deleteForm.invalid) {
+      return;
+    }
+    SimpleAlerts.confirmDeleteDialog().then((result) => {
           if (result) {
             this.toggleLoading();
             this.academicService.deleteRollover(this.deleteForm.value.targetAcademicYearId).pipe(
@@ -141,8 +144,6 @@ export class RolloverComponent extends BaseComponent implements OnInit {
               },
               error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
             })
-          }else{
-            this.toggleLoading();
           }
         });
     }
