@@ -15,5 +15,5 @@ export class GradeSetup extends AcademicCycleTracker{
     minMark!: number;
     maxMark!: number;
     gradingSystemId!: string;
-    sortOrder!: number;
+    sortOrder?: number;
 }
