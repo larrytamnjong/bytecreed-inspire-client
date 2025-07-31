@@ -12,7 +12,7 @@ export class AcademicService {
     private readonly ACADEMIC_YEAR_CONTROLLER: string = "v1/academic-years";
     private readonly ACADEMIC_TERM_CONTROLLER: string = "v1/academic-terms";
     private readonly ACADEMIC_PERIOD_CONTROLLER: string = "v1/academic-periods";
-    private readonly ROLLOVER_CONTROLLER: string = "v1/roll-overs";
+    private readonly ROLLOVER_CONTROLLER: string = "v1/rollovers";
 
     constructor(private apiService: ApiHttpService) {}
 
