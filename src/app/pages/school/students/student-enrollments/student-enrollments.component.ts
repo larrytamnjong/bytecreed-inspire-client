@@ -310,7 +310,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
 
   onEditClick(enrollment: any, content: any){
     this.selectedStudentEnrollment = enrollment;
-    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
+    this.modalService.open(content, {...this.xlModalConfig, backdrop: 'static'});
     this.loadSelectedStudentSubjects();
   }
 
