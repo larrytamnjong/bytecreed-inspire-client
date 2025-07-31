@@ -14,13 +14,13 @@ import { RootReducerState } from 'src/app/store';
 })
 export class AdmissionComponent extends BaseComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
-  submittedAdmissionNumberConfigurationForm: boolean = false;
+  submitted: boolean = false;
 
-  admissionNumberConfigurationForm!: UntypedFormGroup;
-  get fAdmissionNumberConfiguration() {return this.admissionNumberConfigurationForm.controls;}
+  admissionNumberSettingsForm!: UntypedFormGroup;
+  get fAdmissionNumberSettings() {return this.admissionNumberSettingsForm.controls;}
 
   constructor(
-    private admissionNumberConfigurationFormBuilder: UntypedFormBuilder, 
+    private admissionNumberSettingsFormBuilder: UntypedFormBuilder, 
     private settingsService: SettingsService,
     protected override store: Store<{ data: RootReducerState }>) 
     { 
@@ -30,31 +30,31 @@ export class AdmissionComponent extends BaseComponent implements OnInit {
     this.toggleLoading();
     this.breadCrumbItems = [{ label: 'Configuration' },{ label: 'Admission', active: true }];
 
-    this.getAdmissionNumberConfiguration();
+    this.getAdmissionNumberSettings();
 
-    this.admissionNumberConfigurationForm = this.admissionNumberConfigurationFormBuilder.group({
-      leading: [null],
-      startFromNumber: [1,[Validators.required]],
-      trailing: [null],
+    this.admissionNumberSettingsForm = this.admissionNumberSettingsFormBuilder.group({
+      prefix: [null],
+      startingNumber: [1,[Validators.required]],
+      suffix: [null],
     });
     this.toggleLoading();
   }
 
   onSaveAdmissionForm() {
-    this.submittedAdmissionNumberConfigurationForm = true;
-    if(this.admissionNumberConfigurationForm.invalid) {
+    this.submitted = true;
+    if(this.admissionNumberSettingsForm.invalid) {
       return;
     }
    
     SimpleAlerts.confirmDialog().then((result) => {
       if (result) {
         this.toggleLoading();
-        this.settingsService.addOrUpdateAdmissionNumberSettings(this.admissionNumberConfigurationForm.value).pipe(
+        this.settingsService.addOrUpdateAdmissionNumberSettings(this.admissionNumberSettingsForm.value).pipe(
           finalize(() => this.toggleLoading())).subscribe({
           next: (response) => {
             if(response.success){
               SimpleAlerts.showSuccess();
-              this.getAdmissionNumberConfiguration();
+              this.getAdmissionNumberSettings();
             }else{SimpleAlerts.showError(response.message);}
           },
           error: (error) => {SimpleAlerts.showError(getErrorMessage(error));}
@@ -65,21 +65,15 @@ export class AdmissionComponent extends BaseComponent implements OnInit {
     });
   }
 
-  getAdmissionNumberConfiguration() {
+  getAdmissionNumberSettings() {
     this.settingsService.getAdmissionNumberSettings().subscribe({
       next: (response) => {
         if(response.success){
-        this.admissionNumberConfigurationForm.setValue({...response.data!});
+        this.admissionNumberSettingsForm.setValue({...response.data!});
         }
       },
       error: (error) => {}
     });
   }
- 
-  // resetAdmissionForm() {
-  //   this.admissionNumberConfigurationForm.reset();
-  //   this.admissionNumberConfigurationForm.patchValue({startFromNumber: 1});
-  //   this.submittedAdmissionNumberConfigurationForm = false;
-  // }
 
  }

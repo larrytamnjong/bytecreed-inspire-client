@@ -12,31 +12,30 @@
                   </li>
                   <li [ngbNavItem]="2"><a ngbNavLink><i class="ri-list-ordered"></i> Admission Number</a>
                       <ng-template ngbNavContent>
-                        <form [formGroup]="admissionNumberConfigurationForm" (ngSubmit)="onSaveAdmissionForm()">
+                        <form [formGroup]="admissionNumberSettingsForm" (ngSubmit)="onSaveAdmissionForm()">
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="mb-3">
-                                        <label for="leading" class="form-label">Leading</label>
-                                        <input type="text" class="form-control" id="leading" placeholder="Enter Leading Value" formControlName="leading"  >
+                                        <label for="prefix" class="form-label">Prefix</label>
+                                        <input type="text" class="form-control" id="prefix" placeholder="Enter Prefix" formControlName="prefix"  >
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="mb-3">
-                                        <label for="startFromNumber" class="form-label">Start From <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" id="startFromNumber" placeholder="Enter Start From number" formControlName="startFromNumber"  required [ngClass]="{ 'is-invalid': submittedAdmissionNumberConfigurationForm && fAdmissionNumberConfiguration['startFromNumber'].errors }">
-                                        <div class="invalid-feedback">Please Enter Start From Value</div>
+                                        <label for="startFromNumber" class="form-label">Starting Number <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" id="startingNumber" placeholder="Enter Starting Number" formControlName="startingNumber"  required [ngClass]="{ 'is-invalid': submitted && fAdmissionNumberSettings['startingNumber'].errors }">
+                                        <div class="invalid-feedback">Please Enter Starting Number</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="mb-3">
-                                        <label for="trailing" class="form-label">Trailing</label>
-                                        <input type="text" class="form-control" id="trailing" placeholder="Enter Trailing Value" formControlName="trailing">
+                                        <label for="suffix" class="form-label">Suffix</label>
+                                        <input type="text" class="form-control" id="suffix" placeholder="Enter Suffix" formControlName="suffix">
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="hstack gap-2 justify-content-end">
                                         <button type="submit" class="btn btn-primary"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
-                                        <!-- <button type="button" class="btn btn-warning" (click)="resetAdmissionForm()">Reset</button> -->
                                     </div>
                                 </div>
                             </div>
