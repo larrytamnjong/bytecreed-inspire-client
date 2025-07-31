@@ -451,7 +451,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
         class: enrollment.class?.name || '#',
         studentId: enrollment.student?.id || '#',
         year: enrollment.academicYear?.name || '#',
-        section: enrollment.classSection?.name || '#',
+        section: enrollment.classSection?.name || '',
         academicYearId: enrollment.academicYear?.id,
       };
     });
