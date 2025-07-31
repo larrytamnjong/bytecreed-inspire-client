@@ -31,10 +31,17 @@
         </div>
         <form  class="tablelist-form" autocomplete="off" [formGroup]="academicTermForm" (ngSubmit)="onSubmit()">
             <div class="modal-body">
-                <div class="mb-3">
+                <div class="row g-3">
+                <div class="col-lg-6">
                     <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
                     <input type="text" id="name" class="form-control" placeholder="Enter Academic Term Name" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
                     <div class="invalid-feedback">Please enter a name</div>
+                </div>
+                <div class="col-lg-6">
+                    <label for="sortOrder" class="form-label">Sort Order <span class="text-danger">*</span></label>
+                    <input type="number" id="sortOrder" class="form-control" placeholder="Enter Sort Order" required formControlName="sortOrder" [ngClass]="{ 'is-invalid': submitted && form['sortOrder'].errors }" />
+                    <div class="invalid-feedback">Please enter sort order</div>
+                </div>
                 </div>
             </div>
             <div class="modal-footer">

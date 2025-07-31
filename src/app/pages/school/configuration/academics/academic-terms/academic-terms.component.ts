@@ -27,7 +27,8 @@ export class AcademicTermsComponent extends BaseComponent implements OnInit {
   get form() {return this.academicTermForm.controls;}
 
   headers: any = [
-    { key: 'name', displayName: 'Name' }
+    { key: 'name', displayName: 'Name' },
+    { key: 'sortOrder', displayName: 'Sort Order' }
   ]
 
 constructor(
@@ -47,7 +48,8 @@ constructor(
       id: [null],
       name: ['',[Validators.required]],
       academicYearId: [null],
-      staticId: [null]  
+      staticId: [null],
+      sortOrder: [null, [Validators.required]]
     });
 
     this.getAcademicTerms();
@@ -56,14 +58,14 @@ constructor(
   addModal(content: any) {
     this.isCreateMode = true;
     this.submitted = false;
-    this.modalService.open(content, { size: 'md', centered: true });
+    this.modalService.open(content, this.lgModalConfig);
   }
 
   editModal(content: any, academicTerm: AcademicTerm) {
     this.isCreateMode = false;
     this.submitted = false;
     this.academicTermForm.setValue({...academicTerm});
-    this.modalService.open(content, { size: 'md', centered: true });
+    this.modalService.open(content, this.lgModalConfig);
   }
 
   getAcademicTerms() {

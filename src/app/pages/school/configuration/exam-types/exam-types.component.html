@@ -74,8 +74,9 @@
                     <div class="invalid-feedback" *ngIf="submitted && examTypeForm.controls['weight'].invalid">Weight is required when 'Use Weight' is set to Yes</div>
                 </div> 
                 <div class="col-lg-12">
-                    <label  class="form-label">Sort Order</label>
-                    <input type="number" class="form-control" placeholder="Enter Sort Order" formControlName="sortOrder" >
+                   <label for="sortOrder" class="form-label">Sort Order <span class="text-danger">*</span></label>
+                    <input  type="sortOrder" id="sortOrder" class="form-control" placeholder="Enter Sort Order" formControlName="sortOrder" required [ngClass]="{ 'is-invalid': submitted && examTypeForm.controls['sortOrder'].invalid }">
+                    <div class="invalid-feedback">Please enter sort order</div>
                 </div> 
             </div>
             </div>

@@ -31,6 +31,7 @@ export class AcademicYearsComponent extends BaseComponent implements OnInit {
       { key: 'isActive', displayName: 'Status' },
       { key: 'startDate', displayName: 'Start Date' },
       { key: 'endDate', displayName: 'End Date' },
+      { key: 'sortOrder', displayName: 'Sort Order' }
     ]
   
     constructor(
@@ -53,6 +54,7 @@ export class AcademicYearsComponent extends BaseComponent implements OnInit {
       isActive: [null, [Validators.required]],
       startDate: [null, [Validators.required]],
       endDate: [null],
+      sortOrder: [null, [Validators.required]]
     });
 
     this.getAcademicYears();

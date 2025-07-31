@@ -60,7 +60,7 @@ export class ExamTypesComponent extends BaseComponent implements OnInit {
         useWeight: [null, [Validators.required]],
         weight: [null],
         academicTermId: [null, [Validators.required]],
-        sortOrder: [null],
+        sortOrder: [null, [Validators.required]],
         academicYearId: [null],
         staticId: [null]
       });
