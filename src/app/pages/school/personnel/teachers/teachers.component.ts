@@ -121,8 +121,8 @@ export class TeachersComponent extends BaseComponent implements OnInit{
             next: (response) => {
               if(response.success){
                 this.getTeachers();
-                this.dismissModal();
                 SimpleAlerts.showSuccess();
+                this.dismissModal();
               }
             },
             error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
@@ -133,8 +133,8 @@ export class TeachersComponent extends BaseComponent implements OnInit{
             next: (response) => {
               if(response.success){
                 this.getTeachers();
-                this.dismissModal();
                 SimpleAlerts.showSuccess();
+                this.dismissModal();
               }
             },
             error: (error) => {
@@ -227,6 +227,7 @@ export class TeachersComponent extends BaseComponent implements OnInit{
   }
 
   resetForm() {
+    this.submitted = false;
     this.addTeacherForm.reset();
     this.teacherClassForm.reset();
     this.teacherSubjectForm.reset();
