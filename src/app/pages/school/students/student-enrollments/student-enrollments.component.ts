@@ -172,13 +172,13 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     this.studentService.assignStudentSubjects(this.studentSubjectForm.value, this.studentEnrollmentGetForm.get("academicYearId")?.value).pipe(finalize(() => this.toggleLoading())).subscribe({
       next: (response) => {
         if(response.success){
+          this.modalService.dismissAll();
           SimpleAlerts.showSuccessWithOptions('Would you like to unselect selected students?').then((result) => {
             if (result) {
               this.reset();
               this.dismissModal();
               this.getStudentEnrollments();
             }else{
-              this.modalService.dismissAll();
               return;
             }
           });
