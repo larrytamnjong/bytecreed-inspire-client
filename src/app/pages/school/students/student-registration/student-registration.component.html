@@ -10,7 +10,7 @@
                     </div>
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
-                            <button [disabled]="selectedStudentIds.length < 1" type="button" class="btn btn-info" (click)="enrollModal(enrollmentContent)"><i class="ri-swap-box-line align-bottom me-1"></i> Enroll Students</button>
+                            <button [disabled]="selectedStudentIds.length < 1" type="button" class="btn btn-info" (click)="enrollModal(enrollmentContent)"><i class="ri-refresh-line align-bottom me-1"></i> Enroll Students</button>
                             <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-user-add-line align-bottom me-1"></i> Register Student</button>
                             <button type="button" class="btn btn-success" (click)="addBatchModal(content)"><i class="ri-file-excel-2-line align-bottom me-1"></i> Import Students</button>
                         </div>
