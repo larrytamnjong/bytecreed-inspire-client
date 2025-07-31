@@ -68,6 +68,25 @@ constructor(
     this.modalService.open(content, this.lgModalConfig);
   }
 
+  deleteAcademicTerm(academicTerm: AcademicTerm){
+    SimpleAlerts.confirmDeleteDialog().then((result) => {
+      if (result) {
+        this.toggleLoading();
+        this.academicService.deleteAcademicTerm(academicTerm.id!).pipe(finalize(() => {this.toggleLoading();})).subscribe({
+          next: (response) => {
+            if(response.success){
+              this.getAcademicTerms();
+              SimpleAlerts.showSuccess();
+            }
+          },
+          error : (error) => {
+              SimpleAlerts.showError(getErrorMessage(error));
+            }
+        });
+      }
+    });
+  }
+
   getAcademicTerms() {
     this.toggleLoading();
     this.academicService.getAcademicTerms().pipe(finalize(() => this.toggleLoading()))

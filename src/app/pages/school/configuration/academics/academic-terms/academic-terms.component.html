@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </div>
-            <generic-app-table [headers]="headers" [data]="academicTerms" [showActions]="true"  [showDelete]="false" (editClicked)="editModal(content, $event)"></generic-app-table>
+            <generic-app-table [headers]="headers" [data]="academicTerms" [showActions]="true"  [showDelete]="true" (editClicked)="editModal(content, $event)" (deleteClicked)="deleteAcademicTerm($event)"></generic-app-table>
         </div>
     </div>
 

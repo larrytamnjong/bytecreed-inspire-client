@@ -40,6 +40,10 @@ export class AcademicService {
         return this.apiService.put(`${this.ACADEMIC_TERM_CONTROLLER}`, RequestHelper.createServiceRequest([academicTerm]));
     }
 
+    deleteAcademicTerm(id: any): Observable<ServiceResponse<any>> {
+        return this.apiService.delete(`${this.ACADEMIC_TERM_CONTROLLER}/${id}/academic-term`);
+    }
+
     getAcademicYears(): Observable<ServiceResponse<AcademicYear[]>> {
         return this.apiService.get(`${this.ACADEMIC_YEAR_CONTROLLER}`);
     }
