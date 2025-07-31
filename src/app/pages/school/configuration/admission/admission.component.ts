@@ -76,10 +76,10 @@ export class AdmissionComponent extends BaseComponent implements OnInit {
     });
   }
  
-  resetAdmissionForm() {
-    this.admissionNumberConfigurationForm.reset();
-    this.admissionNumberConfigurationForm.patchValue({startFromNumber: 1});
-    this.submittedAdmissionNumberConfigurationForm = false;
-  }
+  // resetAdmissionForm() {
+  //   this.admissionNumberConfigurationForm.reset();
+  //   this.admissionNumberConfigurationForm.patchValue({startFromNumber: 1});
+  //   this.submittedAdmissionNumberConfigurationForm = false;
+  // }
 
  }

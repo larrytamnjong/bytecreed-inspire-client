@@ -5,12 +5,12 @@
         <div class="card">
             <div class="card-body">
                 <ul ngbNav #Bordered="ngbNav" [activeId]="2" class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
-                  <li [ngbNavItem]="1"><a ngbNavLink><i class=" ri-calendar-event-line"></i> Registration</a>
+                  <li [ngbNavItem]="1"><a ngbNavLink><i class=" ri-calendar-event-line"></i> Admission</a>
                       <ng-template ngbNavContent>
                         <form></form>
                       </ng-template>
                   </li>
-                  <li [ngbNavItem]="2"><a ngbNavLink><i class="ri-list-ordered"></i> Matricul Configuration</a>
+                  <li [ngbNavItem]="2"><a ngbNavLink><i class="ri-list-ordered"></i> Admission Number</a>
                       <ng-template ngbNavContent>
                         <form [formGroup]="admissionNumberConfigurationForm" (ngSubmit)="onSaveAdmissionForm()">
                             <div class="row">
@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="hstack gap-2 justify-content-end">
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="submit" class="btn btn-primary"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
                                         <!-- <button type="button" class="btn btn-warning" (click)="resetAdmissionForm()">Reset</button> -->
                                     </div>
                                 </div>
