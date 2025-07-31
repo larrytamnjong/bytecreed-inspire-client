@@ -43,10 +43,10 @@
     <form class="tablelist-form" autocomplete="off" autocomplete="off" [formGroup]="addTeacherForm" >
         <div class="modal-body">
             <div class="mb-3">
-                <label class="form-label">Select Employees <span class="text-danger">*</span></label>
+                <label class="form-label">Employees <span class="text-danger">*</span></label>
                 <ng-select [items]="employees" formControlName="ids" bindLabel="givenNames" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submitted && fAddTeachersForm['ids'].invalid }" placeholder="Select Employees">
                 </ng-select>
-                <div class="invalid-feedback">You have to select at least one person</div>
+                <div class="invalid-feedback">You have to select at least one employee</div>
             </div>
         </div>
     </form>
@@ -61,7 +61,7 @@
 
     <ng-template #manageSubjects role="document" let-modal>
         <div class="modal-header p-3 bg-light">
-            <h5 class="modal-title">Manage Teacher Subjects</h5>
+            <h5 class="modal-title">Teacher Subjects</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
         </div>
         <form class="tablelist-form" autocomplete="off" autocomplete="off" [formGroup]="teacherSubjectForm" >
@@ -85,20 +85,26 @@
 
         <div class="modal-footer">
             <div class="hstack gap-2 justify-content-end">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onSubmitTeacherSubjects()"><i class="ri-add-line align-bottom me-1"></i> Add Subjects</button>
-                <button type="button" class="btn btn-danger" (click)="onSubmitTeacherSubjects(true)" id="add-btn"><i class="ri-delete-bin-line align-bottom me-1"></i> Remove Subjects</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onSubmitTeacherSubjects()"><i class="ri-add-line align-bottom me-1"></i> Assign</button>
+                <button type="button" class="btn btn-danger" (click)="onSubmitTeacherSubjects(true)" id="add-btn"><i class="ri-delete-bin-line align-bottom me-1"></i> Unassign</button>
             </div>
         </div>
     </ng-template>
 
     <ng-template #manageClasses role="document" let-modal>
         <div class="modal-header p-3 bg-light">
-            <h5 class="modal-title">Manage Teacher Classes</h5>
+            <h5 class="modal-title">Teacher Classes</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
         </div>
         <form class="tablelist-form" autocomplete="off" autocomplete="off" [formGroup]="teacherClassForm" >
            <div class="modal-body">
             <div class="row g-3">
+            <div class="col-lg-12">
+                <label class="form-label">Teachers <span class="text-danger">*</span></label>
+                <ng-select [items]="selectedTeachers" formControlName="teacherIds" bindLabel="givenNames" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submitted && fTeacherClassForm['teacherIds'].invalid }" placeholder="Select Teachers">
+                </ng-select>
+                <div class="invalid-feedback">You have to select at least one teacher</div>
+            </div>
             <div class="col-lg-6">
                 <label class="form-label">Classes <span class="text-danger">*</span></label>
                 <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submitted && fTeacherClassForm['classIds'].invalid }" placeholder="Select Classes">
@@ -109,20 +115,14 @@
                 <label class="form-label">Class Section</label>
                 <ng-select [items]="sections" formControlName="classSectionIds" bindLabel="name" bindValue="id" [multiple]="true"  placeholder="Select Class Sections"></ng-select>
             </div>
-            <div class="col-lg-12">
-                <label class="form-label">Teachers <span class="text-danger">*</span></label>
-                <ng-select [items]="selectedTeachers" formControlName="teacherIds" bindLabel="givenNames" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submitted && fTeacherClassForm['teacherIds'].invalid }" placeholder="Select Teachers">
-                </ng-select>
-                <div class="invalid-feedback">You have to select at least one teacher</div>
-            </div>
             </div>
             </div>
         </form>
 
         <div class="modal-footer">
             <div class="hstack gap-2 justify-content-end">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onSubmitTeacherClasses(false)"><i class="ri-add-line align-bottom me-1"></i> Add Classes</button>
-                <button type="button" class="btn btn-danger" (click)="onSubmitTeacherClasses(true)" id="add-btn"><i class="ri-delete-bin-line align-bottom me-1"></i> Remove Classes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onSubmitTeacherClasses(false)"><i class="ri-add-line align-bottom me-1"></i> Assign</button>
+                <button type="button" class="btn btn-danger" (click)="onSubmitTeacherClasses(true)" id="add-btn"><i class="ri-delete-bin-line align-bottom me-1"></i> Unassign</button>
             </div>
         </div>
     </ng-template>

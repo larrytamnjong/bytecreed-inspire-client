@@ -184,7 +184,7 @@ export class TeachersComponent extends BaseComponent implements OnInit{
 
   addModal(content: any) {
     this.submitted = false;
-    this.modalService.open(content, {...this.lgModalConfig, backdrop: 'static'});
+    this.modalService.open(content, {...this.mdModalConfig, backdrop: 'static'});
   }
 
   teacherSubjectModal(content: any) {
