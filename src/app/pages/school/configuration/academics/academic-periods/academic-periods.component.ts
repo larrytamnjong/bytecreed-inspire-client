@@ -144,6 +144,25 @@ export class AcademicPeriodsComponent  extends BaseComponent implements OnInit {
     }
   }
 
+   deleteAcademicPeriod(academicPeriod: AcademicPeriod){
+      SimpleAlerts.confirmDeleteDialog().then((result) => {
+        if (result) {
+          this.toggleLoading();
+          this.academicService.deleteAcademicPeriod(academicPeriod.id!).pipe(finalize(() => {this.toggleLoading();})).subscribe({
+            next: (response) => {
+              if(response.success){
+                this.getAcademicPeriods();
+                SimpleAlerts.showSuccess();
+              }
+            },
+            error : (error) => {
+                SimpleAlerts.showError(getErrorMessage(error));
+              }
+          });
+        }
+      });
+    }
+
   dismissModal() {
     this.modalService.dismissAll();
     this.reset();

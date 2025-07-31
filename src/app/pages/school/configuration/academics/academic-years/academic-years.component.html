@@ -20,9 +20,10 @@
                 [headers]="headers" 
                 [data]="academicYears" 
                 [showActions]="true"  
-                [showDelete]="false"
+                [showDelete]="true"
                 [customTemplates]="{ 'isActive': statusTemplate, 'startDate': dateTemplate, 'endDate': dateTemplate }"
-                (editClicked)="editModal(content, $event)">
+                (editClicked)="editModal(content, $event)"
+                (deleteClicked)="deleteAcademicYear($event)">
             </generic-app-table>
 
                 <ng-template #statusTemplate let-status let-row="row">

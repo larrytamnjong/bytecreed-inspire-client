@@ -44,6 +44,14 @@ export class AcademicService {
         return this.apiService.delete(`${this.ACADEMIC_TERM_CONTROLLER}/${id}/academic-term`);
     }
 
+    deleteAcademicYear(id: any): Observable<ServiceResponse<any>> {
+        return this.apiService.delete(`${this.ACADEMIC_YEAR_CONTROLLER}/${id}/academic-year`);
+    }
+
+    deleteAcademicPeriod(id: any): Observable<ServiceResponse<any>> {
+        return this.apiService.delete(`${this.ACADEMIC_PERIOD_CONTROLLER}/${id}/academic-period`);
+    }
+
     getAcademicYears(): Observable<ServiceResponse<AcademicYear[]>> {
         return this.apiService.get(`${this.ACADEMIC_YEAR_CONTROLLER}`);
     }
