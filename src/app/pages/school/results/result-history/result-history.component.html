@@ -1,2 +1,41 @@
 <app-breadcrumbs title="RESULTS" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header border-bottom-dashed">
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm">
+                        <div>
+                            <h5 class="card-title mb-0"><i class="ri-chat-history-line text-muted fs-18 align-middle me-1"> </i>Result Archive</h5>
+                        </div>
+                    </div>
+                        <div class="col-xl-12 ">
+                        <div class="card-body">
+                            <form class="tablelist-form" autocomplete="off" [formGroup]="filterForm">
+                                <div class="row g-3">
+                                    <div class="col-xxl-3 col-lg-6">
+                                        <ng-select [items]="academicYears" formControlName="academicYearId" bindLabel="name" bindValue="id" placeholder="Academic Year"></ng-select>
+                                    </div>
+                                    <div class="col-xxl-3 col-lg-6">
+                                        <ng-select [items]="academicPeriods" formControlName="academicPeriodId" bindLabel="name" bindValue="id" placeholder="Academic Period"></ng-select>
+                                    </div>
+                                    <div class="col-xxl-2 col-lg-6">
+                                        <button [disabled]="!canPerformYearlyRankings" type="button" class="btn btn-info w-100" (click)="calculateYearlyRankings()" ><i class="ri-calculator-line mx-2"></i> Yearly Rankings</button>
+                                    </div>
+                                    <div class="col-xxl-2 col-lg-6">
+                                        <button [disabled]="!canPerformPeriodRankings" type="button" class="btn btn-secondary w-100" (click)="calculatePeriodRankings()"><i class="ri-calculator-line mx-2"></i> Period Rankings</button>
+                                    </div>
+                                    <div class="col-xxl-2 col-lg-6">
+                                        <button [disabled]="!canEditResults" type="button" class="btn btn-primary w-100" ><i class="ri-edit-2-fill mx-2"></i> Edit Results</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <app-loading [loading]="loading"></app-loading>
+    </div>
