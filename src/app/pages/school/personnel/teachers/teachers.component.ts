@@ -300,12 +300,12 @@ export class TeachersComponent extends BaseComponent implements OnInit{
       });
     }
 
-    getSections() {
-      this.sectionService.getClassSections().subscribe({
-        next: (response) => {
-          if(response.success){ this.sections = response.data;}
-        },
-        error: () => {},
-      });
-    }
+  getSections() {
+    this.sectionService.getClassSections().subscribe({
+      next: (response) => {
+        if(response.success){ this.sections = response.data;}
+      },
+      error: () => {},
+    });
+  }
 }
