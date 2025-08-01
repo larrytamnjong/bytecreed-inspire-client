@@ -25,10 +25,11 @@
                 [data]="teachersToDisplay" 
                 [showActions]="true" 
                 [showDelete]="true"
-                [showEdit]="false"
+                [showEdit]="true"
                 [showRowSelect]="true"
                 (selectedRowsChange)="selectedRowsChanged($event)"
                 (deleteClicked)="deleteTeacher($event)"
+                (editClicked)="onEditClick($event, teacherInfo)"
                 tableId="teachersTable">
             </generic-app-table>
         </div>
@@ -113,7 +114,7 @@
             </div>
             <div class="col-lg-6">
                 <label class="form-label">Class Section</label>
-                <ng-select [items]="sections" formControlName="classSectionIds" bindLabel="name" bindValue="id" [multiple]="true"  placeholder="Select Class Sections"></ng-select>
+                <ng-select [items]="classSections" formControlName="classSectionIds" bindLabel="name" bindValue="id" [multiple]="true"  placeholder="Select Class Sections"></ng-select>
             </div>
             </div>
             </div>
@@ -123,6 +124,99 @@
             <div class="hstack gap-2 justify-content-end">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onSubmitTeacherClasses(false)"><i class="ri-user-shared-line align-bottom me-1"></i> Assign</button>
                 <button type="button" class="btn btn-danger" (click)="onSubmitTeacherClasses(true)" id="add-btn"><i class="ri-delete-bin-line align-bottom me-1"></i> Unassign</button>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #teacherInfo role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title">{{selectedTeacher?.personnel?.familyName}} {{selectedTeacher?.personnel?.givenNames }} [{{activeAcademicYear.name}}]</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="dismissTeacherInfoModal()"></button>
+        </div>
+
+        <div class="col-xxl-12">
+            <ul ngbNav #Justify="ngbNav" [activeId]="1" class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
+                <li [ngbNavItem]="1"><a ngbNavLink><span class="d-sm-block">Subjects</span></a>
+                    <ng-template ngbNavContent>
+                        <form>
+                            <div class="modal-body">
+                                <div class="row g-3">
+                                    <div class="col-lg-9">
+                                        <ng-select [ngModelOptions]="{standalone: true}" [items]="subjects" bindLabel="name"
+                                            multiple="true" [(ngModel)]="selectedTeacherSelectedSubjects" bindValue="id"
+                                            placeholder="Select Subjects"></ng-select>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <button [disabled]="selectedTeacherSelectedSubjects.length < 1"
+                                            (click)="onSelectedTeacherSubjectsSaveClick()" class="btn btn-primary w-100"><i
+                                                class=" ri-save-2-line align-bottom me-1"></i> Save</button>
+                                    </div>
+                                    <div class="col-lg-12 card">
+                                        <generic-app-table [headers]="selectedTeacherSubjectsHeaders"
+                                            [data]="selectedTeacherSubjects" [showActions]="true" [showDelete]="true"
+                                            [showEdit]="false" [showRowSelect]="false"
+                                            (deleteClicked)="onSelectedTeacherSubjectDeleteClick($event)">
+                                        </generic-app-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2"><a ngbNavLink><span class="d-sm-block">Classes</span></a>
+                    <ng-template ngbNavContent>
+                        <form>
+                            <div class="modal-body">
+                                <div class="row g-3">
+                                    <div class="col-lg-5">
+                                        <ng-select [ngModelOptions]="{standalone: true}" [items]="classes" bindLabel="name"
+                                            multiple="true" [(ngModel)]="selectedTeacherSelectedClasses" bindValue="id"
+                                            placeholder="Select Classes"></ng-select>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <ng-select [ngModelOptions]="{standalone: true}" [items]="classSections" bindLabel="name"
+                                            multiple="true" [(ngModel)]="selectedTeacherSelectedClassSections" bindValue="id"
+                                            placeholder="Select Sections"></ng-select>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <button [disabled]="selectedTeacherSelectedClasses.length < 1"
+                                            (click)="onSelectedTeacherClassSaveClick()" class="btn btn-primary w-100"><i
+                                                class=" ri-save-2-line align-bottom me-1"></i> Save</button>
+                                    </div>
+                                    <div class="col-lg-12 card">
+                                        <generic-app-table [headers]="selectedTeacherClassesHeaders"
+                                            [data]="selectedTeacherClasses" [showActions]="true" [showDelete]="true"
+                                            [showEdit]="false" [showRowSelect]="false"
+                                            (deleteClicked)="onSelectedTeacherClassDeleteClick($event)">
+                                        </generic-app-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </ng-template>
+                </li>
+                 <li [ngbNavItem]="3"><a ngbNavLink><span class="d-sm-block">Sections</span></a>
+                    <ng-template ngbNavContent>
+                        <form>
+                            <div class="modal-body">
+                                <div class="row g-3">
+                                    <div class="col-lg-12 card">
+                                        <generic-app-table [headers]="selectedTeacherSectionHeaders" [data]="selectedTeacherSections" [showActions]="false" ></generic-app-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </ng-template>
+                </li>
+            </ul>
+            <div class="tab-content  text-muted">
+                <div [ngbNavOutlet]="Justify"></div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissTeacherInfoModal()"><i class="ri-close-line align-bottom me-1"></i> Close</button>
             </div>
         </div>
     </ng-template>

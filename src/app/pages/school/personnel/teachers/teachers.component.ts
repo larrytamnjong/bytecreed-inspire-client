@@ -14,6 +14,7 @@ import { Validators } from '@angular/forms';
 import { ClassService } from 'src/app/core/services/api/class.service';
 import { ClassSectionService } from 'src/app/core/services/api/class-section.service';
 import { SubjectService } from 'src/app/core/services/api/subject.service';
+import { AcademicService } from 'src/app/core/services/api/academics.service';
 @Component({
   selector: 'app-teachers',
   templateUrl: './teachers.component.html',
@@ -26,10 +27,21 @@ export class TeachersComponent extends BaseComponent implements OnInit{
  teachers: any = [];
  teachersToDisplay: any = [];
  selectedTeachers: any = [];
+ activeAcademicYear: any = null;
 
  classes: any = [];
  subjects: any = [];
- sections: any = [];
+ classSections: any = [];
+
+ selectedTeacher: any = null;
+ selectedTeacherSubjects: any = [];
+ selectedTeacherClasses: any = [];
+ selectedTeacherSections: any = [];
+
+ selectedTeacherSelectedSubjects: any = [];
+ selectedTeacherSelectedClasses: any = [];
+ selectedTeacherSelectedClassSections: any = [];
+
 
   addTeacherForm!: UntypedFormGroup;
   teacherClassForm!: UntypedFormGroup;
@@ -46,10 +58,25 @@ export class TeachersComponent extends BaseComponent implements OnInit{
     { key: 'sections', displayName: 'Sections'}
   ];
 
+  selectedTeacherSubjectsHeaders: any = [
+    { key: 'name', displayName: 'Name' },
+    { key: 'description', displayName: 'Description' },
+    { key: 'code', displayName: 'Code' },
+  ]
+
+  selectedTeacherSectionHeaders: any = [
+    { key: 'name', displayName: 'Name' },
+  ]
+
+  selectedTeacherClassesHeaders: any = [
+    { key: 'name', displayName: 'Name' },
+  ]
+
   constructor(
     private modalService: NgbModal,
     private personnelService: PersonnelService,
     private teacherService: TeacherService,
+    private academicService: AcademicService,
     private classService: ClassService,
     private sectionService: ClassSectionService,
     private subjectService: SubjectService,
@@ -81,8 +108,9 @@ export class TeachersComponent extends BaseComponent implements OnInit{
       this.getEmployees();
       this.getTeachers();
       this.getClasses();
-      this.getSections();
+      this.getClassSections();
       this.getSubjects();
+      this.getActiveAcademicYear();
     }
 
     onSubmitAddTeacher() {
@@ -105,8 +133,6 @@ export class TeachersComponent extends BaseComponent implements OnInit{
             error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
         });
     }
-
-
 
   onSubmitTeacherClasses(isDelete: boolean = false) {
       this.submitted = true;
@@ -231,6 +257,12 @@ export class TeachersComponent extends BaseComponent implements OnInit{
     this.addTeacherForm.reset();
     this.teacherClassForm.reset();
     this.teacherSubjectForm.reset();
+    this.selectedTeacherSubjects = [];
+    this.selectedTeacherClasses = [];
+    this.selectedTeacherSections = [];
+    this.selectedTeacherSelectedSubjects = [];
+    this.selectedTeacherSelectedClasses = [];
+    this.selectedTeacherSelectedClassSections = [];
   }
 
   selectedRowsChanged(event: any) {
@@ -263,26 +295,124 @@ export class TeachersComponent extends BaseComponent implements OnInit{
       });
     }
 
-    setTeachersToDisplay(teachers: any[]): void {
-      this.teachersToDisplay = teachers.map((teacher) => {
-      const subjectsList = teacher.subjects ? teacher.subjects.map((s: any) => s.name).join(', ') : '';
-      const classesList = teacher.classes ? teacher.classes.map((c: any) => c.name).join(', ') : '';
-      const sections = teacher.sections ? teacher.sections.map((s: any) => s.name).join(', ') : '';
-          return {
-            id: teacher.id,
-            familyName: teacher.personnel?.familyName || '#',
-            givenNames: teacher.personnel?.givenNames || '#',
-            subjects: subjectsList, 
-            classes: classesList,
-            sections: sections
-          };
-        });
-      }
+   getTeacher(id: any) {
+      this.toggleLoading();
+      this.teacherService.getTeacher(id).pipe( finalize(() => {this.toggleLoading()})).subscribe({
+        next: (response) => {
+          if(response.success)
+            { 
+              this.setSelectedTeacherData(response.data);
+            }
+        },
+        error: () => {},
+      });
+    }
+
+  setTeachersToDisplay(teachers: any[]): void {
+    this.teachersToDisplay = teachers.map((teacher) => {
+    const subjectsList = teacher.subjects ? teacher.subjects.map((s: any) => s.name).join(', ') : '';
+    const classesList = teacher.classes ? teacher.classes.map((c: any) => c.name).join(', ') : '';
+    const sections = teacher.sections ? teacher.sections.map((s: any) => s.name).join(', ') : '';
+        return {
+          id: teacher.id,
+          familyName: teacher.personnel?.familyName || '#',
+          givenNames: teacher.personnel?.givenNames || '#',
+          subjects: subjectsList, 
+          classes: classesList,
+          sections: sections
+        };
+      });
+    }
+
+  setSelectedTeacherData(teacher: any){
+      this.selectedTeacherSubjects = teacher.subjects;
+      this.selectedTeacherClasses =  teacher.classes;
+      this.selectedTeacherSections = teacher.sections;
+    }
+
+  onEditClick(teacher: any, content: any){
+    this.selectedTeacher = this.teachers.find((t: any) => t.id === teacher.id);
+    this.setSelectedTeacherData(this.selectedTeacher);
+    this.modalService.open(content, {...this.xlModalConfig, backdrop: 'static'});
+  }
 
   dismissModal() {
-      this.modalService.dismissAll();
-      this.resetForm();
+    this.modalService.dismissAll();
+    this.resetForm();
+  }
+
+  onSelectedTeacherSubjectsSaveClick(){
+    this.toggleLoading();
+    this.teacherService.addTeacherSubjects({subjectIds: this.selectedTeacherSelectedSubjects, teacherIds: [this.selectedTeacher.id]}).pipe(
+      finalize(() => {this.toggleLoading();})).subscribe({
+        next: (response) => {
+          if(response.success){
+            this.getTeacher(this.selectedTeacher.id);
+            this.resetForm();
+            SimpleAlerts.showSuccess();
+          }
+        },
+        error: (error) => {
+          SimpleAlerts.showError(getErrorMessage(error));
+        },
+    });
+  }
+
+  onSelectedTeacherSubjectDeleteClick(subject: any){
+    this.toggleLoading();
+    this.teacherService.removeTeacherSubjects({subjectIds: [subject.id], teacherIds: [this.selectedTeacher.id]}).pipe(
+        finalize(() => {this.toggleLoading();})).subscribe({
+          next: (response) => {
+            if(response.success){
+               this.getTeacher(this.selectedTeacher.id);
+               this.resetForm();
+               SimpleAlerts.showSuccess();
+            }
+          },
+          error: (error) => {
+            SimpleAlerts.showError(getErrorMessage(error));
+          },
+      });
+  }
+
+  onSelectedTeacherClassSaveClick(){
+    this.toggleLoading();
+      this.teacherService.addTeacherClasses({teacherIds: [this.selectedTeacher.id], classSectionIds: this.selectedTeacherSelectedClassSections, classIds: this.selectedTeacherSelectedClasses}).pipe(
+        finalize(() => {this.toggleLoading();})).subscribe({
+          next: (response) => {
+            if(response.success){
+               this.getTeacher(this.selectedTeacher.id);
+               this.resetForm();
+               SimpleAlerts.showSuccess();
+            }
+          },
+          error: (error) => {
+            SimpleAlerts.showError(getErrorMessage(error));
+          },
+      });
     }
+
+  onSelectedTeacherClassDeleteClick(_class: any){
+    this.toggleLoading();
+     this.teacherService.deleteTeacherClasses({teacherIds: [this.selectedTeacher.id], classSectionIds: this.selectedTeacherSelectedClassSections, classIds: [_class.id]}).pipe(
+          finalize(() => {this.toggleLoading();})).subscribe({
+            next: (response) => {
+              if(response.success){
+               this.getTeacher(this.selectedTeacher.id);
+               this.resetForm();
+               SimpleAlerts.showSuccess();
+              }
+            },
+            error: (error) => {SimpleAlerts.showError(getErrorMessage(error));},
+        });
+    }
+
+  dismissTeacherInfoModal(){
+    this.modalService.dismissAll();
+    this.selectedTeacher = null;
+    this.resetForm();
+    this.getTeachers();
+  }
 
   getSubjects(){
     this.subjectService.getSubjects().subscribe({
@@ -300,12 +430,23 @@ export class TeachersComponent extends BaseComponent implements OnInit{
       });
     }
 
-  getSections() {
+  getClassSections() {
     this.sectionService.getClassSections().subscribe({
       next: (response) => {
-        if(response.success){ this.sections = response.data;}
+        if(response.success){ this.classSections = response.data;}
       },
       error: () => {},
+    });
+  }
+
+  getActiveAcademicYear(){
+    this.academicService.getActiveAcademicYear().subscribe({
+      next: (response) => {
+        if(response.success){
+          this.activeAcademicYear = response.data;
+        }
+      },
+      error: (error) => {}
     });
   }
 }

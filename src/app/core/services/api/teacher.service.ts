@@ -24,6 +24,10 @@ export class TeacherService {
     public getTeachers(): Observable<ServiceResponse<any[]>> {
          return this.apiService.get(`${this.TEACHER_CONTROLLER}`);
     }
+
+     public getTeacher(id: any): Observable<ServiceResponse<any>> {
+         return this.apiService.get(`${this.TEACHER_CONTROLLER}/${id}/teacher`);
+    }
  
     public addTeacherClasses(data: any): Observable<ServiceResponse<any[]>> {
         return this.apiService.post(this.TEACHER_CLASS_CONTROLLER, RequestHelper.createServiceRequest(data));
