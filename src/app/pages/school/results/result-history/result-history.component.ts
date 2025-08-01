@@ -8,6 +8,8 @@ import { ResultService } from 'src/app/core/services/api/result.service';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 import { finalize } from 'rxjs';
+import { RegisterResultsComponent } from '../register-results/register-results.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-result-history',
@@ -29,6 +31,7 @@ export class ResultHistoryComponent extends BaseComponent implements OnInit {
   constructor( 
     private filterFormBuilder: UntypedFormBuilder,
     private resultService: ResultService,
+    private modalService: NgbModal,
     private academicService: AcademicService,
     protected override store: Store<{ data: RootReducerState }>) {
         super(store);
@@ -113,6 +116,12 @@ export class ResultHistoryComponent extends BaseComponent implements OnInit {
     })
   }
 
+  openModal() {
+    const modalRef = this.modalService.open(RegisterResultsComponent, {...this.xlModalConfig, backdrop: 'static'});
+     modalRef.componentInstance.data = {
+     external: true
+   };
+  }
   
 
   clearChildFormProperties() {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { BaseComponent } from "src/app/shared/base.component";
 import { Store } from "@ngrx/store";
 import { RootReducerState } from "src/app/store";
@@ -28,6 +28,10 @@ import { exportJsonToExcel } from "src/app/core/helpers/excel-utility";
 export class RegisterResultsComponent extends BaseComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
 
+  @Input() data: any;
+  isModalMode: boolean = false;
+
+  private currentModalRef: any;
   teacherSubjects: any = [];
   teacherClasses: any = [];
   teacherSections: any = [];
@@ -77,6 +81,11 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    if(this.data?.external){
+      this.isModalMode = true;
+    }
+
     this.breadCrumbItems = [
       { label: "Results" },
       { label: "Record", active: true },
@@ -173,12 +182,26 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
   }
 
   openModal(content: any) {
-    this.modalService.open(content, this.mdModalConfig);
+    this.openNestedModal(content);
   }
 
   resultEntered(event: any) {}
 
-  dismissModal() {
+  openNestedModal(content: any) {
+    if (this.currentModalRef) {
+      this.currentModalRef.close();
+    }
+    this.currentModalRef =  this.modalService.open(content, this.mdModalConfig);
+  }
+
+  dismissNestedModal() {
+    if (this.currentModalRef) {
+      this.currentModalRef.dismiss();
+      this.currentModalRef = null;
+    }
+  }
+
+  dismissMainModal() {
     this.modalService.dismissAll();
   }
 
@@ -302,7 +325,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
             next: (response) => {
               if (response.success) {
                 SimpleAlerts.showSuccess();
-                this.dismissModal();
+                this.dismissNestedModal();
                 this.resetForm();
               } else {
                 SimpleAlerts.showError(response.message);
@@ -368,7 +391,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
       this.studentEnrollmentsToDisplay.length === 0
     ) {
       SimpleAlerts.showWarning("Please load students first");
-      this.dismissModal();
+      this.dismissNestedModal();
       return;
     }
     const validation = this.validateResults(data);
