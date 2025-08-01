@@ -24,6 +24,7 @@ export class ReportCardsComponent extends BaseComponent {
   classes: any = [];
   classSections: any = [];
   academicPeriods: any = [];
+  academicYears: any = [];
 
   getReportCardForm!: UntypedFormGroup;
 
@@ -42,6 +43,7 @@ export class ReportCardsComponent extends BaseComponent {
     this.breadCrumbItems = [{ label: 'Reporting' }, { label: 'Report Cards', active: true }];
 
     this.getReportCardForm = this.getReportCardFormBuilder.group({
+      academicYearId: [null, [Validators.required]],
       classId: [null, [Validators.required]],
       classSectionId: [null ],
       academicPeriodId: [null, [Validators.required]]
@@ -51,14 +53,20 @@ export class ReportCardsComponent extends BaseComponent {
       this.isFormValid = status === 'VALID';
     });
 
-    this.getClasses();
-    this.getAcademicPeriods();
-    this.getClassSections();
+    this.getReportCardForm.get("academicYearId")?.valueChanges.subscribe((value) => {
+      if (value) {
+        this.clearChildFormProperties();
+        this.getClasses(value);
+        this.getClassSections(value);
+        this.getAcademicPeriods(value);
+      } 
+    });
+
+    this.getAcademicYears();
   }
 
   getReportCards(){
     if(this.getReportCardForm.invalid){
-      console.log(this.getReportCardForm.errors);
       return;
     }
 
@@ -80,8 +88,8 @@ export class ReportCardsComponent extends BaseComponent {
     })
   }
 
-  getClassSections(){
-    this.classSectionService.getClassSections().subscribe({
+  getClassSections(academicYearId?: any){
+    this.classSectionService.getClassSections(academicYearId).subscribe({
       next: (response) => {
         if(response.success){
           this.classSections = response.data;
@@ -92,8 +100,8 @@ export class ReportCardsComponent extends BaseComponent {
     })
   }
 
-  getClasses() {
-    this.classService.getClasses().subscribe({
+  getClasses(academicYearId?: any) {
+    this.classService.getClasses(academicYearId).subscribe({
       next: (response) => {
         if(response.success){
           this.classes = response.data;
@@ -104,8 +112,8 @@ export class ReportCardsComponent extends BaseComponent {
     })
   }
 
-  getAcademicPeriods() {
-    this.academicService.getAcademicPeriods().subscribe({
+  getAcademicPeriods(academicYearId?: any) {
+    this.academicService.getAcademicPeriods(academicYearId).subscribe({
       next: (response) => {
         if(response.success){
           this.academicPeriods = response.data;
@@ -116,7 +124,25 @@ export class ReportCardsComponent extends BaseComponent {
     })
   }
 
-  // Add this method to your ReportCardsComponent
+  getAcademicYears(){
+    this.academicService.getAcademicYears().subscribe({
+      next: (response) => {
+        if(response.success){
+          this.academicYears = response.data;
+        }
+      },
+      error: (error) => {
+      }
+    })
+  }
+
+  clearChildFormProperties() {
+    this.classes = [];
+    this.classSections = [];
+    this.getReportCardForm.patchValue({classId: null, classSectionId: null, academicPeriodId: null});
+  }
+
+
 private generateReportCardPdf(reportData: any[]) {
   // Create a new PDF document
   const doc = new jsPDF({

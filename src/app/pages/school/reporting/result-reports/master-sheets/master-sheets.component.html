@@ -18,21 +18,20 @@
                             <form class="tablelist-form" autocomplete="off" [formGroup]="getMasterSheetForm"
                                 (ngSubmit)="getMasterSheets()">
                                 <div class="row g-3">
-                                    <div class="col-xxl-3 col-lg-6">
-                                        <ng-select [items]="classes" formControlName="classIds" bindLabel="name" multiple="true"
-                                            bindValue="id" placeholder="Class"></ng-select>
+                                     <div class="col-xxl-3 col-lg-6">
+                                        <ng-select [items]="academicYears" formControlName="academicYearId" bindLabel="name" bindValue="id" placeholder="Academic Year"></ng-select>
                                     </div>
                                     <div class="col-xxl-3 col-lg-6">
-                                        <ng-select [items]="classSections" formControlName="classSectionIds" multiple="true"
-                                            bindLabel="name" bindValue="id" placeholder="Section"></ng-select>
+                                        <ng-select [items]="academicPeriods" formControlName="academicPeriodId" bindLabel="name" bindValue="id" placeholder="Academic Period"></ng-select>
                                     </div>
-                                    <div class="col-xxl-3 col-lg-6">
-                                        <ng-select [items]="academicPeriods" formControlName="academicPeriodId"
-                                            bindLabel="name" bindValue="id" placeholder="Academic Period"></ng-select>
+                                    <div class="col-xxl-2 col-lg-6">
+                                        <ng-select [items]="classes" formControlName="classIds" bindLabel="name" multiple="true" bindValue="id" placeholder="Class"></ng-select>
                                     </div>
-                                    <div class="col-xxl-3 col-lg-6">
-                                        <button [disabled]="!isFormValid" type="button" class="btn btn-primary w-100" type="submit"><i
-                                                class="ri-settings-4-fill mx-2"></i>Generate</button>
+                                    <div class="col-xxl-2 col-lg-6">
+                                        <ng-select [items]="classSections" formControlName="classSectionIds" multiple="true" bindLabel="name" bindValue="id" placeholder="Section"></ng-select>
+                                    </div>
+                                    <div class="col-xxl-2 col-lg-6">
+                                        <button [disabled]="!isFormValid" type="button" class="btn btn-primary w-100" type="submit"><i class="ri-settings-4-fill mx-2"></i>Generate</button>
                                     </div>
                                 </div>
                             </form>

@@ -5,6 +5,7 @@ import { ApiHttpService } from "../common/base-api-http.service";
 import { ServiceResponse } from "../../Models/common/service-response";
 import { AcademicTerm, AcademicYear, AcademicPeriod } from "../../Models/api/academics";
 import { Rollover } from "../../Models/api/rollover";
+import { HttpParams } from "@angular/common/http";
 
 
 @Injectable({ providedIn: 'root'})
@@ -64,8 +65,12 @@ export class AcademicService {
         return this.apiService.put(`${this.ACADEMIC_YEAR_CONTROLLER}`, RequestHelper.createServiceRequest(academicYear));
     }
 
-    getAcademicPeriods(): Observable<ServiceResponse<AcademicPeriod[]>> {
-        return this.apiService.get(`${this.ACADEMIC_PERIOD_CONTROLLER}`);
+    getAcademicPeriods(academicYearId?: any): Observable<ServiceResponse<AcademicPeriod[]>> {
+         let queryParams = new HttpParams();
+                if (academicYearId) {
+                    queryParams = queryParams.set('academicYearId', academicYearId);
+                }
+        return this.apiService.get(`${this.ACADEMIC_PERIOD_CONTROLLER}`, {params: queryParams});
     }
 
     getActiveAcademicPeriod(): Observable<ServiceResponse<AcademicPeriod>> {

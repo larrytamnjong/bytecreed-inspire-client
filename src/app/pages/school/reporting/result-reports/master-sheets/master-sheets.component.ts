@@ -23,6 +23,7 @@ export class MasterSheetsComponent extends BaseComponent {
   classes: any = [];
   classSections: any = [];
   academicPeriods: any = [];
+  academicYears: any = [];
 
   getMasterSheetForm!: UntypedFormGroup;
 
@@ -43,18 +44,26 @@ export class MasterSheetsComponent extends BaseComponent {
     this.breadCrumbItems = [{ label: 'Reporting' }, { label: 'Master Sheets', active: true }];
 
     this.getMasterSheetForm = this.getMasterSheetFormBuilder.group({
+      academicYearId: [null, [Validators.required]],
       classIds: [null, [Validators.required]],
-      classSectionIds: [null, ],
+      classSectionIds: [null],
       academicPeriodId: [null, [Validators.required]]
     });
 
     this.getMasterSheetForm.statusChanges.subscribe(status => {
       this.isFormValid = status === 'VALID';
     });
+
+    this.getMasterSheetForm.get("academicYearId")?.valueChanges.subscribe((value) => {
+      if (value) {
+        this.clearChildFormProperties();
+        this.getClasses(value);
+        this.getClassSections(value);
+        this.getAcademicPeriods(value);
+      } 
+    });
     
-    this.getClasses();
-    this.getAcademicPeriods();
-    this.getClassSections();
+    this.getAcademicYears();
   } 
 
 
@@ -77,37 +86,58 @@ export class MasterSheetsComponent extends BaseComponent {
     });
   }
 
-  getClassSections(){
-    this.classSectionService.getClassSections().subscribe({
+   getClassSections(academicYearId?: any){
+    this.classSectionService.getClassSections(academicYearId).subscribe({
       next: (response) => {
         if(response.success){
           this.classSections = response.data;
         }
       },
-      error: () => {},
+      error: (error) => {
+      }
     })
   }
 
-  getClasses() {
-    this.classService.getClasses().subscribe({
+   getClasses(academicYearId?: any) {
+    this.classService.getClasses(academicYearId).subscribe({
       next: (response) => {
         if(response.success){
           this.classes = response.data;
         }
       },
-      error: () => {},
+      error: (error) => {
+      }
     })
   }
 
-  getAcademicPeriods() {
-    this.academicService.getAcademicPeriods().subscribe({
+   getAcademicPeriods(academicYearId?: any) {
+    this.academicService.getAcademicPeriods(academicYearId).subscribe({
       next: (response) => {
         if(response.success){
           this.academicPeriods = response.data;
         }
       },
-      error: () => {},
+      error: (error) => {
+      }
     })
+  }
+
+  getAcademicYears(){
+    this.academicService.getAcademicYears().subscribe({
+      next: (response) => {
+        if(response.success){
+          this.academicYears = response.data;
+        }
+      },
+      error: (error) => {
+      }
+    })
+  }
+
+  clearChildFormProperties() {
+    this.classes = [];
+    this.classSections = [];
+    this.getMasterSheetForm.patchValue({classId: null, classSectionId: null, academicPeriodId: null});
   }
 
 }
