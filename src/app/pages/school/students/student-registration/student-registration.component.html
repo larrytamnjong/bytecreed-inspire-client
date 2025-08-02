@@ -48,7 +48,6 @@
                 <li [ngbNavItem]="1" *ngIf="!isBatchCreateMode">
                     <a ngbNavLink><span class="d-sm-block">General</span></a>
                     <ng-template ngbNavContent>
-                        <div class="mb-0">
                             <form autocomplete="off" [formGroup]="studentForm">
                                 <div class="modal-body">
                                     <div class="row g-3">
@@ -82,7 +81,6 @@
                                         </div>
                                     </div>
                                 </form>
-                              </div>
                             </ng-template>
                         </li>
                         <li [ngbNavItem]="1" [destroyOnHide]="false" *ngIf="isBatchCreateMode">
