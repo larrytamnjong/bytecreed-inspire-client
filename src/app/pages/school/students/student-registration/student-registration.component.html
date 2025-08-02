@@ -44,13 +44,13 @@
         </div>
         
         <div class="col-xxl-12">
-                <div class="modal-body">
-                    <ul ngbNav #Justify="ngbNav" [activeId]="1" class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
-                        <li [ngbNavItem]="1" *ngIf="!isBatchCreateMode">
-                            <a ngbNavLink><span class="d-sm-block">General</span></a>
-                            <ng-template ngbNavContent>
-                              <div class="mb-0">
-                                  <form  class="tablelist-form" autocomplete="off" [formGroup]="studentForm">
+            <ul ngbNav #Justify="ngbNav" [activeId]="1" class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
+                <li [ngbNavItem]="1" *ngIf="!isBatchCreateMode">
+                    <a ngbNavLink><span class="d-sm-block">General</span></a>
+                    <ng-template ngbNavContent>
+                        <div class="mb-0">
+                            <form autocomplete="off" [formGroup]="studentForm">
+                                <div class="modal-body">
                                     <div class="row g-3">
                                         <div class="col-lg-6">
                                             <label for="familyName" class="form-label">Family Name <span class="text-danger">*</span></label>
@@ -80,13 +80,15 @@
                                             <input type="text" id="admissionNumber" class="form-control" placeholder="Enter Admission Number" formControlName="admissionNumber">
                                         </div>
                                         </div>
-                                    </form>
+                                    </div>
+                                </form>
                               </div>
                             </ng-template>
                         </li>
                         <li [ngbNavItem]="1" [destroyOnHide]="false" *ngIf="isBatchCreateMode">
                             <a ngbNavLink><span class="d-sm-block">Batch Upload</span></a>
                             <ng-template ngbNavContent>
+                             <div class="modal-body">
                                 <div class="col-sm-12">
                                     <ul class="list-inline user-chat-nav text-end mb-0">
                                         <li class="list-inline-item m-0">
@@ -102,12 +104,14 @@
                                     </ul>
                                 </div>
                               <app-excel-import (data)="handleBatchUpload($event)" ></app-excel-import>
+                              </div>
                             </ng-template>
                         </li>   
                         <li [ngbNavItem]="2" *ngIf="!isBatchCreateMode">
                             <a ngbNavLink><span class="d-sm-block">Address</span></a>
                             <ng-template ngbNavContent>
                                 <form autocomplete="off" class="tablelist-form" [formGroup]="addressForm">
+                                <div class="modal-body">
                                     <div class="row g-3">
                                     <div class="col-lg-6">
                                         <label class="form-label">Country</label>
@@ -127,6 +131,7 @@
                                     </div>
                                     <div id="newForm" style="display: none;"></div>
                                     </div>
+                                    </div>
                                 </form>
                             </ng-template>
                         </li>
@@ -134,6 +139,7 @@
                             <a ngbNavLink><span class="d-sm-block">Enrollment</span></a>
                             <ng-template ngbNavContent>
                                 <form autocomplete="off" class="tablelist-form" [formGroup]="enrollmentForm">
+                                <div class="modal-body">
                                     <div class="row g-3">
                                         <div class="col-lg-12">
                                             <label class="form-label">Auto Enroll <span class="text-danger">*</span></label>
@@ -154,6 +160,7 @@
                                             <ng-select [items]="classSections" bindLabel="name" id="classSections" bindValue="id" formControlName="classSectionId" placeholder="Select Class Section"></ng-select>
                                         </div>
                                     </div>
+                                </div>
                                 </form>
                             </ng-template>
                         </li>
@@ -161,7 +168,6 @@
                     <div class="tab-content  text-muted">
                         <div [ngbNavOutlet]="Justify"></div>
                     </div>
-                </div>
         </div>
         <div class="modal-footer">
             <div class="hstack gap-2 justify-content-end">
