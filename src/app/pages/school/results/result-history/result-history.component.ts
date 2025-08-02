@@ -10,6 +10,11 @@ import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 import { finalize } from 'rxjs';
 import { RegisterResultsComponent } from '../register-results/register-results.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SubjectService } from 'src/app/core/services/api/subject.service';
+import { ClassService } from 'src/app/core/services/api/class.service';
+import { GradingService } from 'src/app/core/services/api/grading.service';import { ClassSectionService } from 'src/app/core/services/api/class-section.service';
+import { forkJoin } from 'rxjs';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-result-history',
@@ -28,11 +33,21 @@ export class ResultHistoryComponent extends BaseComponent implements OnInit {
    canPerformYearlyRankings: boolean = false;
    canEditResults: boolean = false;
 
+   subjects: any = [];
+   classes: any = []
+   sections: any = [];
+   gradingSystem: any = null;
+
+
   constructor( 
     private filterFormBuilder: UntypedFormBuilder,
     private resultService: ResultService,
     private modalService: NgbModal,
     private academicService: AcademicService,
+    private classService: ClassService,
+    private gradeService: GradingService,
+    private subjectService: SubjectService,
+    private sectionService: ClassSectionService,
     protected override store: Store<{ data: RootReducerState }>) {
         super(store);
   }
@@ -116,13 +131,103 @@ export class ResultHistoryComponent extends BaseComponent implements OnInit {
     })
   }
 
-  openModal() {
-    const modalRef = this.modalService.open(RegisterResultsComponent, {...this.xlModalConfig, backdrop: 'static'});
-     modalRef.componentInstance.data = {
-     external: true,
-     modal: true,
-   };
+  getSubjects(academicYearId: any) {
+    this.subjectService.getSubjects(academicYearId).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.subjects = response.data;
+        }
+      },
+      error: () => {},
+    });
   }
+
+  getGradingSystem(academicYearId: any) {
+    this.gradeService.getActiveGradingSystem(academicYearId).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.gradingSystem = response.data;
+        }
+      },
+      error: () => {},
+    });
+  }
+
+  getClasses(academicYearId: any) {
+    this.classService.getClasses(academicYearId).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.classes = response.data;
+        }
+      },
+      error: () => {},
+    });
+  }
+
+   getSections(academicYearId: any) {
+    this.sectionService.getClassSections(academicYearId).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.sections = response.data;
+        }
+      },
+      error: () => {},
+    });
+  }
+
+  
+openModal() {
+  const academicYearId = this.filterForm.get("academicYearId")?.value;
+  const academicPeriodId = this.filterForm.get("academicPeriodId")?.value;
+  
+  if (!academicYearId) {
+    SimpleAlerts.showError("Please select an academic year first");
+    return;
+  }
+
+  this.toggleLoading();
+
+  const subjects$ = this.subjectService.getSubjects(academicYearId).pipe(
+    catchError(() => of({success: false, data: []}))
+  );
+
+  const grading$ = this.gradeService.getActiveGradingSystem(academicYearId).pipe(
+    catchError(() => of({success: false, data: null}))
+  );
+
+  const classes$ = this.classService.getClasses(academicYearId).pipe(
+    catchError(() => of({success: false, data: []}))
+  );
+
+  const sections$ = this.sectionService.getClassSections(academicYearId).pipe(
+    catchError(() => of({success: false, data: []}))
+  );
+
+  forkJoin([subjects$, grading$, classes$, sections$])
+    .pipe(finalize(() => this.toggleLoading()))
+    .subscribe({
+      next: ([subjectsResponse, gradingResponse, classesResponse, sectionsResponse]) => {
+        const modalRef = this.modalService.open(RegisterResultsComponent, {
+          ...this.xlModalConfig, 
+          backdrop: 'static'
+        });
+        
+        modalRef.componentInstance.data = {
+          external: true,
+          modal: true,
+          subjects: subjectsResponse.success ? subjectsResponse.data : [],
+          gradingSystem: gradingResponse.success ? gradingResponse.data : null,
+          classes: classesResponse.success ? classesResponse.data : [],
+          sections: sectionsResponse.success ? sectionsResponse.data : [],
+          academicYearId: academicYearId,
+          academicPeriodId: academicPeriodId
+        };
+      },
+      error: (error) => {
+        SimpleAlerts.showError();
+      }
+    });
+}
   
 
   clearChildFormProperties() {

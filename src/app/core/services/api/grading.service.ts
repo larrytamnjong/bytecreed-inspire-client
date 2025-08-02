@@ -4,8 +4,7 @@ import { Observable } from "rxjs";
 import { ServiceResponse } from "../../Models/common/service-response";
 import { ApiHttpService } from "../common/base-api-http.service";
 import { RequestHelper } from "../common/service-request-helper";
-
-
+import { HttpParams } from "@angular/common/http";
 @Injectable({ providedIn: 'root'})
 export class GradingService {    
     private readonly GRADING_SYSTEM_CONTROLLER = 'v1/grading-systems';
@@ -16,7 +15,11 @@ export class GradingService {
     return this.apiService.get(this.GRADING_SYSTEM_CONTROLLER);
   }
 
-  public getActiveGradingSystem(): Observable<ServiceResponse<GradingSystem>> {
+  public getActiveGradingSystem(academicYearId?: any): Observable<ServiceResponse<GradingSystem>> {
+     let queryParams = new HttpParams();
+        if (academicYearId) {
+            queryParams = queryParams.set('academicYearId', academicYearId);
+        }
     return this.apiService.get(`${this.GRADING_SYSTEM_CONTROLLER}/active`);
   }
 

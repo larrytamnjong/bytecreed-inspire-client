@@ -41,8 +41,13 @@ export class ClassService {
         return this.apiService.post(`${this.CLASS_EXAM_TYPE_CONTROLLER}`, RequestHelper.createServiceRequest(data));
       }
 
-    getClassExamTypes(classId: any): Observable<ServiceResponse<ClassExamType[]>> {
-        return this.apiService.get(`${this.CLASS_EXAM_TYPE_CONTROLLER}/${classId}/exam-types`);
+    getClassExamTypes(classId: any, academicYearId?: any): Observable<ServiceResponse<ClassExamType[]>> {
+      let queryParams = new HttpParams();
+            queryParams = queryParams.set('classId', classId);
+        if (academicYearId) {
+            queryParams = queryParams.set('academicYearId', academicYearId);
+        }
+        return this.apiService.get(`${this.CLASS_EXAM_TYPE_CONTROLLER}`, {params: queryParams});
       }
 
     deleteClassExamType(data: any): Observable<ServiceResponse<ClassExamType>> {

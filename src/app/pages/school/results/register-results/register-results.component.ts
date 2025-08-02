@@ -33,13 +33,21 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
   isModalMode: boolean = false;
 
   private currentModalRef: any;
+
   teacherSubjects: any = [];
   teacherClasses: any = [];
   teacherSections: any = [];
+
+  subjects: any = [];
+  classes: any = []
+  sections: any = [];
+
   studentEnrollments: any = [];
-  academicPeriod: any;
+  academicPeriodId: any;
+  academicYearId: any;
   examTypes: any = [];
   scale: any = null;
+  gradingSystem: any = null;
 
   studentEnrollmentsToDisplay: any = [];
   studentsResults: any = [];
@@ -85,6 +93,12 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
 
     if(this.data?.external){
       this.isExternalMode = true;
+      this.subjects = this.data.subjects;
+      this.gradingSystem = this.data.gradingSystem;
+      this.classes = this.data.classes;
+      this.sections = this.data.sections;
+      this.academicYearId = this.data.academicYearId;
+      this.academicPeriodId = this.data.academicPeriodId
     }
 
     if (this.data?.modal){
@@ -106,19 +120,29 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
     this.getStudentForm.get("classId")?.valueChanges.subscribe((value) => {
       if (value) {
         this.getExamTypes(value);
+        this.clearEnrollments();
+        
+
       }
     });
 
-    this.getSubjects();
-    this.getActiveAcademicPeriod();
-    this.getClasses();
-    this.getGradingScale();
-    this.getSections();
+    if(!this.data?.external){
+      this.getSubjects();
+      this.getActiveAcademicPeriod();
+      this.getClasses();
+      this.getGradingSystem();
+      this.getSections();
+    }
     this.getLookUps();
   }
 
   isActionButtonDisabled(): boolean {
     return this.studentEnrollmentsToDisplay.length === 0;
+  }
+
+   clearEnrollments() {
+    this.studentEnrollments = [];
+    this.studentEnrollmentsToDisplay = [];
   }
 
 
@@ -151,7 +175,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
   }
 
   getExamTypes(classId: any) {
-    this.classService.getClassExamTypes(classId).subscribe({
+    this.classService.getClassExamTypes(classId, this.academicYearId).subscribe({
       next: (response) => {
         if (response.success) {
           this.examTypes = response.data;
@@ -221,7 +245,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
 
     const payload = {
       examTypeId: this.getStudentForm.get("examTypeId")?.value,
-      academicPeriodId: this.academicPeriod?.id,
+      academicPeriodId: this.academicPeriodId,
       subjectId: this.getStudentForm.get("subjectId")?.value,
       classId: this.getStudentForm.get("classId")?.value,
       classSectionId: this.getStudentForm.get("classSectionId")?.value,
@@ -264,11 +288,11 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
 
         const payload = {
           examTypeId: this.getStudentForm.get("examTypeId")?.value,
-          academicPeriodId: this.academicPeriod?.id,
+          academicPeriodId: this.academicPeriodId,
           subjectId: this.getStudentForm.get("subjectId")?.value,
           classId: this.getStudentForm.get("classId")?.value,
           classSectionId: this.getStudentForm.get("classSectionId")?.value,
-          requestGradingScale: this.scale?.id,
+          requestGradingScale: this.scale,
           deleteForEntireClass: !toDelete,
           admissionNumbers: toDelete ? [toDelete.admissionNumber] : [],
         };
@@ -310,11 +334,11 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
 
     const payload = {
       examTypeId: this.getStudentForm.get("examTypeId")?.value,
-      academicPeriodId: this.academicPeriod?.id,
+      academicPeriodId: this.academicPeriodId,
       subjectId: this.getStudentForm.get("subjectId")?.value,
       classId: this.getStudentForm.get("classId")?.value,
       classSectionId: this.getStudentForm.get("classSectionId")?.value,
-      requestGradingScale: this.scale!.id!,
+      requestGradingScale: this.scale,
       studentResults: this.studentEnrollmentsToDisplay.map((student: any) => ({
         admissionNumber: student.admissionNumber,
         requestScore: student.result,
@@ -346,11 +370,12 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
 
   resetForm() {}
 
-  getGradingScale() {
+  getGradingSystem() {
     this.gradeService.getActiveGradingSystem().subscribe({
       next: (response) => {
         if (response.success) {
-          this.scale = response.data?.scale;
+          this.gradingSystem = response.data;
+          this.scale = this.gradingSystem?.scale;
         }
       },
       error: () => {},
@@ -383,7 +408,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
     this.academicService.getActiveAcademicPeriod().subscribe({
       next: (response) => {
         if (response.success) {
-          this.academicPeriod = response.data;
+          this.academicPeriodId = response.data?.id;
         }
       },
       error: () => {},

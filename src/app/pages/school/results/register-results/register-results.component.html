@@ -23,7 +23,7 @@
                                     class="ri-save-2-line align-bottom me-1"></i> Save</button>
                         </div>
                     </div>
-                    <div class="col-xl-12 ">
+                    <div *ngIf="!isExternalMode" class="col-xl-12 ">
                         <div class="card-body">
                             <form class="tablelist-form" autocomplete="off" [formGroup]="getStudentForm"
                                 (ngSubmit)="getStudents()">
@@ -38,6 +38,35 @@
                                     </div>
                                     <div class="col-xxl-3 col-lg-6">
                                         <ng-select [items]="teacherSubjects" formControlName="subjectId"
+                                            bindLabel="name" bindValue="id" placeholder="Subject"></ng-select>
+                                    </div>
+                                    <div class="col-xxl-3 col-lg-6">
+                                        <ng-select [items]="examTypes" formControlName="examTypeId" bindLabel="name"
+                                            bindValue="examTypeId" placeholder="Exam Type"></ng-select>
+                                    </div>
+                                    <div class="col-xxl-2 col-lg-12">
+                                        <button type="button" class="btn btn-primary w-100" type="submit"><i
+                                                class="ri-equalizer-fill mx-2"></i>Load</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div *ngIf="isExternalMode" class="col-xl-12 ">
+                        <div class="card-body">
+                            <form class="tablelist-form" autocomplete="off" [formGroup]="getStudentForm"
+                                (ngSubmit)="getStudents()">
+                                <div class="row g-3">
+                                    <div class="col-xxl-2 col-lg-6">
+                                        <ng-select [items]="classes" formControlName="classId" bindLabel="name"
+                                            bindValue="id" placeholder="Class"></ng-select>
+                                    </div>
+                                    <div class="col-xxl-2 col-lg-6">
+                                        <ng-select [items]="sections" formControlName="classSectionId"
+                                            bindLabel="name" bindValue="id" placeholder="Section"></ng-select>
+                                    </div>
+                                    <div class="col-xxl-3 col-lg-6">
+                                        <ng-select [items]="subjects" formControlName="subjectId"
                                             bindLabel="name" bindValue="id" placeholder="Subject"></ng-select>
                                     </div>
                                     <div class="col-xxl-3 col-lg-6">
