@@ -19,7 +19,7 @@
                                 class="ri-scales-line align-bottom me-1"></i> Grading Scale</button>
                             <button type="button" class="btn btn-success" (click)="openModal(importResultsContent)" [disabled]="isActionButtonDisabled()"><i
                                         class="ri-file-excel-2-line align-bottom me-1"></i> Import</button>
-                            <button type="button" class="btn btn-info" (click)="saveResults()" [disabled]="isActionButtonDisabled()"><i
+                            <button *ngIf="!isModalMode" type="button" class="btn btn-info" (click)="saveResults()" [disabled]="isActionButtonDisabled()"><i
                                     class="ri-save-2-line align-bottom me-1"></i> Save</button>
                         </div>
                     </div>
@@ -126,7 +126,7 @@
 
             <div class="modal-footer">
                 <div class="hstack gap-2 justify-content-end">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="dismissNestedModal()">Done</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="dismissNestedModal()"><i class="ri-check-line align-bottom me-1"></i> Done</button>
                 </div>
             </div>
         </ng-template>
@@ -162,6 +162,7 @@
                 <button type="button" class="btn btn-light" (click)="dismissMainModal()">
                     <i class="ri-close-line align-bottom me-1"></i> Close
                 </button>
+                <button type="button" (click)="saveResults()" class="btn btn-primary"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
             </div>
         </div>
     </div>

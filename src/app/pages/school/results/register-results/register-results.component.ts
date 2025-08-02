@@ -99,6 +99,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
       this.sections = this.data.sections;
       this.academicYearId = this.data.academicYearId;
       this.academicPeriodId = this.data.academicPeriodId
+      this.scale = this.gradingSystem?.scale;
     }
 
     if (this.data?.modal){
