@@ -110,7 +110,7 @@
                         <li [ngbNavItem]="2" *ngIf="!isBatchCreateMode">
                             <a ngbNavLink><span class="d-sm-block">Address</span></a>
                             <ng-template ngbNavContent>
-                                <form autocomplete="off" class="tablelist-form" [formGroup]="addressForm">
+                                <form autocomplete="off" [formGroup]="addressForm">
                                 <div class="modal-body">
                                     <div class="row g-3">
                                     <div class="col-lg-6">
@@ -138,7 +138,7 @@
                         <li [ngbNavItem]="isBatchCreateMode ? 2 : 3" *ngIf="isCreateMode">
                             <a ngbNavLink><span class="d-sm-block">Enrollment</span></a>
                             <ng-template ngbNavContent>
-                                <form autocomplete="off" class="tablelist-form" [formGroup]="enrollmentForm">
+                                <form autocomplete="off" [formGroup]="enrollmentForm">
                                 <div class="modal-body">
                                     <div class="row g-3">
                                         <div class="col-lg-12">
