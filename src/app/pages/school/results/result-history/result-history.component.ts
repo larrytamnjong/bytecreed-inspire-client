@@ -119,7 +119,8 @@ export class ResultHistoryComponent extends BaseComponent implements OnInit {
   openModal() {
     const modalRef = this.modalService.open(RegisterResultsComponent, {...this.xlModalConfig, backdrop: 'static'});
      modalRef.componentInstance.data = {
-     external: true
+     external: true,
+     modal: true,
    };
   }
   

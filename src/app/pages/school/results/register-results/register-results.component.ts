@@ -29,6 +29,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
 
   @Input() data: any;
+  isExternalMode: boolean = false;
   isModalMode: boolean = false;
 
   private currentModalRef: any;
@@ -83,6 +84,10 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
 
     if(this.data?.external){
+      this.isExternalMode = true;
+    }
+
+    if (this.data?.modal){
       this.isModalMode = true;
     }
 
