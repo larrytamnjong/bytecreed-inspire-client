@@ -141,12 +141,12 @@
                         <form>
                             <div class="modal-body">
                                 <div class="row g-3">
-                                    <div class="col-lg-9">
+                                    <div class="col-lg-10">
                                         <ng-select [ngModelOptions]="{standalone: true}" [items]="subjects" bindLabel="name"
                                             multiple="true" [(ngModel)]="selectedTeacherSelectedSubjects" bindValue="id"
                                             placeholder="Select Subjects"></ng-select>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-2">
                                         <button [disabled]="selectedTeacherSelectedSubjects.length < 1"
                                             (click)="onSelectedTeacherSubjectsSaveClick()" class="btn btn-primary w-100"><i
                                                 class=" ri-save-2-line align-bottom me-1"></i> Save</button>
