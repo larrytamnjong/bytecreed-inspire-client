@@ -21,13 +21,13 @@
                                         <ng-select [items]="academicPeriods" formControlName="academicPeriodId" bindLabel="name" bindValue="id" placeholder="Academic Period"></ng-select>
                                     </div>
                                     <div class="col-xxl-2 col-lg-6">
-                                        <button [disabled]="!canPerformYearlyRankings" type="button" class="btn btn-info w-100" (click)="calculateYearlyRankings()" ><i class="ri-calculator-line mx-2"></i> Yearly Rankings</button>
-                                    </div>
-                                    <div class="col-xxl-2 col-lg-6">
-                                        <button [disabled]="!canPerformPeriodRankings" type="button" class="btn btn-secondary w-100" (click)="calculatePeriodRankings()"><i class="ri-calculator-line mx-2"></i> Period Rankings</button>
-                                    </div>
-                                    <div class="col-xxl-2 col-lg-6">
                                         <button [disabled]="!canEditResults" type="button" class="btn btn-primary w-100" (click)="openModal()" ><i class="ri-edit-2-fill mx-2"></i> Edit Results</button>
+                                    </div>
+                                    <div class="col-xxl-2 col-lg-6">
+                                        <button [disabled]="!canPerformYearlyRankings" title="Re-calculate yearly rankings after updating results" type="button" class="btn btn-info w-100" (click)="calculateYearlyRankings()" ><i class="ri-calculator-line mx-2"></i> Yearly Rankings</button>
+                                    </div>
+                                    <div class="col-xxl-2 col-lg-6">
+                                        <button [disabled]="!canPerformPeriodRankings" title="Re-calculate period rankings after updating results" type="button" class="btn btn-secondary w-100" (click)="calculatePeriodRankings()"><i class="ri-calculator-line mx-2"></i> Period Rankings</button>
                                     </div>
                                 </div>
                             </form>
