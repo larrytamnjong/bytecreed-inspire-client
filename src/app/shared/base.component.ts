@@ -22,6 +22,7 @@ export class BaseComponent  {
   mdModalConfig = { size: 'md', centered: true };
   lgModalConfig = { size: 'lg', centered: true };
   xlModalConfig = { size: 'xl', centered: true };
+  fullScreenModalConfig = { size: 'fullscreen', windowClass: 'modal-holder' };
   
   constructor(protected store: Store<{ data: RootReducerState }>) {}
 
