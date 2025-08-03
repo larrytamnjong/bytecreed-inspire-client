@@ -13,6 +13,7 @@
                             <button [disabled]="selectedStudentIds.length < 1" type="button" class="btn btn-info" (click)="enrollModal(enrollmentContent)"><i class="ri-refresh-line align-bottom me-1"></i> Enroll Students</button>
                             <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal" (click)="addModal(content)"><i class="ri-user-add-line align-bottom me-1"></i> Register Student</button>
                             <button type="button" class="btn btn-success" (click)="addBatchModal(content)"><i class="ri-file-excel-2-line align-bottom me-1"></i> Import Students</button>
+                            <button type="button" class="btn btn-warning" (click)="addBatchModal(content)"><i class="ri-file-excel-2-line align-bottom me-1"></i> Update Students</button>
                         </div>
                     </div>
                 </div>
@@ -74,7 +75,12 @@
                                                 </select>
                                                 <div class="invalid-feedback">Sex is required</div>
                                         </div>
-                                        <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <label for="student-status" class="form-label">Status</label>
+                                            <ng-select [items]="studentStatus" bindLabel="text" bindValue="dataCode" formControlName="status" placeholder="Select Status" [ngClass]="{ 'is-invalid': submitted && fStudent['status'].invalid }"></ng-select>
+                                            <div class="invalid-feedback">Please select a student status</div>
+                                        </div>
+                                        <div class="col-lg-6">
                                             <label for="admissionNumber" class="form-label">Admission Number</label>
                                             <input type="text" id="admissionNumber" class="form-control" placeholder="Enter Admission Number" formControlName="admissionNumber">
                                         </div>

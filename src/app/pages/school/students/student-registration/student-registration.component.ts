@@ -77,7 +77,7 @@ constructor(
       dateOfBirth: [null, [Validators.required]],
       sex: [null,[Validators.required]],
       admissionNumber: [null],
-      status: [1],
+      status: [1, [Validators.required]],
       userId: [null],
       addressId: [null]
     });
