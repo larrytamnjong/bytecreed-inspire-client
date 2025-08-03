@@ -26,6 +26,8 @@ const routes: Routes = [
   {path: 'inventory', component: InventoryComponent, pathMatch: 'full'},
   {path: 'boarding', component: BoardingComponent, pathMatch: 'full'},
   {path: 'transportation', component: TransportationComponent, pathMatch: 'full'},
+  {path: 'bursary', loadChildren: () => import('./bursary/bursary.module').then(m => m.BursaryModule),},
+
 ];
 
 @NgModule({

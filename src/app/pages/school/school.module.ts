@@ -29,6 +29,7 @@ import { BoardingComponent } from './boarding/boarding.component';
 import { TransportationComponent } from './transportation/transportation.component';
 import { FinanceModule } from './finance/finance.module';
 import { UsersModule } from './users/users.module';
+import { BursaryModule } from './bursary/bursary.module';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { UsersModule } from './users/users.module';
     NgbAccordionModule,
     AttendanceModule,
     FinanceModule,
-    UsersModule
+    UsersModule,
+    BursaryModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
