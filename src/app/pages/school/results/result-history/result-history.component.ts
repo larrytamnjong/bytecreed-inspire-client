@@ -203,14 +203,10 @@ openModal() {
     catchError(() => of({success: false, data: []}))
   );
 
-  forkJoin([subjects$, grading$, classes$, sections$])
-    .pipe(finalize(() => this.toggleLoading()))
+  forkJoin([subjects$, grading$, classes$, sections$]).pipe(finalize(() => this.toggleLoading()))
     .subscribe({
       next: ([subjectsResponse, gradingResponse, classesResponse, sectionsResponse]) => {
-        const modalRef = this.modalService.open(RegisterResultsComponent, {
-          ...this.xlModalConfig, 
-          backdrop: 'static'
-        });
+        const modalRef = this.modalService.open(RegisterResultsComponent, {...this.xlModalConfig, backdrop: 'static'});
         
         modalRef.componentInstance.data = {
           external: true,
