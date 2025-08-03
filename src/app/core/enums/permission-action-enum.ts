@@ -54,5 +54,9 @@ export enum PermissionActionEnum {
 
   // Users
   School_ViewUsers = 16000,
-  School_ManageUsers = 16001
+  School_ManageUsers = 16001,
+
+  // Bursary
+  School_ViewBursary = 17000,
+  School_ManageBursary = 17001
 }

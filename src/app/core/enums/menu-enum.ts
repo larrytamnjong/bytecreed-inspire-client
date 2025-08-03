@@ -51,6 +51,8 @@ export enum SchoolMenuEnum {
   SystemSettings = 50,
   AuditLogs = 51,
   ResultReports = 52,
+  Bursary = 53,
+  CashDesk = 54
 }
 
 export enum StudentMenuEnum{

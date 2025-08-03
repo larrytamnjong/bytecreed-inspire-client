@@ -331,6 +331,22 @@ export const MENU: MenuItem[] = [
     ],
   },
   {
+    id: SchoolMenuEnum.Bursary,
+    label: "MENUITEMS.BURSARY.TEXT",
+    icon: "ri-bank-line",
+    isCollapsed: true,
+    permission: PermissionActionEnum.School_ViewBursary,
+    subItems: [
+      {
+        id: SchoolMenuEnum.CashDesk,
+        label: "MENUITEMS.BURSARY.LIST.CASHDESK",
+        parentId: SchoolMenuEnum.Bursary,
+        link: "/school/bursary/cash-desk",
+        permission: PermissionActionEnum.School_ManageBursary,
+      },
+    ],
+  },
+  {
     id: SchoolMenuEnum.Boarding,
     label: "MENUITEMS.BOARDING.TEXT",
     icon: "ri-community-line",

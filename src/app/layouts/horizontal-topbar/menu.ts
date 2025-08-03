@@ -267,7 +267,7 @@ export const MENU: MenuItem[] = [
   {
     id: SchoolMenuEnum.HeaderMore,
     label: "HEADER.MORE.TEXT",
-    icon: "ri-briefcase-2-line",
+    icon: "ri-menu-2-line",
     subItems: [
       {
         id: SchoolMenuEnum.Parents,
@@ -321,7 +321,6 @@ export const MENU: MenuItem[] = [
         permission: PermissionActionEnum.School_ViewInventory,
         link: "/school/inventory",
       },
-
       {
         id: SchoolMenuEnum.Finance,
         label: "MENUITEMS.FINANCE.TEXT",
@@ -334,6 +333,22 @@ export const MENU: MenuItem[] = [
             parentId: SchoolMenuEnum.Finance,
             link: "/school/finance/subscriptions",
             permission: PermissionActionEnum.School_ManageSubscription,
+          },
+        ],
+      },
+      {
+        id: SchoolMenuEnum.Bursary,
+        label: "MENUITEMS.BURSARY.TEXT",
+        icon: "ri-bank-line",
+        isCollapsed: true,
+        permission: PermissionActionEnum.School_ViewBursary,
+        subItems: [
+          {
+            id: SchoolMenuEnum.CashDesk,
+            label: "MENUITEMS.BURSARY.LIST.CASHDESK",
+            parentId: SchoolMenuEnum.Bursary,
+            link: "/school/bursary/cash-desk",
+            permission: PermissionActionEnum.School_ManageBursary,
           },
         ],
       },

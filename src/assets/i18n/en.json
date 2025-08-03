@@ -109,6 +109,12 @@
         "SUBSCRIPTIONS": "Subscriptions"
       }
     },
+  "BURSARY": {
+      "TEXT": "Bursary",
+      "LIST": {
+        "CASHDESK": "Cash Desk"
+      }
+    },
     "BOARDING": {
       "TEXT": "Boarding",
       "LIST": {}
