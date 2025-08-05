@@ -122,8 +122,6 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
       if (value) {
         this.getExamTypes(value);
         this.clearEnrollments();
-        
-
       }
     });
 
