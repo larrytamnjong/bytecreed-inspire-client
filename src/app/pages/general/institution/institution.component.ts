@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, TemplateRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
@@ -24,6 +24,7 @@ import { LookUpTableEnum } from 'src/app/core/enums/look-up-table';
   styleUrl: './institution.component.scss'
 })
 export class InstitutionComponent {
+  @ViewChild('successContent') successContent!: TemplateRef<any> ;
   breadCrumbItems!: Array<{}>;
 
   loading = false;
@@ -117,8 +118,18 @@ afterSuccessfulCreate(data: any){
   this.tokenService.saveInstitution(data.institution);
   this.tokenService.saveToken(data.token.jwtToken.value);
   this.tokenService.saveRefreshToken(data.token.refreshToken.value);
-  SimpleAlerts.showSuccess();
-  setTimeout(() => {location.reload();}, 1100);
+  // SimpleAlerts.showSuccess();
+  // setTimeout(() => {location.reload();}, 1100);
+  const modalRef = this.modalService.open(this.successContent, { 
+    size: 'md', 
+    centered: true
+  });
+  
+  modalRef.result.then(() => {
+    location.reload();
+  }, () => {
+    location.reload(); 
+  });
 }
 
 getStatusLabel(status: boolean): string {
