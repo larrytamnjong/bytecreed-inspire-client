@@ -328,14 +328,50 @@ export const MENU: MenuItem[] = [
         permission: PermissionActionEnum.School_ViewFinance,
         subItems: [
           {
+            id: SchoolMenuEnum.Fees,
+            label: "MENUITEMS.FINANCE.LIST.FEES",
+            parentId: SchoolMenuEnum.Finance,
+            link: "/school/finance/fees",
+            permission: PermissionActionEnum.School_ManageFinances,
+          },
+          {
             id: SchoolMenuEnum.Subscription,
             label: "MENUITEMS.FINANCE.LIST.SUBSCRIPTIONS",
             parentId: SchoolMenuEnum.Finance,
             link: "/school/finance/subscriptions",
             permission: PermissionActionEnum.School_ManageSubscription,
-          },
+          }
         ],
       },
+      // {
+      //   id: SchoolMenuEnum.Fees,
+      //   label: "MENUITEMS.FINANCE.LIST.FEES",
+      //   icon: "ri-wallet-line",
+      //   permission: PermissionActionEnum.School_ManageFinances,
+      //   subItems: [
+      //     {
+      //       id: SchoolMenuEnum.FeeTypes,
+      //       label: "MENUITEMS.FEES.LIST.FEETYPES",
+      //       parentId: SchoolMenuEnum.Fees,
+      //       link: "/school/finance/fee-types",
+      //       permission: PermissionActionEnum.School_ManageFinances,
+      //     },
+      //     {
+      //       id: SchoolMenuEnum.ClassFeeTypes,
+      //       label: "MENUITEMS.FEES.LIST.CLASSFEETYPES",
+      //       parentId: SchoolMenuEnum.Fees,
+      //       link: "/school/finance/class-fee-types",
+      //       permission: PermissionActionEnum.School_ManageFinances,
+      //     },
+      //     {
+      //       id: SchoolMenuEnum.StudentFeeTypes,
+      //       label: "MENUITEMS.FEES.LIST.STUDENTFEETYPES",
+      //       parentId: SchoolMenuEnum.Fees,
+      //       link: "/school/finance/student-fee-types",
+      //       permission: PermissionActionEnum.School_ManageFinances,
+      //     },
+      //   ],
+      // },
       {
         id: SchoolMenuEnum.Bursary,
         label: "MENUITEMS.BURSARY.TEXT",

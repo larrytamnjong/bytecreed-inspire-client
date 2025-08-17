@@ -45,6 +45,7 @@ export enum PermissionActionEnum {
   // Finance
   School_ViewFinance = 13000,
   School_ManageSubscription = 13001,
+  School_ManageFinances = 13002,
 
   // Boarding
   School_ViewBoarding = 14000,

@@ -52,7 +52,11 @@ export enum SchoolMenuEnum {
   AuditLogs = 51,
   ResultReports = 52,
   Bursary = 53,
-  CashDesk = 54
+  CashDesk = 54,
+  Fees = 55,
+  FeeTypes = 56,
+  StudentFeeTypes = 57,
+  ClassFeeTypes = 58
 }
 
 export enum StudentMenuEnum{

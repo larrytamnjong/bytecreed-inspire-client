@@ -15,11 +15,13 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { FinanceRoutingModule } from './finance-routing.module';
+import { FeesComponent } from './fees/fees.component';
 
 
 @NgModule({
   declarations: [
-   SubscriptionsComponent
+   SubscriptionsComponent,
+   FeesComponent
   ],
   imports: [
     CommonModule,

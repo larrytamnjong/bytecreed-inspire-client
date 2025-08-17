@@ -105,7 +105,15 @@
     "FINANCE": {
       "TEXT": "Finance",
       "LIST": {
-        "SUBSCRIPTIONS": "Subscriptions"
+        "SUBSCRIPTIONS": "Subscriptions",
+        "FEES": "Fees"
+      }
+    },
+    "FEES": {
+      "LIST": {
+        "FEETYPES": "Fee Types",
+        "CLASSFEETYPES": "Class Fees",
+        "STUDENTFEETYPES": "Student Fees"
       }
     },
     "BURSARY": {

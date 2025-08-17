@@ -27,6 +27,7 @@ import { PersonnelService } from '../core/services/api/personnel.service';
 import { TeacherService } from '../core/services/api/teacher.service';
 import { GenericAppSmartTableComponent } from './generic-app-smart-table/generic-app-smart-table.component';
 import { ResultReportService } from '../core/services/api/result-report.service';
+import { FeesService } from '../core/services/api/fees.service';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { ResultReportService } from '../core/services/api/result-report.service'
     CourseService,
     PersonnelService,
     TeacherService,
-    ResultReportService
+    ResultReportService,
+    FeesService
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   exports: [

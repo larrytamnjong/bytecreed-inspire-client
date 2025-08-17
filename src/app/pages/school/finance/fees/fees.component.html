@@ -1,0 +1,137 @@
+<app-breadcrumbs title="Finance" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <ul ngbNav #Bordered="ngbNav" [activeId]="1" class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
+                  <li [ngbNavItem]="1"><a ngbNavLink><i class="ri-wallet-line"></i> Fee Types</a>
+                      <ng-template ngbNavContent>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div  class="card-header border-bottom-dashed">
+                                        <div class="row g-4 align-items-center">
+                                            <div class="col-sm">
+                                                <div><h5 class="card-title mb-0"><i class="ri-wallet-line text-muted fs-18 align-middle me-1">   </i>Fee Type</h5></div>
+                                            </div>
+                                            <div class="col-sm-auto">
+                                                <div class="d-flex flex-wrap align-items-start gap-2">
+                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addFeeTypeModal(feeTypeContent)"><i class="ri-add-line align-bottom me-1"></i> Create</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <generic-app-table 
+                                    [headers]="feeTypeHeaders" 
+                                    [data]="feeTypes" 
+                                    [showActions]="true" 
+                                    [showDelete]="true" 
+                                    (editClicked)="editFeeTypeModal(feeTypeContent, $event)" 
+                                    (deleteClicked)="deleteFeeType($event)">
+                                </generic-app-table>
+                                </div>
+                            </div>
+                        </div>
+                      </ng-template>
+                  </li>
+                  <li [ngbNavItem]="2"><a ngbNavLink><i class="ri-artboard-line"></i> Class Fees</a>
+                      <ng-template ngbNavContent>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div  class="card-header border-bottom-dashed">
+                                        <div class="row g-4 align-items-center">
+                                            <div class="col-sm">
+                                                <div><h5 class="card-title mb-0"><i class="ri-artboard-line text-muted fs-18 align-middle me-1">   </i>Class Fee Type</h5></div>
+                                            </div>
+                                            <div class="col-sm-auto">
+                                                <div class="d-flex flex-wrap align-items-start gap-2">
+                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Assign</button>
+                                                    <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-delete-bin-line align-bottom me-1"></i> Unassign</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <generic-app-table 
+                                    [headers]="headers" 
+                                    [data]="classSections" 
+                                    [showActions]="true" 
+                                    [showDelete]="true" 
+                                    (editClicked)="editModal(content, $event)" 
+                                    (deleteClicked)="deleteClassSection($event)">
+                                </generic-app-table> -->
+                                </div>
+                            </div>
+                        </div>
+                      </ng-template>
+                  </li>
+                     <li [ngbNavItem]="3"><a ngbNavLink><i class=" ri-coin-line"></i> Student Fees</a>
+                      <ng-template ngbNavContent>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div  class="card-header border-bottom-dashed">
+                                        <div class="row g-4 align-items-center">
+                                            <div class="col-sm">
+                                                <div><h5 class="card-title mb-0"><i class="ri-coin-line text-muted fs-18 align-middle me-1">   </i>Student Fees</h5></div>
+                                            </div>
+                                            <div class="col-sm-auto">
+                                                <div class="d-flex flex-wrap align-items-start gap-2">
+                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Assign</button>
+                                                    <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-delete-bin-line align-bottom me-1"></i> Unassign</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <generic-app-table 
+                                    [headers]="headers" 
+                                    [data]="classSections" 
+                                    [showActions]="true" 
+                                    [showDelete]="true" 
+                                    (editClicked)="editModal(content, $event)" 
+                                    (deleteClicked)="deleteClassSection($event)">
+                                </generic-app-table> -->
+                                </div>
+                            </div>
+                        </div>
+                      </ng-template>
+                  </li>
+                </ul>
+                <div class="tab-content text-muted">
+                  <div [ngbNavOutlet]="Bordered"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <app-loading [loading]="loading"></app-loading>  
+
+    <ng-template #feeTypeContent role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title">{{isFeeTypeCreateMode ? "Create" : "Update"}} Fee Type</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
+        </div>
+        <form  class="tablelist-form" autocomplete="off" [formGroup]="feeTypeForm" (ngSubmit)="onSubmitFeeType()">
+            <div class="modal-body">
+                <div class="row g-3">
+                <div class="col-lg-6">
+                    <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                    <input type="text" id="name" class="form-control" placeholder="Enter Name" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && feeTypeFormF['name'].errors }" />
+                    <div class="invalid-feedback">Please enter a name</div>
+                </div>
+                <div class="col-lg-6">
+                    <label for="amount" class="form-label">Amount <span class="text-danger">*</span></label>
+                    <input type="number" id="amount" class="form-control" placeholder="Enter Amount" required formControlName="amount" [ngClass]="{ 'is-invalid': submitted && feeTypeFormF['amount'].errors }" />
+                    <div class="invalid-feedback">Please enter an amount</div>
+                </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()"><i class="ri-close-line align-bottom me-1"></i> Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+</div>
