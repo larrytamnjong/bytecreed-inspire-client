@@ -127,29 +127,60 @@
             <h5 class="modal-title">{{selectedStudentEnrollment?.familyName}} {{selectedStudentEnrollment?.givenNames }} [{{selectedStudentEnrollment?.class}}-{{selectedStudentEnrollment?.year}}]</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="dismissStudentInfoModal()"></button>
         </div>
-            <form>
-                <div class="modal-body">
-                    <div class="row g-3">
-                        <div class="col-lg-10">
-                            <ng-select [ngModelOptions]="{standalone: true}" [items]="subjects" bindLabel="name" multiple="true" [(ngModel)]="selectedStudentSelectedSubjects" bindValue="id" placeholder="Select Subjects"></ng-select>
+
+                <div class="col-xxl-12">
+            <ul ngbNav #Justify="ngbNav" [activeId]="1" class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
+                <li [ngbNavItem]="1"><a ngbNavLink><span class="d-sm-block">Subjects</span></a>
+                    <ng-template ngbNavContent>
+                    <form>
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-lg-10">
+                                    <ng-select [ngModelOptions]="{standalone: true}" [items]="subjects" bindLabel="name" multiple="true" [(ngModel)]="selectedStudentSelectedSubjects" bindValue="id" placeholder="Select Subjects"></ng-select>
+                                </div>
+                                <div class="col-lg-2">
+                                        <button [disabled]="selectedStudentSelectedSubjects.length < 1" (click)="onSelectedStudentSubjectsSaveClick()" class="btn btn-primary w-100"><i class=" ri-save-2-line align-bottom me-1"></i> Save</button>
+                                </div>
+                                <div class="col-lg-12 card">
+                                    <generic-app-table 
+                                    [headers]="selectedStudentSubjectHeaders" 
+                                    [data]="selectedStudentSubjects" 
+                                    [showActions]="true"  
+                                    [showDelete]="true"
+                                    [showEdit]="false"
+                                    [showRowSelect]="false"
+                                    (deleteClicked)="onSelectedStudentSubjectDeleteClick($event)">
+                                </generic-app-table>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-2">
-                                <button [disabled]="selectedStudentSelectedSubjects.length < 1" (click)="onSelectedStudentSaveClick()" class="btn btn-primary w-100"><i class=" ri-save-2-line align-bottom me-1"></i> Save</button>
-                        </div>
-                        <div class="col-lg-12 card">
-                            <generic-app-table 
-                            [headers]="selectedStudentSubjectHeaders" 
-                            [data]="selectedStudentSubjects" 
-                            [showActions]="true"  
-                            [showDelete]="true"
-                            [showEdit]="false"
-                            [showRowSelect]="false"
-                            (deleteClicked)="onSelectedStudentDeleteClick($event)">
-                        </generic-app-table>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                    </form>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2"><a ngbNavLink><span class="d-sm-block">Fees</span></a>
+                    <ng-template ngbNavContent>
+                        <form>
+                            <div class="modal-body">
+                                <div class="row g-3">
+                                <div class="col-lg-10">
+                                    <ng-select [ngModelOptions]="{standalone: true}" [items]="feeTypes" bindLabel="name" multiple="true" [(ngModel)]="selectedStudentSelectedFeeTypes" bindValue="id" placeholder="Select Fee Type"></ng-select>
+                                </div>
+                                <div class="col-lg-2">
+                                    <button [disabled]="selectedStudentSelectedFeeTypes.length < 1" (click)="onSelectedStudentFeeTypesSaveClick()" class="btn btn-primary w-100"><i class=" ri-save-2-line align-bottom me-1"></i> Save</button>
+                                </div>
+                                    <div class="col-lg-12 card">
+                                        <generic-app-table [headers]="selectedStudentFeeTypesHeaders" [data]="selectedStudentFeeTypes" [showActions]="true" [showEdit]="false" (deleteClicked)="onSelectedStudentFeeTypeDeleteClick($event)"></generic-app-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </ng-template>
+                </li>
+            </ul>
+            <div class="tab-content  text-muted">
+                <div [ngbNavOutlet]="Justify"></div>
+            </div>
+        </div>
         <div class="modal-footer">
             <div class="hstack gap-2 justify-content-end">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissStudentInfoModal()"><i class="ri-close-line align-bottom me-1"></i> Close</button>

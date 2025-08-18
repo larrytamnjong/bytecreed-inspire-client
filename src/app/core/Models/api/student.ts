@@ -44,5 +44,5 @@ export class StudentSubject{
 
 export class StudentFeeType {
      student!: Student;
-     feeType!: FeeType[];
+     feeTypes!: FeeType[];
 }

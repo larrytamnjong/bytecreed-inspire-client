@@ -14,8 +14,9 @@ import { ClassService } from 'src/app/core/services/api/class.service';
 import { AcademicService } from 'src/app/core/services/api/academics.service';
 import { StudentEnrollment } from 'src/app/core/Models/api/student';
 import { SubjectService } from 'src/app/core/services/api/subject.service';
-import { CourseService } from 'src/app/core/services/api/course.service';
 import { Subject } from 'src/app/core/Models/api/subject';
+import { FeeType } from 'src/app/core/Models/api/fee';
+import { FeesService } from 'src/app/core/services/api/fees.service';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
 
   selectedEnrollments: any[] = [];
 
+  feeTypes: any = [];
   subjects: any = [];
   classes: any = [];
   classSections: any = [];
@@ -49,12 +51,19 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
 
   selectedStudentEnrollment: any = null;
   selectedStudentSelectedSubjects:  [] = [];
+  selectedStudentSelectedFeeTypes: [] = [];
   selectedStudentSubjects: any = [];
+  selectedStudentFeeTypes: any = [];
   selectedStudentSubjectHeaders: any = [
     { key: 'name', displayName: 'Name' },
     { key: 'description', displayName: 'Description' },
     { key: 'coefficient', displayName: 'Coefficient' },
     { key: 'code', displayName: 'Code' },
+  ];
+
+  selectedStudentFeeTypesHeaders: any = [
+    { key: 'name', displayName: 'Name' },
+    { key: 'amount', displayName: 'Amount' }
   ];
   
   headers: any = [
@@ -82,6 +91,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
         private classService: ClassService,
         private academicService: AcademicService,
         private subjectService: SubjectService,
+        private feeTypeService: FeesService,
         protected override store: Store<{ data: RootReducerState }>, ) {
         super(store);
       }
@@ -120,6 +130,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     this.getStudentEnrollments();
     this.getClassSections();
     this.getClasses();
+    this.getFeeTypes();
   }
 
   addModal(content: any) {
@@ -221,6 +232,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     this.selectedStudentEnrollment = enrollment;
     this.modalService.open(content, {...this.xlModalConfig, backdrop: 'static'});
     this.loadSelectedStudentSubjects();
+    this.loadSelectedStudentFees();
   }
 
   loadSelectedStudentSubjects(){
@@ -237,7 +249,21 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     });
   }
 
-  onSelectedStudentSaveClick(){
+   loadSelectedStudentFees(){
+    this.toggleLoading();
+    this.studentService.getStudentFeeTypes([this.selectedStudentEnrollment.id], this.selectedStudentEnrollment.academicYearId ).pipe(finalize(() => {this.toggleLoading();})).subscribe({
+      next: (response) => {
+        if (response.data && response?.data[0]?.feeTypes) {
+          this.selectedStudentFeeTypes = response.data[0].feeTypes.map((fees: FeeType) => ({...fees}));
+        } else {
+          this.selectedStudentFeeTypes = [];
+        }
+      },
+      error: (error) => {}
+    });
+  }
+
+  onSelectedStudentSubjectsSaveClick(){
     if (this.selectedStudentSelectedSubjects.length === 0) {
       return;
     }
@@ -262,7 +288,32 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     });
   }
 
-  onSelectedStudentDeleteClick(subject: any){
+  onSelectedStudentFeeTypesSaveClick(){
+    if (this.selectedStudentSelectedFeeTypes.length === 0) {
+      return;
+    }
+
+    this.toggleLoading();
+    var data = {
+      feeTypeIds: this.selectedStudentSelectedFeeTypes, 
+      enrollmentIds: [this.selectedStudentEnrollment.id]
+    }
+
+    this.studentService.assignStudentFeeType(data, this.studentEnrollmentGetForm.get("academicYearId")?.value).pipe(finalize(() => this.toggleLoading())).subscribe({
+      next: (response) => {
+        if(response.success){
+          this.selectedStudentSelectedFeeTypes = [];
+          this.loadSelectedStudentFees();
+          SimpleAlerts.showSuccess();
+        }else{SimpleAlerts.showError(response.message);}
+      },
+      error: (error) => {
+        SimpleAlerts.showError(getErrorMessage(error));
+      }
+    });
+  }
+
+  onSelectedStudentSubjectDeleteClick(subject: any){
     SimpleAlerts.confirmDeleteDialog().then((result) => {
       if (result) {
         this.toggleLoading();
@@ -274,6 +325,31 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
           next: (response) => {
             if(response.success){
               this.loadSelectedStudentSubjects();
+              SimpleAlerts.showSuccess();
+            }else{SimpleAlerts.showError(response.message);}
+          },
+          error: (error) => {
+            SimpleAlerts.showError(getErrorMessage(error));
+          }
+        });
+      }else{
+        return;
+      }
+    });
+  }
+
+    onSelectedStudentFeeTypeDeleteClick(subject: any){
+    SimpleAlerts.confirmDeleteDialog().then((result) => {
+      if (result) {
+        this.toggleLoading();
+        var data = {
+          feeTypeIds: [subject.id], 
+          enrollmentIds: [this.selectedStudentEnrollment.id]
+        }
+        this.studentService.unassignStudentFeeType(data, this.studentEnrollmentGetForm.get("academicYearId")?.value).pipe(finalize(() => this.toggleLoading())).subscribe({
+          next: (response) => {
+            if(response.success){
+              this.loadSelectedStudentFees();
               SimpleAlerts.showSuccess();
             }else{SimpleAlerts.showError(response.message);}
           },
@@ -420,6 +496,16 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
       });
   }
 
+  getFeeTypes() {
+  this.feeTypeService.getFeeTypes().subscribe({
+      next: (response) => {
+        this.feeTypes = response.data;
+      },
+      error: (error) => {
+        SimpleAlerts.showError(getErrorMessage(error));
+      }
+  });
+}
 
   async onPrint() {
     this.toggleLoading();

@@ -98,4 +98,19 @@ export class StudentService {
     return this.apiService.post(`${this.STUDENT_FEE_TYPE_CONTROLLER}/fee-types`, RequestHelper.createServiceRequest(data), {params: queryParams});
    }
 
+    assignStudentFeeType(data: any, academicYearId?: any): Observable<ServiceResponse<StudentFeeType[]>> {
+    let queryParams = new HttpParams();
+    if (academicYearId) {
+        queryParams = queryParams.set('academicYearId', academicYearId);
+    }
+    return this.apiService.post(this.STUDENT_FEE_TYPE_CONTROLLER, RequestHelper.createServiceRequest(data), {params: queryParams});
+    }
+
+    unassignStudentFeeType(data: any, academicYearId?: any): Observable<ServiceResponse<any>> {
+        let queryParams = new HttpParams();
+        if (academicYearId) {
+            queryParams = queryParams.set('academicYearId', academicYearId);
+        }
+        return this.apiService.delete(`${this.STUDENT_FEE_TYPE_CONTROLLER}`, RequestHelper.createServiceRequest(data), {params: queryParams});
+    }
 } 
