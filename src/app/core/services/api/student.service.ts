@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ApiHttpService } from "../common/base-api-http.service";
-import { Student, StudentCourse, StudentEnrollment, StudentSubject } from "src/app/core/Models/api/student";
+import { Student, StudentCourse, StudentEnrollment, StudentFeeType, StudentSubject } from "src/app/core/Models/api/student";
 import { ServiceResponse } from "../../Models/common/service-response";
 import { RequestHelper } from "../common/service-request-helper";
 import { HttpParams } from "@angular/common/http";
@@ -11,6 +11,7 @@ export class StudentService {
     private readonly STUDENT_ENROLLMENT_CONTROLLER = 'v1/student-enrollments';
     private readonly STUDENT_COURSE_CONTROLLER = 'v1/student-courses';
     private readonly STUDENT_SUBJECT_CONTROLLER = 'v1/student-subjects';
+    private readonly STUDENT_FEE_TYPE_CONTROLLER = 'v1/student-fee-types';
 
   constructor(private apiService: ApiHttpService) {}
 
@@ -88,4 +89,13 @@ export class StudentService {
     getCourseStudents(courseId: string): Observable<ServiceResponse<StudentCourse[]>> {
         return this.apiService.get(`${this.STUDENT_COURSE_CONTROLLER}/${courseId}/students`);
     }
-}
+
+    getStudentFeeTypes(data: any, academicYearId?: any): Observable<ServiceResponse<StudentFeeType[]>> {
+        let queryParams = new HttpParams();
+    if (academicYearId) {
+        queryParams = queryParams.set('academicYearId', academicYearId);
+    }
+    return this.apiService.post(`${this.STUDENT_FEE_TYPE_CONTROLLER}/fee-types`, RequestHelper.createServiceRequest(data), {params: queryParams});
+   }
+
+} 

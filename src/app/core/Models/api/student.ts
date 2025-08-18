@@ -4,6 +4,7 @@ import { Class } from "./class";
 import { Subject } from "./subject";
 import { AcademicYear } from "./academics";
 import { ClassSection } from "./class-section";
+import { FeeType } from "./fee";
 export class Student{
     id?: string;
     familyName!: string;
@@ -39,4 +40,9 @@ export class StudentCourse{
 export class StudentSubject{
      student!: Student;
      subjects!: Subject[];
+}
+
+export class StudentFeeType {
+     student!: Student;
+     feeType!: FeeType[];
 }
