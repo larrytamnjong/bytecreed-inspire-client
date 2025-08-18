@@ -433,6 +433,13 @@ export const MENU: MenuItem[] = [
           },
         ],
       },
+      {
+        id: SchoolMenuEnum.Files,
+        label: "MENUITEMS.FILES.TEXT",
+        icon: "ri-folder-2-line",
+        permission: PermissionActionEnum.School_ViewFiles,
+        link: "/school/files",
+     },
     ],
   },
 ];

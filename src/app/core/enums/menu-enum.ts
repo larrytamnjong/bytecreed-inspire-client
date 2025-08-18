@@ -56,7 +56,8 @@ export enum SchoolMenuEnum {
   Fees = 55,
   FeeTypes = 56,
   StudentFeeTypes = 57,
-  ClassFeeTypes = 58
+  ClassFeeTypes = 58,
+  Files = 59
 }
 
 export enum StudentMenuEnum{

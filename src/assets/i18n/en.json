@@ -138,6 +138,10 @@
         "MANAGEUSERS": "Users",
         "AUDITLOGS": "Logs"
       }
+    },
+   "FILES": {
+      "TEXT": "Files",
+      "LIST": {}
     }
   }
 }
