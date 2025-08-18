@@ -35,7 +35,7 @@
                         </div>
                       </ng-template>
                   </li>
-                  <li [ngbNavItem]="2"><a ngbNavLink><i class="ri-artboard-line"></i> Class Fees</a>
+                  <li [ngbNavItem]="2"><a ngbNavLink><i class="ri-coin-line"></i> Class Fees</a>
                       <ng-template ngbNavContent>
                         <div class="row">
                             <div class="col-lg-12">
@@ -43,30 +43,63 @@
                                     <div  class="card-header border-bottom-dashed">
                                         <div class="row g-4 align-items-center">
                                             <div class="col-sm">
-                                                <div><h5 class="card-title mb-0"><i class="ri-artboard-line text-muted fs-18 align-middle me-1">   </i>Class Fee Type</h5></div>
+                                                <div><h5 class="card-title mb-0"><i class="ri-coin-line text-muted fs-18 align-middle me-1">   </i>Class Fee Type</h5></div>
                                             </div>
                                             <div class="col-sm-auto">
                                                 <div class="d-flex flex-wrap align-items-start gap-2">
-                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Assign</button>
-                                                    <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-delete-bin-line align-bottom me-1"></i> Unassign</button>
+                                                    <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="addClassFeeTypeModal(classFeeTypeModal)"><i class="ri-add-line align-bottom me-1"></i> Assign</button>
+                                                    <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="deleteClassFeeTypeModal(deleteClassFeeTypesContent)"><i class="ri-delete-bin-line align-bottom me-1"></i> Unassign</button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12">
+                                                <div ngbAccordion activeIds="static-1" [closeOthers]="true">
+                                                    <div ngbAccordionItem class="material-shadow" id="static-1">
+                                                        <div ngbAccordionHeader class="accordion-header border-0 bg-transparent"> <button ngbAccordionButton>Filters</button></div>
+                                                        <div ngbAccordionCollapse>
+                                                            <div ngbAccordionBody>
+                                                                <div class="row g-3">
+                                                                    <div class="col-sm-8">
+                                                                        <div>
+                                                                            <ng-select [items]="classes" bindLabel="name" [(ngModel)]="classFeeType_classId" bindValue="id" placeholder="Select Class"></ng-select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <div>
+                                                                            <button type="button" class="btn btn-primary w-100" (click)="getClassFeeTypes()"><i class="ri-equalizer-fill mx-2 align-bottom"></i>Filter</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <generic-app-table 
-                                    [headers]="headers" 
-                                    [data]="classSections" 
+                                    <generic-app-table 
+                                    [headers]="classFeeTypeHeaders" 
+                                    [data]="classFeeTypes" 
                                     [showActions]="true" 
                                     [showDelete]="true" 
-                                    (editClicked)="editModal(content, $event)" 
-                                    (deleteClicked)="deleteClassSection($event)">
-                                </generic-app-table> -->
+                                    (editClicked)="editClassFeeTypeModal(classFeeTypeModal, $event)" 
+                                    (deleteClicked)="deleteClassFeeType($event)"
+                                    [customTemplates]="{ 'isRequired': isRequiredTemplate, 'overrideDefaultAmount': overrideDefaultAmountTemplate }">
+                                    >
+                                  
+                                    <ng-template #isRequiredTemplate let-isRequired let-row="row">
+                                        <span>{{ getYesOrNoLabel(isRequired) }}</span>
+                                    </ng-template>
+
+                                    <ng-template #overrideDefaultAmountTemplate let-overrideDefaultAmount let-row="row">
+                                        <span>{{ getYesOrNoLabel(overrideDefaultAmount) }}</span>
+                                    </ng-template>
+                                </generic-app-table>
                                 </div>
                             </div>
                         </div>
                       </ng-template>
                   </li>
-                     <li [ngbNavItem]="3"><a ngbNavLink><i class=" ri-coin-line"></i> Student Fees</a>
+                     <!-- <li [ngbNavItem]="3"><a ngbNavLink><i class=" ri-coin-line"></i> Student Fees</a>
                       <ng-template ngbNavContent>
                         <div class="row">
                             <div class="col-lg-12">
@@ -84,19 +117,19 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <generic-app-table 
+                                    <generic-app-table 
                                     [headers]="headers" 
                                     [data]="classSections" 
                                     [showActions]="true" 
                                     [showDelete]="true" 
                                     (editClicked)="editModal(content, $event)" 
                                     (deleteClicked)="deleteClassSection($event)">
-                                </generic-app-table> -->
+                                </generic-app-table>
                                 </div>
                             </div>
                         </div>
                       </ng-template>
-                  </li>
+                  </li> -->
                 </ul>
                 <div class="tab-content text-muted">
                   <div [ngbNavOutlet]="Bordered"></div>
@@ -123,6 +156,89 @@
                     <label for="amount" class="form-label">Amount <span class="text-danger">*</span></label>
                     <input type="number" id="amount" class="form-control" placeholder="Enter Amount" required formControlName="amount" [ngClass]="{ 'is-invalid': submitted && feeTypeFormF['amount'].errors }" />
                     <div class="invalid-feedback">Please enter an amount</div>
+                </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()"><i class="ri-close-line align-bottom me-1"></i> Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+        <ng-template #classFeeTypeModal role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title">Class Exam Types</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
+        </div>
+        <form  class="tablelist-form" autocomplete="off" [formGroup]="classFeeTypeForm" (ngSubmit)="onSubmitClassFeeType()">
+            <div class="modal-body">
+                <div class="row g-3">
+                <div class="col-lg-6">
+                    <label class="form-label">Fee Types <span class="text-danger">*</span></label>
+                    <ng-select [items]="feeTypes" bindLabel="name" [multiple]="true"  bindValue="id" formControlName="feeTypeIds" placeholder="Select Fee Types"  [ngClass]="{ 'is-invalid': submitted && classFeeTypeFormF['feeTypeIds'].invalid }"></ng-select>
+                    <div class="invalid-feedback">Please select fee type</div>
+                </div>
+                <div class="col-lg-6">
+                    <label class="form-label">Classes <span class="text-danger">*</span></label>
+                    <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submitted && classFeeTypeFormF['classIds'].invalid }" placeholder="Select Classes">
+                    </ng-select>
+                    <div class="invalid-feedback">Please select a class</div>
+                </div>
+                <div class="col-lg-6">
+                    <label class="form-label">Override Default Amount <span class="text-danger">*</span></label>
+                    <select class="form-select" aria-label=".form-select-sm" formControlName="overrideDefaultAmount" [ngClass]="{ 'is-invalid': submitted && classFeeTypeFormF['overrideDefaultAmount'].invalid }">
+                        <option selected [ngValue]="null">Select Option</option>
+                        <option [ngValue]="true">Yes</option>
+                        <option [ngValue]="false">No</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="submitted && classFeeTypeFormF['overrideDefaultAmount'].invalid">Please select an option</div>
+                </div>
+                <div class="col-lg-6">
+                    <label for="amount" class="form-label">Amount</label>
+                    <input type="number" id="amount" class="form-control" placeholder="Enter Amount" formControlName="amount" [ngClass]="{ 'is-invalid': submitted && classFeeTypeFormF['amount'].invalid }">
+                    <div class="invalid-feedback" *ngIf="submitted && classFeeTypeFormF['amount'].invalid">Amount is required when 'Override Default Amount' is set to Yes</div>
+                </div> 
+                <div class="col-lg-12">
+                    <label class="form-label">Is Required <span class="text-danger">*</span></label>
+                    <select class="form-select" aria-label=".form-select-sm" formControlName="isRequired" [ngClass]="{ 'is-invalid': submitted && classFeeTypeFormF['isRequired'].invalid }">
+                        <option selected [ngValue]="null">Select Option</option>
+                        <option [ngValue]="true">Yes</option>
+                        <option [ngValue]="false">No</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="submitted && classFeeTypeFormF['isRequired'].invalid">Please select an option</div>
+                </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()"><i class="ri-close-line align-bottom me-1"></i> Close</button>
+                    <button type="submit" class="btn btn-primary" id="add-btn"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #deleteClassFeeTypesContent role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title">Remove Class Fee Types</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
+        </div>
+        <form  class="tablelist-form" autocomplete="off" [formGroup]="classFeeTypeDeleteForm" (ngSubmit)="onSubmitDeleteClassFeeTypes()">
+            <div class="modal-body">
+                <div class="row g-3">
+                <div class="col-lg-6">
+                    <label class="form-label">Fee Types <span class="text-danger">*</span></label>
+                    <ng-select [items]="feeTypes" [multiple]="true" bindLabel="name"  bindValue="id" formControlName="feeTypeIds" placeholder="Select Subject"  [ngClass]="{ 'is-invalid': submitted && classFeeTypeDeleteF['feeTypeIds'].invalid }"></ng-select>
+                    <div class="invalid-feedback">Please select a fee type</div>
+                </div>
+                <div class="col-lg-6">
+                    <label class="form-label">Classes <span class="text-danger">*</span></label>
+                    <ng-select [items]="classes" formControlName="classIds" bindLabel="name" bindValue="id" [multiple]="true" [ngClass]="{ 'is-invalid': submitted && classFeeTypeDeleteF['classIds'].invalid }" placeholder="Select Classes">
+                     </ng-select>
+                    <div class="invalid-feedback">Please select a class</div>
                 </div>
                 </div>
             </div>

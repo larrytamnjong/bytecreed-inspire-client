@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ApiHttpService } from "../common/base-api-http.service";
-import { Class, ClassGroup, ClassSubject } from "../../Models/api/class";
+import { Class, ClassFeeType, ClassGroup, ClassSubject } from "../../Models/api/class";
 import { ServiceResponse } from "../../Models/common/service-response";
 import { RequestHelper } from "../common/service-request-helper";
 import { ClassExamType } from "../../Models/api/class";
@@ -14,6 +14,8 @@ export class ClassService {
     private readonly CLASS_EXAM_TYPE_CONTROLLER: string = "v1/class-exam-types";
     private readonly CLASS_GROUP_CONTROLLER: string = "v1/class-groups";
     private readonly CLASS_SUBJECT_CONTROLLER: string = "v1/class-subjects";
+    private readonly CLASS_FEE_TYPE_CONTROLLER: string = "v1/class-fee-types";
+
 
   constructor(private apiService: ApiHttpService) {}
 
@@ -72,5 +74,20 @@ export class ClassService {
 
     deleteClassSubject(data: any): Observable<ServiceResponse<ClassSubject>> {
         return this.apiService.delete(`${this.CLASS_SUBJECT_CONTROLLER}`, RequestHelper.createServiceRequest(data));
+      }
+
+    addClassFeeType(data: any): Observable<ServiceResponse<ClassFeeType[]>> {
+        return this.apiService.put(`${this.CLASS_FEE_TYPE_CONTROLLER}`, RequestHelper.createServiceRequest(data));
+      }
+
+    getClassFeeTypes(classId: any): Observable<ServiceResponse<ClassFeeType[]>> {
+      let queryParams = new HttpParams();
+            queryParams = queryParams.set('classId', classId);
+
+        return this.apiService.get(`${this.CLASS_FEE_TYPE_CONTROLLER}`, {params: queryParams});
+      }
+
+    deleteClassFeeType(data: any): Observable<ServiceResponse<any>> {
+        return this.apiService.delete(`${this.CLASS_FEE_TYPE_CONTROLLER}`, RequestHelper.createServiceRequest(data));
       }
 }

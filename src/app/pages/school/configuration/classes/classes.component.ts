@@ -45,7 +45,8 @@ export class ClassesComponent extends BaseComponent implements OnInit {
   get classExamTypeF() {return this.classExamTypeForm.controls;}
   get classExamTypeDeleteF() {return this.classExamTypeDeleteForm.controls;}
   classExamTypeHeaders = [
-    { key: 'examTypeId', displayName: 'Exam Type' },
+    { key: 'className', displayName: 'Class' },
+    { key: 'examTypeName', displayName: 'Exam Type' },
     { key: 'isActive', displayName: 'Status' },
     { key: 'overrideDefaultWeight', displayName: 'Override Default Weight' },
     { key: 'weight', displayName: 'Weight' },
@@ -62,7 +63,7 @@ export class ClassesComponent extends BaseComponent implements OnInit {
   get classSubjectF() {return this.classSubjectForm.controls;}
   get classSubjectDeleteF() {return this.classSubjectDeleteForm.controls;}
   classSubjectHeaders = [
-    { key: 'subjectId', displayName: 'Subject' },
+    { key: 'subjectName', displayName: 'Subject' },
     { key: 'isActive', displayName: 'Status' },
     { key: 'overrideDefaultCoefficient', displayName: 'Override Coefficient'},
     { key: 'coefficient', displayName: 'Coefficient' },
@@ -351,11 +352,6 @@ export class ClassesComponent extends BaseComponent implements OnInit {
     });
   }
 
-  getExamTypeName(examTypeId: string): string {
-    const name = this.examTypes?.find((item : ExamType) => item.id === examTypeId)?.name;
-    return name ?? '';
-  }
-
   dismissClassExamTypeModal() {
     this.modalService.dismissAll();
     this.resetClassExamTypeForm();
@@ -522,11 +518,6 @@ export class ClassesComponent extends BaseComponent implements OnInit {
       },
       error: () => {},
     });
-  }
-
-  getClassSubjectName(subjectId: string): string {
-    const name = this.subjects?.find((item : Subject) => item.id === subjectId)?.name;
-    return name ?? '';
   }
 
   dismissClassSubjectModal() {

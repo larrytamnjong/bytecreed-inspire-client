@@ -34,4 +34,15 @@ export class Class extends AcademicCycleTracker{
     coefficient?: number;
     overrideDefaultCoefficient: boolean = false;
     classId?: string; 
+    subjectName?: string;
+  }
+
+   export class ClassFeeType extends AcademicCycleTracker {
+    id?: string;
+    feeTypeId!: string;
+    isRequired?: boolean;
+    overrideDefaultAmount!: boolean;
+    classId?: string; 
+    className?: string;
+    amount?: number;
   }

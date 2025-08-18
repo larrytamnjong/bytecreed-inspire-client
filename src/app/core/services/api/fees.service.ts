@@ -10,7 +10,6 @@ import { FeeType } from "../../Models/api/fee";
 @Injectable({ providedIn: 'root'})
 export class FeesService {
     private readonly FEE_TYPE_CONTROLLER: string = "v1/fee-types";
-    private readonly CLASS_FEE_TYPES: string = "v1/class-fee-types";
     private readonly STUDENT_FEE_TYPES: string = "v1/student-fee-types";
 
 

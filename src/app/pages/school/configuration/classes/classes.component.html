@@ -90,15 +90,11 @@
                                     tableId="classExamTypeTable"
                                     (editClicked)="editClassExamTypeModal(addOrUpdateClassExamTypeContent, $event)"
                                     (deleteClicked)="deleteClassExamType($event)"
-                                    [customTemplates]="{ 'isActive': classExamTypeStatusTemplate, 'examTypeId': examTypeTemplate, 'overrideDefaultWeight': overrideDefaultWeightTemplate }">
+                                    [customTemplates]="{ 'isActive': classExamTypeStatusTemplate, 'overrideDefaultWeight': overrideDefaultWeightTemplate }">
                                     </generic-app-table>
 
                                     <ng-template #classExamTypeStatusTemplate let-status let-row="row">
                                         <app-status-badge [status]="status" [label]="getActiveOrInactiveLabel(status)"></app-status-badge>
-                                    </ng-template>
-
-                                    <ng-template #examTypeTemplate let-examTypeId let-row="row">
-                                        <span>{{ getExamTypeName(examTypeId) }}</span>
                                     </ng-template>
 
                                     <ng-template #overrideDefaultWeightTemplate let-overrideDefaultWeight let-row="row">
@@ -161,15 +157,11 @@
                                     (editClicked)="editClassSubjectModal(updateOrAddClassSubjectContent, $event)"
                                     (deleteClicked)="deleteClassSubject($event)"
                                     tableId="classSubjectTable"
-                                    [customTemplates]="{ 'isActive': classSubjectStatusTemplate, 'subjectId': subjectTemplate, 'overrideDefaultCoefficient': overrideDefaultCoefficientTemplate, 'isRequired': isRequiredTemplate }">
+                                    [customTemplates]="{ 'isActive': classSubjectStatusTemplate,'overrideDefaultCoefficient': overrideDefaultCoefficientTemplate, 'isRequired': isRequiredTemplate }">
                                     </generic-app-table>
 
                                     <ng-template #classSubjectStatusTemplate let-status let-row="row">
                                         <app-status-badge [status]="status" [label]="getActiveOrInactiveLabel(status)"></app-status-badge>
-                                    </ng-template>
-
-                                    <ng-template #subjectTemplate let-subjectId let-row="row">
-                                        <span>{{ getClassSubjectName(subjectId) }}</span>
                                     </ng-template>
 
                                     <ng-template #overrideDefaultCoefficientTemplate let-overrideDefaultCoefficient let-row="row">
