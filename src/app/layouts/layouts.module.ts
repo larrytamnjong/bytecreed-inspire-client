@@ -20,12 +20,14 @@ import { HorizontalComponent } from './horizontal/horizontal.component';
 import { HorizontalTopbarComponent } from './horizontal-topbar/horizontal-topbar.component';
 import { TwoColumnComponent } from './two-column/two-column.component';
 import { TwoColumnSidebarComponent } from './two-column-sidebar/two-column-sidebar.component';
+import { AuthLayoutComponent } from './auth-layout.component';
 
 
 
 @NgModule({
   declarations: [
     LayoutComponent,
+    AuthLayoutComponent,
     VerticalComponent,
     TopbarComponent,
     SidebarComponent,
