@@ -55,7 +55,7 @@
                                     </div>
 
                                      <div class="mb-3">
-                                        <label class="form-label">Country</label>
+                                        <label class="form-label">Country <span class="text-danger">*</span></label>
                                         <ng-select appearance="outline" [searchable]="true" [clearable]="false" placeholder="Country" (change)="onCountrySelected($event)"
                                             [ngClass]="{ 'is-invalid': submitted && f['countryCode'].errors }">
                                             @for ( data of countriesData; track $index) {
