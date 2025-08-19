@@ -7,6 +7,7 @@ import { LibraryComponent } from './library/library.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { BoardingComponent } from './boarding/boarding.component';
 import { TransportationComponent } from './transportation/transportation.component';
+import { FilesComponent } from './files/files.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule),},
   {path: 'exams', component: ExamComponent, pathMatch: 'full'},
   {path: 'library', component: LibraryComponent, pathMatch: 'full'},
+  {path: 'files', component: FilesComponent, pathMatch: 'full'},
   {path: 'inventory', component: InventoryComponent, pathMatch: 'full'},
   {path: 'boarding', component: BoardingComponent, pathMatch: 'full'},
   {path: 'transportation', component: TransportationComponent, pathMatch: 'full'},

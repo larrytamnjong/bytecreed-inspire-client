@@ -30,6 +30,7 @@ import { TransportationComponent } from './transportation/transportation.compone
 import { FinanceModule } from './finance/finance.module';
 import { UsersModule } from './users/users.module';
 import { BursaryModule } from './bursary/bursary.module';
+import { FilesComponent } from './files/files.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { BursaryModule } from './bursary/bursary.module';
     LibraryComponent,
     InventoryComponent,
     BoardingComponent,
-    TransportationComponent
+    TransportationComponent,
+    FilesComponent
   ],
   imports: [
     CommonModule,
