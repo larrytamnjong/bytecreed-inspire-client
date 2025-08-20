@@ -1,1 +1,90 @@
 <app-breadcrumbs title="Bursary" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <div class="col-xxl-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="live-preview">
+                    <form action="javascript:void(0);">
+                        <div class="col-xxl-12">
+                            <ul ngbNav #Justify="ngbNav" [(activeId)]="activeTab"
+                                class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
+                                <li [ngbNavItem]="1"><a ngbNavLink class="tab-income"><span class="d-sm-block"><i
+                                                class="ri-hand-coin-line align-bottom me-1"></i> Fees</span></a>
+                                    <ng-template ngbNavContent>
+                                        <form>
+
+                                        </form>
+                                    </ng-template>
+                                </li>
+                                <li [ngbNavItem]="2"><a ngbNavLink class="tab-income"><span class="d-sm-block"><i
+                                                class="ri-arrow-left-down-line me-1"></i> Deposit</span></a>
+                                    <ng-template ngbNavContent>
+                                        <form>
+
+                                        </form>
+                                    </ng-template>
+                                </li>
+                                <li [ngbNavItem]="3"><a ngbNavLink class="tab-expenses"><span class="d-sm-block"><i
+                                                class="ri-arrow-right-up-line me-1"></i> Withdrawal</span></a>
+                                    <ng-template ngbNavContent>
+                                        <form>
+
+                                        </form>
+                                    </ng-template>
+                                </li>
+                            </ul>
+                            <div class="tab-content  text-muted">
+                                <div [ngbNavOutlet]="Justify"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-xxl-6">
+        <div class="card" [ngStyle]="{'background-color': (activeTab === 1 || activeTab === 2) ? '#e0f5e0' : (activeTab === 3 ? '#f7e9e9' : 'white')}">
+            <div class="card-body">
+                <div class="live-preview">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="text-center mb-4">
+                                <h5 class="text-primary">Cash Calculator</h5>
+                                <p class="text-muted">{{amountInProgress | currency: currencySymbol}}</p>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control text-end fs-4 fw-bold" placeholder="Enter Amount" [(ngModel)]="amountInProgress" maxlength="12"/>
+                                <small class="text-muted"> You can enter amount using the numeric keypad below </small>
+                            </div>
+
+                            <div class="d-grid gap-2 mb-2"
+                                style="grid-template-columns: repeat(3, 1fr); display: grid;">
+                                <button type="button" class="btn btn-light" (click)="setQuantity('1')">1</button>
+                                <button type="button" class="btn btn-light" (click)="setQuantity('2')">2</button>
+                                <button type="button" class="btn btn-light" (click)="setQuantity('3')">3</button>
+                                <button type="button" class="btn btn-light" (click)="setQuantity('4')">4</button>
+                                <button type="button" class="btn btn-light" (click)="setQuantity('5')">5</button>
+                                <button type="button" class="btn btn-light" (click)="setQuantity('6')">6</button>
+                                <button type="button" class="btn btn-light" (click)="setQuantity('7')">7</button>
+                                <button type="button" class="btn btn-light" (click)="setQuantity('8')">8</button>
+                                <button type="button" class="btn btn-light" (click)="setQuantity('9')">9</button>
+                                <button type="button" class="btn btn-light" (click)="setQuantity('0')">0</button>
+                                <button type="button" class="btn btn-light" (click)="setQuantity('00')">00</button>
+                                <button type="button" class="btn btn-light" (click)="setQuantity('000')">000</button>
+                            </div>
+
+                            <div class="d-grid gap-2 mb-2" style="grid-template-columns: repeat(3, 1fr); display: grid;">
+                                <button type="button" class="btn btn-warning" (click)="clearQuantity()"><i class="ri-arrow-go-back-line"></i> Clear</button>
+                                <button type="button" class="btn btn-danger" (click)="reduceQuantity()"><i class="ri-arrow-left-circle-line"></i> Delete</button>
+                                <button type="button" class="btn btn-success" (click)="pay()"><i class="ri-bank-card-line"></i> Process</button>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>

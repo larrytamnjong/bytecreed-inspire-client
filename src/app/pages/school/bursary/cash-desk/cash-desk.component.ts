@@ -7,9 +7,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CashDeskComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
+  activeTab: number = 1; 
 
-  loading: boolean = false; 
+  amountInProgress: string = '';   
+  enteredAmount: number = 0;  
+  currencySymbol: string = 'XAF';
+ 
   ngOnInit(): void {
     this.breadCrumbItems = [{label: 'Bursary'},{ label: 'Cash Desk', active: true }];
+  }
+
+  
+  setQuantity(value: string) {
+   if (this.amountInProgress.length < 12) { 
+    this.amountInProgress += value;
+    this.updateEnteredAmount(this.amountInProgress);
+   }
+  }
+
+  updateEnteredAmount(value: string) {
+  this.enteredAmount = Number(value) || 0;
+}
+
+  reduceQuantity() {
+    this.amountInProgress = this.amountInProgress.slice(0, -1);
+    this.updateEnteredAmount(this.amountInProgress);
+  }
+
+  clearQuantity() {
+    this.amountInProgress = '';
+    this.enteredAmount = 0;
+  }
+
+  pay() {
+    console.log('Paying amount: ', this.enteredAmount);
   }
 }

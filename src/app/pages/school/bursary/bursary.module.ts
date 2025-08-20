@@ -15,6 +15,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BursaryRoutingModule } from './bursary.routing.module';
 import { CashDeskComponent } from './cash-desk/cash-desk.component';
+import { CdkObserveContent } from "@angular/cdk/observers";
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { CashDeskComponent } from './cash-desk/cash-desk.component';
     NgbTooltipModule,
     NgSelectModule,
     NgbAccordionModule,
-  ],
+    CdkObserveContent
+],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class BursaryModule { }
