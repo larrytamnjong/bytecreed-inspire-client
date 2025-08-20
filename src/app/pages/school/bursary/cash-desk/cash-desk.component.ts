@@ -6,6 +6,7 @@ import { StudentService } from 'src/app/core/services/api/student.service';
 import { finalize } from 'rxjs/operators';
 import { SimpleAlerts } from 'src/app/core/services/notifications/sweet-alerts';
 import { getErrorMessage } from 'src/app/core/helpers/error-filter';
+import { FeesService } from 'src/app/core/services/api/fees.service';
 
 @Component({
   selector: 'app-cash-desk',
@@ -22,9 +23,11 @@ export class CashDeskComponent extends BaseComponent implements OnInit {
 
   studentEnrollmentsToDisplay: any[] = [];
   studentEnrollments: any = [];
+  selectedStudentEnrollment: any = null;
  
   constructor(
     private studentService: StudentService,
+    private feeService: FeesService,
     protected override store: Store<{ data: RootReducerState }>, ) {
     super(store);
   }
@@ -33,6 +36,32 @@ export class CashDeskComponent extends BaseComponent implements OnInit {
     this.breadCrumbItems = [{label: 'Bursary'},{ label: 'Cash Desk', active: true }];
     this.getStudentEnrollments();
   }
+
+  makeFeePayment(){
+    this.toggleLoading();
+    const paymentData = {
+      amount: this.enteredAmount,
+      enrollmentId: this.selectedStudentEnrollment.id,
+    };
+    this.feeService.makeFeePayment(paymentData).pipe(finalize(() => this.toggleLoading())).subscribe({
+      next: (response) => {
+        console.log(response);
+        if(response.success) {
+          SimpleAlerts.showSuccess('Payment successful!');
+        } else {
+          SimpleAlerts.showError(response.message);
+        }
+        this.clearQuantity();
+      },
+      error: (error) => {
+        SimpleAlerts.showError(getErrorMessage(error));
+      }
+    });
+  }
+
+  onStudentSelectionChange(selectedEnrollment: any) {
+    this.selectedStudentEnrollment = selectedEnrollment;  
+}
 
   getStudentEnrollments(){
     this.toggleLoading();
@@ -69,6 +98,7 @@ export class CashDeskComponent extends BaseComponent implements OnInit {
   }
 
   pay() {
-    console.log('Paying amount: ', this.enteredAmount);
+    this.updateEnteredAmount(this.amountInProgress);
+    this.makeFeePayment();
   }
 }

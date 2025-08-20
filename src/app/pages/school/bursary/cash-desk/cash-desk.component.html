@@ -13,7 +13,7 @@
                                     <ng-template ngbNavContent>
                                     <div class="row g-3">
                                         <div class="col-xxl-12 col-lg-12">
-                                            <ng-select [items]="studentEnrollmentsToDisplay" bindLabel="fullIdentification" bindValue="id" placeholder="Find Students..."></ng-select>
+                                            <ng-select [items]="studentEnrollmentsToDisplay" bindLabel="fullIdentification" bindValue="id" placeholder="Find Students..." (change)="onStudentSelectionChange($event)"></ng-select>
                                         </div>
                                     </div>
                                     </ng-template>
@@ -86,4 +86,5 @@
             </div>
         </div>
     </div>
+    <app-loading [loading]="loading"></app-loading>
 </div>

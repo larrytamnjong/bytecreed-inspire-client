@@ -10,7 +10,7 @@ import { FeeType } from "../../Models/api/fee";
 @Injectable({ providedIn: 'root'})
 export class FeesService {
     private readonly FEE_TYPE_CONTROLLER: string = "v1/fee-types";
-    private readonly STUDENT_FEE_TYPES: string = "v1/student-fee-types";
+    private readonly FEE_PAYMENT_CONTROLLER: string = "v1/fee-payments";
 
 
   constructor(private apiService: ApiHttpService) {}
@@ -30,4 +30,12 @@ export class FeesService {
     deleteFeeType(id: string): Observable<ServiceResponse<any>> {
         return this.apiService.delete(`${this.FEE_TYPE_CONTROLLER}/${id}/fee-type`);
       }
+
+    makeFeePayment(data: any, academicYearId?: string): Observable<ServiceResponse<any>> {
+      let queryParams = new HttpParams();
+        if (academicYearId) {
+            queryParams = queryParams.set('academicYearId', academicYearId);
+        }
+        return this.apiService.post(`${this.FEE_PAYMENT_CONTROLLER}/payment`, RequestHelper.createServiceRequest(data), {params:queryParams});
+    }
 }
