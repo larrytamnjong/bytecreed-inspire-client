@@ -9,6 +9,7 @@ import { LookUpTableEnum } from 'src/app/core/enums/look-up-table';
 import { Country } from 'src/app/core/Models/common/country';
 import { generatePDF } from '../core/helpers/pdf-utility';
 import { formatDateToLocalISOString } from 'src/app/core/helpers/date-utility';
+import { StudentEnrollment } from '../core/Models/api/student';
 
 export class BaseComponent  {
   loading: boolean = false;
@@ -82,4 +83,22 @@ export class BaseComponent  {
     return Number(value);
   }
 
+  public setStudentEnrollmentsToDisplay(enrollments: StudentEnrollment[]): any {
+    let studentEnrollmentsToDisplay = enrollments.map((enrollment) => {
+      return {
+        id: enrollment.id,
+        familyName: enrollment.student?.familyName || '#',
+        givenNames: enrollment.student?.givenNames || '#',
+        dateOfBirth: enrollment.student?.dateOfBirth || '#',
+        sex: enrollment.student?.sex || '#',
+        admissionNumber: enrollment.student?.admissionNumber || '#',
+        class: enrollment.class?.name || '#',
+        studentId: enrollment.student?.id || '#',
+        year: enrollment.academicYear?.name || '#',
+        section: enrollment.classSection?.name || '',
+        academicYearId: enrollment.academicYear?.id,
+      };
+    });
+    return studentEnrollmentsToDisplay;
+  }
 }

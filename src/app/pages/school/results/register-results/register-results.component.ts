@@ -184,7 +184,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
     });
   }
 
-  setStudentEnrollmentsToDisplay(enrollments: StudentEnrollment[]): void {
+  override setStudentEnrollmentsToDisplay(enrollments: StudentEnrollment[]): any {
     this.studentEnrollmentsToDisplay = enrollments.map((enrollment) => {
       return {
         id: enrollment.id,
@@ -425,9 +425,7 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
     }
     const validation = this.validateResults(data);
     if (!validation.isValid) {
-      const invalidDetails = validation.invalidEntries
-        .map((entry) => `${entry.result}`)
-        .join(",");
+      const invalidDetails = validation.invalidEntries.map((entry) => `${entry.result}`).join(",");
       SimpleAlerts.showWarning("Invalid results", 30000, `${invalidDetails}`);
       return;
     }
@@ -470,18 +468,9 @@ export class RegisterResultsComponent extends BaseComponent implements OnInit {
       })
     );
 
-    const className =
-      this.teacherClasses.find(
-        (c: any) => c.id === this.getStudentForm.value.classId
-      )?.name || "Class";
-    const subjectName =
-      this.teacherSubjects.find(
-        (s: any) => s.id === this.getStudentForm.value.subjectId
-      )?.name || "Subject";
-    const examTypeName =
-      this.examTypes.find(
-        (e: any) => e.examTypeId === this.getStudentForm.value.examTypeId
-      )?.name || "Exam";
+    const className = this.teacherClasses.find((c: any) => c.id === this.getStudentForm.value.classId)?.name || "Class";
+    const subjectName =this.teacherSubjects.find((s: any) => s.id === this.getStudentForm.value.subjectId)?.name || "Subject";
+    const examTypeName = this.examTypes.find((e: any) => e.examTypeId === this.getStudentForm.value.examTypeId)?.name || "Exam";
 
     const fileName = `${className}_${subjectName}_${examTypeName}_Template.xlsx`;
 

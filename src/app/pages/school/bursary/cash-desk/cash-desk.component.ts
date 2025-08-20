@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { BaseComponent } from 'src/app/shared/base.component';
+import { Store } from '@ngrx/store';
+import { RootReducerState } from 'src/app/store';
+import { StudentService } from 'src/app/core/services/api/student.service';
 
 @Component({
   selector: 'app-cash-desk',
   templateUrl: './cash-desk.component.html',
   styleUrl: './cash-desk.component.scss'
 })
-export class CashDeskComponent implements OnInit {
+export class CashDeskComponent extends BaseComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
   activeTab: number = 1; 
 
@@ -13,6 +17,12 @@ export class CashDeskComponent implements OnInit {
   enteredAmount: number = 0;  
   currencySymbol: string = 'XAF';
  
+  constructor(
+    private studentService: StudentService,
+    protected override store: Store<{ data: RootReducerState }>, ) {
+    super(store);
+  }
+
   ngOnInit(): void {
     this.breadCrumbItems = [{label: 'Bursary'},{ label: 'Cash Desk', active: true }];
   }

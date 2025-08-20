@@ -390,7 +390,7 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
             this.academicYear = null;
             this.section = null;
           }
-          this.setStudentEnrollmentsToDisplay(this.studentEnrollments);
+          this.studentEnrollmentsToDisplay = this.setStudentEnrollmentsToDisplay(this.studentEnrollments);
         },
         error: (error) => {
           SimpleAlerts.showError(getErrorMessage(error));
@@ -413,24 +413,6 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     this.modalService.dismissAll();
     this.selectedStudentEnrollment = null;
     this.selectedStudentSubjects = [];
-  }
-  
-  setStudentEnrollmentsToDisplay(enrollments: StudentEnrollment[]): void {
-    this.studentEnrollmentsToDisplay = enrollments.map((enrollment) => {
-      return {
-        id: enrollment.id,
-        familyName: enrollment.student?.familyName || '#',
-        givenNames: enrollment.student?.givenNames || '#',
-        dateOfBirth: enrollment.student?.dateOfBirth || '#',
-        sex: enrollment.student?.sex || '#',
-        admissionNumber: enrollment.student?.admissionNumber || '#',
-        class: enrollment.class?.name || '#',
-        studentId: enrollment.student?.id || '#',
-        year: enrollment.academicYear?.name || '#',
-        section: enrollment.classSection?.name || '',
-        academicYearId: enrollment.academicYear?.id,
-      };
-    });
   }
 
   getAcademicYears() {
