@@ -45,9 +45,8 @@ export class CashDeskComponent extends BaseComponent implements OnInit {
     };
     this.feeService.makeFeePayment(paymentData).pipe(finalize(() => this.toggleLoading())).subscribe({
       next: (response) => {
-        console.log(response);
         if(response.success) {
-          SimpleAlerts.showSuccess('Payment successful!');
+          SimpleAlerts.showSuccess();
         } else {
           SimpleAlerts.showError(response.message);
         }
