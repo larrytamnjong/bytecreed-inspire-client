@@ -7,6 +7,7 @@ export enum LookUpTableEnum {
   YesOrNoResponse = 6,
   PaymentStatus = 7,
   PaymentMethods = 8,
+  PaymentTypes = 9
 }
 
 export enum SexEnum {
@@ -42,4 +43,11 @@ export enum PaymentMethodsEnum {
   Cash = 1,
   MTNCameroonMobileMoney = 2,
   OrangeCameroonMobileMoney = 3,
+}
+
+export enum PaymentTypesEnum {
+  Income = 1,
+  Expense = 2,
+  Refund = 3,
+  SchoolFees = 4
 }
