@@ -31,9 +31,6 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
   studentEnrollmentGetForm!: UntypedFormGroup;
   studentSubjectForm!: UntypedFormGroup;
   studentEnrollments: any = [];
-  academicYear: string | null = null;
-  class: string | null = null;
-  section: string | null = null;
   studentEnrollmentsToDisplay: any = [];
   students: any = [];
   submitted = false;
@@ -381,15 +378,6 @@ export class StudentEnrollmentsComponent extends BaseComponent implements OnInit
     this.studentService.getStudentEnrollments(academicYearId, classId, classSectionId, null).pipe(finalize(() => this.toggleLoading())).subscribe({
         next: (response) => {
           this.studentEnrollments = response.data;
-          if(this.studentEnrollments.length > 0){
-            this.class = this.studentEnrollments[0].class.name;
-            this.academicYear = this.studentEnrollments[0].academicYear.name;
-            this.section = this.studentEnrollments[0].classSection?.name;
-          }else{
-            this.class = null;
-            this.academicYear = null;
-            this.section = null;
-          }
           this.studentEnrollmentsToDisplay = this.setStudentEnrollmentsToDisplay(this.studentEnrollments);
         },
         error: (error) => {

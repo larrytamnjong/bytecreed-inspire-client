@@ -97,6 +97,7 @@ export class BaseComponent  {
         year: enrollment.academicYear?.name || '#',
         section: enrollment.classSection?.name || '',
         academicYearId: enrollment.academicYear?.id,
+        fullIdentification: `${enrollment.student?.admissionNumber || '#'}- ${enrollment.student?.familyName || '#'} ${enrollment.student?.givenNames || '#'} (${enrollment.class?.name || '#'} - ${enrollment.academicYear?.name || '#'})`,
       };
     });
     return studentEnrollmentsToDisplay;

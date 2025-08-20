@@ -11,9 +11,11 @@
                                 class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
                                 <li [ngbNavItem]="1"><a ngbNavLink class="tab-income"><span class="d-sm-block"><i class="ri-coin-line align-bottom me-1"></i> Fees</span></a>
                                     <ng-template ngbNavContent>
-                                        <form>
-
-                                        </form>
+                                    <div class="row g-3">
+                                        <div class="col-xxl-12 col-lg-12">
+                                            <ng-select [items]="studentEnrollmentsToDisplay" bindLabel="fullIdentification" bindValue="id" placeholder="Find Students..."></ng-select>
+                                        </div>
+                                    </div>
                                     </ng-template>
                                 </li>
                                 <li [ngbNavItem]="2"><a ngbNavLink class="tab-income"><span class="d-sm-block"><i class="ri-arrow-left-down-line me-1"></i> Deposit</span></a>
