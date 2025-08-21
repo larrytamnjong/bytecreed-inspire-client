@@ -347,7 +347,7 @@ export const MENU: MenuItem[] = [
       {
         id: SchoolMenuEnum.Finance,
         label: "MENUITEMS.FINANCE.TEXT",
-        icon: " ri-hand-coin-fill",
+        icon: "ri-bank-line",
         permission: PermissionActionEnum.School_ViewFinance,
         subItems: [
           {
@@ -366,39 +366,10 @@ export const MENU: MenuItem[] = [
           }
         ],
       },
-      // {
-      //   id: SchoolMenuEnum.Fees,
-      //   label: "MENUITEMS.FINANCE.LIST.FEES",
-      //   icon: "ri-wallet-line",
-      //   permission: PermissionActionEnum.School_ManageFinances,
-      //   subItems: [
-      //     {
-      //       id: SchoolMenuEnum.FeeTypes,
-      //       label: "MENUITEMS.FEES.LIST.FEETYPES",
-      //       parentId: SchoolMenuEnum.Fees,
-      //       link: "/school/finance/fee-types",
-      //       permission: PermissionActionEnum.School_ManageFinances,
-      //     },
-      //     {
-      //       id: SchoolMenuEnum.ClassFeeTypes,
-      //       label: "MENUITEMS.FEES.LIST.CLASSFEETYPES",
-      //       parentId: SchoolMenuEnum.Fees,
-      //       link: "/school/finance/class-fee-types",
-      //       permission: PermissionActionEnum.School_ManageFinances,
-      //     },
-      //     {
-      //       id: SchoolMenuEnum.StudentFeeTypes,
-      //       label: "MENUITEMS.FEES.LIST.STUDENTFEETYPES",
-      //       parentId: SchoolMenuEnum.Fees,
-      //       link: "/school/finance/student-fee-types",
-      //       permission: PermissionActionEnum.School_ManageFinances,
-      //     },
-      //   ],
-      // },
       {
         id: SchoolMenuEnum.Bursary,
         label: "MENUITEMS.BURSARY.TEXT",
-        icon: "ri-bank-line",
+        icon: "ri-hand-coin-fill",
         isCollapsed: true,
         permission: PermissionActionEnum.School_ViewBursary,
         subItems: [
