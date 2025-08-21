@@ -322,6 +322,29 @@ export const MENU: MenuItem[] = [
         link: "/school/inventory",
       },
       {
+        id: SchoolMenuEnum.Accounting,
+        label: "MENUITEMS.ACCOUNTING.TEXT",
+        icon: "ri-scales-line",
+        isCollapsed: true,
+        permission: PermissionActionEnum.School_ViewAccounting,
+        subItems: [
+          {
+            id: SchoolMenuEnum.ChartOfAccounts,
+            label: "MENUITEMS.ACCOUNTING.LIST.CHARTOFACCOUNTS",
+            parentId: SchoolMenuEnum.Bursary,
+            link: "/school/accounting/chart-of-accounts",
+            permission: PermissionActionEnum.School_ManageAccounting,
+          },
+          {
+            id: SchoolMenuEnum.Journals,
+            label: "MENUITEMS.ACCOUNTING.LIST.JOURNALS",
+            parentId: SchoolMenuEnum.Bursary,
+            link: "/school/accounting/journals",
+            permission: PermissionActionEnum.School_ManageAccounting,
+          },
+        ],
+      },
+      {
         id: SchoolMenuEnum.Finance,
         label: "MENUITEMS.FINANCE.TEXT",
         icon: " ri-hand-coin-fill",
@@ -384,6 +407,13 @@ export const MENU: MenuItem[] = [
             label: "MENUITEMS.BURSARY.LIST.CASHDESK",
             parentId: SchoolMenuEnum.Bursary,
             link: "/school/bursary/cash-desk",
+            permission: PermissionActionEnum.School_ManageBursary,
+          },
+          {
+            id: SchoolMenuEnum.PaymentAchieve,
+            label: "MENUITEMS.BURSARY.LIST.PAYMENTARCHIVE", 
+            parentId: SchoolMenuEnum.Bursary,
+            link: "/school/bursary/payment-archive",
             permission: PermissionActionEnum.School_ManageBursary,
           },
         ],

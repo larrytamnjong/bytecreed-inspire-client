@@ -63,5 +63,9 @@ export enum PermissionActionEnum {
   
   //Files
   School_ViewFiles = 18000,
-  Schools_ManageFiles = 18001
+  Schools_ManageFiles = 18001,
+
+  //Accounting
+  School_ViewAccounting = 19000,
+  School_ManageAccounting = 19001
 }

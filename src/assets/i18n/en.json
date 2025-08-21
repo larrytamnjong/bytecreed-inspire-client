@@ -120,7 +120,15 @@
   "BURSARY": {
       "TEXT": "Bursary",
       "LIST": {
-        "CASHDESK": "Cash Desk"
+        "CASHDESK": "Cash Desk",
+        "PAYMENTARCHIVE": "Payment Archive"
+      }
+    },
+      "ACCOUNTING": {
+      "TEXT": "Accounting",
+      "LIST": {
+        "CHARTOFACCOUNTS": "Chart of Accounts",
+        "JOURNALS": "Journals"
       }
     },
     "BOARDING": {

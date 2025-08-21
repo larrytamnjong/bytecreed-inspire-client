@@ -43,6 +43,7 @@ export enum PaymentMethodsEnum {
   Cash = 1,
   MTNCameroonMobileMoney = 2,
   OrangeCameroonMobileMoney = 3,
+  Bank = 4
 }
 
 export enum PaymentTypesEnum {

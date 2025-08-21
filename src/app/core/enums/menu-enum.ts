@@ -57,7 +57,11 @@ export enum SchoolMenuEnum {
   FeeTypes = 56,
   StudentFeeTypes = 57,
   ClassFeeTypes = 58,
-  Files = 59
+  Files = 59,
+  PaymentAchieve = 60,
+  Accounting = 70,
+  ChartOfAccounts = 71,
+  Journals = 72
 }
 
 export enum StudentMenuEnum{
