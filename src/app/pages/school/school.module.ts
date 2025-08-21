@@ -31,6 +31,7 @@ import { FinanceModule } from './finance/finance.module';
 import { UsersModule } from './users/users.module';
 import { BursaryModule } from './bursary/bursary.module';
 import { FilesComponent } from './files/files.component';
+import { AccountModule } from 'src/app/account/account.module';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { FilesComponent } from './files/files.component';
     AttendanceModule,
     FinanceModule,
     UsersModule,
-    BursaryModule
+    BursaryModule,
+    AccountModule
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })

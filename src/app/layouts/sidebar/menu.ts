@@ -321,19 +321,19 @@ export const MENU: MenuItem[] = [
     permission: PermissionActionEnum.School_ViewAccounting,
     subItems: [
       {
-        id: SchoolMenuEnum.ChartOfAccounts,
-        label: "MENUITEMS.ACCOUNTING.LIST.CHARTOFACCOUNTS",
-        parentId: SchoolMenuEnum.Bursary,
-        link: "/school/accounting/chart-of-accounts",
-        permission: PermissionActionEnum.School_ManageAccounting,
-      },
-      {
         id: SchoolMenuEnum.Journals,
         label: "MENUITEMS.ACCOUNTING.LIST.JOURNALS",
         parentId: SchoolMenuEnum.Bursary,
         link: "/school/accounting/journals",
         permission: PermissionActionEnum.School_ManageAccounting,
       },
+      {
+        id: SchoolMenuEnum.ChartOfAccounts,
+        label: "MENUITEMS.ACCOUNTING.LIST.CHARTOFACCOUNTS",
+        parentId: SchoolMenuEnum.Bursary,
+        link: "/school/accounting/chart-of-accounts",
+        permission: PermissionActionEnum.School_ManageAccounting,
+      }
     ],
   },
 

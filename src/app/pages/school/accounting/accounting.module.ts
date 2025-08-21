@@ -13,16 +13,15 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { BursaryRoutingModule } from './bursary.routing.module';
-import { CashDeskComponent } from './cash-desk/cash-desk.component';
-import { CdkObserveContent } from "@angular/cdk/observers";
-import { PaymentArchiveComponent } from './payment-archive/payment-archive.component';
+import { JournalsComponent } from './journals/journals.component';
+import { ChartOfAccountsComponent } from './chart-of-accounts/chart-of-accounts.component';
+import { AccountingRoutingModule } from './accounting-routing.module';
 
 
 @NgModule({
   declarations: [
- CashDeskComponent,
- PaymentArchiveComponent
+    JournalsComponent,
+    ChartOfAccountsComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +35,7 @@ import { PaymentArchiveComponent } from './payment-archive/payment-archive.compo
     NgApexchartsModule,
     SlickCarouselModule,
     FlatpickrModule.forRoot(),
-    BursaryRoutingModule,
+    AccountingRoutingModule,
     SharedModule,
     NgbPaginationModule,
     NgbTypeaheadModule,
@@ -44,9 +43,9 @@ import { PaymentArchiveComponent } from './payment-archive/payment-archive.compo
     ReactiveFormsModule,
     NgbTooltipModule,
     NgSelectModule,
-    NgbAccordionModule,
-    CdkObserveContent
-],
+    NgbAccordionModule
+    
+  ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
-export class BursaryModule { }
+export class AccountingModule { }

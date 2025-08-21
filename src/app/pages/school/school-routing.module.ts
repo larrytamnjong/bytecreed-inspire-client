@@ -29,7 +29,7 @@ const routes: Routes = [
   {path: 'boarding', component: BoardingComponent, pathMatch: 'full'},
   {path: 'transportation', component: TransportationComponent, pathMatch: 'full'},
   {path: 'bursary', loadChildren: () => import('./bursary/bursary.module').then(m => m.BursaryModule),},
-
+  {path: 'accounting', loadChildren: () => import('./accounting/accounting.module').then(m => m.AccountingModule),},
 ];
 
 @NgModule({
