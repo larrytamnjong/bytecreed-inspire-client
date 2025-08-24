@@ -18,6 +18,7 @@ export class BaseComponent  {
   yesOrNoResponse: LookUpData[] = [];
   sexOptions: LookUpData[] = [];
   studentStatus: LookUpData[] = [];
+  paymentStatus: LookUpData[] = [];
   countries: Country[] = [];
 
   mdModalConfig = { size: 'md', centered: true };
@@ -37,6 +38,7 @@ export class BaseComponent  {
         this.countries = this.lookUps?.countries || [];
         this.sexOptions = this.lookUps?.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTableEnum.Sex) || [];
         this.studentStatus = this.lookUps?.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTableEnum.StudentStatus) || [];
+        this.paymentStatus = this.lookUps?.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTableEnum.PaymentStatus) || [];
       }
     });
   }
@@ -71,6 +73,10 @@ export class BaseComponent  {
     return statusItem?.text ?? '#';
   }
 
+  public getPaymentStatusLabel(status: number): string { 
+    const statusItem = this.paymentStatus.find(item => item.dataCode === status);
+    return statusItem?.text ?? '#';
+  }
   public async generatePDF(html: string, fileName: string) {
     await generatePDF(html, fileName);
   }

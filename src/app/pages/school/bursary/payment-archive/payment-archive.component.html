@@ -1,1 +1,66 @@
 <app-breadcrumbs title="BURSARY" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header border-bottom-dashed">
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm">
+                        <div><h5 class="card-title mb-0"><i class="ri-history-line text-muted fs-18 align-middle me-1"></i> Payment Archive</h5></div>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="d-flex flex-wrap align-items-start gap-2">
+                            <button type="button" class="btn btn-primary" routerLink="/school/bursary/cash-desk"><i class="ri-bank-card-line align-bottom me-1"></i> Make Payment</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <generic-paginated-app-table
+             apiUrl="v1/payments/archive/batch"
+            [headers]="headers"
+            [showActions]="true"
+            [showRowSelect]="true"
+            [showDelete]="false"
+            [reload]="reloadTable"
+            [customTemplates]="{ 'paymentDate': dateOfPaymentTemplate, 'status': statusTemplate }"
+            (selectedRowsChange)="onSelectedRowsChange($event)">
+            
+            <ng-template #sexTemplate let-value>{{getSexLabel(value)}}</ng-template>
+            <ng-template #dateOfPaymentTemplate let-value>{{value | date: 'longDate'}}</ng-template>
+            <ng-template #statusTemplate let-value let-row="row"><app-payment-status-badge [status]="value" [label]="getPaymentStatusLabel(value)"></app-payment-status-badge></ng-template>
+            </generic-paginated-app-table>
+        </div>
+    </div>  
+
+    <app-loading [loading]="loading"></app-loading>
+
+    <!-- <ng-template #enrollmentContent role="document" let-modal>
+        <div class="modal-header p-3 bg-light">
+            <h5 class="modal-title" id="modalLabel">Enroll {{selectedStudentIds.length}} Selected Student(s)</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="dismissModal()"></button>
+        </div>
+        <form autocomplete="off" class="tablelist-form" [formGroup]="enrollmentForm" (submit)="enrollSelectedStudents()">
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-lg-6">
+                        <label class="form-label">Class <span class="text-danger">*</span></label>
+                        <ng-select [items]="classes" bindLabel="name" id="class" bindValue="id" formControlName="classId" placeholder="Select Class" [ngClass]="{ 'is-invalid': submitted && fEnrollment['classId'].invalid }"></ng-select>
+                        <div class="invalid-feedback">Please select a class</div>
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="form-label">Class Section</label>
+                        <ng-select [items]="classSections" bindLabel="name" id="classSections" bindValue="id" formControlName="classSectionId" placeholder="Select Class Section"></ng-select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="dismissModal()"><i class="ri-close-line align-bottom me-1"></i> Close</button>
+                    <button type="submit" class="btn btn-primary"><i class="ri-save-2-line align-bottom me-1"></i> Save</button>
+                </div>
+            </div>
+        </form>
+    </ng-template> -->
+
+</div>

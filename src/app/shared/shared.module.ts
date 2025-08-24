@@ -28,6 +28,7 @@ import { TeacherService } from '../core/services/api/teacher.service';
 import { GenericAppSmartTableComponent } from './generic-app-smart-table/generic-app-smart-table.component';
 import { ResultReportService } from '../core/services/api/result-report.service';
 import { FeesService } from '../core/services/api/fees.service';
+import { PaymentStatusBadgeComponent } from './payment-status-badge/payment-status-badge.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { FeesService } from '../core/services/api/fees.service';
     GenericAppSmartTableComponent,
     StudentStatusBadgeComponent,
     ExcelImportComponent,
-    ExcelExportComponent
+    ExcelExportComponent,
+    PaymentStatusBadgeComponent
   ],
   imports: [
     CommonModule,
@@ -77,7 +79,8 @@ import { FeesService } from '../core/services/api/fees.service';
     BreadcrumbsComponent,
     StudentStatusBadgeComponent,
     ExcelImportComponent,
-    ExcelExportComponent
+    ExcelExportComponent,
+    PaymentStatusBadgeComponent
   ]
 })
 export class SharedModule { }

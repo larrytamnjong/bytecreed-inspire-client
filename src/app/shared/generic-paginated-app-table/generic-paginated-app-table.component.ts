@@ -52,7 +52,7 @@ export class GenericPaginatedAppTableComponent implements OnChanges {
 
   ngOnInit() {
   this.searchSubject.pipe(
-    debounceTime(300), 
+    debounceTime(600), 
     distinctUntilChanged()
   ).subscribe(() => {
     this.onSearchChange();
