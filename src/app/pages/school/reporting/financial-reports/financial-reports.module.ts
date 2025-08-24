@@ -13,14 +13,13 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { ReportingRoutingModule } from './reporting-routing.module';
-import { ResultReportsModule } from './result-reports/result-reports.module';
-import { FinancialReportsModule } from './financial-reports/financial-reports.module';
+import { FinancialReportsRoutingModule } from './financial-reports-routing.module';
+import { FeeReportsComponent } from './fee-reports/fee-reports.component';
 
 
 @NgModule({
   declarations: [
- 
+   FeeReportsComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +33,7 @@ import { FinancialReportsModule } from './financial-reports/financial-reports.mo
     NgApexchartsModule,
     SlickCarouselModule,
     FlatpickrModule.forRoot(),
-    ReportingRoutingModule,
+    FinancialReportsRoutingModule,
     SharedModule,
     NgbPaginationModule,
     NgbTypeaheadModule,
@@ -42,10 +41,9 @@ import { FinancialReportsModule } from './financial-reports/financial-reports.mo
     ReactiveFormsModule,
     NgbTooltipModule,
     NgSelectModule,
-    NgbAccordionModule,
-    ResultReportsModule,
-    FinancialReportsModule   
+    NgbAccordionModule
+    
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ReportingModule { }
+export class FinancialReportsModule { }

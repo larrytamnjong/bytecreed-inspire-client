@@ -61,7 +61,9 @@ export enum SchoolMenuEnum {
   PaymentAchieve = 60,
   Accounting = 70,
   ChartOfAccounts = 71,
-  Journals = 72
+  Journals = 72,
+  FinancialReports = 73,
+  FeeReports = 75,
 }
 
 export enum StudentMenuEnum{

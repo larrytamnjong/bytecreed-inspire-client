@@ -187,6 +187,22 @@ export const MENU: MenuItem[] = [
           }
         ],
       },
+      {
+      id: SchoolMenuEnum.FinancialReports,
+      label: "MENUITEMS.FINANCIALREPORTS.TEXT",
+      icon: "ri-bank-line",
+      isCollapsed: true,
+      permission: PermissionActionEnum.School_ManageReports,
+      subItems: [
+        {
+          id: SchoolMenuEnum.FeeReports,
+          label: "MENUITEMS.FINANCIALREPORTS.LIST.FEEREPORTS",
+          parentId: SchoolMenuEnum.ResultReports,
+          link: "/school/reporting/financial-reports/fees",
+          permission: PermissionActionEnum.School_ManageReports,
+        },
+      ],
+    },
     ],
   },
   {

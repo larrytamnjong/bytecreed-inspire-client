@@ -88,11 +88,17 @@
       }
     },
     "RESULTREPORTS": {
-      "TEXT": "Result Reports",
+      "TEXT": "Result",
       "LIST": {
         "REPORTCARDS": "Report Cards",
         "TRANSCRIPTS": "Transcripts",
         "MASTERSHEETS": "Master Sheets"
+      }
+    },
+    "FINANCIALREPORTS": {
+      "TEXT": "Financial",
+      "LIST": {
+        "FEEREPORTS": "Fees"
       }
     },
     "LIBRARY": {
