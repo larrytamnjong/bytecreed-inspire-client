@@ -22,4 +22,7 @@ export class FeePayment{
     referenceNumber?: string;
     paymentDate?: string;
     student?: Student;
+    paidForOrToFullName?: string;
+    paidOrReceivedByFullName?: string;
+    paymentMethodName?: string;
 }

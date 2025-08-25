@@ -29,6 +29,7 @@ import { GenericAppSmartTableComponent } from './generic-app-smart-table/generic
 import { ResultReportService } from '../core/services/api/result-report.service';
 import { FeesService } from '../core/services/api/fees.service';
 import { PaymentStatusBadgeComponent } from './payment-status-badge/payment-status-badge.component';
+import { PaymentTypeBadgeComponent } from './payment-type-badge/payment-type-badge.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { PaymentStatusBadgeComponent } from './payment-status-badge/payment-stat
     StudentStatusBadgeComponent,
     ExcelImportComponent,
     ExcelExportComponent,
-    PaymentStatusBadgeComponent
+    PaymentStatusBadgeComponent,
+    PaymentTypeBadgeComponent
   ],
   imports: [
     CommonModule,
@@ -80,7 +82,8 @@ import { PaymentStatusBadgeComponent } from './payment-status-badge/payment-stat
     StudentStatusBadgeComponent,
     ExcelImportComponent,
     ExcelExportComponent,
-    PaymentStatusBadgeComponent
+    PaymentStatusBadgeComponent,
+    PaymentTypeBadgeComponent
   ]
 })
 export class SharedModule { }

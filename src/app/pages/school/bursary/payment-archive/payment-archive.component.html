@@ -23,12 +23,13 @@
             [showRowSelect]="true"
             [showDelete]="false"
             [reload]="reloadTable"
-            [customTemplates]="{ 'paymentDate': dateOfPaymentTemplate, 'status': statusTemplate }"
+            [customTemplates]="{ 'paymentDate': dateOfPaymentTemplate, 'status': statusTemplate, 'paymentType': typeTemplate }"
             (selectedRowsChange)="onSelectedRowsChange($event)">
             
             <ng-template #sexTemplate let-value>{{getSexLabel(value)}}</ng-template>
             <ng-template #dateOfPaymentTemplate let-value>{{value | date: 'longDate'}}</ng-template>
             <ng-template #statusTemplate let-value let-row="row"><app-payment-status-badge [status]="value" [label]="getPaymentStatusLabel(value)"></app-payment-status-badge></ng-template>
+            <ng-template #typeTemplate let-value let-row="row"><app-payment-type-badge [status]="value" [label]="getPaymentTypeLabel(value)"></app-payment-type-badge></ng-template>
             </generic-paginated-app-table>
         </div>
     </div>  

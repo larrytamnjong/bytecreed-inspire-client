@@ -19,6 +19,7 @@ export class BaseComponent  {
   sexOptions: LookUpData[] = [];
   studentStatus: LookUpData[] = [];
   paymentStatus: LookUpData[] = [];
+  paymentTypes: LookUpData[] = [];
   countries: Country[] = [];
 
   mdModalConfig = { size: 'md', centered: true };
@@ -39,6 +40,7 @@ export class BaseComponent  {
         this.sexOptions = this.lookUps?.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTableEnum.Sex) || [];
         this.studentStatus = this.lookUps?.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTableEnum.StudentStatus) || [];
         this.paymentStatus = this.lookUps?.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTableEnum.PaymentStatus) || [];
+        this.paymentTypes = this.lookUps?.lookUpData?.filter((item: LookUpData) => item.tableCode === LookUpTableEnum.PaymentTypes) || [];
       }
     });
   }
@@ -76,6 +78,11 @@ export class BaseComponent  {
   public getPaymentStatusLabel(status: number): string { 
     const statusItem = this.paymentStatus.find(item => item.dataCode === status);
     return statusItem?.text ?? '#';
+  }
+
+  public getPaymentTypeLabel(type: number): string { 
+    const typeItem = this.paymentTypes.find(item => item.dataCode === type);
+    return typeItem?.text ?? '#';
   }
   public async generatePDF(html: string, fileName: string) {
     await generatePDF(html, fileName);
