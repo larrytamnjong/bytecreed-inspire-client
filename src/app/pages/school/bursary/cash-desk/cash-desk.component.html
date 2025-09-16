@@ -30,7 +30,7 @@
                                     <ng-template ngbNavContent>
                                     <div class="row g-3">
                                         <div class="col-xxl-12 col-lg-12">
-                                            <ng-select [items]="studentEnrollmentsToDisplay" bindLabel="fullIdentification" bindValue="id" placeholder="Find Students..." (change)="onStudentSelectionChange($event)"></ng-select>
+                                            <ng-select [virtualScroll]="true" [bufferAmount]="10" [items]="studentEnrollmentsToDisplay" bindLabel="fullIdentification" bindValue="id" placeholder="Find Students..." (change)="onStudentSelectionChange($event)"></ng-select>
                                         </div>
                                     </div>
                                     </ng-template>
@@ -42,7 +42,7 @@
                                         </form>
                                     </ng-template>
                                 </li>
-                                <li [ngbNavItem]="3"><a ngbNavLink class="tab-expenses"><span class="d-sm-block"><i class="ri-arrow-right-up-line me-1"></i> Withdrawal</span></a>
+                                <li [ngbNavItem]="3"><a ngbNavLink class="tab-expenses"><span class="d-sm-block"><i class="ri-arrow-right-up-line me-1"></i> Payment</span></a>
                                     <ng-template ngbNavContent>
                                         <form>
 
