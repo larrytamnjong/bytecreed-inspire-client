@@ -77,7 +77,7 @@ export class BaseComponent  {
 
   public getPaymentStatusLabel(status: number): string { 
     const statusItem = this.paymentStatus.find(item => item.dataCode === status);
-    return statusItem?.text ?? '#';
+    return statusItem?.text ?? '';
   }
 
   public getPaymentTypeLabel(type: number): string { 

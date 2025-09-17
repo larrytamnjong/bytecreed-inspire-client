@@ -36,6 +36,7 @@ export class CashDeskComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.breadCrumbItems = [{label: 'Bursary'},{ label: 'Cash Desk', active: true }];
     this.getStudentEnrollments();
+    this.getLookUps();
   }
 
   makeFeePayment(){

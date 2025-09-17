@@ -72,12 +72,7 @@
                                                                                     <td>{{payment?.remainingBalance |
                                                                                         currency: currencySymbol}}</td>
                                                                                     <td>
-                                                                                        <span class="badge bg-success"
-                                                                                            *ngIf="payment?.status === 2">Completed</span>
-                                                                                        <span class="badge bg-warning"
-                                                                                            *ngIf="payment?.status === 1">Pending</span>
-                                                                                        <span class="badge bg-danger"
-                                                                                            *ngIf="payment?.status === 3">Failed</span>
+                                                                                        <app-payment-status-badge [status]="payment?.status" [label]="getPaymentStatusLabel(payment?.status)"></app-payment-status-badge>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
