@@ -14,8 +14,7 @@ export class PaymentArchiveComponent extends BaseComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
   reloadTable: number = 0;
     headers: any = [
-    { key: 'paidForOrToFullName', displayName: 'Paid For/To' },
-    { key: 'paidOrReceivedByFullName', displayName: 'Paid/Received By' },
+    { key: 'Recipient', displayName: 'Recipient' },
     { key: 'paymentMethodName', displayName: 'Payment Method' },
     { key: 'transactionAmount', displayName: 'Amount' },
     { key: 'internalTransactionReference', displayName: 'Internal Ref' }, 

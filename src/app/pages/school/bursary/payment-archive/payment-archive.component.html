@@ -19,9 +19,8 @@
             <generic-paginated-app-table
              apiUrl="v1/payments/archive/batch"
             [headers]="headers"
-            [showActions]="true"
+            [showActions]="false"
             [showRowSelect]="true"
-            [showDelete]="false"
             [reload]="reloadTable"
             [customTemplates]="{ 'paymentDate': dateOfPaymentTemplate, 'status': statusTemplate, 'paymentType': typeTemplate }"
             (selectedRowsChange)="onSelectedRowsChange($event)">
