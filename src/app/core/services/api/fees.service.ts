@@ -37,4 +37,13 @@ export class FeesService {
         }
         return this.apiService.post(`${this.PAYMENT_CONTROLLER}/payment`, RequestHelper.createServiceRequest(data), {params:queryParams});
     }
+
+    getStudentFeePayments(studentId: string, academicYearId?: string): Observable<ServiceResponse<any>> {
+      let queryParams = new HttpParams();
+        if (academicYearId) {
+            queryParams = queryParams.set('academicYearId', academicYearId);
+         }
+          queryParams = queryParams.set('studentId', studentId);
+        return this.apiService.get(`${this.PAYMENT_CONTROLLER}/student`, {params:queryParams});
+    }
 }

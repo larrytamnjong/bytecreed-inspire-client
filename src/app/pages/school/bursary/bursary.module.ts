@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {NgbAccordionModule, NgbToastModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbAccordionModule, NgbCollapse, NgbToastModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule, NgbTypeaheadModule, NgbDropdownModule, NgbNavModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FeatherModule } from 'angular-feather';
@@ -45,7 +45,9 @@ import { PaymentArchiveComponent } from './payment-archive/payment-archive.compo
     NgbTooltipModule,
     NgSelectModule,
     NgbAccordionModule,
-    CdkObserveContent
+    CdkObserveContent,
+    NgbAccordionModule,
+    NgbCollapse
 ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })

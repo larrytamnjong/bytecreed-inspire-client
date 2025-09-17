@@ -5,17 +5,22 @@
             <div class="card-header">
                 <div class="row g-4 align-items-center">
                     <div class="col-sm">
-                        <div><h5 class="card-title mb-0"><i class="ri-hand-coin-line text-muted fs-18 align-middle me-1">     </i>Cash Desk</h5></div>
+                        <div>
+                            <h5 class="card-title mb-0"><i class="ri-hand-coin-line text-muted fs-18 align-middle me-1">
+                                </i>Cash Desk</h5>
+                        </div>
                     </div>
                     <div class="col-sm-auto">
                         <div class="d-flex flex-wrap align-items-start gap-2">
-                            <button type="button" class="btn btn-primary" routerLink="/school/bursary/payment-archive"><i class="ri-history-line align-bottom me-1"></i> Payment History</button>
+                            <button type="button" class="btn btn-primary"
+                                routerLink="/school/bursary/payment-archive"><i
+                                    class="ri-history-line align-bottom me-1"></i> Payment History</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>  
+    </div>
 </div>
 <div class="row">
     <div class="col-xxl-6">
@@ -26,23 +31,106 @@
                         <div class="col-xxl-12">
                             <ul ngbNav #Justify="ngbNav" [(activeId)]="activeTab"
                                 class="nav nav-tabs nav-tabs-custom nav-primary nav-justified mb-3">
-                                <li [ngbNavItem]="1"><a ngbNavLink class="tab-income"><span class="d-sm-block"><i class="ri-coin-line align-bottom me-1"></i> Fees</span></a>
+                                <li [ngbNavItem]="1"><a ngbNavLink class="tab-income"><span class="d-sm-block"><i
+                                                class="ri-coin-line align-bottom me-1"></i> Fees</span></a>
                                     <ng-template ngbNavContent>
-                                    <div class="row g-3">
-                                        <div class="col-xxl-12 col-lg-12">
-                                            <ng-select [virtualScroll]="true" [bufferAmount]="10" [items]="studentEnrollmentsToDisplay" bindLabel="fullIdentification" bindValue="id" placeholder="Find Students..." (change)="onStudentSelectionChange($event)"></ng-select>
+                                        <div class="row g-3">
+                                            <div class="col-xxl-12 col-lg-12">
+                                                <ng-select [virtualScroll]="true" [bufferAmount]="10"
+                                                    [items]="studentEnrollmentsToDisplay" bindLabel="fullIdentification"
+                                                    bindValue="id" placeholder="Find Students..."
+                                                    (change)="onStudentSelectionChange($event)"></ng-select>
+                                            </div>
+                                            <div class="col-xxl-12 col-lg-12" *ngIf="selectedStudentEnrollment">
+                                                    <div ngbAccordion activeIds="static-1" [closeOthers]="true">
+                                                        <div ngbAccordionItem class="material-shadow" id="static-1">
+                                                            <div ngbAccordionHeader
+                                                                class="accordion-header border-0 bg-transparent">
+                                                                <button ngbAccordionButton><i class="ri-history-line text-muted fs-18 align-middle me-1"></i> Payment History
+                                                                </button>
+                                                            </div>
+                                                            <div ngbAccordionCollapse>
+
+                                                                <div ngbAccordionBody>
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-sm table-borderless">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Date</th>
+                                                                                    <th>Amount</th>
+                                                                                    <th>Balance</th>
+                                                                                    <th>Status</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr
+                                                                                    *ngFor="let payment of selectedStudentFeePayments">
+                                                                                    <td>{{payment?.paymentDate |
+                                                                                        date:'shortDate'}}</td>
+                                                                                    <td>{{payment?.transactionAmount |
+                                                                                        currency: currencySymbol}}</td>
+                                                                                    <td>{{payment?.remainingBalance |
+                                                                                        currency: currencySymbol}}</td>
+                                                                                    <td>
+                                                                                        <span class="badge bg-success"
+                                                                                            *ngIf="payment?.status === 2">Completed</span>
+                                                                                        <span class="badge bg-warning"
+                                                                                            *ngIf="payment?.status === 1">Pending</span>
+                                                                                        <span class="badge bg-danger"
+                                                                                            *ngIf="payment?.status === 3">Failed</span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- <div ngbAccordionItem class="material-shadow" id="static-2">
+                                                            <div ngbAccordionHeader
+                                                                class="accordion-header border-0 bg-transparent">
+                                                                <button ngbAccordionButton>
+                                                                </button>
+                                                            </div>
+                                                            <div ngbAccordionCollapse>
+                                                                <div ngbAccordionBody>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div ngbAccordionItem class="material-shadow" id="static-3">
+                                                            <div ngbAccordionHeader
+                                                                class="accordion-header border-0 bg-transparent">
+                                                                <button ngbAccordionButton>
+                                                                </button>
+                                                            </div>
+                                                            <div ngbAccordionCollapse>
+                                                                <div ngbAccordionBody>
+
+                                                                </div>
+                                                            </div>
+                                                        </div> -->
+                                                    </div>
+
+                                                <div class="alert alert-warning mt-3"
+                                                    *ngIf="selectedStudentFeePayments.length === 0">
+                                                    <i class="ri-information-line me-2"></i> No payment history found
+                                                    for this student.
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
                                     </ng-template>
                                 </li>
-                                <li [ngbNavItem]="2"><a ngbNavLink class="tab-income"><span class="d-sm-block"><i class="ri-arrow-left-down-line me-1"></i> Deposit</span></a>
+                                <li [ngbNavItem]="2"><a ngbNavLink class="tab-income"><span class="d-sm-block"><i
+                                                class="ri-arrow-left-down-line me-1"></i> Deposit</span></a>
                                     <ng-template ngbNavContent>
                                         <form>
 
                                         </form>
                                     </ng-template>
                                 </li>
-                                <li [ngbNavItem]="3"><a ngbNavLink class="tab-expenses"><span class="d-sm-block"><i class="ri-arrow-right-up-line me-1"></i> Payment</span></a>
+                                <li [ngbNavItem]="3"><a ngbNavLink class="tab-expenses"><span class="d-sm-block"><i
+                                                class="ri-arrow-right-up-line me-1"></i> Payment</span></a>
                                     <ng-template ngbNavContent>
                                         <form>
 
@@ -62,7 +150,8 @@
 
     </div>
     <div class="col-xxl-6">
-        <div class="card" [ngStyle]="{'background-color': (activeTab === 1 || activeTab === 2) ? '#e0f5e0' : (activeTab === 3 ? '#f7e9e9' : 'white')}">
+        <div class="card"
+            [ngStyle]="{'background-color': (activeTab === 1 || activeTab === 2) ? '#e0f5e0' : (activeTab === 3 ? '#f7e9e9' : 'white')}">
             <div class="card-body">
                 <div class="live-preview">
                     <div class="row">
@@ -72,7 +161,8 @@
                                 <p class="text-muted">{{amountInProgress | currency: currencySymbol}}</p>
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control text-end fs-4 fw-bold" placeholder="Enter Amount" [(ngModel)]="amountInProgress" maxlength="12"/>
+                                <input type="text" class="form-control text-end fs-4 fw-bold" placeholder="Enter Amount"
+                                    [(ngModel)]="amountInProgress" maxlength="12" />
                                 <small class="text-muted"> You can enter amount using the numeric keypad below </small>
                             </div>
 
@@ -92,14 +182,18 @@
                                 <button type="button" class="btn btn-light" (click)="setQuantity('000')">000</button>
                             </div>
 
-                            <div class="d-grid gap-2 mb-2" style="grid-template-columns: repeat(3, 1fr); display: grid;">
-                                <button type="button" class="btn btn-warning" (click)="clearQuantity()"><i class="ri-arrow-go-back-line"></i> Clear</button>
-                                <button type="button" class="btn btn-danger" (click)="reduceQuantity()"><i class="ri-arrow-left-circle-line"></i> Delete</button>
-                                <button type="button" class="btn btn-success" (click)="pay()"><i class="ri-bank-card-line"></i> Process</button>
+                            <div class="d-grid gap-2 mb-2"
+                                style="grid-template-columns: repeat(3, 1fr); display: grid;">
+                                <button type="button" class="btn btn-warning" (click)="clearQuantity()"><i
+                                        class="ri-arrow-go-back-line"></i> Clear</button>
+                                <button type="button" class="btn btn-danger" (click)="reduceQuantity()"><i
+                                        class="ri-arrow-left-circle-line"></i> Delete</button>
+                                <button type="button" class="btn btn-success" (click)="pay()"><i
+                                        class="ri-bank-card-line"></i> Process</button>
                             </div>
                         </div>
                     </div>
-                 </div>
+                </div>
             </div>
         </div>
     </div>

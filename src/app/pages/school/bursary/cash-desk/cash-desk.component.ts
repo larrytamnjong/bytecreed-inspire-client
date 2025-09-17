@@ -24,6 +24,7 @@ export class CashDeskComponent extends BaseComponent implements OnInit {
   studentEnrollmentsToDisplay: any[] = [];
   studentEnrollments: any = [];
   selectedStudentEnrollment: any = null;
+  selectedStudentFeePayments: any = [];
  
   constructor(
     private studentService: StudentService,
@@ -46,6 +47,7 @@ export class CashDeskComponent extends BaseComponent implements OnInit {
     this.feeService.makeFeePayment(paymentData).pipe(finalize(() => this.toggleLoading())).subscribe({
       next: (response) => {
         if(response.success) {
+          this.getStudentFeePayments();
           SimpleAlerts.showSuccess();
         } else {
           SimpleAlerts.showError(response.message);
@@ -60,6 +62,22 @@ export class CashDeskComponent extends BaseComponent implements OnInit {
 
   onStudentSelectionChange(selectedEnrollment: any) {
     this.selectedStudentEnrollment = selectedEnrollment;  
+    this.selectedStudentFeePayments = [];
+    this.getStudentFeePayments();
+}
+
+getStudentFeePayments(){
+  if(this.selectedStudentEnrollment){
+    this.toggleLoading();
+    this.feeService.getStudentFeePayments(this.selectedStudentEnrollment.studentId).pipe(finalize(() => this.toggleLoading())).subscribe({
+      next: (response) => {
+        this.selectedStudentFeePayments = response.data || [];
+      },
+      error: (error) => {
+        SimpleAlerts.showError(getErrorMessage(error));
+      }
+    });
+  }
 }
 
   getStudentEnrollments(){
